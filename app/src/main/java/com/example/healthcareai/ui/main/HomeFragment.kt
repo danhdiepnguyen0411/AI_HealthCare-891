@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.FragmentHomeBinding
 import com.example.healthcareai.ui.camera.CameraActivity
+import com.example.healthcareai.ui.heartrate.HeartRateActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
@@ -102,11 +103,7 @@ class HomeFragment : Fragment() {
 
         // Feature Card 2: Measure Heart Rate
         binding.cardMeasureHeartRate.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Measure Heart Rate feature is coming soon!",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), HeartRateActivity::class.java))
         }
 
         // Feature Card 3: Symptom Checker

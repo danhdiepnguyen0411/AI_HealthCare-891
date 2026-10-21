@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootHeartRateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <!-- Top Bar: Back Button, Title ("Heart Rate"), Statistics Action Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Circular Back Button -->
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_back_chevron" />
+        </FrameLayout>
+
+        <!-- Centered Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:text="@string/title_heart_rate"
+            android:textColor="@color/color_text"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Circular Statistics Action Button -->
+        <FrameLayout
+            android:id="@+id/btnStatistics"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_statistics" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- "How to measure" Button Row -->
+    <LinearLayout
+        android:id="@+id/layoutHowToMeasure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_medium"
+            app:fontFamily="@font/urbanist_medium"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:text="@string/heart_rate_how_to_measure"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="6dp"
+            android:contentDescription="@null"
+            android:src="@drawable/how_to_measure" />
+
+    </LinearLayout>
+
+    <!-- Center 3D Heart with Soft Red Radial Glow -->
+    <FrameLayout
+        android:id="@+id/heartContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tvInstruction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHowToMeasure">
+
+        <!-- Soft Red Radial Glow Background -->
+        <View
+            android:id="@+id/viewHeartGlow"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_heart_glow" />
+
+        <!-- 3D Heart Graphic -->
+        <ImageView
+            android:id="@+id/ivHeart"
+            android:layout_width="160dp"
+            android:layout_height="145dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/heartrate" />
+
+    </FrameLayout>
+
+    <!-- Bottom Instruction Text -->
+    <TextView
+        android:id="@+id/tvInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:fontFamily="@font/urbanist_medium"
+        app:fontFamily="@font/urbanist_medium"
+        android:includeFontPadding="false"
+        android:letterSpacing="0"
+        android:lineHeight="20sp"
+        android:text="@string/heart_rate_instruction"
+        android:textColor="@color/color_subtext"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/btnStartMeasure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- "Start Measure" Action Pill Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStartMeasure"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:fontFamily="@font/urbanist_semibold"
+        app:fontFamily="@font/urbanist_semibold"
+        android:stateListAnimator="@null"
+        android:text="@string/heart_rate_btn_start"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
