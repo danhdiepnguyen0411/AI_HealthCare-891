@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/brand_primary_light" />
-    <corners android:radius="14dp" />
-    <stroke android:width="1.5dp" android:color="@color/brand_primary" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingMode="stack">
+    <!-- Outer halo ring matching Figma (Chosen shadow: Spread 4, Color: #0F67FE 25%) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="@color/lang_card_selected_ring" />
+        </shape>
+    </item>
+    <!-- Selected Card Surface: #4E75F7 with 14dp radius, inset by 2dp -->
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="14dp" />
+            <solid android:color="@color/darker_blue" />
+        </shape>
+    </item>
+</layer-list>
