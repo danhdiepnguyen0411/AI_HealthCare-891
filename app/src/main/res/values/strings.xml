@@ -149,4 +149,14 @@
     <string name="family_no_members_desc">Add your loved ones to manage shared health records, medications, allergies, and care together.</string>
     <string name="family_btn_add_first_member">Add first member</string>
     <string name="family_add_member_hint">Add family member feature is coming soon.</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">Setting</string>
+    <string name="settings_section_general">General</string>
+    <string name="settings_section_support">Support</string>
+    <string name="settings_item_language">Language</string>
+    <string name="settings_item_permission">Permission</string>
+    <string name="settings_item_share">Share with friends</string>
+    <string name="settings_item_rate">Rate Us</string>
+    <string name="settings_item_privacy">Privacy Policy</string>
 </resources>
