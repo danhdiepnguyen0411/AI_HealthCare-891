@@ -142,4 +142,11 @@
     <string name="heart_rate_guide_tip_2">2. Maintain light, steady pressure without pressing too hard.</string>
     <string name="heart_rate_guide_tip_3">3. Keep still, breathe normally, and wait for measurement to finish.</string>
     <string name="heart_rate_guide_btn_got_it">Got It</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">Family Hub</string>
+    <string name="family_no_members_title">No family members yet</string>
+    <string name="family_no_members_desc">Add your loved ones to manage shared health records, medications, allergies, and care together.</string>
+    <string name="family_btn_add_first_member">Add first member</string>
+    <string name="family_add_member_hint">Add family member feature is coming soon.</string>
 </resources>

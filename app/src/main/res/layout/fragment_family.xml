@@ -1,17 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootFamilyLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg">
+    android:background="@color/screen_bg"
+    android:paddingBottom="80dp">
 
-    <TextView
-        android:id="@+id/tvScreenTitle"
-        android:layout_width="wrap_content"
+    <!-- Top Bar: Centered "Family Hub" Title & Top Right "+" Add Member Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/screen_family"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="36dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <!-- Centered Screen Title (24px, Bold, Line Height 27px, #242E49) -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:text="@string/title_family_hub"
+            android:textColor="@color/color_text"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Top Right "+" Button (Hidden when no members yet, per requirement) -->
+        <FrameLayout
+            android:id="@+id/btnAddMemberTop"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_circle_primary_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_plus_white" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Empty State Content Container (Centered Vertically) -->
+    <LinearLayout
+        android:id="@+id/layoutEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <!-- 3D Illustration: Glossy 3D Group Add Icon (297px x 170px) -->
+        <ImageView
+            android:id="@+id/ivEmptyIllustration"
+            android:layout_width="297dp"
+            android:layout_height="170dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/no_family_members_yet" />
+
+        <!-- Empty State Title (20px, Bold, Line Height 28px, #242E49) -->
+        <TextView
+            android:id="@+id/tvEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="28sp"
+            android:text="@string/family_no_members_title"
+            android:textColor="@color/color_text"
+            android:textSize="20sp" />
+
+        <!-- Empty State Subtitle (14px, Medium, Line Height 20px, #56627A) -->
+        <TextView
+            android:id="@+id/tvEmptySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/urbanist_medium"
+            app:fontFamily="@font/urbanist_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="20sp"
+            android:text="@string/family_no_members_desc"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
+
+        <!-- Primary Action Button: "Add first member" (191px x 52px, Radius 112px, #0F67FE) -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddFirstMember"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginTop="28dp"
+            android:minWidth="191dp"
+            android:paddingHorizontal="32dp"
+            android:background="@drawable/bg_pill_btn_blue"
+            android:fontFamily="@font/urbanist_semibold"
+            app:fontFamily="@font/urbanist_semibold"
+            android:stateListAnimator="@null"
+            android:text="@string/family_btn_add_first_member"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
