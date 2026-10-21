@@ -67,6 +67,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Heart Rate Screen Activity -->
+        <activity
+            android:name=".ui.heartrate.HeartRateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Uninstall Retention Flow Activities -->
         <activity
             android:name=".ui.uninstall.UninstallActivity"

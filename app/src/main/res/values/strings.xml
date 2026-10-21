@@ -130,4 +130,16 @@
     <string name="home_no_scans_desc">Your scan results will appear here after your first check.</string>
     <string name="home_btn_start_first_scan">Start first scan</string>
     <string name="home_btn_get_pro">Get Pro</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">Heart Rate</string>
+    <string name="heart_rate_how_to_measure">How to measure</string>
+    <string name="heart_rate_instruction">Place your fingertip over the camera\nand flash, then tap Start Scan.</string>
+    <string name="heart_rate_btn_start">Start Measure</string>
+    <string name="heart_rate_statistics_coming_soon">Heart rate statistics and trends will appear here.</string>
+    <string name="heart_rate_guide_title">How to measure</string>
+    <string name="heart_rate_guide_tip_1">1. Gently place the tip of your index finger over the rear camera lens and flashlight.</string>
+    <string name="heart_rate_guide_tip_2">2. Maintain light, steady pressure without pressing too hard.</string>
+    <string name="heart_rate_guide_tip_3">3. Keep still, breathe normally, and wait for measurement to finish.</string>
+    <string name="heart_rate_guide_btn_got_it">Got It</string>
 </resources>
