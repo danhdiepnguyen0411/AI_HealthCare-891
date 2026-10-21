@@ -66,13 +66,36 @@ object LocaleHelper {
 
     fun getLanguageNameByCode(code: String): String {
         return when (code) {
+            "en" -> "English (UK)"
+            "vi" -> "Vietnamese"
+            "es" -> "Spanish"
+            "fr" -> "French"
+            "de" -> "German"
+            "pt_BR" -> "Brasil"
+            "pt_PT" -> "Portugal"
+            "ja" -> "Japanese"
+            "ko" -> "Korean"
+            "zh_CN" -> "Chinese (Simplified)"
+            "zh_TW" -> "Chinese (Traditional)"
+            "ru" -> "Russian"
+            "hi" -> "India"
+            "id" -> "Indonesian"
+            "ar" -> "Arabic"
+            "tr" -> "Turkish"
+            "bn" -> "Bengali"
+            else -> "English"
+        }
+    }
+
+    fun getNativeNameByCode(code: String): String {
+        return when (code) {
             "en" -> "English"
             "vi" -> "Tiếng Việt"
             "es" -> "Español"
             "fr" -> "Français"
             "de" -> "Deutsch"
-            "pt_BR" -> "Português (Brasil)"
-            "pt_PT" -> "Português (Portugal)"
+            "pt_BR" -> "Português"
+            "pt_PT" -> "Português"
             "ja" -> "日本語"
             "ko" -> "한국어"
             "zh_CN" -> "简体中文"
