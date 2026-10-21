@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.core.animation.doOnEnd
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.ActivitySplashBinding
@@ -54,6 +55,12 @@ class SplashActivity : BaseActivity() {
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Ensure white status bar icons on top of blue background
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        }
 
         // Setup Dynamic Shortcuts (e.g. Uninstall retention shortcut)
         ShortcutHelper.setupUninstallShortcut(this)
