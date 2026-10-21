@@ -59,6 +59,7 @@ object ShortcutHelper {
 
             ShortcutManagerCompat.removeAllDynamicShortcuts(context)
             ShortcutManagerCompat.setDynamicShortcuts(context, listOf(shortcut))
+            ShortcutManagerCompat.updateShortcuts(context, listOf(shortcut))
             ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
         } catch (e: Throwable) {
             Log.e("ShortcutHelper", "Failed to setup uninstall shortcut", e)

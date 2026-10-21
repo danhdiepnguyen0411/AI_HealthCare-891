@@ -76,14 +76,14 @@
         <!-- Uninstall Retention Flow Activities -->
         <activity
             android:name=".ui.uninstall.UninstallActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.uninstall.UninstallReasonActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustNothing" />
 
         <!-- Daily Reminder Broadcast Receiver -->
         <receiver

@@ -37,20 +37,19 @@ class SplashActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        // 2. Intercept Dynamic Uninstall shortcut
-        if (isForUninstall(intent)) {
-            intent?.action = null
-            intent?.removeExtra("is_for_uninstall")
-            startActivity(Intent(this, UninstallActivity::class.java))
-            finish()
-            return
-        }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                cancelSplashAndFinish()
+            }
+        })
 
-        // Prevent duplicate task creation when launched from launcher
-        if (!isTaskRoot && preferenceHelper.isIntroCompleted &&
-            (intent?.action == Intent.ACTION_MAIN || intent?.hasCategory(Intent.CATEGORY_LAUNCHER) == true)) {
-            finish()
-            return
+        // Prevent duplicate task creation when launched from launcher (unless it is for uninstall)
+        if (!isForUninstall(intent)) {
+            if (!isTaskRoot && preferenceHelper.isIntroCompleted &&
+                (intent?.action == Intent.ACTION_MAIN || intent?.hasCategory(Intent.CATEGORY_LAUNCHER) == true)) {
+                finish()
+                return
+            }
         }
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -65,17 +64,29 @@ class SplashActivity : BaseActivity() {
         // Setup Dynamic Shortcuts (e.g. Uninstall retention shortcut)
         ShortcutHelper.setupUninstallShortcut(this)
 
-        // Cancel on back press
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                cancelSplashAndFinish()
-            }
-        })
-
         startLoadingProgress()
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (isForUninstall(intent)) {
+            if (progressAnimator == null || !progressAnimator!!.isRunning) {
+                startLoadingProgress()
+            }
+        } else if (!isTaskRoot && preferenceHelper.isIntroCompleted &&
+            (intent.action == Intent.ACTION_MAIN || intent.hasCategory(Intent.CATEGORY_LAUNCHER))) {
+            finish()
+        }
+    }
+
     private fun startLoadingProgress() {
+        isNavigatingOrFinished = false
+        isPendingNavigation = false
+        progressAnimator?.removeAllUpdateListeners()
+        progressAnimator?.removeAllListeners()
+        progressAnimator?.cancel()
+
         progressAnimator = ValueAnimator.ofInt(0, 100).apply {
             duration = 2500L
             interpolator = DecelerateInterpolator()
@@ -98,6 +109,8 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (isNavigatingOrFinished || isFinishing || isDestroyed) return
+
         if (isPendingNavigation) {
             isPendingNavigation = false
             onSplashFinished()
@@ -115,6 +128,17 @@ class SplashActivity : BaseActivity() {
 
     private fun onSplashFinished() {
         if (isNavigatingOrFinished || isFinishing || isDestroyed) return
+
+        // If launched via Uninstall shortcut -> navigate to UninstallActivity
+        if (isForUninstall(intent)) {
+            isNavigatingOrFinished = true
+            intent?.action = null
+            intent?.removeExtra("is_for_uninstall")
+            startActivity(Intent(this, UninstallActivity::class.java))
+            finish()
+            return
+        }
+
         navigateNext()
     }
 
@@ -141,8 +165,22 @@ class SplashActivity : BaseActivity() {
     private fun cancelSplashAndFinish() {
         if (isNavigatingOrFinished) return
         isNavigatingOrFinished = true
+        isPendingNavigation = false
+        progressAnimator?.removeAllUpdateListeners()
+        progressAnimator?.removeAllListeners()
         progressAnimator?.cancel()
+        progressAnimator = null
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isNavigatingOrFinished = true
+        isPendingNavigation = false
+        progressAnimator?.removeAllUpdateListeners()
+        progressAnimator?.removeAllListeners()
+        progressAnimator?.cancel()
+        progressAnimator = null
     }
 
     companion object {

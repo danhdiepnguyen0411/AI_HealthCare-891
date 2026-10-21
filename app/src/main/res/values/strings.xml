@@ -51,22 +51,25 @@
     <string name="settings_notifications">Daily Reminders</string>
     <string name="settings_version">Version 1.0</string>
     
-    <!-- Uninstall Retention -->
-    <string name="uninstall_title">Wait! Don\'t leave us yet</string>
-    <string name="uninstall_subtitle">We are constantly improving HealthCare AI to give you the most accurate assessments and personal care guidance.</string>
-    <string name="uninstall_btn_explore">Explore HealthCare AI</string>
-    <string name="uninstall_btn_dont_uninstall">Don\'t Uninstall</string>
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">What problems did you encounter during use?</string>
+    <string name="uninstall_card1_title">Unable to use features and save result</string>
+    <string name="uninstall_card1_desc">Connectivity issues or internal server errors detected.</string>
+    <string name="uninstall_card2_title">Not currently available for use</string>
+    <string name="uninstall_card2_desc">This tool is currently under maintenance or region-locked.</string>
+    <string name="uninstall_btn_try_again">Try again</string>
+    <string name="uninstall_btn_explore">Explore</string>
+    <string name="uninstall_btn_dont_uninstall">Don\'t want to uninstall</string>
     <string name="uninstall_btn_still_uninstall">Still want to uninstall</string>
-    
-    <!-- Uninstall Reason -->
-    <string name="uninstall_reason_title">Why do you want to uninstall?</string>
-    <string name="uninstall_reason_1">App is difficult to use</string>
-    <string name="uninstall_reason_2">Found another health app</string>
-    <string name="uninstall_reason_3">Temporary cleanup / freeing storage</string>
-    <string name="uninstall_reason_4">Other reasons</string>
-    <string name="uninstall_reason_hint">Tell us what we can improve...</string>
-    <string name="uninstall_btn_confirm">Confirm Uninstall</string>
-    <string name="uninstall_btn_cancel">Keep Using App</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">Why uninstall HealthCare AI ?</string>
+    <string name="uninstall_reason_subtitle">We\'re sorry to see you go. Please let us know how we can improve the app for everyone.</string>
+    <string name="uninstall_reason_1">Difficult to use</string>
+    <string name="uninstall_reason_2">Too many ads</string>
+    <string name="uninstall_reason_3">Design quality not good enough</string>
+    <string name="uninstall_reason_4">Other</string>
+    <string name="uninstall_reason_hint">Please provide additional details here..</string>
     
     <!-- Notifications -->
     <string name="noti_channel_name">Daily Health Reminders</string>
