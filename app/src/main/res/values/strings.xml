@@ -108,4 +108,26 @@
     <string name="ratio_2_3">2:3</string>
     <string name="ratio_3_4">3:4</string>
     <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">Good morning</string>
+    <string name="home_greeting_afternoon">Good afternoon</string>
+    <string name="home_greeting_evening">Good evening</string>
+    <string name="home_subtitle">Your health is looking great today.</string>
+    <string name="home_ai_assistant_badge">AI Health Assistant</string>
+    <string name="home_ai_assistant_title">Your personal\nhealth assistant</string>
+    <string name="home_btn_chat_ai">Chat with AI</string>
+    <string name="home_feature_health_scan">Health\nScan</string>
+    <string name="home_feature_measure_heart_rate">Measure\nHeart&#160;Rate</string>
+    <string name="home_feature_symptom_checker">Symptom\nChecker</string>
+    <string name="home_section_today_reminder">Today\'s reminder</string>
+    <string name="home_section_ai_scan_history">AI scan history</string>
+    <string name="home_view_all">View all</string>
+    <string name="home_no_reminder_title">No reminder yet</string>
+    <string name="home_no_reminder_desc">Add medication, water, or wellness reminders to stay on track.</string>
+    <string name="home_btn_add_reminder">Add reminder</string>
+    <string name="home_no_scans_title">No scans yet</string>
+    <string name="home_no_scans_desc">Your scan results will appear here after your first check.</string>
+    <string name="home_btn_start_first_scan">Start first scan</string>
+    <string name="home_btn_get_pro">Get Pro</string>
 </resources>

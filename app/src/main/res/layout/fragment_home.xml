@@ -1,17 +1,681 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg">
+    android:background="@color/screen_bg"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/tvScreenTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/screen_home"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingBottom="100dp">
 
-</FrameLayout>
+        <!-- 1. Top Bar: App Logo (40x40 with 8dp radius) + Name (HealthLink 26sp #0556E5) & "Get Pro" Badge (40dp height, #3965DA border) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="50dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- Logo + Title Container -->
+            <LinearLayout
+                android:id="@+id/brandContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Logo with 8dp corner radius (40px x 40px) -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
+
+                    <ImageView
+                        android:id="@+id/ivLogoApp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/splash_app_title"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logo_app" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- HealthLink App Title (26px, Bold, #0556E5) -->
+                <TextView
+                    android:id="@+id/tvAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.01"
+                    android:text="@string/splash_app_title"
+                    android:textColor="@color/home_app_title"
+                    android:textSize="26sp" />
+            </LinearLayout>
+
+            <!-- "Get Pro" Badge (40px height, 24px radius, 1px #3965DA border, gap 8px) -->
+            <LinearLayout
+                android:id="@+id/btnGetPro"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_btn_get_pro"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_get_pro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:text="@string/home_btn_get_pro"
+                    android:textColor="@color/get_pro_border"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 2. Dynamic Greeting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_text"
+                android:textSize="26sp"
+                tools:text="Good morning" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist"
+                android:text="@string/home_subtitle"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 3. AI Health Assistant Banner Card -->
+        <FrameLayout
+            android:id="@+id/cardAssistantContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="22dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Card Background & Left Content -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardAssistantBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_agent_home"
+                android:minHeight="172dp"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="20dp">
+
+                <!-- Sparkle Badge: "AI Health Assistant" -->
+                <LinearLayout
+                    android:id="@+id/badgeAiAssistant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ai_health_assistant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        android:text="@string/home_ai_assistant_badge"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Headline: "Your personal health assistant" -->
+                <TextView
+                    android:id="@+id/tvAiAssistantTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="135dp"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:lineSpacingExtra="3dp"
+                    android:text="@string/home_ai_assistant_title"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/badgeAiAssistant" />
+
+                <!-- Button: "Chat with AI" -->
+                <LinearLayout
+                    android:id="@+id/btnChatWithAi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_chat_ai_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAiAssistantTitle">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/chat_with_ai" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/urbanist_bold"
+                        android:text="@string/home_btn_chat_ai"
+                        android:textColor="#0843C6"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 3D Robot Waving Character (Aligned to top end, 20dp above card body matching Figma Top: -20.31px) -->
+            <ImageView
+                android:id="@+id/ivRobotAgent"
+                android:layout_width="151dp"
+                android:layout_height="171dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/agent_home" />
+
+        </FrameLayout>
+
+        <!-- 4. 3 Action Feature Cards Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <!-- Card 1: Health Scan -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardHealthScan"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="20dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_circle_health_scan">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/health_scan" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="24sp"
+                        android:text="@string/home_feature_health_scan"
+                        android:textColor="@color/color_text"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Card 2: Measure Heart Rate -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMeasureHeartRate"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="20dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_circle_heart_rate">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/measure_heart_rate" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="24sp"
+                        android:text="@string/home_feature_measure_heart_rate"
+                        android:textColor="@color/color_text"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Card 3: Symptom Checker -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSymptomChecker"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="20dp">
+
+                    <FrameLayout
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_circle_symptom">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/symptom_checker" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="24sp"
+                        android:text="@string/home_feature_symptom_checker"
+                        android:textColor="@color/color_text"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- 5. "Today's reminder" Section -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/tvReminderSectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="26sp"
+                android:text="@string/home_section_today_reminder"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvViewAllReminders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="16sp"
+                android:text="@string/home_view_all"
+                android:textColor="@color/blue_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Today's reminder Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardMaxElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Content Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivNoReminder"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/no_reminder_yet" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0"
+                            android:lineHeight="24sp"
+                            android:text="@string/home_no_reminder_title"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0"
+                            android:lineHeight="18sp"
+                            android:text="@string/home_no_reminder_desc"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Button: "Add reminder" -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddReminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_home_pill_btn"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:stateListAnimator="@null"
+                    android:text="@string/home_btn_add_reminder"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 6. "AI scan history" Section -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/tvScanHistoryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="26sp"
+                android:text="@string/home_section_ai_scan_history"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvViewAllScans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="16sp"
+                android:text="@string/home_view_all"
+                android:textColor="@color/blue_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- AI scan history Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:cardMaxElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Content Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivNoScans"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/no_scans_yet" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0"
+                            android:lineHeight="24sp"
+                            android:text="@string/home_no_scans_title"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0"
+                            android:lineHeight="18sp"
+                            android:text="@string/home_no_scans_desc"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Button: "Start first scan" -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnStartFirstScan"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_home_pill_btn"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:stateListAnimator="@null"
+                    android:text="@string/home_btn_start_first_scan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
