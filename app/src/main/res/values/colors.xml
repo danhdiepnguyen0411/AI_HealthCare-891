@@ -12,6 +12,7 @@
 
     <!-- 2. Typography / Text Colors -->
     <color name="color_text">#242E49</color>
+    <color name="color_subtext">#56627A</color>
     <color name="text_tertiary">#BEC5D2</color>
 
     <!-- 3. Backgrounds -->
@@ -40,6 +41,13 @@
     <color name="ratio_unselected">#B4B7BF</color>
     <color name="ratio_unselected_text">#B4B7BF</color>
     <color name="ratio_unselected_icon">#B4B7BF</color>
+
+    <!-- 8. Home Screen Tokens -->
+    <color name="home_app_title">#0556E5</color>
+    <color name="get_pro_border">#3965DA</color>
+    <color name="circle_health_scan_bg">#E4FAE1</color>
+    <color name="circle_heart_rate_bg">#FFEAEB</color>
+    <color name="circle_symptom_bg">#EBEDFF</color>
 
     <!-- ================================================================= -->
     <!-- COMPONENT & THEME ALIASES                                         -->
