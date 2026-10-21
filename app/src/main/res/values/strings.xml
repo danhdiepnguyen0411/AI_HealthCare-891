@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">Home</string>
+    <string name="tab_scan">Scan</string>
+    <string name="tab_my_health">My Health</string>
+    <string name="tab_family">Family Hub</string>
+    <string name="tab_settings">Setting</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">Home Screen</string>
+    <string name="screen_scan">Scan Screen</string>
+    <string name="screen_my_health">My Health Screen</string>
+    <string name="screen_family">Family Screen</string>
+    <string name="screen_settings">Settings Screen</string>
+    
+    <!-- Splash & Loading -->
+    <string name="splash_loading">Loading smart health models...</string>
+    
+    <!-- Language -->
+    <string name="title_language">Language</string>
+    <string name="btn_done">Done</string>
+    <string name="hint_tap_device_language">Tap to select your language</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">Skip</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="intro_title_1">AI Photo Analysis</string>
+    <string name="intro_desc_1">Scan skin, eyes, nails, and body areas to detect potential anomalies early.</string>
+    <string name="intro_title_2">Smart Symptom Checker</string>
+    <string name="intro_desc_2">Answer interactive health questionnaires to assess potential risks accurately.</string>
+    <string name="intro_title_3">Care &amp; AI Assistant</string>
+    <string name="intro_desc_3">Personalized lifestyle recommendations, reminder alerts, and 24/7 AI chat.</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">Language Setting</string>
+    <string name="settings_notifications">Daily Reminders</string>
+    <string name="settings_version">Version 1.0</string>
+    
+    <!-- Uninstall Retention -->
+    <string name="uninstall_title">Wait! Don\'t leave us yet</string>
+    <string name="uninstall_subtitle">We are constantly improving HealthCare AI to give you the most accurate assessments and personal care guidance.</string>
+    <string name="uninstall_btn_explore">Explore HealthCare AI</string>
+    <string name="uninstall_btn_dont_uninstall">Don\'t Uninstall</string>
+    <string name="uninstall_btn_still_uninstall">Still want to uninstall</string>
+    
+    <!-- Uninstall Reason -->
+    <string name="uninstall_reason_title">Why do you want to uninstall?</string>
+    <string name="uninstall_reason_1">App is difficult to use</string>
+    <string name="uninstall_reason_2">Found another health app</string>
+    <string name="uninstall_reason_3">Temporary cleanup / freeing storage</string>
+    <string name="uninstall_reason_4">Other reasons</string>
+    <string name="uninstall_reason_hint">Tell us what we can improve...</string>
+    <string name="uninstall_btn_confirm">Confirm Uninstall</string>
+    <string name="uninstall_btn_cancel">Keep Using App</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">Daily Health Reminders</string>
+    <string name="noti_channel_desc">Daily reminders for hydration, health checks, and habits.</string>
+    <string name="noti_title_morning">Morning Health Check ☀️</string>
+    <string name="noti_msg_morning">Start your day with a glass of water and check your daily health goal.</string>
+    <string name="noti_title_afternoon">Afternoon Wellness 💧</string>
+    <string name="noti_msg_afternoon">Take a brief pause, stretch, and log your afternoon energy status.</string>
+    <string name="noti_title_evening">Evening Care &amp; Review 🌙</string>
+    <string name="noti_msg_evening">Review your daily progress and consult your AI Health Assistant.</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">Permission Needed</string>
+    <string name="permission_desc">To enable reminders and smart photo scans, please allow the permission in Settings.</string>
+    <string name="permission_btn_settings">Go to Settings</string>
+    <string name="permission_btn_cancel">Not Now</string>
+</resources>

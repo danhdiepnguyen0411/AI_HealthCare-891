@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg">
+
+    <!-- ViewPager2 for silky smooth tab switching without fragment recreation -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Floating Pill Bottom Navigation Dock -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:id="@+id/bottomNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <!-- Tab 1: Home (Initial Active) -->
+            <LinearLayout
+                android:id="@+id/tabHome"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pillHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_bottom_nav_pill"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivHome"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_home"
+                        app:tint="@color/white" />
+
+                    <com.example.healthcareai.ui.widget.MarqueeTextView
+                        android:id="@+id/tvHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:singleLine="true"
+                        android:text="@string/tab_home"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tab 2: Scan -->
+            <LinearLayout
+                android:id="@+id/tabScan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pillScan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivScan"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_scan"
+                        app:tint="@color/nav_unselected" />
+
+                    <com.example.healthcareai.ui.widget.MarqueeTextView
+                        android:id="@+id/tvScan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:singleLine="true"
+                        android:text="@string/tab_scan"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tab 3: My Health -->
+            <LinearLayout
+                android:id="@+id/tabMyHealth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pillMyHealth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivMyHealth"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_my_health"
+                        app:tint="@color/nav_unselected" />
+
+                    <com.example.healthcareai.ui.widget.MarqueeTextView
+                        android:id="@+id/tvMyHealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:singleLine="true"
+                        android:text="@string/tab_my_health"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tab 4: Family Hub -->
+            <LinearLayout
+                android:id="@+id/tabFamily"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pillFamily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivFamily"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_family"
+                        app:tint="@color/nav_unselected" />
+
+                    <com.example.healthcareai.ui.widget.MarqueeTextView
+                        android:id="@+id/tvFamily"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:singleLine="true"
+                        android:text="@string/tab_family"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tab 5: Setting -->
+            <LinearLayout
+                android:id="@+id/tabSetting"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pillSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivSetting"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_setting"
+                        app:tint="@color/nav_unselected" />
+
+                    <com.example.healthcareai.ui.widget.MarqueeTextView
+                        android:id="@+id/tvSetting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:singleLine="true"
+                        android:text="@string/tab_settings"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

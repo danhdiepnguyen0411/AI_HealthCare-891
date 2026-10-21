@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Permissions required for Bring App to Front & Services -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".HealthCareApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo_app"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo_app"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HealthCareAI">
+
+        <!-- Splash Activity: Root Launcher & Dynamic Uninstall Interceptor -->
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:alwaysRetainTaskState="true"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.example.healthcareai.ACTION_UNINSTALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Language Activity -->
+        <activity
+            android:name=".ui.language.LanguageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Intro ViewPager Activity -->
+        <activity
+            android:name=".ui.intro.IntroActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Main Home Activity -->
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- Uninstall Retention Flow Activities -->
+        <activity
+            android:name=".ui.uninstall.UninstallActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.uninstall.UninstallReasonActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Daily Reminder Broadcast Receiver -->
+        <receiver
+            android:name=".util.NotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="com.example.healthcareai.ACTION_TRIGGER_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
