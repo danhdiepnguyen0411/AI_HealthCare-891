@@ -28,13 +28,13 @@
     <!-- Intro -->
     <string name="btn_skip">Skip</string>
     <string name="btn_next">Next</string>
-    <string name="btn_get_started">Get Started</string>
-    <string name="intro_title_1">AI Photo Analysis</string>
-    <string name="intro_desc_1">Scan skin, eyes, nails, and body areas to detect potential anomalies early.</string>
-    <string name="intro_title_2">Smart Symptom Checker</string>
-    <string name="intro_desc_2">Answer interactive health questionnaires to assess potential risks accurately.</string>
-    <string name="intro_title_3">Care &amp; AI Assistant</string>
-    <string name="intro_desc_3">Personalized lifestyle recommendations, reminder alerts, and 24/7 AI chat.</string>
+    <string name="btn_get_started">GET STARTED</string>
+    <string name="intro_title_1">Understand your\nhealth better</string>
+    <string name="intro_desc_1">Explore concerns with photo analysis, symptom questions and your AI assistant.</string>
+    <string name="intro_title_2">Your health,\nall in one place</string>
+    <string name="intro_desc_2">Keep records, track changes and set reminders that fit your routine.</string>
+    <string name="intro_title_3">Care for you\nand your family</string>
+    <string name="intro_desc_3">Keep family profiles organized and manage care for those who depend on you.</string>
     
     <!-- Settings -->
     <string name="settings_language">Language Setting</string>
