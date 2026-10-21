@@ -12,6 +12,10 @@
     <color name="lang_card_selected">#4E75F7</color>
     <color name="lang_card_selected_ring">#400F67FE</color>
     
+    <color name="intro_title">#242E49</color>
+    <color name="intro_subtitle">#56627A</color>
+    <color name="intro_btn">#0F67FE</color>
+    
     <color name="nav_selected_bg">#306BFE</color>
     <color name="nav_selected_text">#FFFFFF</color>
     <color name="nav_unselected">#BEC5D2</color>

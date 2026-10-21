@@ -2,6 +2,7 @@ package com.example.healthcareai.ui.intro
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthcareai.databinding.ItemIntroSlideBinding
@@ -9,7 +10,8 @@ import com.example.healthcareai.databinding.ItemIntroSlideBinding
 data class IntroSlide(
     val title: String,
     val description: String,
-    @param:DrawableRes val illustrationRes: Int
+    @param:DrawableRes val illustrationRes: Int,
+    @param:ColorInt val backgroundColor: Int
 )
 
 class IntroAdapter(
@@ -34,9 +36,10 @@ class IntroAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(slide: IntroSlide) {
+            binding.root.setBackgroundColor(slide.backgroundColor)
+            binding.ivIllustration.setImageResource(slide.illustrationRes)
             binding.tvTitle.text = slide.title
             binding.tvDescription.text = slide.description
-            binding.ivIllustration.setImageResource(slide.illustrationRes)
         }
     }
 }
