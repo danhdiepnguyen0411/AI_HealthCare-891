@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brand_primary">#306BFE</color>
-    <color name="brand_primary_variant">#1D55E0</color>
-    <color name="brand_primary_light">#EBF1FF</color>
+    <!-- ================================================================= -->
+    <!-- FIGMA DESIGN SYSTEM TOKENS                                        -->
+    <!-- ================================================================= -->
+
+    <!-- 1. Primary Colors -->
+    <color name="primary_color">#0F67FE</color>
+    <color name="blue_text">#0843C6</color>
+    <color name="darker_blue">#4E75F7</color>
+    <color name="secondary_color_btn">#D6E8FF</color>
+
+    <!-- 2. Typography / Text Colors -->
+    <color name="color_text">#242E49</color>
+    <color name="text_tertiary">#BEC5D2</color>
+
+    <!-- 3. Backgrounds -->
+    <color name="backgr">#F2F5F9</color>
+    <color name="bg_main">#F2F5F9</color>
+
+    <!-- 4. Card Blue Gradient Stops (0% -> 100%) -->
+    <color name="card_gradient_start">#0843C6</color>
+    <color name="card_gradient_end">#335EDF</color>
+
+    <!-- 5. Gradient Red Stops (0% -> 100%) -->
+    <color name="gradient_red_start">#FF8082</color>
+    <color name="gradient_red_end">#F64A4D</color>
+
+    <!-- ================================================================= -->
+    <!-- COMPONENT & THEME ALIASES                                         -->
+    <!-- ================================================================= -->
+    <color name="brand_primary">#0F67FE</color>
+    <color name="brand_primary_variant">#0843C6</color>
+    <color name="brand_primary_light">#D6E8FF</color>
     <color name="brand_secondary">#03DAC5</color>
     
     <color name="splash_bg">#0F67FE</color>
@@ -16,22 +45,22 @@
     <color name="intro_subtitle">#56627A</color>
     <color name="intro_btn">#0F67FE</color>
     
-    <color name="nav_selected_bg">#306BFE</color>
+    <color name="nav_selected_bg">#0F67FE</color>
     <color name="nav_selected_text">#FFFFFF</color>
     <color name="nav_unselected">#BEC5D2</color>
     <color name="nav_card_bg">#FFFFFF</color>
     
-    <color name="screen_bg">#F7F9FC</color>
+    <color name="screen_bg">#F2F5F9</color>
     <color name="card_bg">#FFFFFF</color>
     <color name="card_stroke">#E2E8F0</color>
-    <color name="card_stroke_selected">#306BFE</color>
+    <color name="card_stroke_selected">#0F67FE</color>
     
-    <color name="text_primary">#191D23</color>
-    <color name="text_secondary">#687383</color>
-    <color name="text_muted">#9AA2B1</color>
+    <color name="text_primary">#242E49</color>
+    <color name="text_secondary">#56627A</color>
+    <color name="text_muted">#BEC5D2</color>
     <color name="text_white">#FFFFFF</color>
     
-    <color name="danger">#FF4D4D</color>
+    <color name="danger">#F64A4D</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="transparent">#00000000</color>
