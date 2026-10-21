@@ -16,7 +16,9 @@
     <string name="screen_settings">Settings Screen</string>
     
     <!-- Splash & Loading -->
-    <string name="splash_loading">Loading smart health models...</string>
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">Loading...</string>
+    <string name="splash_ads_notice">This action can contain ads</string>
     
     <!-- Language -->
     <string name="title_language">Language</string>
