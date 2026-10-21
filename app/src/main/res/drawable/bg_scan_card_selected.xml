@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Soft outer drop shadow (Figma: X:0, Y:2, Blur:4, #000000 6%) -->
+    <item
+        android:bottom="0dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#0F000000" />
+        </shape>
+    </item>
+    <!-- Selected Card Surface: #E8F1FF (White + 20% #0F67FE) with 1px/1.5dp Primary Color Stroke -->
+    <item
+        android:bottom="2dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="@color/scan_card_selected_bg" />
+            <stroke
+                android:width="1.5dp"
+                android:color="@color/scan_card_selected_stroke" />
+        </shape>
+    </item>
+</layer-list>

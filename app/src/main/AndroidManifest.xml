@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:name=".HealthCareApp"
@@ -52,6 +53,18 @@
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- AI Camera Activity -->
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Confirm Photo Activity -->
+        <activity
+            android:name=".ui.camera.ConfirmPhotoActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <!-- Uninstall Retention Flow Activities -->

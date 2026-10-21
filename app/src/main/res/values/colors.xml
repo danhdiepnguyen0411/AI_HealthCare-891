@@ -26,6 +26,21 @@
     <color name="gradient_red_start">#FF8082</color>
     <color name="gradient_red_end">#F64A4D</color>
 
+    <!-- 6. AI Scan Screen Tokens -->
+    <color name="scan_circle_skin">#FEF1E6</color>
+    <color name="scan_circle_mouth">#FEE6E6</color>
+    <color name="scan_circle_eye">#E4F0FC</color>
+    <color name="scan_circle_nails">#EEE6FC</color>
+    <color name="scan_circle_other">#DDF9E9</color>
+    <color name="scan_card_selected_bg">#E8F1FF</color>
+    <color name="scan_card_selected_stroke">#0F67FE</color>
+    <color name="scan_card_unselected_bg">#FFFFFF</color>
+
+    <!-- 7. Confirm Photo Screen Tokens -->
+    <color name="ratio_unselected">#B4B7BF</color>
+    <color name="ratio_unselected_text">#B4B7BF</color>
+    <color name="ratio_unselected_icon">#B4B7BF</color>
+
     <!-- ================================================================= -->
     <!-- COMPONENT & THEME ALIASES                                         -->
     <!-- ================================================================= -->

@@ -42,6 +42,16 @@ object AppColors {
     @ColorInt const val GRADIENT_RED_START: Int = 0xFFFF8082.toInt()
     @ColorInt const val GRADIENT_RED_END: Int = 0xFFF64A4D.toInt()
 
+    // AI Scan tokens
+    @ColorInt const val SCAN_CIRCLE_SKIN: Int = 0xFFFEF1E6.toInt()
+    @ColorInt const val SCAN_CIRCLE_MOUTH: Int = 0xFFFEE6E6.toInt()
+    @ColorInt const val SCAN_CIRCLE_EYE: Int = 0xFFE4F0FC.toInt()
+    @ColorInt const val SCAN_CIRCLE_NAILS: Int = 0xFFEEE6FC.toInt()
+    @ColorInt const val SCAN_CIRCLE_OTHER: Int = 0xFFDDF9E9.toInt()
+    @ColorInt const val SCAN_CARD_SELECTED_BG: Int = 0xFFE8F1FF.toInt()
+    @ColorInt const val SCAN_CARD_SELECTED_STROKE: Int = 0xFF0F67FE.toInt()
+    @ColorInt const val SCAN_CARD_UNSELECTED_BG: Int = 0xFFFFFFFF.toInt()
+
     // Common system tones
     @ColorInt const val WHITE: Int = 0xFFFFFFFF.toInt()
     @ColorInt const val BLACK: Int = 0xFF000000.toInt()
@@ -62,6 +72,15 @@ object AppColors {
         @ColorRes val CARD_GRADIENT_END = R.color.card_gradient_end
         @ColorRes val GRADIENT_RED_START = R.color.gradient_red_start
         @ColorRes val GRADIENT_RED_END = R.color.gradient_red_end
+
+        @ColorRes val SCAN_CIRCLE_SKIN = R.color.scan_circle_skin
+        @ColorRes val SCAN_CIRCLE_MOUTH = R.color.scan_circle_mouth
+        @ColorRes val SCAN_CIRCLE_EYE = R.color.scan_circle_eye
+        @ColorRes val SCAN_CIRCLE_NAILS = R.color.scan_circle_nails
+        @ColorRes val SCAN_CIRCLE_OTHER = R.color.scan_circle_other
+        @ColorRes val SCAN_CARD_SELECTED_BG = R.color.scan_card_selected_bg
+        @ColorRes val SCAN_CARD_SELECTED_STROKE = R.color.scan_card_selected_stroke
+        @ColorRes val SCAN_CARD_UNSELECTED_BG = R.color.scan_card_unselected_bg
     }
 
     // =========================================================================
