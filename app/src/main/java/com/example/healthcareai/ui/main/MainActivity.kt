@@ -85,7 +85,7 @@ class MainActivity : BaseActivity() {
         binding.tabSetting.setOnClickListener { navigateToTab(4) }
     }
 
-    private fun navigateToTab(position: Int) {
+    fun navigateToTab(position: Int) {
         if (binding.viewPager.currentItem == position) return
         binding.viewPager.setCurrentItem(position, false)
     }

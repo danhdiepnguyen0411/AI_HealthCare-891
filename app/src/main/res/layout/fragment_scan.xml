@@ -1,17 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootScanLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg">
+    android:background="@color/backgr">
 
-    <TextView
-        android:id="@+id/tvScreenTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/screen_scan"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+    <!-- Top Header Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="36dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <!-- Center Screen Title: AI Scan (Figma: Urbanist 700 Bold, 22px, #242E49) -->
+        <TextView
+            android:id="@+id/tvScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/title_ai_scan"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Content to guarantee zero cutoffs across all phone heights -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Subheading: What would you like to check? -->
+            <TextView
+                android:id="@+id/tvHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/headline_ai_scan"
+                android:textColor="@color/color_text"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- 2-Column Grid Container for Scan Category Cards -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp">
+
+                <!-- Row 1 - Left: Skin (Default Selected) -->
+                <FrameLayout
+                    android:id="@+id/cardSkin"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_scan_card_selected"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toStartOf="@+id/cardMouth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/flCircleSkin"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_circle_skin">
+
+                            <ImageView
+                                android:id="@+id/ivIconSkin"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_scan_skin" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvSkin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist"
+                            android:text="@string/category_skin"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Row 1 - Right: Mouth -->
+                <FrameLayout
+                    android:id="@+id/cardMouth"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_scan_card_unselected"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardSkin"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/flCircleMouth"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:background="@drawable/bg_circle_mouth">
+
+                            <ImageView
+                                android:id="@+id/ivIconMouth"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_scan_mouth" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvMouth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist"
+                            android:text="@string/category_mouth"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Row 2 - Left: Eye -->
+                <FrameLayout
+                    android:id="@+id/cardEye"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_scan_card_unselected"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toStartOf="@+id/cardNails"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardSkin">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/flCircleEye"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_circle_eye">
+
+                            <ImageView
+                                android:id="@+id/ivIconEye"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/icon_scan_eye" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvEye"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist"
+                            android:text="@string/category_eye"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Row 2 - Right: Nails -->
+                <FrameLayout
+                    android:id="@+id/cardNails"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_scan_card_unselected"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardEye"
+                    app:layout_constraintTop_toBottomOf="@+id/cardMouth">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/flCircleNails"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:background="@drawable/bg_circle_nails">
+
+                            <ImageView
+                                android:id="@+id/ivIconNails"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_scan_nails" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvNails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist"
+                            android:text="@string/category_nails"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Row 3 - Left: Other area (Equal width with column 0) -->
+                <FrameLayout
+                    android:id="@+id/cardOtherArea"
+                    android:layout_width="0dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_scan_card_unselected"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="@+id/cardEye"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardEye">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/flCircleOtherArea"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_circle_other">
+
+                            <ImageView
+                                android:id="@+id/ivIconOtherArea"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_scan__otherarea" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvOtherArea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist"
+                            android:text="@string/category_other_area"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Bottom Action: Start Scan Button (Pill 52dp, Primary Color) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnStartScan"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_btn_start_scan"
+                android:fontFamily="@font/urbanist"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_start_scan"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

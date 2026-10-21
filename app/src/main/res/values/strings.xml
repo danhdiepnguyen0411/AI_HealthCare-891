@@ -15,6 +15,16 @@
     <string name="screen_family">Family Screen</string>
     <string name="screen_settings">Settings Screen</string>
     
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">AI Scan</string>
+    <string name="headline_ai_scan">What would you like to check?</string>
+    <string name="category_skin">Skin</string>
+    <string name="category_mouth">Mouth</string>
+    <string name="category_eye">Eye</string>
+    <string name="category_nails">Nails</string>
+    <string name="category_other_area">Other area</string>
+    <string name="btn_start_scan">Start Scan</string>
+    
     <!-- Splash & Loading -->
     <string name="splash_app_title">HealthLink</string>
     <string name="splash_loading">Loading...</string>
@@ -73,4 +83,29 @@
     <string name="permission_desc">To enable reminders and smart photo scans, please allow the permission in Settings.</string>
     <string name="permission_btn_settings">Go to Settings</string>
     <string name="permission_btn_cancel">Not Now</string>
+    
+    <!-- Camera Permission Custom Dialog -->
+    <string name="dialog_camera_permission_title">Camera Access Needed</string>
+    <string name="dialog_camera_permission_desc">To scan and assess your health symptoms accurately, HealthCare AI requires camera access. Please enable Camera in Settings.</string>
+    <string name="dialog_camera_btn_settings">Go to Settings</string>
+    <string name="dialog_camera_btn_cancel">Not Now</string>
+
+    <!-- Camera Screen & Guide -->
+    <string name="camera_guide_title">Photo Guide</string>
+    <string name="camera_guide_tip_1">1. Keep the target area well-centered in the frame.</string>
+    <string name="camera_guide_tip_2">2. Ensure clear, natural lighting without harsh shadows.</string>
+    <string name="camera_guide_tip_3">3. Hold the camera steady at about 10–15 cm distance.</string>
+    <string name="camera_guide_btn_got_it">Got It</string>
+    <string name="camera_capture_success">Photo captured! Analyzing...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">Confirm Photo</string>
+    <string name="label_aspect_ratio">Aspect Ratio</string>
+    <string name="btn_use_photo">Use this photo</string>
+    <string name="btn_retake_photo">Retake photo</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
 </resources>
