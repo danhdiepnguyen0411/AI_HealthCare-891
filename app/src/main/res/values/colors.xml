@@ -51,6 +51,17 @@
     <color name="circle_heart_rate_bg">#FFEAEB</color>
     <color name="circle_symptom_bg">#EBEDFF</color>
 
+    <!-- 9. Symptom Checker & Assessment Tokens -->
+    <color name="badge_privacy_bg">#D6E8FF</color>
+    <color name="text_stat_label">#7E8A9C</color>
+    <color name="disable_color">#D0D5DB</color>
+    <color name="age_card_bg">#4E75F7</color>
+    <color name="age_card_ring">#400F67FE</color>
+    <color name="gender_male_bg">#6A8BFB</color>
+    <color name="gender_male_ring">#400F67FE</color>
+    <color name="gender_female_bg">#FE808B</color>
+    <color name="gender_female_ring">#40FA4D5E</color>
+
     <!-- ================================================================= -->
     <!-- COMPONENT & THEME ALIASES                                         -->
     <!-- ================================================================= -->

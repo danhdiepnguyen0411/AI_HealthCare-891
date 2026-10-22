@@ -73,6 +73,18 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Symptom Checker Screen Activity -->
+        <activity
+            android:name=".ui.symptom.SymptomCheckerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Symptom Assessment Question Onboard Activity -->
+        <activity
+            android:name=".ui.symptom.SymptomAssessmentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Uninstall Retention Flow Activities -->
         <activity
             android:name=".ui.uninstall.UninstallActivity"

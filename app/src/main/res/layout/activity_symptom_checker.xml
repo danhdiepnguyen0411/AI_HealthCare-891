@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootSymptomCheckerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <!-- Top Bar: Circular Back Button & Centered Screen Title -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="36dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Circular Back Button -->
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_back_chevron" />
+        </FrameLayout>
+
+        <!-- Centered Title: Figma Size 22px, Line height 27px, Weight 700 Bold, Color #242E49 -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:text="@string/title_symptom_checker"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Main Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartAssessment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
+
+            <!-- Illustration Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardIllustration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/ivIllustration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/title_symptom_checker"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_symptom_checker" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Description Text: Figma Size 18px, Line height 28px, Weight 400 Regular, Color #56627A, Width 274px -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxWidth="280dp"
+                android:fontFamily="@font/urbanist_regular"
+                app:fontFamily="@font/urbanist_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="28sp"
+                android:text="@string/symptom_checker_subtitle"
+                android:textColor="@color/color_subtext"
+                android:textSize="18sp" />
+
+            <!-- Encrypted & Private Pill Badge: Figma Height 36px, Padding 8px/16px, Gap 8px, Radius 9999px, #D6E8FF -->
+            <LinearLayout
+                android:id="@+id/badgePrivacy"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_privacy_badge"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_khoa" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_medium"
+                    app:fontFamily="@font/urbanist_medium"
+                    android:includeFontPadding="false"
+                    android:text="@string/symptom_checker_privacy_notice"
+                    android:textColor="@color/color_text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Stat Info Cards Row (EST. TIME & LENGTH) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Left Card: EST. TIME -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEstTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="4dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_est__time" />
+
+                        <!-- EST. TIME: Figma Size 12px, Line height 16px, Weight 600 SemiBold, Letter spacing 0.6px, Uppercase, Color #56627A -->
+                        <TextView
+                            android:id="@+id/tvEstTimeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist_semibold"
+                            app:fontFamily="@font/urbanist_semibold"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0.05"
+                            android:lineHeight="16sp"
+                            android:text="@string/symptom_checker_est_time_label"
+                            android:textAllCaps="true"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="12sp" />
+
+                        <!-- 3 min: Figma Weight 700 Bold, Color #242E49, Size 20sp, Line height 24sp -->
+                        <TextView
+                            android:id="@+id/tvEstTimeValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:lineHeight="24sp"
+                            android:text="@string/symptom_checker_est_time_val"
+                            android:textColor="@color/color_text"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Right Card: LENGTH -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardLength"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="4dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_length" />
+
+                        <!-- LENGTH: Figma Size 12px, Line height 16px, Weight 600 SemiBold, Letter spacing 0.6px, Uppercase, Color #56627A -->
+                        <TextView
+                            android:id="@+id/tvLengthLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/urbanist_semibold"
+                            app:fontFamily="@font/urbanist_semibold"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="0.05"
+                            android:lineHeight="16sp"
+                            android:text="@string/symptom_checker_length_label"
+                            android:textAllCaps="true"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="12sp" />
+
+                        <!-- 10 Qs: Figma Weight 700 Bold, Color #242E49, Size 20sp, Line height 24sp -->
+                        <TextView
+                            android:id="@+id/tvLengthValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:lineHeight="24sp"
+                            android:text="@string/symptom_checker_length_val"
+                            android:textColor="@color/color_text"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Button: Start Assessment - Figma Height 52px, Radius 112px, Padding Horizontal 32px, Color #0F67FE -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStartAssessment"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:fontFamily="@font/urbanist_bold"
+        app:fontFamily="@font/urbanist_bold"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="32dp"
+        android:stateListAnimator="@null"
+        android:text="@string/symptom_checker_btn_start"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

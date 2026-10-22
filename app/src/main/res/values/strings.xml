@@ -162,4 +162,39 @@
     <string name="settings_item_share">Share with friends</string>
     <string name="settings_item_rate">Rate Us</string>
     <string name="settings_item_privacy">Privacy Policy</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">Symptom Checker</string>
+    <string name="symptom_checker_subtitle">Let\'s understand how you\'re feeling\nto provide the best guidance.</string>
+    <string name="symptom_checker_privacy_notice">Your data is encrypted and private.</string>
+    <string name="symptom_checker_est_time_label">EST. TIME</string>
+    <string name="symptom_checker_est_time_val">3 min</string>
+    <string name="symptom_checker_length_label">LENGTH</string>
+    <string name="symptom_checker_length_val">10 Qs</string>
+    <string name="symptom_checker_btn_start">Start Assessment</string>
+    <string name="symptom_checker_start_toast">Starting 10-question AI Symptom Assessment...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">What is your age?</string>
+    <string name="assessment_gender_title">What is your Gender?</string>
+    <string name="assessment_gender_subtitle">Please select your gender for better personalized health experience.</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="assessment_symptoms_title">What are your symptoms?</string>
+    <string name="search_symptoms_hint">Type your main symptom here</string>
+    <string name="no_symptoms_found">No symptoms matching \"%s\"</string>
+    <string name="assessment_related_symptoms_title">Do you have any of the following symptoms?</string>
+    <string name="assessment_related_symptoms_subtitle">Select all answers that apply</string>
+    <string name="assessment_insect_bite_title">Have you been bitten or stung by an insect? (lice, mosquitoes, ticks, spiders, or bedbugs…)?</string>
+    <string name="option_yes">Yes</string>
+    <string name="option_no">No</string>
+    <string name="option_dont_know">Don’t know</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_assessment_title">Exit Symptom Checker?</string>
+    <string name="dialog_exit_assessment_desc">Do you want to continue your symptom assessment, or exit to the main screen? Your current progress will not be saved.</string>
+    <string name="dialog_exit_btn_continue">Continue Assessment</string>
+    <string name="dialog_exit_btn_exit">Exit to Main Screen</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">Continue</string>
+    <string name="btn_back">Back</string>
 </resources>
