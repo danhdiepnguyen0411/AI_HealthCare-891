@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Track Background: Disable Color #D0D5DB, Height 8dp, Radius 2dp -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="2dp" />
+            <solid android:color="@color/disable_color" />
+            <size android:height="8dp" />
+        </shape>
+    </item>
+    <!-- Active Progress: Color text #242E49, Height 8dp, Radius 2dp -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="2dp" />
+                <solid android:color="@color/color_text" />
+                <size android:height="8dp" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

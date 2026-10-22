@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="24dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="12dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="24dp">
+
+        <!-- Top Icon Badge -->
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_circle_symptom">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/symptom_checker"
+                app:tint="@color/primary_color" />
+        </FrameLayout>
+
+        <!-- Dialog Title -->
+        <TextView
+            android:id="@+id/tvExitDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/dialog_exit_assessment_title"
+            android:textColor="@color/color_text"
+            android:textSize="20sp" />
+
+        <!-- Dialog Description -->
+        <TextView
+            android:id="@+id/tvExitDialogDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/urbanist_regular"
+            app:fontFamily="@font/urbanist_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/dialog_exit_assessment_desc"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
+
+        <!-- Action: Continue Assessment (Stay) -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinueAssessment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_pill_btn_blue"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:stateListAnimator="@null"
+            android:text="@string/dialog_exit_btn_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <!-- Action: Exit to Main Screen (Leave) -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExitAssessment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_secondary"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:stateListAnimator="@null"
+            android:text="@string/dialog_exit_btn_exit"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_color"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

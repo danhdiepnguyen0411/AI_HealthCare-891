@@ -14,6 +14,7 @@ import com.example.healthcareai.R
 import com.example.healthcareai.databinding.FragmentHomeBinding
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.heartrate.HeartRateActivity
+import com.example.healthcareai.ui.symptom.SymptomCheckerActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
@@ -108,11 +109,7 @@ class HomeFragment : Fragment() {
 
         // Feature Card 3: Symptom Checker
         binding.cardSymptomChecker.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Symptom Checker: Describe your symptoms for AI analysis.",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), SymptomCheckerActivity::class.java))
         }
 
         // Today's reminder: "View all" and "Add reminder"

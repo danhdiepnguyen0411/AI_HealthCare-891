@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer 4dp Spread Ring: #400F67FE with 24dp radius -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="24dp" />
+            <solid android:color="@color/age_card_ring" />
+        </shape>
+    </item>
+    <!-- Inner Box: 150dp x 150dp, radius 20dp, Buttom Color #4E75F7 -->
+    <item
+        android:bottom="4dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="@color/age_card_bg" />
+        </shape>
+    </item>
+</layer-list>
