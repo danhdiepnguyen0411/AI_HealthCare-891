@@ -92,6 +92,7 @@ class UninstallActivity : BaseActivity() {
         val targetActivity = when {
             !prefs.isFirstLanguageSet -> LanguageActivity::class.java
             !prefs.isIntroCompleted -> IntroActivity::class.java
+            !prefs.isProfileCreated -> com.example.healthcareai.ui.profile.AddProfileActivity::class.java
             else -> MainActivity::class.java
         }
 

@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootAddProfile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgr"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.profile.AddProfileActivity">
+
+    <!-- Top Bar: Centered Title -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:text="@string/title_add_profile"
+            android:textColor="@color/color_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Form Body -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottomAction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp">
+
+            <!-- Avatar Container -->
+            <FrameLayout
+                android:id="@+id/avatarContainer"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center_horizontal">
+
+                <!-- Circular Avatar Image with white border -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    app:cardCornerRadius="62.5dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/add_avatar"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_person" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Camera Badge Button (36dp, primary color, bottom end) -->
+                <FrameLayout
+                    android:id="@+id/btnPickAvatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_camera_badge"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/add_avatar"
+                        android:src="@drawable/ic_camera_addprofile" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <!-- Add Avatar Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/add_avatar"
+                android:textColor="@color/color_text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Field 1: Full Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:text="@string/label_full_name"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:elevation="1dp">
+
+                <EditText
+                    android:id="@+id/etFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_full_name"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <!-- Field 2: Date of Birth -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:text="@string/label_date_of_birth"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/cardDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:clickable="true"
+                android:elevation="1dp"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvDateOfBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_date_of_birth"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/label_date_of_birth"
+                    android:src="@drawable/ic_calendar" />
+            </FrameLayout>
+
+            <!-- Field 3: Gender -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:text="@string/label_gender"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/cardGender"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:clickable="true"
+                android:elevation="1dp"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_gender"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <!-- Field 4: Height & Weight (2 Columns) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Height Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:text="@string/label_height"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="14sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_profile_input_card"
+                        android:elevation="1dp">
+
+                        <EditText
+                            android:id="@+id/etHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/hint_height"
+                            android:imeOptions="actionNext"
+                            android:importantForAutofill="no"
+                            android:includeFontPadding="false"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="45dp"
+                            android:textColor="@color/color_text"
+                            android:textColorHint="#BEC5D2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/unit_cm"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="14sp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!-- Weight Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:text="@string/label_weight"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="14sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_profile_input_card"
+                        android:elevation="1dp">
+
+                        <EditText
+                            android:id="@+id/etWeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/hint_weight"
+                            android:imeOptions="actionDone"
+                            android:importantForAutofill="no"
+                            android:includeFontPadding="false"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="45dp"
+                            android:textColor="@color/color_text"
+                            android:textColorHint="#BEC5D2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/unit_kg"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="14sp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Button: Create Profile -->
+    <FrameLayout
+        android:id="@+id/layoutBottomAction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/btnCreateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_btn_create_profile"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/btn_create_profile"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

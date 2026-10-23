@@ -149,6 +149,7 @@ class SplashActivity : BaseActivity() {
         val nextIntent = when {
             !preferenceHelper.isFirstLanguageSet -> Intent(this, LanguageActivity::class.java)
             !preferenceHelper.isIntroCompleted -> Intent(this, IntroActivity::class.java)
+            !preferenceHelper.isProfileCreated -> Intent(this, com.example.healthcareai.ui.profile.AddProfileActivity::class.java)
             else -> {
                 Intent(this, MainActivity::class.java).apply {
                     if (intent?.getBooleanExtra("from_notification", false) == true) {

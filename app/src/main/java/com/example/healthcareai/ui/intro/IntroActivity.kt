@@ -36,6 +36,16 @@ class IntroActivity : BaseActivity() {
         setupIndicators()
         setupListeners()
         setupBackPress()
+
+        val startPage = intent.getIntExtra(EXTRA_START_PAGE, 0)
+        if (startPage in slides.indices && startPage > 0) {
+            binding.viewPager.setCurrentItem(startPage, false)
+            updateIndicatorsExact(startPage)
+        }
+    }
+
+    companion object {
+        const val EXTRA_START_PAGE = "extra_start_page"
     }
 
     private fun setupWindowInsets() {
@@ -77,6 +87,12 @@ class IntroActivity : BaseActivity() {
                 description = getString(R.string.intro_desc_3),
                 illustrationRes = R.drawable.intro3,
                 backgroundColor = Color.parseColor("#E7F3FC")
+            ),
+            IntroSlide(
+                title = getString(R.string.intro_title_4),
+                description = getString(R.string.intro_desc_4),
+                illustrationRes = R.drawable.intro4,
+                backgroundColor = Color.parseColor("#DDF0FD")
             )
         )
     }
@@ -84,7 +100,7 @@ class IntroActivity : BaseActivity() {
     private fun setupViewPager() {
         binding.viewPager.apply {
             adapter = IntroAdapter(slides)
-            offscreenPageLimit = 2
+            offscreenPageLimit = 3
             setPageTransformer(IntroPageTransformer())
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(
@@ -159,13 +175,21 @@ class IntroActivity : BaseActivity() {
         }
         binding.layoutIndicators.requestLayout()
 
-        // Update button text to GET STARTED on the final slide
-        val effectivePosition = if (positionOffset >= 0.5f) position + 1 else position
-        binding.btnNext.text = if (effectivePosition == slides.size - 1) {
-            getString(R.string.btn_get_started)
-        } else {
-            getString(R.string.btn_next)
+        // Smooth continuous cross-fade and gentle slide between "Next" and "Get started"
+        val lastIndex = slides.size - 1
+        val slideOffsetPx = 10f * density
+
+        val progress = when {
+            position == lastIndex - 1 -> positionOffset.coerceIn(0f, 1f)
+            position >= lastIndex -> 1f
+            else -> 0f
         }
+
+        binding.tvNext.alpha = 1f - progress
+        binding.tvNext.translationX = -progress * slideOffsetPx
+
+        binding.tvGetStarted.alpha = progress
+        binding.tvGetStarted.translationX = (1f - progress) * slideOffsetPx
     }
 
     private fun updateIndicatorsExact(selectedIndex: Int) {
@@ -189,12 +213,15 @@ class IntroActivity : BaseActivity() {
         }
         binding.layoutIndicators.requestLayout()
 
-        // Ensure button text is updated on page snap
-        binding.btnNext.text = if (selectedIndex == slides.size - 1) {
-            getString(R.string.btn_get_started)
-        } else {
-            getString(R.string.btn_next)
-        }
+        // Ensure button cross-fade is cleanly settled on page snap
+        val lastIndex = slides.size - 1
+        val isLast = (selectedIndex == lastIndex)
+
+        binding.tvNext.alpha = if (isLast) 0f else 1f
+        binding.tvNext.translationX = 0f
+
+        binding.tvGetStarted.alpha = if (isLast) 1f else 0f
+        binding.tvGetStarted.translationX = 0f
     }
 
     private fun setupListeners() {
@@ -225,7 +252,7 @@ class IntroActivity : BaseActivity() {
 
     private fun completeIntro() {
         preferenceHelper.isIntroCompleted = true
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, com.example.healthcareai.ui.profile.AddProfileActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
