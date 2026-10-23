@@ -394,6 +394,23 @@ class AddProfileActivity : BaseActivity() {
             return
         }
 
+        val isFirstProfile = !preferenceHelper.isProfileCreated
+        if (!isFirstProfile) {
+            val profile = UserProfile(
+                name = name,
+                avatarUri = selectedAvatarUri?.toString(),
+                dateOfBirth = selectedDob,
+                gender = selectedGender,
+                heightCm = height,
+                weightKg = weight,
+                isPrimary = false
+            )
+            profileRepository.addFamilyMemberProfile(profile)
+            Toast.makeText(this, "Profile added to Family!", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         val profile = UserProfile(
             name = name,
             avatarUri = selectedAvatarUri?.toString(),

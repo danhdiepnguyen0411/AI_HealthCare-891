@@ -15,12 +15,17 @@ import com.example.healthcareai.databinding.FragmentHomeBinding
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.heartrate.HeartRateActivity
 import com.example.healthcareai.ui.symptom.SymptomCheckerActivity
+import coil.load
+import coil.transform.CircleCropTransformation
+import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.ui.profile.AddProfileActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var selectedFamilyMemberIndex = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +41,13 @@ class HomeFragment : Fragment() {
         setupWindowInsets()
         updateGreeting()
         setupListeners()
+        syncFamilyProfiles()
     }
 
     override fun onResume() {
         super.onResume()
         updateGreeting()
+        syncFamilyProfiles()
     }
 
     private fun setupWindowInsets() {
@@ -77,6 +84,9 @@ class HomeFragment : Fragment() {
         }
         binding.tvGreeting.setText(greetingRes)
     }
+
+    private var isReminder1Done = false
+    private var isReminder2Done = false
 
     private fun setupListeners() {
         // "Get Pro" button
@@ -121,6 +131,32 @@ class HomeFragment : Fragment() {
             (activity as? MainActivity)?.navigateToTab(2)
         }
 
+        // Reminder 1 Mark as done
+        binding.btnMarkDoneReminder1.setOnClickListener {
+            isReminder1Done = !isReminder1Done
+            if (isReminder1Done) {
+                binding.btnMarkDoneReminder1.setText(R.string.btn_done)
+                binding.btnMarkDoneReminder1.alpha = 0.7f
+                Toast.makeText(requireContext(), R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
+            } else {
+                binding.btnMarkDoneReminder1.setText(R.string.btn_mark_as_done)
+                binding.btnMarkDoneReminder1.alpha = 1.0f
+            }
+        }
+
+        // Reminder 2 Mark as done
+        binding.btnMarkDoneReminder2.setOnClickListener {
+            isReminder2Done = !isReminder2Done
+            if (isReminder2Done) {
+                binding.btnMarkDoneReminder2.setText(R.string.btn_done)
+                binding.btnMarkDoneReminder2.alpha = 0.7f
+                Toast.makeText(requireContext(), R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
+            } else {
+                binding.btnMarkDoneReminder2.setText(R.string.btn_mark_as_done)
+                binding.btnMarkDoneReminder2.alpha = 1.0f
+            }
+        }
+
         // AI scan history: "View all" and "Start first scan"
         binding.tvViewAllScans.setOnClickListener {
             (activity as? MainActivity)?.navigateToTab(1)
@@ -129,6 +165,118 @@ class HomeFragment : Fragment() {
         binding.btnStartFirstScan.setOnClickListener {
             val intent = Intent(requireContext(), CameraActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.cardScan1.setOnClickListener {
+            (activity as? MainActivity)?.navigateToTab(1)
+        }
+
+        binding.cardScan2.setOnClickListener {
+            (activity as? MainActivity)?.navigateToTab(1)
+        }
+
+        // Family Hub: Manage & Card click
+        binding.tvManageFamily.setOnClickListener {
+            (activity as? MainActivity)?.navigateToTab(3)
+        }
+
+        binding.cardFamilyHub.setOnClickListener {
+            (activity as? MainActivity)?.navigateToTab(3)
+        }
+
+        binding.layoutMemberThang.setOnClickListener {
+            switchFamilyMember(0)
+        }
+
+        binding.layoutMemberWoman.setOnClickListener {
+            switchFamilyMember(1)
+        }
+
+        binding.layoutMemberAdd.setOnClickListener {
+            val intent = Intent(requireContext(), AddProfileActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    /**
+     * Synchronizes profiles dynamically from ProfileRepository.
+     */
+    private fun syncFamilyProfiles() {
+        val context = context ?: return
+        val profileRepository = ProfileRepository.getInstance(context)
+        val density = resources.displayMetrics.density
+        val strokeSelected = (1 * density).toInt()
+
+        // 1. Primary Profile (Member 1)
+        val primary = profileRepository.getPrimaryProfile()
+        binding.tvMemberThangName.text = primary.name
+        if (!primary.avatarUri.isNullOrEmpty()) {
+            binding.ivMemberThangAvatar.load(primary.avatarUri) {
+                crossfade(true)
+                transformations(CircleCropTransformation())
+                placeholder(R.drawable.profile_person)
+                error(R.drawable.profile_person)
+            }
+        } else {
+            binding.ivMemberThangAvatar.setImageResource(R.drawable.profile_person)
+        }
+
+        // 2. Family Members (Member 2)
+        val all = profileRepository.getAllProfiles()
+        val familyMembers = all.filter { !it.isPrimary }
+        if (familyMembers.isNotEmpty()) {
+            val second = familyMembers[0]
+            binding.layoutMemberWoman.visibility = View.VISIBLE
+            binding.tvMemberWomanName.text = second.name
+            if (!second.avatarUri.isNullOrEmpty()) {
+                binding.ivMemberWomanAvatar.load(second.avatarUri) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                    placeholder(R.drawable.profile_person)
+                    error(R.drawable.profile_person)
+                }
+            } else {
+                binding.ivMemberWomanAvatar.setImageResource(R.drawable.profile_person)
+            }
+        } else {
+            binding.layoutMemberWoman.visibility = View.GONE
+            selectedFamilyMemberIndex = 0
+            binding.cardFamilyHub.selectMember(0, animate = false)
+            binding.cardMemberThangAvatar.strokeWidth = strokeSelected
+            binding.tvMemberThangName.visibility = View.VISIBLE
+            binding.cardMemberWomanAvatar.strokeWidth = 0
+            binding.tvMemberWomanName.visibility = View.INVISIBLE
+        }
+    }
+
+    /**
+     * Switches active family member with smooth background tab animation,
+     * border toggle, and name visibility toggle without mock data.
+     */
+    private fun switchFamilyMember(index: Int) {
+        if (selectedFamilyMemberIndex == index) return
+        selectedFamilyMemberIndex = index
+
+        val density = resources.displayMetrics.density
+        val strokeSelected = (1 * density).toInt()
+
+        // Animate custom tab background in FamilyHubCardView
+        binding.cardFamilyHub.selectMember(index, animate = true)
+
+        if (index == 0) {
+            // Member 1 (Primary) selected
+            binding.cardMemberThangAvatar.strokeWidth = strokeSelected
+            binding.tvMemberThangName.visibility = View.VISIBLE
+
+            binding.cardMemberWomanAvatar.strokeWidth = 0
+            binding.tvMemberWomanName.visibility = View.INVISIBLE
+        } else {
+            // Member 2 (Family Member) selected
+            binding.cardMemberWomanAvatar.strokeWidth = strokeSelected
+            binding.tvMemberWomanName.visibility = View.VISIBLE
+
+            binding.cardMemberThangAvatar.strokeWidth = 0
+            binding.tvMemberThangName.visibility = View.INVISIBLE
         }
     }
 
