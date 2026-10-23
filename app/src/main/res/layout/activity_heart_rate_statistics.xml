@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg">
+
+    <!-- Top Bar with Back Button and Screen Title -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Circular Back Button -->
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_back_chevron" />
+        </FrameLayout>
+
+        <!-- Centered Screen Title: "Statistics" (Figma: Urbanist Bold 700, 24sp, Line Height 27sp, #242E49) -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:lineHeight="27sp"
+            android:text="@string/statistics_title"
+            android:textColor="@color/color_text"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Top Metric Cards Row (Average, Highest, Lowest) -->
+    <LinearLayout
+        android:id="@+id/layoutMetricCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <!-- 1. Average Card -->
+        <LinearLayout
+            android:id="@+id/cardAverage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white_18"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="6dp">
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_circle_stat_average">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_average" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvAverageValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                app:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:lineHeight="40sp"
+                android:textColor="@color/color_text"
+                android:textSize="32sp"
+                tools:text="82" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/statistics_average"
+                android:textColor="@color/text_stat_label"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <!-- 2. Highest Card -->
+        <LinearLayout
+            android:id="@+id/cardHighest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white_18"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="6dp">
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_circle_stat_highest">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_highest" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvHighestValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                app:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:lineHeight="40sp"
+                android:textColor="@color/color_text"
+                android:textSize="32sp"
+                tools:text="96" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/statistics_highest"
+                android:textColor="@color/text_stat_label"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <!-- 3. Lowest Card -->
+        <LinearLayout
+            android:id="@+id/cardLowest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white_18"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="6dp">
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_circle_stat_lowest">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_lowest" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvLowestValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                app:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:lineHeight="40sp"
+                android:textColor="@color/color_text"
+                android:textSize="32sp"
+                tools:text="64" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/statistics_lowest"
+                android:textColor="@color/text_stat_label"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Segmented Tab Switcher (Overview vs History, Figma: 358px Fill, Height: 48px, Radius: 12px) -->
+    <LinearLayout
+        android:id="@+id/layoutTabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_stats_tab_container"
+        android:orientation="horizontal"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toBottomOf="@id/layoutMetricCards">
+
+        <!-- Overview Tab Button -->
+        <TextView
+            android:id="@+id/btnTabOverview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_stats_tab_selected"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/urbanist_semibold"
+            app:fontFamily="@font/urbanist_semibold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/statistics_tab_overview"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <!-- History Tab Button -->
+        <TextView
+            android:id="@+id/btnTabHistory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/urbanist_medium"
+            app:fontFamily="@font/urbanist_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/statistics_tab_history"
+            android:textColor="@color/stats_tab_inactive_text"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <!-- Main Content Area: FrameLayout hosting Overview, History, or Empty States -->
+    <FrameLayout
+        android:id="@+id/layoutContentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTabs">
+
+        <!-- 1. EMPTY STATE (Both Overview and History) -->
+        <LinearLayout
+            android:id="@+id/layoutEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="32dp"
+            android:paddingTop="36dp"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <!-- Empty State Illustration (Figma: 164x151dp cropped, prominent 3D heart) -->
+            <ImageView
+                android:id="@+id/ivEmptyIllustration"
+                android:layout_width="180dp"
+                android:layout_height="166dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/no_data_statistics" />
+
+            <!-- Empty Title (Figma: Urbanist Bold 700, 20sp, Line height 28sp, #242E49) -->
+            <TextView
+                android:id="@+id/tvEmptyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineHeight="28sp"
+                android:text="@string/statistics_no_data_title"
+                android:textColor="@color/color_text"
+                android:textSize="20sp" />
+
+            <!-- Empty Subtitle Description (Figma: Urbanist Medium 500, 14sp, Line height 20sp, #56627A) -->
+            <TextView
+                android:id="@+id/tvEmptySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineHeight="20sp"
+                android:text="@string/statistics_no_data_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp" />
+
+            <!-- "Measure now" Action Button (Figma: Height 52dp, MinWidth 161dp, Padding 32dp, Urbanist SemiBold 600, 16sp, Line height 24sp) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEmptyMeasureNow"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_pill_btn_blue"
+                android:fontFamily="@font/urbanist_semibold"
+                app:fontFamily="@font/urbanist_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineHeight="24sp"
+                android:minWidth="161dp"
+                android:paddingHorizontal="32dp"
+                android:stateListAnimator="@null"
+                android:text="@string/statistics_btn_measure_now"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- 2. OVERVIEW DATA STATE (Weekly Chart Card) -->
+        <ScrollView
+            android:id="@+id/layoutOverviewData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="24dp">
+
+                <!-- White Card hosting the Chart -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardWeeklyChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_card_white_18"
+                    android:padding="18dp">
+
+                    <!-- Title: Heart Rate (bpm) -->
+                    <TextView
+                        android:id="@+id/tvChartHeaderTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_bold"
+                        app:fontFamily="@font/urbanist_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/statistics_heart_rate_chart_title"
+                        android:textColor="@color/color_text"
+                        android:textSize="17sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Thin Divider -->
+                    <View
+                        android:id="@+id/viewChartDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:background="#F0F3F8"
+                        app:layout_constraintTop_toBottomOf="@id/tvChartHeaderTitle" />
+
+                    <!-- Week Switcher Navigation Row (Figma: Left arrow, centered date range, right arrow) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutWeekSwitcher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintTop_toBottomOf="@id/viewChartDivider">
+
+                        <!-- Previous Week Button -->
+                        <FrameLayout
+                            android:id="@+id/btnPrevWeek"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="9dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/arrow_reminder_left" />
+                        </FrameLayout>
+
+                        <!-- Week Date Range Text (e.g. June 1 - June 7) centered -->
+                        <TextView
+                            android:id="@+id/tvWeekRange"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/color_text"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="June 1 - June 7" />
+
+                        <!-- Next Week Button -->
+                        <FrameLayout
+                            android:id="@+id/btnNextWeek"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="9dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/arrow_reminder_right" />
+                        </FrameLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Custom Weekly Bar Chart -->
+                    <com.example.healthcareai.ui.heartrate.view.WeeklyHeartRateChartView
+                        android:id="@+id/chartWeeklyHeartRate"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintTop_toBottomOf="@id/layoutWeekSwitcher" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- 3. HISTORY DATA STATE (RecyclerView of measurements) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="24dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

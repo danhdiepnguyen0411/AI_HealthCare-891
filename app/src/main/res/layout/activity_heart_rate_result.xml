@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootResultLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <!-- Top Bar: Back Button, Title ("Result"), Delete Action Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <!-- Centered Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:text="@string/heart_rate_result_title"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Circular Delete Button -->
+        <FrameLayout
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_delete" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/btnDone"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Card 1: Heart Rate Result Summary Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_heart_rate_card"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp">
+
+                <!-- Left info column -->
+                <LinearLayout
+                    android:id="@+id/layoutLeftInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/layoutHeartContainer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Timestamp e.g. "July 2 • 09:20 AM" -->
+                    <TextView
+                        android:id="@+id/tvDateTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_medium"
+                        app:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="14sp"
+                        tools:text="July 2 • 09:20 AM" />
+
+                    <!-- "Heart Rate" title -->
+                    <TextView
+                        android:id="@+id/tvCardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/urbanist_bold"
+                        app:fontFamily="@font/urbanist_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/title_heart_rate"
+                        android:textColor="@color/color_text"
+                        android:textSize="24sp" />
+
+                    <!-- "Result Summary" subtitle -->
+                    <TextView
+                        android:id="@+id/tvCardSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/urbanist_medium"
+                        app:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/heart_rate_result_summary"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <!-- Right Heart Graphic with BPM & Ripple rings -->
+                <FrameLayout
+                    android:id="@+id/layoutHeartContainer"
+                    android:layout_width="116dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Heart Graphic with Concentric Rings from Figma -->
+                    <ImageView
+                        android:id="@+id/ivHeartResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/heart_resuilt" />
+
+                    <!-- BPM text overlay centered inside heart -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBpmValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            tools:text="82" />
+
+                        <TextView
+                            android:id="@+id/tvBpmUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-2dp"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_bpm_lowercase"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Card 2: Category & Range Breakdown Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_heart_rate_card"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp">
+
+                <!-- Category Title e.g. "Normal" -->
+                <TextView
+                    android:id="@+id/tvCategoryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_bold"
+                    app:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_text"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Normal" />
+
+                <!-- Gradient Bar -->
+                <View
+                    android:id="@+id/viewGradientBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_heart_rate_gradient_bar"
+                    app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle" />
+
+                <!-- Triangle Indicator Track Container positioned right under gradient bar -->
+                <FrameLayout
+                    android:id="@+id/layoutIndicatorTrack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/viewGradientBar">
+
+                    <ImageView
+                        android:id="@+id/ivIndicatorTriangle"
+                        android:layout_width="14dp"
+                        android:layout_height="12dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_triangle_indicator"
+                        app:tint="#9FD52E" />
+
+                </FrameLayout>
+
+                <!-- Range Breakdown List: 3 rows -->
+                <LinearLayout
+                    android:id="@+id/layoutRangeList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/layoutIndicatorTrack">
+
+                    <!-- Row 1: Slow -->
+                    <LinearLayout
+                        android:id="@+id/rowSlow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- 8px x 8px Cyan Dot -->
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_slow" />
+
+                        <TextView
+                            android:id="@+id/tvSlowLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_slow_label"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvSlowValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_range_slow"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <!-- Row 2: Normal -->
+                    <LinearLayout
+                        android:id="@+id/rowNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- 8px x 8px Green Dot -->
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_normal" />
+
+                        <TextView
+                            android:id="@+id/tvNormalLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_normal_label"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvNormalValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_bold"
+                            app:fontFamily="@font/urbanist_bold"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_range_normal"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!-- Row 3: Fast -->
+                    <LinearLayout
+                        android:id="@+id/rowFast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- 8px x 8px Red Dot -->
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_fast" />
+
+                        <TextView
+                            android:id="@+id/tvFastLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_fast_label"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvFastValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/heart_rate_range_fast"
+                            android:textColor="@color/color_subtext"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Done Action Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:fontFamily="@font/urbanist_semibold"
+        app:fontFamily="@font/urbanist_semibold"
+        android:stateListAnimator="@null"
+        android:text="@string/heart_rate_btn_done"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

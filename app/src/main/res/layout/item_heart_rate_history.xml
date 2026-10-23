@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_history_delete_card"
+    android:elevation="2dp">
+
+    <!-- Secondary View: Background Red Delete Action (Figma: 90px width, #FF4D4F, 20px radius) -->
+    <FrameLayout
+        android:id="@+id/btnDeleteAction"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_delete_white" />
+
+    </FrameLayout>
+
+    <!-- Main View: Foreground White Card (Figma: 358px Fill, Hug 133.91px, Radius 20px, Elevation 2dp) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardForeground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="134dp"
+        android:background="@drawable/bg_card_white_18"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="2dp"
+        android:padding="20dp">
+
+        <!-- Left Heart Illustration Container (Figma: 109px × 93.91px) -->
+        <FrameLayout
+            android:id="@+id/heartContainer"
+            android:layout_width="109dp"
+            android:layout_height="94dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Glowing Concentric Outline Heart Image -->
+            <ImageView
+                android:id="@+id/ivHeartResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/heart_resuilt" />
+
+            <!-- Centered BPM & bpm Unit -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHistoryBpm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_bold"
+                    app:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    tools:text="82" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_medium"
+                    app:fontFamily="@font/urbanist_medium"
+                    android:includeFontPadding="false"
+                    android:text="@string/heart_rate_bpm_lowercase"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- Subtle Vertical Divider (Figma: 74dp height, #F0F3F8) -->
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="1dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="14dp"
+            android:background="#F0F3F8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/heartContainer"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Right Content: Centered Date & Centered Status Badge -->
+        <LinearLayout
+            android:id="@+id/layoutInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/viewDivider"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Date & Time (July 2, 2026 · 09:20 AM) centered horizontally -->
+            <TextView
+                android:id="@+id/tvHistoryDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp"
+                tools:text="July 2, 2026 · 09:20 AM" />
+
+            <!-- Status Badge Pill (Figma: Fixed 40px height, Hug 84px min, Radius 10px, Gap 10px, centered) -->
+            <TextView
+                android:id="@+id/tvHistoryStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_badge_stat_normal"
+                android:fontFamily="@font/urbanist_semibold"
+                app:fontFamily="@font/urbanist_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="84dp"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:text="Normal" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout>
