@@ -67,9 +67,21 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <!-- Heart Rate Screen Activity -->
+        <!-- Heart Rate Screen Activity (Single-screen direct measurement) -->
         <activity
             android:name=".ui.heartrate.HeartRateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Heart Rate Result Screen Activity -->
+        <activity
+            android:name=".ui.heartrate.HeartRateResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Heart Rate Statistics Screen Activity -->
+        <activity
+            android:name=".ui.heartrate.HeartRateStatisticsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

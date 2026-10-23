@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootHeartRateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main">
+    android:background="@color/bg_main"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <!-- Top Bar: Back Button, Title ("Heart Rate"), Statistics Action Button -->
+    <!-- Top Bar: Back Button, Title ("Heart Rate" 22sp Bold), Statistics Action Button -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -35,7 +38,7 @@
                 android:src="@drawable/ic_back_chevron" />
         </FrameLayout>
 
-        <!-- Centered Title -->
+        <!-- Centered Title: Urbanist 700 Bold, 22sp, line height 27sp, color #242E49 -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -44,9 +47,10 @@
             app:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
             android:letterSpacing="0"
+            android:lineHeight="27sp"
             android:text="@string/title_heart_rate"
             android:textColor="@color/color_text"
-            android:textSize="18sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,72 +78,245 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- "How to measure" Button Row -->
+    <!-- ========================================================================= -->
+    <!-- TOP SECTION: Circular Camera Preview & Status Text                        -->
+    <!-- ========================================================================= -->
     <LinearLayout
-        android:id="@+id/layoutHowToMeasure"
-        android:layout_width="wrap_content"
+        android:id="@+id/layoutMeasuringHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/topBar">
 
+        <!-- Circular Camera Preview Container -->
+        <FrameLayout
+            android:id="@+id/cameraCircleContainer"
+            android:layout_width="52dp"
+            android:layout_height="52dp">
+
+            <!-- Rounded Circle Card holding CameraX PreviewView -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                app:cardBackgroundColor="#1F2937"
+                app:cardCornerRadius="26dp"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <androidx.camera.view.PreviewView
+                    android:id="@+id/previewView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:implementationMode="compatible"
+                    app:scaleType="fillCenter" />
+
+                <!-- Camera Lens Ring Graphic Border -->
+                <View
+                    android:id="@+id/viewCameraBorder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_circle_camera_frame" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Green Checkmark Badge overlay at 4 o'clock (visible when finger detected) -->
+            <FrameLayout
+                android:id="@+id/layoutCheckmarkBadge"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_green_check_circle"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_check_white" />
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <!-- "Measuring your heart rate..." -->
         <TextView
+            android:id="@+id/tvMeasuringBannerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/urbanist_medium"
             app:fontFamily="@font/urbanist_medium"
             android:includeFontPadding="false"
-            android:letterSpacing="0"
-            android:text="@string/heart_rate_how_to_measure"
+            android:text="@string/heart_rate_measuring_banner_title"
             android:textColor="@color/color_subtext"
             android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="6dp"
-            android:contentDescription="@null"
-            android:src="@drawable/how_to_measure" />
+        <!-- "Please keep your finger steady." -->
+        <TextView
+            android:id="@+id/tvMeasuringBannerSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/urbanist_regular"
+            app:fontFamily="@font/urbanist_regular"
+            android:includeFontPadding="false"
+            android:text="@string/heart_rate_measuring_banner_sub"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
-    <!-- Center 3D Heart with Soft Red Radial Glow -->
+    <!-- ========================================================================= -->
+    <!-- CENTER SECTION: 3D Heart, Red Glow & Pulse Line ("Mạch máu qua trái tim") -->
+    <!-- ========================================================================= -->
+
+    <!-- ECG Blood Vessel Pulse Line running horizontally across screen -->
+    <com.example.healthcareai.ui.heartrate.view.EcgPulseLineView
+        android:id="@+id/ecgPulseLineView"
+        android:layout_width="match_parent"
+        android:layout_height="184dp"
+        app:layout_constraintBottom_toBottomOf="@id/heartContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/heartContainer" />
+
+
+    <!-- Center 3D Heart -->
     <FrameLayout
         android:id="@+id/heartContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/tvInstruction"
+        android:layout_marginTop="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/phoneHandContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutHowToMeasure">
+        app:layout_constraintTop_toBottomOf="@id/layoutMeasuringHeader"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_chainStyle="packed">
 
-        <!-- Soft Red Radial Glow Background -->
-        <View
-            android:id="@+id/viewHeartGlow"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
+        <!-- Heart Silhouette Shadow layer -->
+        <ImageView
+            android:id="@+id/ivHeartShadow"
+            android:layout_width="228dp"
+            android:layout_height="194dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_heart_glow" />
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/heartrate"
+            app:tint="#65FF2042" />
 
-        <!-- 3D Heart Graphic -->
+        <!-- 3D Heart Graphic: 218dp x 184dp matching Figma 218px x 184.12px -->
         <ImageView
             android:id="@+id/ivHeart"
-            android:layout_width="160dp"
-            android:layout_height="145dp"
+            android:layout_width="218dp"
+            android:layout_height="184dp"
             android:layout_gravity="center"
             android:contentDescription="@null"
             android:scaleType="fitCenter"
             android:src="@drawable/heartrate" />
 
+        <!-- Real-time BPM display overlay in the center of the heart -->
+        <LinearLayout
+            android:id="@+id/layoutHeartBpmOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvLiveBpm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="44sp"
+                tools:text="75" />
+
+            <TextView
+                android:id="@+id/tvLiveBpmUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:text="@string/heart_rate_bpm_lowercase"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                tools:text="bpm" />
+
+        </LinearLayout>
+
     </FrameLayout>
+
+    <!-- ========================================================================= -->
+    <!-- BOTTOM SECTION: Phone/Hand guide animation + Text + Capsule Progress Pill  -->
+    <!-- ========================================================================= -->
+
+    <!-- Phone and Hand Guide Animation Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/phoneHandContainer"
+        android:layout_width="112dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/tvInstruction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heartContainer">
+
+        <!-- Phone Back Image -->
+        <ImageView
+            android:id="@+id/ivPhone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Flash / Camera Pulse Glow Behind Finger -->
+        <View
+            android:id="@+id/viewTouchPulse"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:alpha="0"
+            android:background="@drawable/bg_camera_pulse"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.083" />
+
+        <!-- Hand with Index Finger (animates into position onto camera) -->
+        <ImageView
+            android:id="@+id/ivHand"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_hand"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Bottom Instruction Text -->
     <TextView
@@ -147,36 +324,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="28dp"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/urbanist_medium"
         app:fontFamily="@font/urbanist_medium"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:letterSpacing="0"
         android:lineHeight="20sp"
         android:text="@string/heart_rate_instruction"
         android:textColor="@color/color_subtext"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/btnStartMeasure"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/cardProgressPill"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneHandContainer" />
 
-    <!-- "Start Measure" Action Pill Button -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStartMeasure"
-        android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/bg_pill_btn_blue"
-        android:fontFamily="@font/urbanist_semibold"
-        app:fontFamily="@font/urbanist_semibold"
-        android:stateListAnimator="@null"
-        android:text="@string/heart_rate_btn_start"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
+    <!-- Capsule Progress Pill at bottom (shows default dashes or 25%) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardProgressPill"
+        android:layout_width="128dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="36dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/frameProgressContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Blue progress fill extending from left -->
+            <View
+                android:id="@+id/viewProgressFill"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@drawable/bg_pill_progress_fill" />
+
+            <!-- Centered progress text (default dashes or 25%) -->
+            <TextView
+                android:id="@+id/tvProgressPill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:text="--"
+                android:textColor="@color/color_text"
+                android:textSize="14sp" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

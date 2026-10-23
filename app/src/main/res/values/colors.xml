@@ -50,6 +50,9 @@
     <color name="circle_health_scan_bg">#E4FAE1</color>
     <color name="circle_heart_rate_bg">#FFEAEB</color>
     <color name="circle_symptom_bg">#EBEDFF</color>
+    <color name="heart_rate_slow">#06BFD0</color>
+    <color name="heart_rate_normal">#9FD52E</color>
+    <color name="heart_rate_fast">#FF3627</color>
 
     <!-- 9. Symptom Checker & Assessment Tokens -->
     <color name="badge_privacy_bg">#D6E8FF</color>
@@ -61,6 +64,18 @@
     <color name="gender_male_ring">#400F67FE</color>
     <color name="gender_female_bg">#FE808B</color>
     <color name="gender_female_ring">#40FA4D5E</color>
+
+    <!-- 10. Statistics Screen Tokens -->
+    <color name="stats_icon_bg_average">#E8F0FF</color>
+    <color name="stats_icon_bg_highest">#FEE7E7</color>
+    <color name="stats_icon_bg_lowest">#DBF6C3</color>
+    <color name="stats_tab_active">#4E75F7</color>
+    <color name="stats_tab_inactive_text">#8E99AF</color>
+    <color name="stats_badge_normal">#53B100</color>
+    <color name="stats_badge_slow">#00BCD4</color>
+    <color name="stats_badge_fast">#FA4D38</color>
+    <color name="stats_chart_bar">#FA5C65</color>
+    <color name="stats_chart_grid">#E8EDF4</color>
 
     <!-- ================================================================= -->
     <!-- COMPONENT & THEME ALIASES                                         -->
