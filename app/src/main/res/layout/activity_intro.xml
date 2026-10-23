@@ -40,28 +40,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Next Action Button -->
-        <TextView
+        <!-- Next / Get Started Action Button Container -->
+        <FrameLayout
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="26dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/urbanist"
-            android:gravity="center"
-            android:letterSpacing="0"
-            android:lineHeight="26sp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="6dp"
-            android:text="@string/btn_next"
-            android:textColor="#0F67FE"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:clickable="false"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/urbanist"
+                android:gravity="center"
+                android:letterSpacing="0"
+                android:lineHeight="26sp"
+                android:minHeight="26dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:text="@string/btn_next"
+                android:textColor="#0F67FE"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvGetStarted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:alpha="0"
+                android:clickable="false"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/urbanist"
+                android:gravity="center"
+                android:letterSpacing="0"
+                android:lineHeight="26sp"
+                android:minHeight="26dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:text="@string/btn_get_started"
+                android:textColor="#0F67FE"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

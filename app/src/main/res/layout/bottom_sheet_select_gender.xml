@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="32dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/select_gender_title"
+        android:textColor="@color/color_text"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Male Option -->
+    <FrameLayout
+        android:id="@+id/cardGenderMale"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_profile_input_card"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:text="@string/gender_male"
+            android:textColor="@color/color_text"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckMale"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/bg_green_check_circle"
+            android:visibility="visible" />
+    </FrameLayout>
+
+    <!-- Female Option -->
+    <FrameLayout
+        android:id="@+id/cardGenderFemale"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_profile_input_card"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:text="@string/gender_female"
+            android:textColor="@color/color_text"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckFemale"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/bg_green_check_circle"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Other Option -->
+    <FrameLayout
+        android:id="@+id/cardGenderOther"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/bg_profile_input_card"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:text="@string/gender_other"
+            android:textColor="@color/color_text"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckOther"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/bg_green_check_circle"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

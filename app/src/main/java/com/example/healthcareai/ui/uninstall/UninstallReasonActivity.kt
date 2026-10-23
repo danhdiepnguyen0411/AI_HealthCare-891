@@ -361,7 +361,7 @@ class UninstallReasonActivity : BaseActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun hideKeyboard() {
+    override fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         currentFocus?.let { focus ->
             imm?.hideSoftInputFromWindow(focus.windowToken, 0)
@@ -376,6 +376,7 @@ class UninstallReasonActivity : BaseActivity() {
         val targetActivity = when {
             !prefs.isFirstLanguageSet -> LanguageActivity::class.java
             !prefs.isIntroCompleted -> IntroActivity::class.java
+            !prefs.isProfileCreated -> com.example.healthcareai.ui.profile.AddProfileActivity::class.java
             else -> MainActivity::class.java
         }
 
