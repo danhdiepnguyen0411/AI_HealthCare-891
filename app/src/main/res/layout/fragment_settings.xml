@@ -16,28 +16,26 @@
         android:orientation="vertical"
         android:paddingBottom="90dp">
 
-        <!-- Top Bar: Centered "Setting" Title (24px, Bold, Line height 27px, #242E49) -->
+        <!-- Top Bar: Centered "Setting" Title -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/topBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp">
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="16dp">
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist_bold"
-                app:fontFamily="@font/urbanist_bold"
-                android:gravity="center"
+                android:fontFamily="@font/urbanist"
                 android:includeFontPadding="false"
                 android:letterSpacing="0"
                 android:lineHeight="27sp"
                 android:text="@string/title_setting"
                 android:textColor="@color/color_text"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

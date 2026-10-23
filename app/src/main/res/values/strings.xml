@@ -72,6 +72,18 @@
     <string name="error_height_empty">Please enter your height</string>
     <string name="error_weight_empty">Please enter your weight</string>
     
+    <!-- My Health Screen -->
+    <string name="title_my_health">My Health</string>
+    <string name="label_age">Age</string>
+    <string name="title_health_records">Health Records</string>
+    <string name="record_medications">Medications</string>
+    <string name="record_allergies">Allergies</string>
+    <string name="record_conditions">Conditions</string>
+    <string name="record_vaccinations">Vaccinations</string>
+    <string name="record_active_format">%1$d active</string>
+    <string name="record_reported_format">%1$d reported</string>
+    <string name="record_recorded_format">%1$d recorded</string>
+    
     <!-- Settings -->
     <string name="settings_language">Language Setting</string>
     <string name="settings_notifications">Daily Reminders</string>
@@ -159,6 +171,17 @@
     <string name="home_no_scans_desc">Your scan results will appear here after your first check.</string>
     <string name="home_btn_start_first_scan">Start first scan</string>
     <string name="home_btn_get_pro">Get Pro</string>
+    <string name="home_manage">Manage</string>
+    <string name="btn_mark_as_done">Mark as done</string>
+    <string name="msg_marked_as_done">Marked as done!</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">Drink water</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">Arm skin check</string>
+    <string name="scan_arm_skin_check_date">Oct 5</string>
 
     <!-- Heart Rate Screen -->
     <string name="title_heart_rate">Heart Rate</string>

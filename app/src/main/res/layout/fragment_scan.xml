@@ -12,20 +12,22 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:paddingHorizontal="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Center Screen Title: AI Scan (Figma: Urbanist 700 Bold, 22px, #242E49) -->
+        <!-- Center Screen Title: AI Scan -->
         <TextView
             android:id="@+id/tvScreenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist"
             android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
             android:text="@string/title_ai_scan"
             android:textColor="@color/color_text"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

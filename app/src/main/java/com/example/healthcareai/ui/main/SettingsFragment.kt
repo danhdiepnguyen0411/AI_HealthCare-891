@@ -47,9 +47,15 @@ class SettingsFragment : Fragment() {
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootSettingsContainer) { _, insets ->
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
+            val density = resources.displayMetrics.density
+            val targetTopMargin = if (statusBarTop > 0) {
+                statusBarTop + (8 * density).toInt()
+            } else {
+                (24 * density).toInt()
+            }
+            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                if (topMargin != targetTopMargin) {
+                    topMargin = targetTopMargin
                 }
             }
             insets
