@@ -13,9 +13,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:paddingHorizontal="16dp"
+        android:minHeight="56dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Circular White Back Button with Soft Shadow (Hidden on First Launch) -->
@@ -27,9 +33,9 @@
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
             tools:visibility="visible">
 
             <ImageView
@@ -40,42 +46,79 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <!-- Centered Header Title -->
+        <!-- Header Title: Language (Centered horizontally) -->
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/urbanist"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginEnd="76dp"
+            android:fontFamily="@font/urbanist_bold"
+            app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:textAlignment="center"
             android:includeFontPadding="false"
+            android:letterSpacing="0"
             android:text="@string/title_language"
             android:textColor="@color/text_primary"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Done Confirmation Button -->
+        <!-- Subtitle: Please select language to continue (visible on first launch, Centered horizontally) -->
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/urbanist_medium"
+            app:fontFamily="@font/urbanist_medium"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:text="@string/subtitle_select_language"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <!-- Done Confirmation Button: Primary Button (Fixed 60dp x 36dp, Radius 112px, Color #0F67FE) -->
         <FrameLayout
             android:id="@+id/btnDone"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:minWidth="60dp"
+            android:background="@drawable/bg_btn_done_primary"
             android:alpha="0.35"
             android:clickable="false"
             android:enabled="false"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/tvTitle">
 
-            <ImageView
-                android:id="@+id/ivDone"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+            <TextView
+                android:id="@+id/tvBtnDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:contentDescription="@string/btn_done"
-                android:src="@drawable/done_lang" />
+                android:gravity="center"
+                android:fontFamily="@font/urbanist_bold"
+                app:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:text="@string/btn_done"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

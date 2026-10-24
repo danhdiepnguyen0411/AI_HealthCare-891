@@ -32,6 +32,7 @@
     
     <!-- Language -->
     <string name="title_language">Language</string>
+    <string name="subtitle_select_language">Please select language to continue</string>
     <string name="btn_done">Done</string>
     <string name="hint_tap_device_language">Tap to select your language</string>
     
