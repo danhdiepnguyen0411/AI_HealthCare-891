@@ -106,6 +106,7 @@ class ProfileRepository private constructor(context: Context) {
                         heightCm = obj.getInt("heightCm"),
                         weightKg = obj.getInt("weightKg"),
                         isPrimary = obj.optBoolean("isPrimary", false),
+                        relationship = if (obj.has("relationship") && !obj.isNull("relationship")) obj.getString("relationship") else null,
                         createdAt = obj.optLong("createdAt", System.currentTimeMillis())
                     )
                 )
@@ -113,6 +114,22 @@ class ProfileRepository private constructor(context: Context) {
         } catch (_: Exception) {
         }
         return list
+    }
+
+    /**
+     * Returns only family members (non-primary profiles).
+     */
+    fun getFamilyMembers(): List<UserProfile> {
+        return getAllProfiles().filter { !it.isPrimary }
+    }
+
+    /**
+     * Deletes a family member profile by id.
+     */
+    fun deleteProfile(id: String) {
+        val profiles = getAllProfiles().toMutableList()
+        profiles.removeAll { it.id == id && !it.isPrimary }
+        persistProfiles(profiles)
     }
 
     private fun persistProfiles(profiles: List<UserProfile>) {
@@ -127,6 +144,7 @@ class ProfileRepository private constructor(context: Context) {
                 put("heightCm", p.heightCm)
                 put("weightKg", p.weightKg)
                 put("isPrimary", p.isPrimary)
+                put("relationship", p.relationship ?: JSONObject.NULL)
                 put("createdAt", p.createdAt)
             }
             array.put(obj)

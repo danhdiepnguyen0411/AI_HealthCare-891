@@ -57,6 +57,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Profile Detail Activity -->
+        <activity
+            android:name=".ui.profile.ProfileDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Main Home Activity -->
         <activity
             android:name=".ui.main.MainActivity"

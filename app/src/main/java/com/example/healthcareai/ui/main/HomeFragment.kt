@@ -19,6 +19,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.ui.profile.AddProfileActivity
+import com.example.healthcareai.ui.profile.ProfileDetailActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
@@ -181,21 +182,41 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardFamilyHub.setOnClickListener {
-            (activity as? MainActivity)?.navigateToTab(3)
+            navigateToSelectedProfileDetail()
         }
 
         binding.layoutMemberThang.setOnClickListener {
-            switchFamilyMember(0)
+            if (selectedFamilyMemberIndex == 0) {
+                navigateToSelectedProfileDetail()
+            } else {
+                switchFamilyMember(0)
+            }
         }
 
         binding.layoutMemberWoman.setOnClickListener {
-            switchFamilyMember(1)
+            if (selectedFamilyMemberIndex == 1) {
+                navigateToSelectedProfileDetail()
+            } else {
+                switchFamilyMember(1)
+            }
         }
 
         binding.layoutMemberAdd.setOnClickListener {
-            val intent = Intent(requireContext(), AddProfileActivity::class.java)
-            startActivity(intent)
+            AddProfileActivity.start(requireContext(), isAddMember = true)
         }
+    }
+
+    private fun navigateToSelectedProfileDetail() {
+        val ctx = context ?: return
+        val profileRepository = ProfileRepository.getInstance(ctx)
+        val allProfiles = profileRepository.getAllProfiles()
+        val familyMembers = allProfiles.filter { !it.isPrimary }
+        val targetProfile = if (selectedFamilyMemberIndex == 0 || familyMembers.isEmpty()) {
+            profileRepository.getPrimaryProfile()
+        } else {
+            familyMembers.getOrNull(0) ?: profileRepository.getPrimaryProfile()
+        }
+        ProfileDetailActivity.start(ctx, targetProfile.id)
     }
 
     /**

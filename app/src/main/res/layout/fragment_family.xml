@@ -34,28 +34,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Top Right "+" Button (Hidden when no members yet, per requirement) -->
-        <FrameLayout
+        <!-- Top Right "+" Button (Using ic_add_profile, hidden when no members yet) -->
+        <ImageView
             android:id="@+id/btnAddMemberTop"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_circle_primary_button"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/title_add_member"
             android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add_profile"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_plus_white" />
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Family Members List (Visible when members exist) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFamilyMembers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="4dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar" />
 
     <!-- Empty State Content Container (Centered Vertically) -->
     <LinearLayout
@@ -112,15 +121,17 @@
             android:textColor="@color/color_subtext"
             android:textSize="14sp" />
 
-        <!-- Primary Action Button: "Add first member" (191px x 52px, Radius 112px, #0F67FE) -->
+        <!-- Primary Action Button: "+ Add first member" (191px x 52px, Radius 112px, #0F67FE) -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAddFirstMember"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
             android:layout_marginTop="28dp"
             android:minWidth="191dp"
-            android:paddingHorizontal="32dp"
+            android:paddingHorizontal="24dp"
             android:background="@drawable/bg_pill_btn_blue"
+            android:drawableStart="@drawable/ic_plus_small_white"
+            android:drawablePadding="8dp"
             android:fontFamily="@font/urbanist_semibold"
             app:fontFamily="@font/urbanist_semibold"
             android:stateListAnimator="@null"

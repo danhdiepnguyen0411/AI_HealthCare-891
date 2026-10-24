@@ -167,7 +167,6 @@ class SwipeRevealLayout @JvmOverloads constructor(
                 initialMotionX = ev.x
                 initialMotionY = ev.y
                 isDragging = false
-                dragHelper.processTouchEvent(ev)
             }
             MotionEvent.ACTION_MOVE -> {
                 val dx = abs(ev.x - initialMotionX)
@@ -205,9 +204,23 @@ class SwipeRevealLayout @JvmOverloads constructor(
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                val dx = abs(ev.x - initialMotionX)
+                val dy = abs(ev.y - initialMotionY)
+                if (ev.actionMasked == MotionEvent.ACTION_UP && dx <= dragHelper.touchSlop && dy <= dragHelper.touchSlop) {
+                    if (isOpen) {
+                        close(true)
+                    } else {
+                        performClick()
+                    }
+                }
                 parent?.requestDisallowInterceptTouchEvent(false)
             }
         }
+        return true
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
         return true
     }
 

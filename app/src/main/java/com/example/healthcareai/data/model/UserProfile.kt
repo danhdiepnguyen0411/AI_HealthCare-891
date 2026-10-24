@@ -9,5 +9,6 @@ data class UserProfile(
     val heightCm: Int,
     val weightKg: Int,
     val isPrimary: Boolean = true,
+    val relationship: String? = null,
     val createdAt: Long = System.currentTimeMillis()
 )
