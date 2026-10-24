@@ -6,7 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.healthcareai.R
@@ -47,21 +51,43 @@ class LanguageActivity : BaseActivity() {
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupWindowInsets()
         setupToolbar()
         setupLanguageList()
         setupBackPress()
     }
 
+    private fun setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            val density = resources.displayMetrics.density
+            val targetTopMargin = if (statusBarTop > 0) {
+                statusBarTop + (8 * density).toInt()
+            } else {
+                (36 * density).toInt()
+            }
+            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                if (topMargin != targetTopMargin) {
+                    topMargin = targetTopMargin
+                }
+            }
+            insets
+        }
+        ViewCompat.requestApplyInsets(binding.rootLayout)
+    }
+
     private fun setupToolbar() {
         if (isFromSettings) {
             binding.btnBack.visibility = View.VISIBLE
+            binding.tvSubtitle.visibility = View.GONE
             binding.btnBack.setOnClickListener {
                 handleBackPressed()
             }
             updateDoneButtonState(hasSelection = true, animate = false)
         } else {
-            // First launch: hide back button completely
+            // First launch: hide back button completely, show subtitle
             binding.btnBack.visibility = View.GONE
+            binding.tvSubtitle.visibility = View.VISIBLE
             updateDoneButtonState(hasSelection = false, animate = false)
         }
 
