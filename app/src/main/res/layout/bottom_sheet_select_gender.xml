@@ -1,52 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottom_sheet_rounded"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="12dp"
-    android:paddingBottom="32dp">
+    android:paddingBottom="24dp">
 
     <!-- Drag Handle -->
     <View
         android:layout_width="40dp"
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_bottom_sheet_drag_handle" />
 
-    <!-- Title -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/urbanist"
-        android:text="@string/select_gender_title"
-        android:textColor="@color/color_text"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <!-- Top Bar: Title & Close Button -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist"
+            android:text="@string/title_gender_sheet"
+            android:textColor="@color/color_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/bg_circle_close_button"
+            android:clickable="true"
+            android:contentDescription="@string/btn_cancel"
+            android:focusable="true"
+            android:padding="9dp"
+            android:src="@drawable/ic_close_gray" />
+    </FrameLayout>
 
     <!-- Male Option -->
     <FrameLayout
         android:id="@+id/cardGenderMale"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_profile_input_card"
+        android:layout_height="56dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_bottom_sheet_item_selected"
         android:clickable="true"
-        android:elevation="1dp"
         android:focusable="true">
 
         <TextView
+            android:id="@+id/tvGenderMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/urbanist_medium"
             android:text="@string/gender_male"
-            android:textColor="@color/color_text"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <ImageView
@@ -55,26 +72,25 @@
             android:layout_height="22dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/bg_green_check_circle"
-            android:visibility="visible" />
+            android:src="@drawable/bg_checkbox_selected_white" />
     </FrameLayout>
 
     <!-- Female Option -->
     <FrameLayout
         android:id="@+id/cardGenderFemale"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_profile_input_card"
+        android:layout_height="56dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_bottom_sheet_item_unselected"
         android:clickable="true"
-        android:elevation="1dp"
         android:focusable="true">
 
         <TextView
+            android:id="@+id/tvGenderFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/urbanist_medium"
             android:text="@string/gender_female"
             android:textColor="@color/color_text"
@@ -86,25 +102,24 @@
             android:layout_height="22dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/bg_green_check_circle"
-            android:visibility="gone" />
+            android:src="@drawable/bg_checkbox_unchecked" />
     </FrameLayout>
 
     <!-- Other Option -->
     <FrameLayout
         android:id="@+id/cardGenderOther"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/bg_profile_input_card"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_bottom_sheet_item_unselected"
         android:clickable="true"
-        android:elevation="1dp"
         android:focusable="true">
 
         <TextView
+            android:id="@+id/tvGenderOther"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/urbanist_medium"
             android:text="@string/gender_other"
             android:textColor="@color/color_text"
@@ -116,8 +131,29 @@
             android:layout_height="22dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/bg_green_check_circle"
-            android:visibility="gone" />
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- Save Button -->
+    <FrameLayout
+        android:id="@+id/btnSaveGender"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/btn_save"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </FrameLayout>
 
 </LinearLayout>

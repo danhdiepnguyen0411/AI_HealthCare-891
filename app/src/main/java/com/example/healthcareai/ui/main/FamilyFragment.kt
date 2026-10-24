@@ -9,16 +9,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthcareai.R
+import com.example.healthcareai.data.model.UserProfile
+import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.FragmentFamilyBinding
+import com.example.healthcareai.ui.profile.AddProfileActivity
+import com.example.healthcareai.ui.profile.ProfileDetailActivity
 
 class FamilyFragment : Fragment() {
 
     private var _binding: FragmentFamilyBinding? = null
     private val binding get() = _binding!!
-
-    // Simulating family members list (initially empty)
-    private val familyMembers = mutableListOf<String>()
+    private lateinit var profileRepository: ProfileRepository
+    private lateinit var memberAdapter: FamilyMemberAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +35,45 @@ class FamilyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        profileRepository = ProfileRepository.getInstance(requireContext())
 
+        setupRecyclerView()
         setupWindowInsets()
         updateUiState()
         setupListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUiState()
+    }
+
+    private fun setupRecyclerView() {
+        memberAdapter = FamilyMemberAdapter(
+            onItemClick = { member ->
+                ProfileDetailActivity.start(requireContext(), member.id)
+            },
+            onItemDelete = { member ->
+                showDeleteMemberDialog(member)
+            }
+        )
+        binding.rvFamilyMembers.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = memberAdapter
+        }
+    }
+
+    private fun showDeleteMemberDialog(member: UserProfile) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.dialog_delete_member_title)
+            .setMessage(getString(R.string.dialog_delete_member_msg, member.name))
+            .setPositiveButton(R.string.btn_remove) { _, _ ->
+                profileRepository.deleteProfile(member.id)
+                Toast.makeText(requireContext(), R.string.msg_member_removed, Toast.LENGTH_SHORT).show()
+                updateUiState()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun setupWindowInsets() {
@@ -56,30 +96,30 @@ class FamilyFragment : Fragment() {
 
     /**
      * Updates UI based on whether family members exist:
-     * - When empty: Top right "+" button is hidden (GONE), empty state illustration and "Add first member" shown.
-     * - When members exist: Top right "+" button is visible.
+     * - Top right "+" button is hidden (GONE) when no members exist, visible when members exist.
+     * - Empty state shown when 0 members exist.
+     * - Card list shown when 1+ members exist.
      */
     private fun updateUiState() {
+        val familyMembers = profileRepository.getFamilyMembers()
         val hasMembers = familyMembers.isNotEmpty()
+
         binding.btnAddMemberTop.visibility = if (hasMembers) View.VISIBLE else View.GONE
         binding.layoutEmptyState.visibility = if (hasMembers) View.GONE else View.VISIBLE
+        binding.rvFamilyMembers.visibility = if (hasMembers) View.VISIBLE else View.GONE
+
+        if (hasMembers) {
+            memberAdapter.submitList(familyMembers)
+        }
     }
 
     private fun setupListeners() {
         binding.btnAddFirstMember.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                R.string.family_add_member_hint,
-                Toast.LENGTH_SHORT
-            ).show()
+            AddProfileActivity.start(requireContext(), isAddMember = true)
         }
 
         binding.btnAddMemberTop.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                R.string.family_add_member_hint,
-                Toast.LENGTH_SHORT
-            ).show()
+            AddProfileActivity.start(requireContext(), isAddMember = true)
         }
     }
 

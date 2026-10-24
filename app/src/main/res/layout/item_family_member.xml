@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_history_delete_card">
+
+    <!-- Secondary View: Background Red Delete Action (width 84dp, #FF4D4F, 20dp radius) -->
+    <FrameLayout
+        android:id="@+id/btnDeleteAction"
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/btn_remove"
+            android:src="@drawable/ic_delete_white" />
+
+    </FrameLayout>
+
+    <!-- Main View: Foreground White Card (Radius 20px) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardForeground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_white_18"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp">
+
+        <!-- Avatar Container (Always clipped to circle) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAvatar"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:id="@+id/ivMemberAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_person" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Member Info (Name, Relationship, Gender) -->
+        <LinearLayout
+            android:id="@+id/layoutInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivChevron"
+            app:layout_constraintStart_toEndOf="@+id/cardAvatar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Name and Relationship -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvMemberName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Harry" />
+
+                <TextView
+                    android:id="@+id/tvMemberRelationship"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="14sp"
+                    tools:text="(Husband)" />
+            </LinearLayout>
+
+            <!-- Gender -->
+            <TextView
+                android:id="@+id/tvMemberGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp"
+                tools:text="Male" />
+        </LinearLayout>
+
+        <!-- Right Chevron Icon -->
+        <ImageView
+            android:id="@+id/ivChevron"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/color_subtext" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout>

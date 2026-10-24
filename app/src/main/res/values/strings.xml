@@ -50,6 +50,10 @@
     
     <!-- Add Profile -->
     <string name="title_add_profile">Add profile</string>
+    <string name="title_add_member">Add member</string>
+    <string name="title_detail_profile">Detail Profile</string>
+    <string name="title_profile_detail">Detail Profile</string>
+    <string name="msg_member_added">Member added to Family!</string>
     <string name="add_avatar">Add Avatar</string>
     <string name="label_full_name">Full name</string>
     <string name="hint_full_name">Enter full name</string>
@@ -65,12 +69,37 @@
     <string name="hint_weight">Weight</string>
     <string name="unit_kg">kg</string>
     <string name="btn_create_profile">Create profile</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_close">Close</string>
+    <string name="title_gender_sheet">Gender</string>
     <string name="select_gender_title">Select Gender</string>
     <string name="error_name_empty">Please enter your name</string>
     <string name="error_dob_empty">Please select your date of birth</string>
     <string name="error_gender_empty">Please select your gender</string>
     <string name="error_height_empty">Please enter your height</string>
     <string name="error_weight_empty">Please enter your weight</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">Relationship</string>
+    <string name="hint_relationship">Select relationship</string>
+    <string name="title_relationship_sheet">Relationship</string>
+    <string name="select_relationship_title">Select Relationship</string>
+    <string name="rel_father">Father</string>
+    <string name="rel_mother">Mother</string>
+    <string name="rel_spouse">Spouse</string>
+    <string name="rel_husband">Husband</string>
+    <string name="rel_wife">Wife</string>
+    <string name="rel_son">Son</string>
+    <string name="rel_daughter">Daughter</string>
+    <string name="rel_brother">Brother</string>
+    <string name="rel_sister">Sister</string>
+    <string name="rel_grandparent">Grandparent</string>
+    <string name="rel_other">Other</string>
+    <string name="dialog_delete_member_title">Remove Member</string>
+    <string name="dialog_delete_member_msg">Are you sure you want to remove %1$s from Family Hub?</string>
+    <string name="btn_remove">Remove</string>
+    <string name="msg_member_removed">Member removed from Family Hub</string>
     
     <!-- My Health Screen -->
     <string name="title_my_health">My Health</string>

@@ -25,8 +25,11 @@ import com.example.healthcareai.data.model.UserProfile
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.ActivityAddProfileBinding
 import com.example.healthcareai.databinding.BottomSheetSelectGenderBinding
+import com.example.healthcareai.databinding.BottomSheetSelectRelationshipBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.main.MainActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -43,6 +46,8 @@ class AddProfileActivity : BaseActivity() {
     private val dobDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
     private var selectedDob: String = ""
     private var selectedGender: String = ""
+    private var selectedRelationship: String = ""
+    private var isAddMemberMode: Boolean = false
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -68,6 +73,16 @@ class AddProfileActivity : BaseActivity() {
         profileRepository = ProfileRepository.getInstance(this)
         preferenceHelper = PreferenceHelper.getInstance(this)
 
+        isAddMemberMode = intent.getBooleanExtra(EXTRA_IS_ADD_MEMBER, false) || preferenceHelper.isProfileCreated
+        if (isAddMemberMode) {
+            binding.tvTitle.setText(R.string.title_add_member)
+            binding.tvBtnCreateProfile.setText(R.string.title_add_member)
+            binding.btnBack.visibility = View.VISIBLE
+            binding.btnBack.setOnClickListener { finish() }
+            binding.layoutRelationship.visibility = View.VISIBLE
+            binding.cardRelationship.setOnClickListener { showRelationshipBottomSheet() }
+        }
+
         setupKeyboardInsetsListener()
         setupListeners()
         setupBackPress()
@@ -76,11 +91,15 @@ class AddProfileActivity : BaseActivity() {
     private fun setupBackPress() {
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@AddProfileActivity, com.example.healthcareai.ui.intro.IntroActivity::class.java).apply {
-                    putExtra(com.example.healthcareai.ui.intro.IntroActivity.EXTRA_START_PAGE, 3)
+                if (isAddMemberMode) {
+                    finish()
+                } else {
+                    val intent = Intent(this@AddProfileActivity, com.example.healthcareai.ui.intro.IntroActivity::class.java).apply {
+                        putExtra(com.example.healthcareai.ui.intro.IntroActivity.EXTRA_START_PAGE, 3)
+                    }
+                    startActivity(intent)
+                    finish()
                 }
-                startActivity(intent)
-                finish()
             }
         })
     }
@@ -326,32 +345,114 @@ class AddProfileActivity : BaseActivity() {
         val sheetBinding = BottomSheetSelectGenderBinding.inflate(layoutInflater)
         bottomSheet.setContentView(sheetBinding.root)
 
-        fun updateChecks(gender: String) {
-            sheetBinding.ivCheckMale.visibility = if (gender == "Male") View.VISIBLE else View.GONE
-            sheetBinding.ivCheckFemale.visibility = if (gender == "Female") View.VISIBLE else View.GONE
-            sheetBinding.ivCheckOther.visibility = if (gender == "Other") View.VISIBLE else View.GONE
+        bottomSheet.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheet.behavior.skipCollapsed = true
+
+        var tempGender = selectedGender.ifEmpty { "Male" }
+
+        val genderOptions = listOf(
+            Triple(sheetBinding.cardGenderMale, sheetBinding.tvGenderMale, sheetBinding.ivCheckMale) to "Male",
+            Triple(sheetBinding.cardGenderFemale, sheetBinding.tvGenderFemale, sheetBinding.ivCheckFemale) to "Female",
+            Triple(sheetBinding.cardGenderOther, sheetBinding.tvGenderOther, sheetBinding.ivCheckOther) to "Other"
+        )
+
+        fun updateGenderUI(selected: String) {
+            tempGender = selected
+            for ((views, name) in genderOptions) {
+                val (card, tv, iv) = views
+                val isSelected = (name == selected)
+                if (isSelected) {
+                    card.setBackgroundResource(R.drawable.bg_bottom_sheet_item_selected)
+                    tv.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    iv.setImageResource(R.drawable.bg_checkbox_selected_white)
+                } else {
+                    card.setBackgroundResource(R.drawable.bg_bottom_sheet_item_unselected)
+                    tv.setTextColor(ContextCompat.getColor(this, R.color.color_text))
+                    iv.setImageResource(R.drawable.bg_checkbox_unchecked)
+                }
+            }
         }
 
-        updateChecks(selectedGender)
+        updateGenderUI(tempGender)
 
-        sheetBinding.cardGenderMale.setOnClickListener {
-            selectedGender = "Male"
-            binding.tvGender.text = getString(R.string.gender_male)
-            updateChecks(selectedGender)
+        for ((views, name) in genderOptions) {
+            views.first.setOnClickListener {
+                updateGenderUI(name)
+            }
+        }
+
+        sheetBinding.btnClose.setOnClickListener {
             bottomSheet.dismiss()
         }
 
-        sheetBinding.cardGenderFemale.setOnClickListener {
-            selectedGender = "Female"
-            binding.tvGender.text = getString(R.string.gender_female)
-            updateChecks(selectedGender)
+        sheetBinding.btnSaveGender.setOnClickListener {
+            selectedGender = tempGender
+            binding.tvGender.text = when (tempGender) {
+                "Male" -> getString(R.string.gender_male)
+                "Female" -> getString(R.string.gender_female)
+                else -> getString(R.string.gender_other)
+            }
             bottomSheet.dismiss()
         }
 
-        sheetBinding.cardGenderOther.setOnClickListener {
-            selectedGender = "Other"
-            binding.tvGender.text = getString(R.string.gender_other)
-            updateChecks(selectedGender)
+        bottomSheet.show()
+    }
+
+    private fun showRelationshipBottomSheet() {
+        hideKeyboard()
+        val bottomSheet = BottomSheetDialog(this, R.style.TransparentBottomSheetDialogTheme)
+        val sheetBinding = BottomSheetSelectRelationshipBinding.inflate(layoutInflater)
+        bottomSheet.setContentView(sheetBinding.root)
+
+        bottomSheet.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheet.behavior.skipCollapsed = true
+
+        var tempRelationship = selectedRelationship.ifEmpty { "Son" }
+
+        val relOptions = listOf(
+            Triple(sheetBinding.cardRelFather, sheetBinding.tvRelFather, sheetBinding.ivCheckFather) to "Father",
+            Triple(sheetBinding.cardRelMother, sheetBinding.tvRelMother, sheetBinding.ivCheckMother) to "Mother",
+            Triple(sheetBinding.cardRelSpouse, sheetBinding.tvRelSpouse, sheetBinding.ivCheckSpouse) to "Spouse",
+            Triple(sheetBinding.cardRelSon, sheetBinding.tvRelSon, sheetBinding.ivCheckSon) to "Son",
+            Triple(sheetBinding.cardRelDaughter, sheetBinding.tvRelDaughter, sheetBinding.ivCheckDaughter) to "Daughter",
+            Triple(sheetBinding.cardRelBrother, sheetBinding.tvRelBrother, sheetBinding.ivCheckBrother) to "Brother",
+            Triple(sheetBinding.cardRelSister, sheetBinding.tvRelSister, sheetBinding.ivCheckSister) to "Sister",
+            Triple(sheetBinding.cardRelGrandparent, sheetBinding.tvRelGrandparent, sheetBinding.ivCheckGrandparent) to "Grandparent",
+            Triple(sheetBinding.cardRelOther, sheetBinding.tvRelOther, sheetBinding.ivCheckOther) to "Other"
+        )
+
+        fun updateRelationshipUI(selected: String) {
+            tempRelationship = selected
+            for ((views, name) in relOptions) {
+                val (card, tv, iv) = views
+                val isSelected = (name == selected)
+                if (isSelected) {
+                    card.setBackgroundResource(R.drawable.bg_bottom_sheet_item_selected)
+                    tv.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    iv.setImageResource(R.drawable.bg_checkbox_selected_white)
+                } else {
+                    card.setBackgroundResource(R.drawable.bg_bottom_sheet_item_unselected)
+                    tv.setTextColor(ContextCompat.getColor(this, R.color.color_text))
+                    iv.setImageResource(R.drawable.bg_checkbox_unchecked)
+                }
+            }
+        }
+
+        updateRelationshipUI(tempRelationship)
+
+        for ((views, name) in relOptions) {
+            views.first.setOnClickListener {
+                updateRelationshipUI(name)
+            }
+        }
+
+        sheetBinding.btnClose.setOnClickListener {
+            bottomSheet.dismiss()
+        }
+
+        sheetBinding.btnSaveRelationship.setOnClickListener {
+            selectedRelationship = tempRelationship
+            binding.tvRelationship.text = tempRelationship
             bottomSheet.dismiss()
         }
 
@@ -394,7 +495,7 @@ class AddProfileActivity : BaseActivity() {
             return
         }
 
-        val isFirstProfile = !preferenceHelper.isProfileCreated
+        val isFirstProfile = !preferenceHelper.isProfileCreated && !isAddMemberMode
         if (!isFirstProfile) {
             val profile = UserProfile(
                 name = name,
@@ -403,10 +504,11 @@ class AddProfileActivity : BaseActivity() {
                 gender = selectedGender,
                 heightCm = height,
                 weightKg = weight,
-                isPrimary = false
+                isPrimary = false,
+                relationship = selectedRelationship.ifEmpty { null }
             )
             profileRepository.addFamilyMemberProfile(profile)
-            Toast.makeText(this, "Profile added to Family!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.msg_member_added, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -433,8 +535,12 @@ class AddProfileActivity : BaseActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, AddProfileActivity::class.java)
+        const val EXTRA_IS_ADD_MEMBER = "extra_is_add_member"
+
+        fun start(context: Context, isAddMember: Boolean = false) {
+            val intent = Intent(context, AddProfileActivity::class.java).apply {
+                putExtra(EXTRA_IS_ADD_MEMBER, isAddMember)
+            }
             context.startActivity(intent)
         }
     }

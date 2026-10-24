@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <!-- Top Bar: Title & Close Button -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist"
+            android:text="@string/title_relationship_sheet"
+            android:textColor="@color/color_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/bg_circle_close_button"
+            android:clickable="true"
+            android:contentDescription="@string/btn_cancel"
+            android:focusable="true"
+            android:padding="9dp"
+            android:src="@drawable/ic_close_gray" />
+    </FrameLayout>
+
+    <!-- Scrollable Options List -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollRelationship"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 1. Father -->
+            <FrameLayout
+                android:id="@+id/cardRelFather"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelFather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_father"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckFather"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 2. Mother -->
+            <FrameLayout
+                android:id="@+id/cardRelMother"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelMother"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_mother"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckMother"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 3. Spouse -->
+            <FrameLayout
+                android:id="@+id/cardRelSpouse"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelSpouse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_spouse"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckSpouse"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 4. Son -->
+            <FrameLayout
+                android:id="@+id/cardRelSon"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_selected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelSon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_son"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckSon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_selected_white" />
+            </FrameLayout>
+
+            <!-- 5. Daughter -->
+            <FrameLayout
+                android:id="@+id/cardRelDaughter"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelDaughter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_daughter"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckDaughter"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 6. Brother -->
+            <FrameLayout
+                android:id="@+id/cardRelBrother"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelBrother"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_brother"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckBrother"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 7. Sister -->
+            <FrameLayout
+                android:id="@+id/cardRelSister"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelSister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_sister"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckSister"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 8. Grandparent -->
+            <FrameLayout
+                android:id="@+id/cardRelGrandparent"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelGrandparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_grandparent"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckGrandparent"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+            <!-- 9. Other -->
+            <FrameLayout
+                android:id="@+id/cardRelOther"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_bottom_sheet_item_unselected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRelOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:text="@string/rel_other"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivCheckOther"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/bg_checkbox_unchecked" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Save Button -->
+    <FrameLayout
+        android:id="@+id/btnSaveRelationship"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/btn_save"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</LinearLayout>
