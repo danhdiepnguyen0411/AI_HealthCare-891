@@ -18,6 +18,7 @@ import com.example.healthcareai.ui.symptom.SymptomCheckerActivity
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.ui.chat.AiChatActivity
 import com.example.healthcareai.ui.profile.AddProfileActivity
 import com.example.healthcareai.ui.profile.ProfileDetailActivity
 import java.util.Calendar
@@ -101,11 +102,7 @@ class HomeFragment : Fragment() {
 
         // "Chat with AI" button in the assistant card
         binding.btnChatWithAi.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Connecting to your personal AI Health Assistant...",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), AiChatActivity::class.java))
         }
 
         // Feature Card 1: Health Scan -> Switch to Scan Tab

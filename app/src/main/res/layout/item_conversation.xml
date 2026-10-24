@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    android:background="@drawable/bg_history_delete_card"
+    android:elevation="1.5dp">
+
+    <!-- Secondary View: Background Red Delete Action (Figma: 90px width, #FF4D4F, 20px radius) -->
+    <FrameLayout
+        android:id="@+id/btnDeleteAction"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_delete_white" />
+
+    </FrameLayout>
+
+    <!-- Main View: Foreground White Card (Figma: 358px Fill, Hug 110px, Radius 20px, Elevation 1.5dp) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardForeground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="110dp"
+        android:background="@drawable/bg_conversation_card"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="1.5dp"
+        android:padding="20dp">
+
+        <!-- Conversation Title (Figma: Urbanist SemiBold 600, 16sp, lineHeight 24sp, #242E49) -->
+        <TextView
+            android:id="@+id/tvConversationTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="24sp"
+            android:maxLines="1"
+            android:textColor="@color/color_text"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivRecent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Healthy lifestyle tips" />
+
+        <!-- Open Icon (↗) (Figma: 8dp x 8dp, Top: 8dp, Color: #56627A) -->
+        <ImageView
+            android:id="@+id/ivRecent"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_recent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Last Snippet (Figma: Urbanist Regular 400, 14sp, lineHeight 20sp, #56627A) -->
+        <TextView
+            android:id="@+id/tvConversationSnippet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="20sp"
+            android:maxLines="1"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivRecent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConversationTitle"
+            tools:text="Give me daily habits to improve my overall he..." />
+
+        <!-- Timestamp (e.g. 2 hours ago) -->
+        <TextView
+            android:id="@+id/tvConversationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:lineHeight="16sp"
+            android:textColor="#8A98A8"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConversationSnippet"
+            tools:text="2 hours ago" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout>

@@ -334,4 +334,38 @@
     <string name="assessment_progress_format">%1$d/%2$d</string>
     <string name="btn_continue">Continue</string>
     <string name="btn_back">Back</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">AI Health Assistant</string>
+    <string name="ai_chat_welcome_title">How can I help with your\nhealth today?</string>
+    <string name="ai_chat_suggestion_1_title">Healthy lifestyle tips</string>
+    <string name="ai_chat_suggestion_1_desc">Give me daily habits to improve my overall he...</string>
+    <string name="ai_chat_suggestion_1_query">Give me daily habits to improve my overall health and wellness.</string>
+    <string name="ai_chat_suggestion_2_title">Explain my scan results</string>
+    <string name="ai_chat_suggestion_2_desc">Help me understand my skin or dental scan.</string>
+    <string name="ai_chat_suggestion_2_query">Help me understand my skin or dental scan results and recommendations.</string>
+    <string name="ai_chat_suggestion_3_title">Review my health data</string>
+    <string name="ai_chat_suggestion_3_desc">Analyze my heart rate, sleep, and activity.</string>
+    <string name="ai_chat_suggestion_3_query">Analyze my heart rate, sleep, and activity data to give me actionable insights.</string>
+    <string name="ai_chat_input_hint">Ask me anything...</string>
+    <string name="ai_chat_new_chat">New Conversation</string>
+    <string name="ai_chat_clear_confirm_title">Start New Chat?</string>
+    <string name="ai_chat_clear_confirm_msg">Would you like to clear the current conversation and start fresh?</string>
+    <string name="ai_chat_listening">Listening... speak now</string>
+    <string name="ai_chat_mic_permission_required">Microphone permission is required for voice messaging.</string>
+    <string name="ai_chat_error_fallback">I\'m sorry, I couldn\'t process that right now. Please check your connection and try again.</string>
+    <string name="ai_chat_today">Today</string>
+    <string name="ai_chat_yesterday">Yesterday</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">Conversation</string>
+    <string name="conversation_empty_title">No conversations yet</string>
+    <string name="conversation_empty_desc">Start a conversation to get personalized\nhealth advice and support.</string>
+    <string name="time_just_now">Just now</string>
+    <string name="time_minute_ago">1 minute ago</string>
+    <string name="time_minutes_ago">%d minutes ago</string>
+    <string name="time_hour_ago">1 hour ago</string>
+    <string name="time_hours_ago">%d hours ago</string>
+    <string name="time_day_ago">1 day ago</string>
+    <string name="time_days_ago">%d days ago</string>
 </resources>
