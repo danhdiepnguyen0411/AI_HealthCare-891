@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootAiChat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgr">
+
+    <!-- Top App Bar (Header) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="0dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back Button -->
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_back" />
+        </FrameLayout>
+
+        <!-- Centered Screen Title (Figma: Urbanist Bold 700, 22sp, 27sp line height, letterSpacing 0, #242E49) -->
+        <TextView
+            android:id="@+id/tvScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:maxLines="1"
+            android:text="@string/ai_chat_title"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Conversation / History / New Chat Button -->
+        <FrameLayout
+            android:id="@+id/btnConversationHistory"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_conversation" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Empty / Welcome Layout (Visible when no messages exist) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layoutWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBarContainer"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="20dp">
+
+            <!-- Mascot Illustration -->
+            <ImageView
+                android:id="@+id/ivMascot"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:contentDescription="@null"
+                android:src="@drawable/agent_chat" />
+
+            <!-- Headline -->
+            <TextView
+                android:id="@+id/tvWelcomeHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/ai_chat_welcome_title"
+                android:textColor="#0843C6"
+                android:textSize="22sp" />
+
+            <!-- Suggestion Card 1: Healthy lifestyle tips (Figma: 358px Fill x 88px Hug, 20px padding, 20px radius, transparent bg) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSuggestion1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/bg_chat_suggestion_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="88dp"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvSuggestion1Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/urbanist_semibold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="24sp"
+                    android:text="@string/ai_chat_suggestion_1_title"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSuggestion1Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="20sp"
+                    android:maxLines="1"
+                    android:text="@string/ai_chat_suggestion_1_desc"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSuggestion1Title" />
+
+                <ImageView
+                    android:id="@+id/ivRecent1"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_recent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Suggestion Card 2: Explain my scan results (Figma: 358px Fill x 88px Hug, 20px padding, 20px radius, transparent bg) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSuggestion2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chat_suggestion_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="88dp"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvSuggestion2Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/urbanist_semibold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="24sp"
+                    android:text="@string/ai_chat_suggestion_2_title"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSuggestion2Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="20sp"
+                    android:maxLines="1"
+                    android:text="@string/ai_chat_suggestion_2_desc"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSuggestion2Title" />
+
+                <ImageView
+                    android:id="@+id/ivRecent2"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_recent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Suggestion Card 3: Review my health data (Figma: 358px Fill x 88px Hug, 20px padding, 20px radius, transparent bg) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSuggestion3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chat_suggestion_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="88dp"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvSuggestion3Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/urbanist_semibold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="24sp"
+                    android:text="@string/ai_chat_suggestion_3_title"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSuggestion3Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="20sp"
+                    android:maxLines="1"
+                    android:text="@string/ai_chat_suggestion_3_desc"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRecent3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSuggestion3Title" />
+
+                <ImageView
+                    android:id="@+id/ivRecent3"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_recent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Active Conversation Message List (Visible when messages exist) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBarContainer"
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+
+    <!-- Bottom Input Bar Container (Generously padded above bottom edge) -->
+    <FrameLayout
+        android:id="@+id/bottomBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgr"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Mode 1: Normal Text Input Bar -->
+        <LinearLayout
+            android:id="@+id/layoutInputNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Gallery/Album Icon Button -->
+            <FrameLayout
+                android:id="@+id/btnGallery"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_album" />
+            </FrameLayout>
+
+            <!-- Capsule Input Box with Mic inside -->
+            <LinearLayout
+                android:id="@+id/containerInputCapsule"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chat_input_capsule"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp">
+
+                <EditText
+                    android:id="@+id/etMessageInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/urbanist"
+                    android:hint="@string/ai_chat_input_hint"
+                    android:imeOptions="actionSend"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLines="3"
+                    android:textColor="#242E49"
+                    android:textColorHint="#8A98A8"
+                    android:textSize="14sp" />
+
+                <!-- Mic Icon Button inside Capsule -->
+                <ImageView
+                    android:id="@+id/btnMic"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_micro" />
+
+            </LinearLayout>
+
+            <!-- Send Button (dimmed by default when empty) -->
+            <FrameLayout
+                android:id="@+id/btnSend"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:alpha="0.45"
+                android:background="@drawable/bg_chat_send_button"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false">
+
+                <ImageView
+                    android:id="@+id/ivSend"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_seen" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Mode 2: Voice Audio Recording Bar (Group 11356 in Screenshot 2) -->
+        <LinearLayout
+            android:id="@+id/layoutInputVoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <!-- Cancel Button (X) -->
+            <FrameLayout
+                android:id="@+id/btnCancelVoice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_circle_close_button"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_close_gray" />
+            </FrameLayout>
+
+            <!-- Sound Waveform Capsule with Pause/Stop icon inside -->
+            <LinearLayout
+                android:id="@+id/containerVoiceCapsule"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chat_input_capsule"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp">
+
+                <TextView
+                    android:id="@+id/tvVoiceWaveform"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:letterSpacing="0.25"
+                    android:maxLines="1"
+                    android:text="• • • • • • • • • • • • • • • • • • • •"
+                    android:textColor="#56627A"
+                    android:textSize="16sp" />
+
+                <!-- Pause/Stop Button inside Voice Capsule -->
+                <ImageView
+                    android:id="@+id/btnPauseVoice"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_pause" />
+
+            </LinearLayout>
+
+            <!-- Send Voice Recording Button -->
+            <FrameLayout
+                android:id="@+id/btnSendVoice"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:alpha="0.45"
+                android:background="@drawable/bg_chat_send_button"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false">
+
+                <ImageView
+                    android:id="@+id/ivSendVoice"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_seen" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@
     <color name="color_text">#242E49</color>
     <color name="color_subtext">#56627A</color>
     <color name="text_tertiary">#BEC5D2</color>
+    <color name="neutral_03">#7A808C</color>
     <color name="uninstall_text_title">#131B2E</color>
     <color name="uninstall_text_desc">#434840</color>
 

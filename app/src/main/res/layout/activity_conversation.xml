@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootConversation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgr">
+
+    <!-- Top App Bar (Header) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="0dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back Button -->
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_back" />
+        </FrameLayout>
+
+        <!-- Centered Screen Title: Conversation (Figma: Urbanist Bold 700, 22sp, lineHeight 27sp, 131 Hug x 27 Hug) -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:maxLines="1"
+            android:text="@string/title_conversation"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Empty State (Shown when no conversations exist yet) -->
+    <LinearLayout
+        android:id="@+id/layoutEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
+        tools:visibility="visible">
+
+        <!-- Empty Illustration: no_conversations_yet -->
+        <ImageView
+            android:id="@+id/ivEmptyIllustration"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:contentDescription="@null"
+            android:src="@drawable/no_conversations_yet" />
+
+        <TextView
+            android:id="@+id/tvEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/conversation_empty_title"
+            android:textColor="#242E49"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvEmptyDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/conversation_empty_desc"
+            android:textColor="#56627A"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <!-- RecyclerView of Conversations List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConversations"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
