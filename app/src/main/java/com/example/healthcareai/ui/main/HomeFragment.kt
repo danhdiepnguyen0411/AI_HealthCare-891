@@ -15,6 +15,10 @@ import com.example.healthcareai.databinding.FragmentHomeBinding
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.heartrate.HeartRateActivity
 import com.example.healthcareai.ui.symptom.SymptomCheckerActivity
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.google.android.material.card.MaterialCardView
+import com.example.healthcareai.databinding.ItemHomeFamilyAvatarBinding
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
@@ -182,42 +186,31 @@ class HomeFragment : Fragment() {
             navigateToSelectedProfileDetail()
         }
 
-        binding.layoutMemberThang.setOnClickListener {
-            if (selectedFamilyMemberIndex == 0) {
-                navigateToSelectedProfileDetail()
-            } else {
-                switchFamilyMember(0)
-            }
-        }
-
-        binding.layoutMemberWoman.setOnClickListener {
-            if (selectedFamilyMemberIndex == 1) {
-                navigateToSelectedProfileDetail()
-            } else {
-                switchFamilyMember(1)
-            }
-        }
-
         binding.layoutMemberAdd.setOnClickListener {
             AddProfileActivity.start(requireContext(), isAddMember = true)
+        }
+
+        binding.scrollFamilyAvatars.setOnScrollChangeListener { _, _, _, _, _ ->
+            binding.cardFamilyHub.updateTabBoundsForScroll()
         }
     }
 
     private fun navigateToSelectedProfileDetail() {
         val ctx = context ?: return
         val profileRepository = ProfileRepository.getInstance(ctx)
-        val allProfiles = profileRepository.getAllProfiles()
-        val familyMembers = allProfiles.filter { !it.isPrimary }
-        val targetProfile = if (selectedFamilyMemberIndex == 0 || familyMembers.isEmpty()) {
-            profileRepository.getPrimaryProfile()
-        } else {
-            familyMembers.getOrNull(0) ?: profileRepository.getPrimaryProfile()
+        val familyMembers = profileRepository.getFamilyMembers()
+        if (familyMembers.isEmpty()) {
+            AddProfileActivity.start(ctx, isAddMember = true)
+            return
         }
+        val targetProfile = familyMembers.getOrNull(selectedFamilyMemberIndex) ?: familyMembers[0]
         ProfileDetailActivity.start(ctx, targetProfile.id)
     }
 
     /**
-     * Synchronizes profiles dynamically from ProfileRepository.
+     * Synchronizes profiles dynamically from ProfileRepository and populates
+     * only family members (excluding primary/creator profile) in layoutFamilyAvatarsRow
+     * before layoutMemberAdd.
      */
     private fun syncFamilyProfiles() {
         val context = context ?: return
@@ -225,51 +218,76 @@ class HomeFragment : Fragment() {
         val density = resources.displayMetrics.density
         val strokeSelected = (1 * density).toInt()
 
-        // 1. Primary Profile (Member 1)
-        val primary = profileRepository.getPrimaryProfile()
-        binding.tvMemberThangName.text = primary.name
-        if (!primary.avatarUri.isNullOrEmpty()) {
-            binding.ivMemberThangAvatar.load(primary.avatarUri) {
-                crossfade(true)
-                transformations(CircleCropTransformation())
-                placeholder(R.drawable.profile_person)
-                error(R.drawable.profile_person)
-            }
-        } else {
-            binding.ivMemberThangAvatar.setImageResource(R.drawable.profile_person)
+        val familyMembers = profileRepository.getFamilyMembers()
+
+        val row = binding.layoutFamilyAvatarsRow
+        val addBtn = binding.layoutMemberAdd
+        val addBtnIndex = row.indexOfChild(addBtn)
+        if (addBtnIndex > 0) {
+            row.removeViews(0, addBtnIndex)
         }
 
-        // 2. Family Members (Member 2)
-        val all = profileRepository.getAllProfiles()
-        val familyMembers = all.filter { !it.isPrimary }
-        if (familyMembers.isNotEmpty()) {
-            val second = familyMembers[0]
-            binding.layoutMemberWoman.visibility = View.VISIBLE
-            binding.tvMemberWomanName.text = second.name
-            if (!second.avatarUri.isNullOrEmpty()) {
-                binding.ivMemberWomanAvatar.load(second.avatarUri) {
+        if (familyMembers.isEmpty()) {
+            selectedFamilyMemberIndex = -1
+            (addBtn.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
+                marginStart = 0
+            }
+            binding.cardFamilyHub.selectMember(-1, animate = false, force = true)
+            return
+        }
+
+        if (selectedFamilyMemberIndex !in familyMembers.indices) {
+            selectedFamilyMemberIndex = 0
+        }
+
+        (addBtn.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
+            marginStart = (20 * density).toInt()
+        }
+
+        for ((index, profile) in familyMembers.withIndex()) {
+            val itemBinding = ItemHomeFamilyAvatarBinding.inflate(layoutInflater, row, false)
+            val lp = LinearLayout.LayoutParams(
+                (64 * density).toInt(),
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginStart = if (index == 0) 0 else (20 * density).toInt()
+            }
+            itemBinding.root.layoutParams = lp
+
+            itemBinding.tvMemberName.text = profile.name
+            if (!profile.avatarUri.isNullOrEmpty()) {
+                itemBinding.ivMemberAvatar.load(profile.avatarUri) {
                     crossfade(true)
                     transformations(CircleCropTransformation())
                     placeholder(R.drawable.profile_person)
                     error(R.drawable.profile_person)
                 }
             } else {
-                binding.ivMemberWomanAvatar.setImageResource(R.drawable.profile_person)
+                itemBinding.ivMemberAvatar.setImageResource(R.drawable.profile_person)
             }
-        } else {
-            binding.layoutMemberWoman.visibility = View.GONE
-            selectedFamilyMemberIndex = 0
-            binding.cardFamilyHub.selectMember(0, animate = false)
-            binding.cardMemberThangAvatar.strokeWidth = strokeSelected
-            binding.tvMemberThangName.visibility = View.VISIBLE
-            binding.cardMemberWomanAvatar.strokeWidth = 0
-            binding.tvMemberWomanName.visibility = View.INVISIBLE
+
+            val isSelected = (index == selectedFamilyMemberIndex)
+            itemBinding.cardMemberAvatar.strokeWidth = if (isSelected) strokeSelected else 0
+            itemBinding.tvMemberName.visibility = if (isSelected) View.VISIBLE else View.INVISIBLE
+
+            itemBinding.root.setOnClickListener {
+                if (selectedFamilyMemberIndex == index) {
+                    ProfileDetailActivity.start(requireContext(), profile.id)
+                } else {
+                    switchFamilyMember(index)
+                }
+            }
+
+            val insertIndex = row.indexOfChild(addBtn).coerceAtLeast(0)
+            row.addView(itemBinding.root, insertIndex)
         }
+
+        binding.cardFamilyHub.selectMember(selectedFamilyMemberIndex, animate = false, force = true)
     }
 
     /**
      * Switches active family member with smooth background tab animation,
-     * border toggle, and name visibility toggle without mock data.
+     * border toggle, and name visibility toggle.
      */
     private fun switchFamilyMember(index: Int) {
         if (selectedFamilyMemberIndex == index) return
@@ -278,23 +296,41 @@ class HomeFragment : Fragment() {
         val density = resources.displayMetrics.density
         val strokeSelected = (1 * density).toInt()
 
+        val row = binding.layoutFamilyAvatarsRow
+        val addBtn = binding.layoutMemberAdd
+        val addBtnIndex = row.indexOfChild(addBtn)
+        val profileCount = if (addBtnIndex >= 0) addBtnIndex else row.childCount
+
+        for (i in 0 until profileCount) {
+            val child = row.getChildAt(i) ?: continue
+            val card = child.findViewById<MaterialCardView>(R.id.cardMemberAvatar)
+            val tvName = child.findViewById<TextView>(R.id.tvMemberName)
+            if (i == index) {
+                card?.strokeWidth = strokeSelected
+                tvName?.visibility = View.VISIBLE
+            } else {
+                card?.strokeWidth = 0
+                tvName?.visibility = View.INVISIBLE
+            }
+        }
+
         // Animate custom tab background in FamilyHubCardView
         binding.cardFamilyHub.selectMember(index, animate = true)
 
-        if (index == 0) {
-            // Member 1 (Primary) selected
-            binding.cardMemberThangAvatar.strokeWidth = strokeSelected
-            binding.tvMemberThangName.visibility = View.VISIBLE
+        // Smooth scroll to make selected member visible if near/beyond edge
+        val selectedChild = row.getChildAt(index)
+        if (selectedChild != null) {
+            val scrollX = binding.scrollFamilyAvatars.scrollX
+            val scrollWidth = binding.scrollFamilyAvatars.width
+            val childLeft = selectedChild.left
+            val childRight = selectedChild.right
+            val margin = (20 * density).toInt()
 
-            binding.cardMemberWomanAvatar.strokeWidth = 0
-            binding.tvMemberWomanName.visibility = View.INVISIBLE
-        } else {
-            // Member 2 (Family Member) selected
-            binding.cardMemberWomanAvatar.strokeWidth = strokeSelected
-            binding.tvMemberWomanName.visibility = View.VISIBLE
-
-            binding.cardMemberThangAvatar.strokeWidth = 0
-            binding.tvMemberThangName.visibility = View.INVISIBLE
+            if (childLeft - margin < scrollX) {
+                binding.scrollFamilyAvatars.smoothScrollTo((childLeft - margin).coerceAtLeast(0), 0)
+            } else if (childRight + margin > scrollX + scrollWidth && scrollWidth > 0) {
+                binding.scrollFamilyAvatars.smoothScrollTo(childRight + margin - scrollWidth, 0)
+            }
         }
     }
 
