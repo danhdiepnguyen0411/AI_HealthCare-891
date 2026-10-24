@@ -7,9 +7,10 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
-import android.view.View
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import androidx.core.content.ContextCompat
 import com.example.healthcareai.R
 
@@ -56,30 +57,46 @@ class FamilyHubCardView @JvmOverloads constructor(
 
     private fun calculateTabBounds(index: Int, animate: Boolean) {
         val density = resources.displayMetrics.density
+        val avatarsRow = findViewById<ViewGroup>(R.id.layoutFamilyAvatarsRow)
+        val scrollContainer = findViewById<HorizontalScrollView>(R.id.scrollFamilyAvatars)
+
+        if (index < 0) {
+            targetTabLeft = 0f
+            targetTabRight = 0f
+            currentTabLeft = 0f
+            currentTabRight = 0f
+            hasCalculatedInitialBounds = true
+            invalidate()
+            return
+        }
+
+        val child = avatarsRow?.getChildAt(index)
+        val scrollX = scrollContainer?.scrollX ?: 0
+
         val targetLeft: Float
         val targetRight: Float
 
-        val memberThang = findViewById<View>(R.id.layoutMemberThang)
-        val memberWoman = findViewById<View>(R.id.layoutMemberWoman)
-        val hasSecondMember = memberWoman != null && memberWoman.visibility == View.VISIBLE
+        if (child != null && child.width > 0) {
+            val childLeftInCard = child.left - scrollX
+            val childRightInCard = child.right - scrollX
 
-        if (index == 0 || !hasSecondMember) {
-            targetLeft = 0f
-            targetRight = if (memberThang != null && memberThang.width > 0) {
-                memberThang.right.toFloat() + 10f * density
+            if (index == 0 && scrollX <= (4 * density).toInt()) {
+                targetLeft = 0f
+                targetRight = childRightInCard.toFloat() + 10f * density
             } else {
-                86f * density
+                targetLeft = childLeftInCard.toFloat() - 10f * density
+                targetRight = childRightInCard.toFloat() + 10f * density
             }
         } else {
-            targetLeft = if (memberWoman.width > 0) {
-                memberWoman.left.toFloat() - 10f * density
+            // Fallback before initial child layout measurement
+            val step = 84f * density // 64dp avatar + 20dp margin
+            val start = 12f * density + index * step
+            if (index == 0) {
+                targetLeft = 0f
+                targetRight = 12f * density + 64f * density + 10f * density // 86dp
             } else {
-                92f * density
-            }
-            targetRight = if (memberWoman.width > 0) {
-                memberWoman.right.toFloat() + 10f * density
-            } else {
-                178f * density
+                targetLeft = start - 10f * density
+                targetRight = start + 64f * density + 10f * density
             }
         }
 
@@ -111,10 +128,14 @@ class FamilyHubCardView @JvmOverloads constructor(
         }
     }
 
-    fun selectMember(index: Int, animate: Boolean = true) {
-        if (selectedIndex == index && hasCalculatedInitialBounds) return
+    fun selectMember(index: Int, animate: Boolean = true, force: Boolean = false) {
+        if (!force && selectedIndex == index && hasCalculatedInitialBounds) return
         selectedIndex = index
         calculateTabBounds(index, animate)
+    }
+
+    fun updateTabBoundsForScroll() {
+        calculateTabBounds(selectedIndex, animate = false)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -128,10 +149,40 @@ class FamilyHubCardView @JvmOverloads constructor(
         val density = resources.displayMetrics.density
         // Large soft bottom corner radius (matching Figma and user's bottom pink circle)
         val bottomRadius = 36f * density
-        // Wide, gentle sweeping concave curve (matching Figma and user's top pink circle)
-        val memberWoman = findViewById<View>(R.id.layoutMemberWoman)
-        val hasSecondMember = memberWoman != null && memberWoman.visibility == View.VISIBLE
-        val concaveRadius = if (hasSecondMember) 28f * density else 20f * density
+        val avatarsRow = findViewById<ViewGroup>(R.id.layoutFamilyAvatarsRow)
+        val addBtn = findViewById<android.view.View>(R.id.layoutMemberAdd)
+        val addBtnIndex = avatarsRow?.indexOfChild(addBtn) ?: -1
+        val memberCount = if (addBtnIndex >= 0) addBtnIndex else ((avatarsRow?.childCount ?: 1) - 1).coerceAtLeast(0)
+
+        if (memberCount == 0 || selectedIndex < 0) {
+            // No family members yet: draw standard rounded rectangle card
+            val topRadius = 26f * density
+            path.reset()
+            rectF.set(0f, h - 2 * bottomRadius, 2 * bottomRadius, h)
+            path.arcTo(rectF, 90f, 90f, false)
+
+            path.lineTo(0f, topRadius)
+            rectF.set(0f, 0f, 2 * topRadius, 2 * topRadius)
+            path.arcTo(rectF, 180f, 90f, false)
+
+            path.lineTo(w - topRadius, 0f)
+            rectF.set(w - 2 * topRadius, 0f, w, 2 * topRadius)
+            path.arcTo(rectF, 270f, 90f, false)
+
+            path.lineTo(w, h - bottomRadius)
+            rectF.set(w - 2 * bottomRadius, h - 2 * bottomRadius, w, h)
+            path.arcTo(rectF, 0f, 90f, false)
+
+            path.lineTo(bottomRadius, h)
+            path.close()
+            canvas.drawPath(path, bgPaint)
+            super.onDraw(canvas)
+            return
+        }
+
+        // Wide, gentle sweeping concave curve
+        val hasMultipleMembers = memberCount >= 2
+        val concaveRadius = if (hasMultipleMembers) 24f * density else 20f * density
         val shelfTopRadius = 26f * density
         val shelfY = 108f * density
 
@@ -147,10 +198,10 @@ class FamilyHubCardView @JvmOverloads constructor(
         path.arcTo(rectF, 90f, 90f, false)
 
         // 2. Tab selection shape
-        val isFlushLeft = tabLeft <= 4f * density
+        val isFlushLeft = selectedIndex == 0 && tabLeft <= 4f * density
 
         if (isFlushLeft) {
-            // Member 1 (Thang): flush with left edge
+            // Member 1 (Primary): flush with left edge
             path.lineTo(0f, domeRadius)
 
             // Soft continuous top dome over Member 1 (180° to 360°)
@@ -160,14 +211,15 @@ class FamilyHubCardView @JvmOverloads constructor(
             // Right vertical side down to shelf
             path.lineTo(tabRight, shelfY - concaveRadius)
 
-            // Large 28dp concave inverted curve into shelf
+            // Large concave inverted curve into shelf
             rectF.set(tabRight, shelfY - 2 * concaveRadius, tabRight + 2 * concaveRadius, shelfY)
             path.arcTo(rectF, 180f, -90f, false)
 
             // Horizontal shelf to the right
-            path.lineTo(w - shelfTopRadius, shelfY)
+            val rightShelfEnd = (w - shelfTopRadius).coerceAtLeast(tabRight + concaveRadius).coerceAtMost(w)
+            path.lineTo(rightShelfEnd, shelfY)
         } else {
-            // Member 2 (Woman) or during animation
+            // Member 2+ or during animation
             path.lineTo(0f, shelfY + shelfTopRadius)
 
             // Shelf top-left rounded corner
@@ -183,7 +235,7 @@ class FamilyHubCardView @JvmOverloads constructor(
             val leftConcaveStart = (tabLeft - concaveRadius).coerceAtLeast(leftCornerRadius)
             path.lineTo(leftConcaveStart, shelfY)
 
-            // Large 28dp concave curve up into tabLeft
+            // Concave curve up into tabLeft
             rectF.set(tabLeft - 2 * concaveRadius, shelfY - 2 * concaveRadius, tabLeft, shelfY)
             path.arcTo(rectF, 90f, -90f, false)
 
@@ -197,12 +249,13 @@ class FamilyHubCardView @JvmOverloads constructor(
             // Right vertical side down to shelf
             path.lineTo(tabRight, shelfY - concaveRadius)
 
-            // Large 28dp concave curve down into shelf
+            // Concave curve down into shelf
             rectF.set(tabRight, shelfY - 2 * concaveRadius, tabRight + 2 * concaveRadius, shelfY)
             path.arcTo(rectF, 180f, -90f, false)
 
             // Horizontal shelf to the right
-            path.lineTo(w - shelfTopRadius, shelfY)
+            val rightShelfEnd = (w - shelfTopRadius).coerceAtLeast(tabRight + concaveRadius).coerceAtMost(w)
+            path.lineTo(rightShelfEnd, shelfY)
         }
 
         // 3. Top-right corner of shelf

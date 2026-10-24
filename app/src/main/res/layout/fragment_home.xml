@@ -1114,135 +1114,57 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Row 1: Avatars (Thang, Woman, + Add) -->
-                <LinearLayout
-                    android:id="@+id/layoutFamilyAvatarsRow"
+                <!-- Row 1: Avatars in HorizontalScrollView -->
+                <HorizontalScrollView
+                    android:id="@+id/scrollFamilyAvatars"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingEnd="12dp">
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
 
-                    <!-- Member 1: Thang (Selected by default) -->
                     <LinearLayout
-                        android:id="@+id/layoutMemberThang"
-                        android:layout_width="64dp"
+                        android:id="@+id/layoutFamilyAvatarsRow"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="12dp">
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardMemberThangAvatar"
+                        <!-- Member Add Button (dynamically kept at end of row) -->
+                        <LinearLayout
+                            android:id="@+id/layoutMemberAdd"
                             android:layout_width="64dp"
-                            android:layout_height="84dp"
-                            app:cardCornerRadius="42dp"
-                            app:cardElevation="0dp"
-                            app:strokeColor="#0843C6"
-                            app:strokeWidth="1dp">
-
-                            <ImageView
-                                android:id="@+id/ivMemberThangAvatar"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@null"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/profile_person" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/tvMemberThangName"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/urbanist_bold"
-                            app:fontFamily="@font/urbanist_bold"
-                            android:includeFontPadding="false"
-                            android:letterSpacing="0"
-                            android:text=""
-                            android:textColor="#0843C6"
-                            android:textSize="14sp" />
+                            android:layout_marginStart="20dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="64dp"
+                                android:layout_height="84dp"
+                                android:background="@drawable/bg_circle_add_member">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_plus_white"
+                                    app:tint="#242E49" />
+                            </FrameLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="18dp"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
                     </LinearLayout>
-
-                    <!-- Member 2: Family Member (Gone by default until 2nd profile added) -->
-                    <LinearLayout
-                        android:id="@+id/layoutMemberWoman"
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="26dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardMemberWomanAvatar"
-                            android:layout_width="64dp"
-                            android:layout_height="84dp"
-                            app:cardCornerRadius="42dp"
-                            app:cardElevation="0dp"
-                            app:strokeColor="#0843C6"
-                            app:strokeWidth="0dp">
-
-                            <ImageView
-                                android:id="@+id/ivMemberWomanAvatar"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@null"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/profile_person" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/tvMemberWomanName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/urbanist_bold"
-                            app:fontFamily="@font/urbanist_bold"
-                            android:includeFontPadding="false"
-                            android:letterSpacing="0"
-                            android:text=""
-                            android:textColor="#0843C6"
-                            android:textSize="14sp"
-                            android:visibility="invisible" />
-                    </LinearLayout>
-
-                    <!-- Member 3: + Add Button -->
-                    <LinearLayout
-                        android:id="@+id/layoutMemberAdd"
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="26dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="64dp"
-                            android:layout_height="84dp"
-                            android:background="@drawable/bg_circle_add_member">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_plus_white"
-                                app:tint="#242E49" />
-                        </FrameLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="18dp"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                </HorizontalScrollView>
 
                 <!-- Row 2: 4 Health Records Container -->
                 <LinearLayout
