@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_delete_confirm"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="24dp">
+
+    <!-- Red Trash Icon -->
+    <ImageView
+        android:id="@+id/ivDeleteIcon"
+        android:layout_width="44dp"
+        android:layout_height="48dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_delete_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Dialog Title -->
+    <TextView
+        android:id="@+id/tvDeleteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/urbanist"
+        android:includeFontPadding="false"
+        android:text="@string/delete_confirm_title"
+        android:textColor="@color/color_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDeleteIcon"
+        tools:text="Delete this record?" />
+
+    <!-- Dialog Subtitle / Message -->
+    <TextView
+        android:id="@+id/tvDeleteMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/urbanist_medium"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/delete_confirm_message"
+        android:textColor="@color/color_subtext"
+        android:textSize="13.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeleteTitle"
+        tools:text="Are you sure you want to delete this record?\nThis action cannot be undone." />
+
+    <!-- Delete Button (Solid Red) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDeleteConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_btn_delete_confirm"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/btn_delete"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeleteMessage" />
+
+    <!-- Cancel Button (Soft Pastel Pink with Red Text) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCancelConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_btn_cancel_confirm"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/btn_cancel"
+        android:textAllCaps="false"
+        android:textColor="#FF4D4F"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteConfirm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

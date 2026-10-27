@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginBottom="12dp"
-    android:background="@drawable/bg_history_delete_card">
+    android:background="@drawable/bg_family_delete_card">
 
     <!-- Secondary View: Background Red Delete Action (width 84dp, #FF4D4F, 20dp radius) -->
     <FrameLayout
@@ -33,11 +33,11 @@
         android:id="@+id/cardForeground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card_white_18"
+        android:background="@drawable/bg_card_family_hub"
         android:clickable="true"
         android:focusable="true"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="14dp">
+        android:paddingVertical="20dp">
 
         <!-- Avatar Container (Always clipped to circle) -->
         <com.google.android.material.card.MaterialCardView
@@ -46,7 +46,6 @@
             android:layout_height="52dp"
             app:cardCornerRadius="26dp"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeWidth="0dp">
@@ -65,14 +64,14 @@
             android:id="@+id/layoutInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="14dp"
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cardAvatar"
             app:layout_constraintEnd_toStartOf="@+id/ivChevron"
             app:layout_constraintStart_toEndOf="@+id/cardAvatar"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/cardAvatar">
 
             <!-- Name and Relationship -->
             <LinearLayout
@@ -113,11 +112,11 @@
                 android:id="@+id/tvMemberGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist_medium"
                 android:includeFontPadding="false"
                 android:textColor="@color/color_subtext"
-                android:textSize="14sp"
+                android:textSize="13.5sp"
                 tools:text="Male" />
         </LinearLayout>
 
@@ -128,10 +127,200 @@
             android:layout_height="20dp"
             android:contentDescription="@null"
             android:src="@drawable/ic_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@+id/cardAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardAvatar"
+            app:tint="@color/color_subtext" />
+
+        <!-- Bottom Stats Row: Age, Height, Weight, Reminder -->
+        <LinearLayout
+            android:id="@+id/layoutMemberStats"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/color_subtext" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardAvatar">
+
+            <!-- 1. Age -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.85"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_family_age" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_age"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvMemberAge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/urbanist"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_text"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        tools:text="32" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 2. Height -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.15"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_family_height" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_height"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvMemberHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/urbanist"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_text"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        tools:text="175 cm" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 3. Weight -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_family_weight" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_weight"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvMemberWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/urbanist"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_text"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        tools:text="72 kg" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 4. Reminder -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_family_remider" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_reminder"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvMemberReminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/urbanist"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_text"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold"
+                        tools:text="0" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

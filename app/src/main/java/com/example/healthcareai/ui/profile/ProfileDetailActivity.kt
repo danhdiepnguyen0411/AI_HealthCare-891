@@ -18,6 +18,7 @@ import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.ActivityProfileDetailBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.camera.CameraActivity
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -159,16 +160,14 @@ class ProfileDetailActivity : BaseActivity() {
     }
 
     private fun showDeleteConfirmationDialog(profile: UserProfile) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_delete_member_title)
-            .setMessage(getString(R.string.dialog_delete_member_msg, profile.name))
-            .setPositiveButton(R.string.btn_remove) { _, _ ->
+        DeleteConfirmationDialog.show(
+            context = this,
+            onDeleteConfirmed = {
                 profileRepository.deleteProfile(profile.id)
                 Toast.makeText(this, R.string.msg_member_removed, Toast.LENGTH_SHORT).show()
                 finish()
             }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+        )
     }
 
     companion object {

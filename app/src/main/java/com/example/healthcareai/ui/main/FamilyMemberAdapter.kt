@@ -1,8 +1,14 @@
 package com.example.healthcareai.ui.main
 
+import android.content.Context
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +16,12 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.UserProfile
+import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ItemFamilyMemberBinding
 import com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class FamilyMemberAdapter(
     private val onItemClick: (UserProfile) -> Unit = {},
@@ -43,6 +53,8 @@ class FamilyMemberAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(member: UserProfile) {
+            val context = binding.root.context
+
             // Close swipe layout by default on rebind
             binding.swipeRevealLayout.close(false)
 
@@ -56,6 +68,22 @@ class FamilyMemberAdapter(
             }
 
             binding.tvMemberGender.text = member.gender
+
+            // Stats: Age, Height, Weight, Reminder
+            binding.tvMemberAge.text = calculateAge(member.dateOfBirth)
+            binding.tvMemberHeight.text = formatUnit(context, member.heightCm, "cm")
+            binding.tvMemberWeight.text = formatUnit(context, member.weightKg, "kg")
+
+            val reminderRepo = ReminderRepository.getInstance(context)
+            val reminders = reminderRepo.getAllReminders()
+            val memberReminderCount = reminders.count { reminder ->
+                (reminder.profileId != null && reminder.profileId == member.id) ||
+                (member.name.isNotBlank() && (
+                    reminder.notes.contains(member.name, ignoreCase = true) ||
+                    reminder.name.contains(member.name, ignoreCase = true)
+                ))
+            }
+            binding.tvMemberReminder.text = memberReminderCount.toString()
 
             if (!member.avatarUri.isNullOrEmpty()) {
                 binding.ivMemberAvatar.load(member.avatarUri) {
@@ -100,6 +128,45 @@ class FamilyMemberAdapter(
                 binding.swipeRevealLayout.close(false)
                 onItemDelete(member)
             }
+        }
+
+        private fun calculateAge(dobString: String?): String {
+            if (dobString.isNullOrBlank()) return "--"
+            return try {
+                val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+                val birthDate = sdf.parse(dobString) ?: return "--"
+                val birthCal = Calendar.getInstance().apply { time = birthDate }
+                val nowCal = Calendar.getInstance()
+                var age = nowCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR)
+                if (nowCal.get(Calendar.DAY_OF_YEAR) < birthCal.get(Calendar.DAY_OF_YEAR)) {
+                    age--
+                }
+                if (age in 0..130) age.toString() else "--"
+            } catch (_: Exception) {
+                "--"
+            }
+        }
+
+        private fun formatUnit(context: Context, value: Int, unit: String): CharSequence {
+            if (value <= 0) return "-- $unit"
+            val fullText = "$value $unit"
+            val spannable = SpannableString(fullText)
+            val unitIndex = fullText.indexOf(unit)
+            if (unitIndex >= 0) {
+                spannable.setSpan(
+                    RelativeSizeSpan(0.85f),
+                    unitIndex,
+                    fullText.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.color_subtext)),
+                    unitIndex,
+                    fullText.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            return spannable
         }
     }
 

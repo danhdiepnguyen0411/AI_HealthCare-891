@@ -15,6 +15,7 @@ import com.example.healthcareai.R
 import com.example.healthcareai.data.model.UserProfile
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.FragmentFamilyBinding
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import com.example.healthcareai.ui.profile.AddProfileActivity
 import com.example.healthcareai.ui.profile.ProfileDetailActivity
 
@@ -64,16 +65,14 @@ class FamilyFragment : Fragment() {
     }
 
     private fun showDeleteMemberDialog(member: UserProfile) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.dialog_delete_member_title)
-            .setMessage(getString(R.string.dialog_delete_member_msg, member.name))
-            .setPositiveButton(R.string.btn_remove) { _, _ ->
+        DeleteConfirmationDialog.show(
+            context = requireContext(),
+            onDeleteConfirmed = {
                 profileRepository.deleteProfile(member.id)
                 Toast.makeText(requireContext(), R.string.msg_member_removed, Toast.LENGTH_SHORT).show()
                 updateUiState()
             }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+        )
     }
 
     private fun setupWindowInsets() {

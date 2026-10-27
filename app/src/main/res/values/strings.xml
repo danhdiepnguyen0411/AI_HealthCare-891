@@ -112,6 +112,7 @@
     <!-- My Health Screen -->
     <string name="title_my_health">My Health</string>
     <string name="label_age">Age</string>
+    <string name="label_reminder">Reminder</string>
     <string name="title_health_records">Health Records</string>
     <string name="record_medications">Medications</string>
     <string name="record_allergies">Allergies</string>
@@ -445,5 +446,7 @@
     <string name="msg_reminder_updated">Reminder updated</string>
     <string name="msg_marked_as_undone">Marked as undone</string>
     <string name="delete_reminder_confirm">Are you sure you want to delete this reminder?</string>
+    <string name="delete_confirm_title">Delete this record?</string>
+    <string name="delete_confirm_message">Are you sure you want to delete this record?\nThis action cannot be undone.</string>
     <string name="btn_delete">Delete</string>
 </resources>
