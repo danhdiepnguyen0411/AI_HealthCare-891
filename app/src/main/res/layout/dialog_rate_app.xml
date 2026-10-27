@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_rate_app"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="28dp"
+    android:paddingBottom="24dp">
+
+    <!-- Top Emoji Image (72x72dp) -->
+    <ImageView
+        android:id="@+id/ivRateEmoji"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_rate_5_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvRateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/urbanist"
+        android:includeFontPadding="false"
+        android:text="@string/rate_dialog_title"
+        android:textColor="@color/color_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivRateEmoji"
+        tools:text="Rate Your Experience" />
+
+    <!-- Subtitle / Message -->
+    <TextView
+        android:id="@+id/tvRateMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/urbanist_medium"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/rate_dialog_message"
+        android:textColor="@color/color_subtext"
+        android:textSize="13.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRateTitle"
+        tools:text="Your feedback helps us improve.\nTap a star to rate your experience." />
+
+    <!-- Star Rating Container -->
+    <LinearLayout
+        android:id="@+id/layoutStars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRateMessage">
+
+        <ImageView
+            android:id="@+id/ivStar1"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/ivStar2"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/ivStar3"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/ivStar4"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/ivStar5"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_filled" />
+    </LinearLayout>
+
+    <!-- Submit Button (Solid Blue) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmitRating"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_btn_submit_rating"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/rate_dialog_submit"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/layoutStars" />
+
+    <!-- Maybe Later Button (Soft Light Blue) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMaybeLater"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_btn_maybe_later"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/rate_dialog_maybe_later"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_color"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubmitRating" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

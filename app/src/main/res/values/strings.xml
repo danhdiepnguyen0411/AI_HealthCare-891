@@ -449,4 +449,11 @@
     <string name="delete_confirm_title">Delete this record?</string>
     <string name="delete_confirm_message">Are you sure you want to delete this record?\nThis action cannot be undone.</string>
     <string name="btn_delete">Delete</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">Rate Your Experience</string>
+    <string name="rate_dialog_message">Your feedback helps us improve.\nTap a star to rate your experience.</string>
+    <string name="rate_dialog_submit">Submit rating</string>
+    <string name="rate_dialog_maybe_later">Maybe later</string>
+    <string name="rate_dialog_thank_you">Thank you for your feedback!</string>
 </resources>

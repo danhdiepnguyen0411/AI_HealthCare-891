@@ -23,6 +23,7 @@ class PreferenceHelper private constructor(context: Context) {
         private const val KEY_USER_WEIGHT = "key_user_weight"
         private const val KEY_NOTI_DENIAL_COUNT = "key_noti_denial_count"
         private const val KEY_CAMERA_DENIAL_COUNT = "key_camera_denial_count"
+        private const val KEY_APP_RATED = "key_app_rated"
 
         @Volatile
         private var instance: PreferenceHelper? = null
@@ -89,6 +90,10 @@ class PreferenceHelper private constructor(context: Context) {
     var cameraDenialCount: Int
         get() = prefs.getInt(KEY_CAMERA_DENIAL_COUNT, 0)
         set(value) = prefs.edit().putInt(KEY_CAMERA_DENIAL_COUNT, value).apply()
+
+    var isAppRated: Boolean
+        get() = prefs.getBoolean(KEY_APP_RATED, false)
+        set(value) = prefs.edit().putBoolean(KEY_APP_RATED, value).apply()
 
     /**
      * Resets language selection back to system default if onboarding was not fully completed.
