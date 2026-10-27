@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Drop shadow: Spread 4px, Color #0F67FE 25% (#400F67FE), Radius 12px + 4px = 16dp -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#400F67FE" />
+        </shape>
+    </item>
+    <!-- Selected Day Card: Radius 12px, Color #4E75F7 -->
+    <item
+        android:bottom="4dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp" />
+            <solid android:color="#4E75F7" />
+        </shape>
+    </item>
+</layer-list>

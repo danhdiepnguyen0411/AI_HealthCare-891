@@ -126,6 +126,19 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- New Reminder Activity -->
+        <activity
+            android:name=".ui.reminder.NewReminderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Reminder View All Activity -->
+        <activity
+            android:name=".ui.reminder.ReminderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Uninstall Retention Flow Activities -->
         <activity
             android:name=".ui.uninstall.UninstallActivity"

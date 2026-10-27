@@ -149,7 +149,7 @@ class ProfileDetailActivity : BaseActivity() {
 
         // Today's reminder
         binding.btnAddReminder.setOnClickListener {
-            Toast.makeText(this, R.string.home_btn_add_reminder, Toast.LENGTH_SHORT).show()
+            startActivity(android.content.Intent(this, com.example.healthcareai.ui.reminder.NewReminderActivity::class.java))
         }
 
         // AI Scan

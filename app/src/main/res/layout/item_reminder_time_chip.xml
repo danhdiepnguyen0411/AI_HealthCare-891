@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chipRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="32dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_time_chip"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="10dp">
+
+    <TextView
+        android:id="@+id/tvChipTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/urbanist_medium"
+        android:includeFontPadding="false"
+        android:textColor="#2563EB"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/btnRemoveTime"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:focusable="true"
+        android:src="@drawable/ic_close_gray"
+        app:tint="#2563EB" />
+</LinearLayout>

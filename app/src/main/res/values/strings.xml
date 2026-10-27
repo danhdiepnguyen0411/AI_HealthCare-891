@@ -19,10 +19,17 @@
     <string name="title_ai_scan">AI Scan</string>
     <string name="headline_ai_scan">What would you like to check?</string>
     <string name="category_skin">Skin</string>
+    <string name="category_skin_desc">Spots, rashes or skin changes</string>
     <string name="category_mouth">Mouth</string>
+    <string name="category_mouth_desc">Lips, gums, tongue or teeth</string>
     <string name="category_eye">Eye</string>
+    <string name="category_eyes">Eyes</string>
+    <string name="category_eyes_desc">Visible changes around the eyes</string>
     <string name="category_nails">Nails</string>
+    <string name="category_nail">Nail</string>
+    <string name="category_nail_desc">Fingernails or toenails</string>
     <string name="category_other_area">Other area</string>
+    <string name="category_other_area_desc">Another visible area of the body</string>
     <string name="btn_start_scan">Start Scan</string>
     
     <!-- Splash & Loading -->
@@ -369,4 +376,74 @@
     <string name="time_hours_ago">%d hours ago</string>
     <string name="time_day_ago">1 day ago</string>
     <string name="time_days_ago">%d days ago</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">New reminder</string>
+    <string name="label_reminder_category">Category</string>
+    <string name="hint_select_category">Select category</string>
+    <string name="label_reminder_name">Name</string>
+    <string name="label_reminder_strength">Strength</string>
+    <string name="hint_reminder_strength">e.g. 10 mg</string>
+    <string name="label_reminder_form">Form</string>
+    <string name="hint_reminder_form">Select form</string>
+    <string name="label_reminder_repeat">Repeat</string>
+    <string name="hint_repeat_schedule">Choose repeat schedule</string>
+    <string name="label_reminder_time">Time</string>
+    <string name="time_no_times_added">No times added yet</string>
+    <string name="label_reminder_start_date">Start date</string>
+    <string name="label_reminder_end_date">End date</string>
+    <string name="hint_select_date">Select date</string>
+    <string name="label_reminder_notes">Notes (optional)</string>
+    <string name="hint_reminder_name">Enter reminder name</string>
+    <string name="hint_enter_medication_name">Enter medication name</string>
+    <string name="hint_add_notes">Add notes</string>
+    <string name="reminder_btn_add_time">Add time</string>
+    <string name="btn_save_reminder">Save reminder</string>
+    <string name="repeat_every_day">Every day</string>
+    <string name="repeat_weekdays">Weekdays</string>
+    <string name="repeat_weekends">Weekends</string>
+    <string name="repeat_weekly">Weekly</string>
+    <string name="repeat_monthly">Monthly</string>
+    <string name="repeat_once">Once</string>
+    <string name="form_tablet">Tablet</string>
+    <string name="form_capsule">Capsule</string>
+    <string name="form_liquid">Liquid</string>
+    <string name="form_drops">Drops</string>
+    <string name="form_injection">Injection</string>
+    <string name="form_inhaler">Inhaler</string>
+    <string name="form_other">Other</string>
+    <string name="msg_reminder_saved">Reminder saved successfully</string>
+    <string name="msg_enter_reminder_name">Please enter a reminder name</string>
+    <string name="msg_time_already_added">This time has already been added</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">Select category</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">Repeat</string>
+    <string name="category_health_monitoring_title">Health monitoring</string>
+    <string name="category_health_monitoring_desc">Temperature, heart rate, etc.</string>
+    <string name="category_medication_title">Medication</string>
+    <string name="category_medication_desc">Take medicine, vitamins, supplements</string>
+    <string name="category_healthy_habits_title">Healthy habits</string>
+    <string name="category_healthy_habits_desc">Drink water, exercise, sleep, etc.</string>
+    <string name="category_appointments_title">Appointments</string>
+    <string name="category_appointments_desc">Doctor visits, health checkups</string>
+    <string name="category_vaccinations_title">Vaccinations</string>
+    <string name="category_vaccinations_desc">Vaccine schedules and booster doses</string>
+    <string name="category_other_title">Other</string>
+    <string name="category_other_desc">Personal health reminders</string>
+
+    <!-- Reminder History & Detail Management -->
+    <string name="title_reminder">Reminder</string>
+    <string name="title_edit_reminder">Edit reminder</string>
+    <string name="reminder_action_edit">Edit reminder</string>
+    <string name="reminder_action_delete">Delete reminder</string>
+    <string name="reminder_status_taken">Taken</string>
+    <string name="reminder_action_undo">Undo</string>
+    <string name="msg_reminder_deleted">Reminder deleted</string>
+    <string name="msg_reminder_updated">Reminder updated</string>
+    <string name="msg_marked_as_undone">Marked as undone</string>
+    <string name="delete_reminder_confirm">Are you sure you want to delete this reminder?</string>
+    <string name="btn_delete">Delete</string>
 </resources>

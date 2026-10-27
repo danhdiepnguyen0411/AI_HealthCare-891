@@ -19,7 +19,7 @@
         android:top="0dp">
         <shape android:shape="rectangle">
             <corners android:radius="16dp" />
-            <solid android:color="@color/scan_card_unselected_bg" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
 </layer-list>
