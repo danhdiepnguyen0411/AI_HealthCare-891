@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootSelectCategory"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:includeFontPadding="false"
+        android:text="@string/title_select_category"
+        android:textColor="#172044"
+        android:textSize="22sp" />
+
+    <!-- 1. Health monitoring -->
+    <FrameLayout
+        android:id="@+id/cardCategoryHealthMonitoring"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_selected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleHealthMonitoring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_health_monitoring_title"
+                android:textColor="@color/white"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescHealthMonitoring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_health_monitoring_desc"
+                android:textColor="#DCE6FF"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckHealthMonitoring"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_selected_white" />
+    </FrameLayout>
+
+    <!-- 2. Medication -->
+    <FrameLayout
+        android:id="@+id/cardCategoryMedication"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleMedication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_medication_title"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescMedication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_medication_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckMedication"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- 3. Healthy habits -->
+    <FrameLayout
+        android:id="@+id/cardCategoryHealthyHabits"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleHealthyHabits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_healthy_habits_title"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescHealthyHabits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_healthy_habits_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckHealthyHabits"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- 4. Appointments -->
+    <FrameLayout
+        android:id="@+id/cardCategoryAppointments"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleAppointments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_appointments_title"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescAppointments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_appointments_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckAppointments"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- 5. Vaccinations -->
+    <FrameLayout
+        android:id="@+id/cardCategoryVaccinations"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleVaccinations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_vaccinations_title"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescVaccinations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_vaccinations_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckVaccinations"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- 6. Other -->
+    <FrameLayout
+        android:id="@+id/cardCategoryOther"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/category_other_title"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/category_other_desc"
+                android:textColor="@color/color_subtext"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivCheckOther"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- Continue Button -->
+    <FrameLayout
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/btn_continue"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</LinearLayout>

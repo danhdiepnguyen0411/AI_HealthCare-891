@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootReminder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgr"
+    tools:context=".ui.reminder.ReminderActivity">
+
+    <!-- Top Bar: Back Circular Button, Title "Reminder", Right Add Circular Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_back" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="27sp"
+            android:text="@string/title_reminder"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/btnAddReminder"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_primary_button"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_plus_small_white" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Calendar Month Header & Week Days Strip -->
+    <LinearLayout
+        android:id="@+id/layoutCalendarSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <!-- Month & Calendar Icon Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCalendarMonthYear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                tools:text="April 2026" />
+
+            <ImageView
+                android:id="@+id/ivCalendarAction"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_calendar" />
+        </LinearLayout>
+
+        <!-- Week Days Row (7 Days) -->
+        <LinearLayout
+            android:id="@+id/layoutWeekDaysRow"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginTop="12dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <include
+                android:id="@+id/day0"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day1"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day2"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day3"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day4"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day5"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/day6"
+                layout="@layout/item_calendar_day"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Reminders List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReminders"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCalendarSection"
+        tools:listitem="@layout/item_reminder_card" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/layoutEmptyState"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCalendarSection"
+        tools:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="@null"
+            android:src="@drawable/no_reminder_yet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:text="@string/home_no_reminder_title"
+            android:textColor="@color/color_text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/home_no_reminder_desc"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEmptyAddReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_home_pill_btn"
+            android:fontFamily="@font/urbanist_bold"
+            android:paddingHorizontal="24dp"
+            android:stateListAnimator="@null"
+            android:text="@string/home_btn_add_reminder"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

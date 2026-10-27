@@ -14,9 +14,14 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.FragmentMyHealthBinding
+import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.profile.AddProfileActivity
+import com.example.healthcareai.ui.reminder.NewReminderActivity
+import com.example.healthcareai.ui.reminder.ReminderActivity
+import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,11 +44,13 @@ class MyHealthFragment : Fragment() {
         setupWindowInsets()
         setupListeners()
         loadPrimaryProfile()
+        syncReminders()
     }
 
     override fun onResume() {
         super.onResume()
         loadPrimaryProfile()
+        syncReminders()
     }
 
     private fun setupWindowInsets() {
@@ -111,9 +118,6 @@ class MyHealthFragment : Fragment() {
         }
     }
 
-    private var isReminder1Done = false
-    private var isReminder2Done = false
-
     private fun setupListeners() {
         // Edit Profile
         binding.cardProfile.setOnClickListener {
@@ -136,37 +140,11 @@ class MyHealthFragment : Fragment() {
 
         // Reminder View All and Add
         binding.tvViewAllReminders.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.home_section_today_reminder, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), ReminderActivity::class.java))
         }
 
         binding.btnAddReminder.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.home_btn_add_reminder, Toast.LENGTH_SHORT).show()
-        }
-
-        // Reminder 1 Mark as done
-        binding.btnMarkDoneReminder1.setOnClickListener {
-            isReminder1Done = !isReminder1Done
-            if (isReminder1Done) {
-                binding.btnMarkDoneReminder1.setText(R.string.btn_done)
-                binding.btnMarkDoneReminder1.alpha = 0.7f
-                Toast.makeText(requireContext(), R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
-            } else {
-                binding.btnMarkDoneReminder1.setText(R.string.btn_mark_as_done)
-                binding.btnMarkDoneReminder1.alpha = 1.0f
-            }
-        }
-
-        // Reminder 2 Mark as done
-        binding.btnMarkDoneReminder2.setOnClickListener {
-            isReminder2Done = !isReminder2Done
-            if (isReminder2Done) {
-                binding.btnMarkDoneReminder2.setText(R.string.btn_done)
-                binding.btnMarkDoneReminder2.alpha = 0.7f
-                Toast.makeText(requireContext(), R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
-            } else {
-                binding.btnMarkDoneReminder2.setText(R.string.btn_mark_as_done)
-                binding.btnMarkDoneReminder2.alpha = 1.0f
-            }
+            startActivity(Intent(requireContext(), NewReminderActivity::class.java))
         }
 
         // AI scan history
@@ -184,6 +162,77 @@ class MyHealthFragment : Fragment() {
 
         binding.cardScan2.setOnClickListener {
             (activity as? MainActivity)?.navigateToTab(1)
+        }
+    }
+
+    /**
+     * Synchronizes Today's reminder cards dynamically from ReminderRepository.
+     */
+    private fun syncReminders() {
+        val ctx = context ?: return
+        val reminderRepo = ReminderRepository.getInstance(ctx)
+        val reminders = reminderRepo.getAllReminders()
+
+        if (reminders.isEmpty()) {
+            binding.layoutEmptyReminder.visibility = View.VISIBLE
+            binding.layoutReminderList.visibility = View.GONE
+            binding.tvViewAllReminders.visibility = View.GONE
+        } else {
+            binding.layoutEmptyReminder.visibility = View.GONE
+            binding.layoutReminderList.visibility = View.VISIBLE
+            binding.tvViewAllReminders.visibility = View.VISIBLE
+
+            binding.layoutReminderList.removeAllViews()
+            for (item in reminders) {
+                val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
+                cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
+                cardBinding.tvReminderTitle.text = item.name
+                val desc = item.getDisplayDescription()
+                if (desc.isNotBlank()) {
+                    cardBinding.tvReminderDesc.visibility = View.VISIBLE
+                    cardBinding.tvReminderDesc.text = desc
+                } else {
+                    cardBinding.tvReminderDesc.visibility = View.GONE
+                }
+                val time = item.getDisplayTime()
+                if (time.isNotBlank()) {
+                    cardBinding.tvReminderTime.visibility = View.VISIBLE
+                    cardBinding.tvReminderTime.text = time
+                } else {
+                    cardBinding.tvReminderTime.visibility = View.GONE
+                }
+
+                if (item.isDone) {
+                    cardBinding.btnMarkDone.visibility = View.GONE
+                    cardBinding.layoutTakenUndo.visibility = View.VISIBLE
+                } else {
+                    cardBinding.btnMarkDone.visibility = View.VISIBLE
+                    cardBinding.layoutTakenUndo.visibility = View.GONE
+                }
+
+                cardBinding.cardReminderRoot.setOnClickListener {
+                    ReminderDetailBottomSheetDialog.show(
+                        parentFragmentManager,
+                        item.id,
+                        onUpdated = { syncReminders() },
+                        onDeleted = { syncReminders() }
+                    )
+                }
+
+                cardBinding.btnMarkDone.setOnClickListener {
+                    reminderRepo.setReminderDone(item.id, true)
+                    Toast.makeText(ctx, R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
+                    syncReminders()
+                }
+
+                cardBinding.btnUndo.setOnClickListener {
+                    reminderRepo.setReminderDone(item.id, false)
+                    Toast.makeText(ctx, R.string.msg_marked_as_undone, Toast.LENGTH_SHORT).show()
+                    syncReminders()
+                }
+
+                binding.layoutReminderList.addView(cardBinding.root)
+            }
         }
     }
 

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardReminderRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Info Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Category / Reminder Icon Box -->
+            <FrameLayout
+                android:id="@+id/layoutIconContainer"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_badge_rounded_14">
+
+                <ImageView
+                    android:id="@+id/ivReminderIcon"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_medications" />
+            </FrameLayout>
+
+            <!-- Title & Description -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvReminderTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    tools:text="Cetirizine" />
+
+                <TextView
+                    android:id="@+id/tvReminderDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="14sp"
+                    tools:text="10 mg · 1 tablet" />
+            </LinearLayout>
+
+            <!-- Time Badge -->
+            <TextView
+                android:id="@+id/tvReminderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_time_badge"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:textColor="@color/primary_color"
+                android:textSize="12sp"
+                tools:text="8:00 PM" />
+        </LinearLayout>
+
+        <!-- Bottom Action Button Area -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="14dp">
+
+            <!-- 1. Mark as done Button (Active when not done) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarkDone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_home_pill_btn"
+                android:fontFamily="@font/urbanist_bold"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_mark_as_done"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <!-- 2. Taken | Undo Split Container (Active when done) -->
+            <LinearLayout
+                android:id="@+id/layoutTakenUndo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_taken_undo_pill"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!-- Taken Status indicator -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_taken" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/urbanist_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/reminder_status_taken"
+                        android:textColor="@color/primary_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Thin Divider Line -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#AECDF8" />
+
+                <!-- Undo Action Button -->
+                <LinearLayout
+                    android:id="@+id/btnUndo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/reminder_action_undo"
+                        android:textColor="@color/primary_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

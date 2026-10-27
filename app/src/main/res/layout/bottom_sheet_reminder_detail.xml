@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootReminderDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <!-- Top Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <!-- Reminder Info Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <FrameLayout
+            android:id="@+id/layoutIconContainer"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_badge_rounded_14">
+
+            <ImageView
+                android:id="@+id/ivReminderIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_drink_water" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvReminderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/color_text"
+                android:textSize="18sp"
+                tools:text="Drink water" />
+
+            <TextView
+                android:id="@+id/tvReminderDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/color_subtext"
+                android:textSize="14sp"
+                tools:text="200ml" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvReminderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_time_badge"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:textColor="@color/primary_color"
+            android:textSize="12sp"
+            tools:text="8:00 PM" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Edit Reminder Action -->
+    <LinearLayout
+        android:id="@+id/layoutEditReminder"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_edit_reminder" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/reminder_action_edit"
+            android:textColor="@color/color_text"
+            android:textSize="15.5sp" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="14dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_arrowright" />
+    </LinearLayout>
+
+    <!-- Delete Reminder Action -->
+    <LinearLayout
+        android:id="@+id/layoutDeleteReminder"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_delete_red" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/reminder_action_delete"
+            android:textColor="#FF4D4F"
+            android:textSize="15.5sp" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="14dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_arrowright"
+            android:tint="#FF4D4F" />
+    </LinearLayout>
+
+    <!-- Mark as done Button -->
+    <FrameLayout
+        android:id="@+id/btnMarkDoneSheet"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_pill_btn_blue"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tvMarkDoneButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:text="@string/btn_mark_as_done"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+</LinearLayout>

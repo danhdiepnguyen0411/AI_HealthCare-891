@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#25FFFFFF">
+    <item>
+        <layer-list>
+            <!-- Outer halo ring (Figma Chosen shadow: Spread 4, Color: #0F67FE 25%) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="19dp" />
+                    <solid android:color="#400F67FE" />
+                </shape>
+            </item>
+            <!-- Selected Card Surface: #4E75F7 with 16dp radius, inset by 3dp -->
+            <item
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp" />
+                    <solid android:color="#4E75F7" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</ripple>

@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootNewReminder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgr"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.reminder.NewReminderActivity">
+
+    <!-- Top Bar: Centered Title (22sp Bold #242E49) and Circle Back Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_back" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:text="@string/title_new_reminder"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Form Content -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollForm"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottomAction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="24dp">
+
+            <!-- 1. Category -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/label_reminder_category"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:id="@+id/cardCategory"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="36dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_select_category"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="15.5sp" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_arrowright" />
+            </FrameLayout>
+
+            <!-- 2. Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/label_reminder_name"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card">
+
+                <EditText
+                    android:id="@+id/etReminderName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_enter_medication_name"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:text=""
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="15.5sp" />
+            </FrameLayout>
+
+            <!-- 2b. Strength & Form (Shown for Medication) -->
+            <LinearLayout
+                android:id="@+id/layoutStrengthForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- Strength Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_reminder_strength"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="13sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_profile_input_card">
+
+                        <EditText
+                            android:id="@+id/etStrength"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:hint="@string/hint_reminder_strength"
+                            android:imeOptions="actionNext"
+                            android:importantForAutofill="no"
+                            android:includeFontPadding="false"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingHorizontal="16dp"
+                            android:text=""
+                            android:textColor="@color/color_text"
+                            android:textColorHint="#BEC5D2"
+                            android:textSize="15.5sp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!-- Form Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        android:includeFontPadding="false"
+                        android:text="@string/label_reminder_form"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="13sp" />
+
+                    <FrameLayout
+                        android:id="@+id/cardForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_profile_input_card"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/tvForm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|start"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginEnd="32dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:hint="@string/hint_reminder_form"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:text=""
+                            android:textColor="@color/color_text"
+                            android:textColorHint="#BEC5D2"
+                            android:textSize="15.5sp" />
+
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginEnd="16dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_arrowright" />
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 3. Repeat -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/label_reminder_repeat"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:id="@+id/cardRepeat"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="36dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:hint="@string/hint_repeat_schedule"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="15.5sp" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_arrowright" />
+            </FrameLayout>
+
+            <!-- 4. Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/label_reminder_time"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_profile_input_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Empty State (Matching Image 2) -->
+                <LinearLayout
+                    android:id="@+id/layoutTimeEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_oclock" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/time_no_times_added"
+                        android:textColor="@color/color_subtext"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/btnAddTimeEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_add_time_btn"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_plus_small_blue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/reminder_btn_add_time"
+                            android:textColor="@color/primary_color"
+                            android:textSize="13.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Filled State (Chips + Add time) -->
+                <LinearLayout
+                    android:id="@+id/layoutTimeFilled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.example.healthcareai.ui.widget.FlowLayout
+                        android:id="@+id/flowTimeChips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/btnAddTimeFilled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_add_time_btn"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_plus_small_blue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:fontFamily="@font/urbanist_medium"
+                            android:includeFontPadding="false"
+                            android:text="@string/reminder_btn_add_time"
+                            android:textColor="@color/primary_color"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 5. Notes (optional) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/label_reminder_notes"
+                android:textColor="@color/color_subtext"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:id="@+id/cardReminderNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_profile_input_card">
+
+                <EditText
+                    android:id="@+id/etReminderNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="top|start"
+                    android:hint="@string/hint_add_notes"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minHeight="54dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp"
+                    android:text=""
+                    android:textColor="@color/color_text"
+                    android:textColorHint="#BEC5D2"
+                    android:textSize="15.5sp" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Fixed Bottom Actions: Save Reminder & Cancel -->
+    <LinearLayout
+        android:id="@+id/layoutBottomAction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/backgr"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Save Reminder Button -->
+        <FrameLayout
+            android:id="@+id/btnSaveReminder"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_pill_btn_blue"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/btn_save_reminder"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Cancel Button -->
+        <FrameLayout
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_secondary"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/btn_cancel"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
