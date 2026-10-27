@@ -17,6 +17,7 @@ import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.HeartRateRepository
 import com.example.healthcareai.databinding.ActivityHeartRateResultBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -152,18 +153,16 @@ class HeartRateResultActivity : BaseActivity() {
     }
 
     private fun showDeleteConfirmation() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.heart_rate_delete_confirm_title)
-            .setMessage(R.string.heart_rate_delete_confirm_msg)
-            .setPositiveButton(R.string.heart_rate_delete_btn) { _, _ ->
+        DeleteConfirmationDialog.show(
+            context = this,
+            onDeleteConfirmed = {
                 recordId?.let { id ->
                     HeartRateRepository.getInstance(this).deleteRecord(id)
                 }
                 Toast.makeText(this, R.string.heart_rate_deleted, Toast.LENGTH_SHORT).show()
                 finish()
             }
-            .setNegativeButton(R.string.heart_rate_cancel_btn, null)
-            .show()
+        )
     }
 
     companion object {

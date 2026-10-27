@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.BottomSheetReminderDetailBinding
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import com.example.healthcareai.util.DialogImmersiveHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -98,17 +99,15 @@ class ReminderDetailBottomSheetDialog : BottomSheetDialogFragment() {
 
         // 2. Delete reminder
         binding.layoutDeleteReminder.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.reminder_action_delete)
-                .setMessage(R.string.delete_reminder_confirm)
-                .setPositiveButton(R.string.btn_delete) { _, _ ->
+            DeleteConfirmationDialog.show(
+                context = requireContext(),
+                onDeleteConfirmed = {
                     ReminderRepository.getInstance(requireContext()).deleteReminder(id)
                     Toast.makeText(requireContext(), R.string.msg_reminder_deleted, Toast.LENGTH_SHORT).show()
                     onReminderDeletedListener?.invoke()
                     dismiss()
                 }
-                .setNegativeButton(R.string.btn_cancel, null)
-                .show()
+            )
         }
 
         // 3. Mark as done / Undo

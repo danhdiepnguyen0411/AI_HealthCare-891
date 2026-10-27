@@ -5,6 +5,7 @@ import java.util.UUID
 
 data class ReminderItem(
     val id: String = UUID.randomUUID().toString(),
+    var profileId: String? = null,
     var name: String = "",
     var category: String = "Medication",
     var strength: String = "",
