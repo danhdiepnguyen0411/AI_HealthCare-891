@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.healthcareai.R
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.FragmentSettingsBinding
+import com.example.healthcareai.ui.dialog.RateAppDialog
 import com.example.healthcareai.ui.language.LanguageActivity
 import com.example.healthcareai.util.LocaleHelper
 import com.example.healthcareai.util.PermissionReturnHelper
@@ -36,12 +37,19 @@ class SettingsFragment : Fragment() {
 
         setupWindowInsets()
         updateCurrentLanguageLabel()
+        updateRateUsVisibility()
         setupListeners()
     }
 
     override fun onResume() {
         super.onResume()
         updateCurrentLanguageLabel()
+        updateRateUsVisibility()
+    }
+
+    private fun updateRateUsVisibility() {
+        val isRated = PreferenceHelper.getInstance(requireContext()).isAppRated
+        binding.cardRateUs.visibility = if (isRated) View.GONE else View.VISIBLE
     }
 
     private fun setupWindowInsets() {
@@ -104,21 +112,34 @@ class SettingsFragment : Fragment() {
 
         // 4. Rate Us
         binding.cardRateUs.setOnClickListener {
-            val appPackageName = requireContext().packageName
-            try {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$appPackageName")
-                    )
-                )
-            } catch (e: Exception) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                    )
-                )
+            RateAppDialog.show(requireContext()) { rating ->
+                binding.cardRateUs.visibility = View.GONE
+                Toast.makeText(
+                    requireContext(),
+                    R.string.rate_dialog_thank_you,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                if (rating >= 4) {
+                    val appPackageName = requireContext().packageName
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=$appPackageName")
+                            )
+                        )
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                                )
+                            )
+                        } catch (_: Exception) {}
+                    }
+                }
             }
         }
 
