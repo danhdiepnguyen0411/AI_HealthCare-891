@@ -456,4 +456,35 @@
     <string name="rate_dialog_submit">Submit rating</string>
     <string name="rate_dialog_maybe_later">Maybe later</string>
     <string name="rate_dialog_thank_you">Thank you for your feedback!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">Medication details</string>
+    <string name="title_allergy_details">Allergy details</string>
+    <string name="title_condition_details">Condition details</string>
+    <string name="title_vaccination_details">Vaccination details</string>
+
+    <!-- Select Form & Severity Bottom Sheets -->
+    <string name="title_select_form">Select form</string>
+    <string name="title_select_severity">Select severity</string>
+    <string name="severity_mild">Mild</string>
+    <string name="severity_moderate">Moderate</string>
+    <string name="severity_severe">Severe</string>
+    <string name="severity_not_sure">Not sure</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">Update status</string>
+    <string name="btn_save_status">Save status</string>
+    <string name="status_ongoing_title">Ongoing</string>
+    <string name="status_ongoing_sub">Still part of your current health history</string>
+    <string name="status_resolved_title">Resolved</string>
+    <string name="status_resolved_sub">Recorded as no longer ongoing</string>
+    <string name="status_unsure_title">Unsure</string>
+    <string name="status_unsure_sub">You\'re not sure of the current status</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">Add time</string>
+    <string name="label_hour">Hour</string>
+    <string name="label_minute">Minute</string>
+    <string name="label_already_add">Already add</string>
+    <string name="btn_add_time">Add time</string>
 </resources>

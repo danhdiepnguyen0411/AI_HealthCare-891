@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.healthcareai.R
+import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityNewReminderBinding
@@ -35,6 +36,7 @@ class NewReminderActivity : BaseActivity() {
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
 
     private var editingReminderId: String? = null
+    private var selectedHealthRecordItem: HealthRecordItem? = null
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -51,12 +53,18 @@ class NewReminderActivity : BaseActivity() {
         setupTopBar()
         setupWindowInsetsAndKeyboard()
         setupCategoryField()
-        setupNameAndStrengthFields()
+        setupChooseItemField()
+        setupStrengthAndFormFields()
         setupRepeatField()
         setupTimeSection()
         setupActionButtons()
 
-        loadExistingReminderIfAny()
+        if (editingReminderId != null) {
+            loadExistingReminderIfAny()
+        } else {
+            // Default to Medication per design
+            updateCategoryState(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION)
+        }
     }
 
     private fun setupTopBar() {
@@ -66,17 +74,18 @@ class NewReminderActivity : BaseActivity() {
     }
 
     private fun setupCategoryField() {
-        // Initial state: empty text so hint "Select category" is displayed
-        binding.tvCategory.text = ""
-        binding.layoutStrengthForm.visibility = View.GONE
-        binding.etReminderName.hint = getString(R.string.hint_reminder_name)
-
         binding.cardCategory.setOnClickListener {
             hideKeyboard()
             val currentCategory = binding.tvCategory.text.toString().ifEmpty {
-                SelectCategoryBottomSheetDialog.CATEGORY_HEALTH_MONITORING
+                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
             }
             SelectCategoryBottomSheetDialog.show(supportFragmentManager, currentCategory) { selected ->
+                if (!selected.equals(binding.tvCategory.text.toString(), ignoreCase = true)) {
+                    selectedHealthRecordItem = null
+                    binding.tvChooseItem.text = ""
+                    binding.etStrength.setText("")
+                    binding.tvForm.text = ""
+                }
                 updateCategoryState(selected)
             }
         }
@@ -84,27 +93,63 @@ class NewReminderActivity : BaseActivity() {
 
     private fun updateCategoryState(category: String) {
         binding.tvCategory.text = category
-        val isMedication = category.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)
-
-        if (isMedication) {
-            binding.layoutStrengthForm.visibility = View.VISIBLE
-            binding.etReminderName.hint = getString(R.string.hint_enter_medication_name)
-        } else {
-            binding.layoutStrengthForm.visibility = View.GONE
-            binding.etReminderName.hint = getString(R.string.hint_reminder_name)
+        when (category.lowercase()) {
+            SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase() -> {
+                binding.layoutChooseItem.visibility = View.VISIBLE
+                binding.tvLabelChooseItem.text = "Choose medication"
+                binding.tvChooseItem.hint = "Medication"
+                binding.layoutStrengthForm.visibility = View.VISIBLE
+            }
+            SelectCategoryBottomSheetDialog.CATEGORY_VACCINATION.lowercase() -> {
+                binding.layoutChooseItem.visibility = View.VISIBLE
+                binding.tvLabelChooseItem.text = "Choose vaccination"
+                binding.tvChooseItem.hint = "Vaccination"
+                binding.layoutStrengthForm.visibility = View.GONE
+            }
+            SelectCategoryBottomSheetDialog.CATEGORY_APPOINTMENTS.lowercase() -> {
+                binding.layoutChooseItem.visibility = View.VISIBLE
+                binding.tvLabelChooseItem.text = "Choose appointment"
+                binding.tvChooseItem.hint = "Appointment"
+                binding.layoutStrengthForm.visibility = View.GONE
+            }
+            else -> {
+                // Simple categories: Drink water, Sleep, Exercise, Temperature, Heart rate
+                // Only Category, Repeat, Time, Notes (optional) are shown
+                binding.layoutChooseItem.visibility = View.GONE
+                binding.layoutStrengthForm.visibility = View.GONE
+            }
         }
     }
 
-    private fun setupNameAndStrengthFields() {
-        // Textfields are kept completely empty without any mock data
-        binding.etReminderName.setText("")
+    private fun setupChooseItemField() {
+        binding.cardChooseItem.setOnClickListener {
+            hideKeyboard()
+            val currentCategory = binding.tvCategory.text.toString().ifEmpty {
+                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
+            }
+            ChooseHealthItemBottomSheetDialog.show(
+                supportFragmentManager,
+                category = currentCategory,
+                selectedItemId = selectedHealthRecordItem?.id ?: binding.tvChooseItem.text.toString()
+            ) { item ->
+                selectedHealthRecordItem = item
+                binding.tvChooseItem.text = item.name
+                if (currentCategory.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)) {
+                    if (item.strength.isNotBlank()) {
+                        binding.etStrength.setText(item.strength)
+                    }
+                    if (item.form.isNotBlank()) {
+                        binding.tvForm.text = item.form
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupStrengthAndFormFields() {
         binding.etStrength.setText("")
         binding.etReminderNotes.setText("")
 
-        // Listen for focus to smoothly position fields above keyboard
-        binding.etReminderName.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) scrollToView(v)
-        }
         binding.etStrength.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) scrollToView(v)
         }
@@ -156,7 +201,6 @@ class NewReminderActivity : BaseActivity() {
     }
 
     private fun setupRepeatField() {
-        // Repeat field starts with empty text so hint "Choose repeat schedule" is displayed
         binding.tvRepeat.text = ""
 
         binding.cardRepeat.setOnClickListener {
@@ -175,30 +219,18 @@ class NewReminderActivity : BaseActivity() {
 
         val onAddTimeClicked = View.OnClickListener {
             hideKeyboard()
-            val now = Calendar.getInstance()
-            val hour = now.get(Calendar.HOUR_OF_DAY)
-            val minute = now.get(Calendar.MINUTE)
-
-            val timePicker = TimePickerDialog(
+            AddTimeCustomDialog.show(
                 this,
-                { _, selectedHour, selectedMinute ->
-                    val chosenCal = Calendar.getInstance().apply {
-                        set(Calendar.HOUR_OF_DAY, selectedHour)
-                        set(Calendar.MINUTE, selectedMinute)
-                    }
-                    val formatted = timeFormat.format(chosenCal.time)
-                    if (timeChipsList.contains(formatted)) {
-                        Toast.makeText(this, R.string.msg_time_already_added, Toast.LENGTH_SHORT).show()
-                    } else {
-                        timeChipsList.add(formatted)
-                        renderTimeChips()
-                    }
+                alreadyAddedTimes = timeChipsList,
+                onTimeAdded = { newTime ->
+                    timeChipsList.add(newTime)
+                    renderTimeChips()
                 },
-                hour,
-                minute,
-                false
+                onTimeRemoved = { removedTime ->
+                    timeChipsList.remove(removedTime)
+                    renderTimeChips()
+                }
             )
-            timePicker.show()
         }
 
         binding.btnAddTimeEmpty.setOnClickListener(onAddTimeClicked)
@@ -226,14 +258,13 @@ class NewReminderActivity : BaseActivity() {
         }
     }
 
-
     private fun loadExistingReminderIfAny() {
         val id = editingReminderId ?: return
         val existing = ReminderRepository.getInstance(this).getReminder(id) ?: return
 
         binding.tvTitle.text = getString(R.string.title_edit_reminder)
         updateCategoryState(existing.category)
-        binding.etReminderName.setText(existing.name)
+        binding.tvChooseItem.text = existing.name
         binding.etStrength.setText(existing.strength)
         if (existing.form.isNotBlank()) {
             binding.tvForm.text = existing.form
@@ -253,10 +284,30 @@ class NewReminderActivity : BaseActivity() {
 
     private fun setupActionButtons() {
         binding.btnSaveReminder.setOnClickListener {
-            val reminderName = binding.etReminderName.text?.toString()?.trim().orEmpty()
+            val chosenCategory = binding.tvCategory.text.toString().ifBlank {
+                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
+            }
+
+            val isSelectableCategory = when (chosenCategory.lowercase()) {
+                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase(),
+                SelectCategoryBottomSheetDialog.CATEGORY_VACCINATION.lowercase(),
+                SelectCategoryBottomSheetDialog.CATEGORY_APPOINTMENTS.lowercase() -> true
+                else -> false
+            }
+
+            val reminderName = if (isSelectableCategory) {
+                binding.tvChooseItem.text?.toString()?.trim().orEmpty()
+            } else {
+                chosenCategory
+            }
+
             if (reminderName.isEmpty()) {
-                binding.etReminderName.requestFocus()
-                Toast.makeText(this, R.string.msg_enter_reminder_name, Toast.LENGTH_SHORT).show()
+                if (isSelectableCategory) {
+                    Toast.makeText(this, "Please choose a $chosenCategory", Toast.LENGTH_SHORT).show()
+                    binding.cardChooseItem.performClick()
+                } else {
+                    Toast.makeText(this, R.string.msg_enter_reminder_name, Toast.LENGTH_SHORT).show()
+                }
                 return@setOnClickListener
             }
 
@@ -265,20 +316,25 @@ class NewReminderActivity : BaseActivity() {
             val repo = ReminderRepository.getInstance(this)
             val existing = editingReminderId?.let { repo.getReminder(it) }
 
-            val chosenCategory = binding.tvCategory.text.toString().ifBlank {
-                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
-            }
             val chosenRepeat = binding.tvRepeat.text.toString().ifBlank {
                 SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
             }
             val times = timeChipsList.toList()
 
+            val strength = if (chosenCategory.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)) {
+                binding.etStrength.text?.toString()?.trim().orEmpty()
+            } else ""
+
+            val form = if (chosenCategory.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)) {
+                binding.tvForm.text?.toString()?.trim().orEmpty()
+            } else ""
+
             val itemToSave = ReminderItem(
                 id = existing?.id ?: UUID.randomUUID().toString(),
                 name = reminderName,
                 category = chosenCategory,
-                strength = binding.etStrength.text?.toString()?.trim().orEmpty(),
-                form = binding.tvForm.text?.toString()?.trim().orEmpty(),
+                strength = strength,
+                form = form,
                 repeat = chosenRepeat,
                 timeList = times,
                 startDate = existing?.startDate.orEmpty(),

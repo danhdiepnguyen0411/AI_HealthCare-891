@@ -123,41 +123,60 @@
                     android:src="@drawable/ic_arrowright" />
             </FrameLayout>
 
-            <!-- 2. Name -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/urbanist_semibold"
-                android:includeFontPadding="false"
-                android:text="@string/label_reminder_name"
-                android:textColor="@color/color_subtext"
-                android:textSize="13sp" />
-
-            <FrameLayout
+            <!-- 2. Choose Item (Medication, Vaccination, Appointments) -->
+            <LinearLayout
+                android:id="@+id/layoutChooseItem"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_profile_input_card">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <EditText
-                    android:id="@+id/etReminderName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:fontFamily="@font/urbanist_medium"
-                    android:hint="@string/hint_enter_medication_name"
-                    android:imeOptions="actionNext"
-                    android:importantForAutofill="no"
+                <TextView
+                    android:id="@+id/tvLabelChooseItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/urbanist_semibold"
                     android:includeFontPadding="false"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1"
-                    android:paddingHorizontal="16dp"
-                    android:text=""
-                    android:textColor="@color/color_text"
-                    android:textColorHint="#BEC5D2"
-                    android:textSize="15.5sp" />
-            </FrameLayout>
+                    android:text="Choose medication"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="13sp" />
+
+                <FrameLayout
+                    android:id="@+id/cardChooseItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_profile_input_card"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/tvChooseItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/urbanist_medium"
+                        android:hint="Choose medication"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/color_text"
+                        android:textColorHint="#BEC5D2"
+                        android:textSize="15.5sp" />
+
+                    <ImageView
+                        android:layout_width="8dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_arrowright" />
+                </FrameLayout>
+            </LinearLayout>
 
             <!-- 2b. Strength & Form (Shown for Medication) -->
             <LinearLayout

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootDialogAddTime"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_add_time"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:includeFontPadding="false"
+        android:text="@string/dialog_title_add_time"
+        android:textColor="@color/color_text"
+        android:textSize="22sp" />
+
+    <!-- Time Input Area: Hour : Minute + AM/PM -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <!-- Hour Label -->
+        <TextView
+            android:id="@+id/tvHourLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/label_hour"
+            android:textColor="@color/color_subtext"
+            android:textSize="13.5sp"
+            app:layout_constraintStart_toStartOf="@id/boxHour"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Hour Box -->
+        <FrameLayout
+            android:id="@+id/boxHour"
+            android:layout_width="94dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_time_input_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHourLabel">
+
+            <EditText
+                android:id="@+id/etHour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:fontFamily="@font/urbanist_bold"
+                android:gravity="center"
+                android:hint="10"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:maxLength="2"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/color_text"
+                android:textColorHint="#CAD2DE"
+                android:textSize="36sp" />
+        </FrameLayout>
+
+        <!-- Colon Separator -->
+        <TextView
+            android:id="@+id/tvColon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:text=":"
+            android:textColor="@color/color_text"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="@id/boxHour"
+            app:layout_constraintEnd_toStartOf="@id/boxMinute"
+            app:layout_constraintStart_toEndOf="@id/boxHour"
+            app:layout_constraintTop_toTopOf="@id/boxHour" />
+
+        <!-- Minute Label -->
+        <TextView
+            android:id="@+id/tvMinuteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/label_minute"
+            android:textColor="@color/color_subtext"
+            android:textSize="13.5sp"
+            app:layout_constraintStart_toStartOf="@id/boxMinute"
+            app:layout_constraintTop_toTopOf="@id/tvHourLabel" />
+
+        <!-- Minute Box -->
+        <FrameLayout
+            android:id="@+id/boxMinute"
+            android:layout_width="94dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_time_input_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvColon"
+            app:layout_constraintTop_toBottomOf="@id/tvMinuteLabel">
+
+            <EditText
+                android:id="@+id/etMinute"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:fontFamily="@font/urbanist_bold"
+                android:gravity="center"
+                android:hint="00"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:maxLength="2"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/color_text"
+                android:textColorHint="#CAD2DE"
+                android:textSize="36sp" />
+        </FrameLayout>
+
+        <!-- AM / PM Toggle -->
+        <LinearLayout
+            android:id="@+id/layoutAmPm"
+            android:layout_width="74dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/bg_ampm_toggle_container"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/boxMinute"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/boxMinute"
+            app:layout_constraintTop_toTopOf="@id/boxMinute">
+
+            <!-- AM Option -->
+            <FrameLayout
+                android:id="@+id/btnToggleAm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvAm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:text="AM"
+                    android:textColor="@color/color_text"
+                    android:textSize="15.5sp" />
+            </FrameLayout>
+
+            <!-- PM Option -->
+            <FrameLayout
+                android:id="@+id/btnTogglePm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_ampm_bottom_selected"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvPm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:text="PM"
+                    android:textColor="@color/white"
+                    android:textSize="15.5sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="#E9EDF5" />
+
+    <!-- Already add section -->
+    <LinearLayout
+        android:id="@+id/layoutAlreadyAddSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAlreadyAddTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/urbanist_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/label_already_add"
+            android:textColor="@color/color_subtext"
+            android:textSize="13.5sp" />
+
+        <com.example.healthcareai.ui.widget.FlowLayout
+            android:id="@+id/flowAlreadyAddedTimes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Bottom Actions: Cancel & Add time -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <!-- Cancel Button -->
+        <FrameLayout
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_pill_btn_light_blue"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/btn_cancel"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Add time Button -->
+        <FrameLayout
+            android:id="@+id/btnAddTime"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_pill_btn_blue"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/btn_add_time"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

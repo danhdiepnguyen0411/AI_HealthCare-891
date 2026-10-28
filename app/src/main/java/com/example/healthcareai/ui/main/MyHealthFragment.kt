@@ -13,12 +13,17 @@ import androidx.fragment.app.Fragment
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
+import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.FragmentMyHealthBinding
 import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.profile.AddProfileActivity
+import com.example.healthcareai.ui.reminder.AddAllergyActivity
+import com.example.healthcareai.ui.reminder.AddConditionActivity
+import com.example.healthcareai.ui.reminder.AddMedicationActivity
+import com.example.healthcareai.ui.reminder.HealthRecordListActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
@@ -45,12 +50,14 @@ class MyHealthFragment : Fragment() {
         setupListeners()
         loadPrimaryProfile()
         syncReminders()
+        syncHealthRecordCounts()
     }
 
     override fun onResume() {
         super.onResume()
         loadPrimaryProfile()
         syncReminders()
+        syncHealthRecordCounts()
     }
 
     private fun setupWindowInsets() {
@@ -101,6 +108,20 @@ class MyHealthFragment : Fragment() {
         binding.tvWeight.text = if (profile.weightKg > 0) "${profile.weightKg} kg" else "-- kg"
     }
 
+    private fun syncHealthRecordCounts() {
+        val context = context ?: return
+        val repo = HealthRecordRepository.getInstance(context)
+        val medCount = repo.getRecordsByCategory("Medication").size
+        val allergyCount = repo.getRecordsByCategory("Allergies").size
+        val conditionCount = repo.getRecordsByCategory("Conditions").size
+        val vaccCount = repo.getRecordsByCategory("Vaccinations").size
+
+        binding.tvMedicationsCount.text = "$medCount active"
+        binding.tvAllergiesCount.text = "$allergyCount reported"
+        binding.tvConditionsCount.text = "$conditionCount active"
+        binding.tvVaccinationsCount.text = "$vaccCount recorded"
+    }
+
     private fun calculateAge(dobString: String?): String {
         if (dobString.isNullOrBlank()) return "--"
         return try {
@@ -126,16 +147,16 @@ class MyHealthFragment : Fragment() {
 
         // Health Records Cards
         binding.cardMedications.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.record_medications, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_MEDICATION)
         }
         binding.cardAllergies.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.record_allergies, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_ALLERGIES)
         }
         binding.cardConditions.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.record_conditions, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_CONDITIONS)
         }
         binding.cardVaccinations.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.record_vaccinations, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_VACCINATIONS)
         }
 
         // Reminder View All and Add
