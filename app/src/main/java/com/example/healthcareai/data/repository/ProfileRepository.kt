@@ -12,11 +12,13 @@ import org.json.JSONObject
  */
 class ProfileRepository private constructor(context: Context) {
 
+    private val appContext: Context = context.applicationContext ?: context
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val preferenceHelper = PreferenceHelper.getInstance(context)
 
     companion object {
+        const val PRIMARY_PROFILE_ID = "primary_admin_profile"
         private const val PREF_NAME = "app_healthcare_profiles"
         private const val KEY_PROFILES_JSON = "key_profiles_json"
 
@@ -43,12 +45,18 @@ class ProfileRepository private constructor(context: Context) {
         preferenceHelper.userWeight = profile.weightKg
         preferenceHelper.isProfileCreated = true
 
+        val stableProfile = if (profile.id.isBlank()) {
+            profile.copy(id = PRIMARY_PROFILE_ID, isPrimary = true)
+        } else {
+            profile.copy(isPrimary = true)
+        }
+
         val profiles = getAllProfiles().toMutableList()
         val existingIndex = profiles.indexOfFirst { it.isPrimary }
         if (existingIndex >= 0) {
-            profiles[existingIndex] = profile.copy(isPrimary = true)
+            profiles[existingIndex] = stableProfile
         } else {
-            profiles.add(0, profile.copy(isPrimary = true))
+            profiles.add(0, stableProfile)
         }
         persistProfiles(profiles)
     }
@@ -75,7 +83,8 @@ class ProfileRepository private constructor(context: Context) {
         val found = all.find { it.isPrimary }
         if (found != null) return found
 
-        return UserProfile(
+        val primary = UserProfile(
+            id = PRIMARY_PROFILE_ID,
             name = preferenceHelper.userName,
             avatarUri = preferenceHelper.userAvatarUri,
             dateOfBirth = preferenceHelper.userDob,
@@ -84,6 +93,8 @@ class ProfileRepository private constructor(context: Context) {
             weightKg = preferenceHelper.userWeight,
             isPrimary = true
         )
+        savePrimaryProfile(primary)
+        return primary
     }
 
     /**
@@ -130,6 +141,11 @@ class ProfileRepository private constructor(context: Context) {
         val profiles = getAllProfiles().toMutableList()
         profiles.removeAll { it.id == id && !it.isPrimary }
         persistProfiles(profiles)
+        try {
+            HealthRecordRepository.getInstance(appContext).deleteRecordsForProfile(id)
+            ReminderRepository.getInstance(appContext).deleteRemindersForProfile(id)
+        } catch (_: Exception) {
+        }
     }
 
     private fun persistProfiles(profiles: List<UserProfile>) {

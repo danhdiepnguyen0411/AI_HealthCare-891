@@ -23,10 +23,15 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+data class FamilyMemberItem(
+    val profile: UserProfile,
+    val reminderCount: Int
+)
+
 class FamilyMemberAdapter(
     private val onItemClick: (UserProfile) -> Unit = {},
     private val onItemDelete: (UserProfile) -> Unit = {}
-) : ListAdapter<UserProfile, FamilyMemberAdapter.MemberViewHolder>(DiffCallback) {
+) : ListAdapter<FamilyMemberItem, FamilyMemberAdapter.MemberViewHolder>(DiffCallback) {
 
     private var currentlyOpenLayout: SwipeRevealLayout? = null
 
@@ -52,7 +57,8 @@ class FamilyMemberAdapter(
         private val binding: ItemFamilyMemberBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(member: UserProfile) {
+        fun bind(item: FamilyMemberItem) {
+            val member = item.profile
             val context = binding.root.context
 
             // Close swipe layout by default on rebind
@@ -74,16 +80,7 @@ class FamilyMemberAdapter(
             binding.tvMemberHeight.text = formatUnit(context, member.heightCm, "cm")
             binding.tvMemberWeight.text = formatUnit(context, member.weightKg, "kg")
 
-            val reminderRepo = ReminderRepository.getInstance(context)
-            val reminders = reminderRepo.getAllReminders()
-            val memberReminderCount = reminders.count { reminder ->
-                (reminder.profileId != null && reminder.profileId == member.id) ||
-                (member.name.isNotBlank() && (
-                    reminder.notes.contains(member.name, ignoreCase = true) ||
-                    reminder.name.contains(member.name, ignoreCase = true)
-                ))
-            }
-            binding.tvMemberReminder.text = memberReminderCount.toString()
+            binding.tvMemberReminder.text = item.reminderCount.toString()
 
             if (!member.avatarUri.isNullOrEmpty()) {
                 binding.ivMemberAvatar.load(member.avatarUri) {
@@ -170,12 +167,12 @@ class FamilyMemberAdapter(
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<UserProfile>() {
-        override fun areItemsTheSame(oldItem: UserProfile, newItem: UserProfile): Boolean {
-            return oldItem.id == newItem.id
+    companion object DiffCallback : DiffUtil.ItemCallback<FamilyMemberItem>() {
+        override fun areItemsTheSame(oldItem: FamilyMemberItem, newItem: FamilyMemberItem): Boolean {
+            return oldItem.profile.id == newItem.profile.id
         }
 
-        override fun areContentsTheSame(oldItem: UserProfile, newItem: UserProfile): Boolean {
+        override fun areContentsTheSame(oldItem: FamilyMemberItem, newItem: FamilyMemberItem): Boolean {
             return oldItem == newItem
         }
     }

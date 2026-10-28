@@ -13,17 +13,20 @@ import androidx.core.view.updateLayoutParams
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
+import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.model.UserProfile
 import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityProfileDetailBinding
+import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
-import com.example.healthcareai.ui.reminder.AddAllergyActivity
-import com.example.healthcareai.ui.reminder.AddConditionActivity
-import com.example.healthcareai.ui.reminder.AddMedicationActivity
 import com.example.healthcareai.ui.reminder.HealthRecordListActivity
+import com.example.healthcareai.ui.reminder.NewReminderActivity
+import com.example.healthcareai.ui.reminder.ReminderActivity
+import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -47,12 +50,14 @@ class ProfileDetailActivity : BaseActivity() {
         setupListeners()
         loadProfileData()
         syncHealthRecordCounts()
+        syncReminders()
     }
 
     override fun onResume() {
         super.onResume()
         loadProfileData()
         syncHealthRecordCounts()
+        syncReminders()
     }
 
     private fun setupWindowInsets() {
@@ -141,23 +146,27 @@ class ProfileDetailActivity : BaseActivity() {
             }
         }
 
-        // Health Records
+        // Health Records - filtered by this member's profile
         binding.cardMedications.setOnClickListener {
-            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_MEDICATION)
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_MEDICATION, currentProfile?.id)
         }
         binding.cardAllergies.setOnClickListener {
-            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_ALLERGIES)
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_ALLERGIES, currentProfile?.id)
         }
         binding.cardConditions.setOnClickListener {
-            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_CONDITIONS)
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_CONDITIONS, currentProfile?.id)
         }
         binding.cardVaccinations.setOnClickListener {
-            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_VACCINATIONS)
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_VACCINATIONS, currentProfile?.id)
         }
 
-        // Today's reminder
+        // Today's reminder - for this specific member
         binding.btnAddReminder.setOnClickListener {
-            startActivity(android.content.Intent(this, com.example.healthcareai.ui.reminder.NewReminderActivity::class.java))
+            NewReminderActivity.start(this, profileId = currentProfile?.id)
+        }
+
+        binding.tvViewAllReminders.setOnClickListener {
+            ReminderActivity.start(this, profileId = currentProfile?.id)
         }
 
         // AI Scan
@@ -178,16 +187,99 @@ class ProfileDetailActivity : BaseActivity() {
     }
 
     private fun syncHealthRecordCounts() {
+        val targetId = currentProfile?.id
         val repo = HealthRecordRepository.getInstance(this)
-        val medCount = repo.getRecordsByCategory("Medication").size
-        val allergyCount = repo.getRecordsByCategory("Allergies").size
-        val conditionCount = repo.getRecordsByCategory("Conditions").size
-        val vaccCount = repo.getRecordsByCategory("Vaccinations").size
+        val medCount = repo.getRecordsByCategory("Medication", targetId).size
+        val allergyCount = repo.getRecordsByCategory("Allergies", targetId).size
+        val conditionCount = repo.getRecordsByCategory("Conditions", targetId).size
+        val vaccCount = repo.getRecordsByCategory("Vaccinations", targetId).size
 
         binding.tvMedicationsCount.text = "$medCount active"
         binding.tvAllergiesCount.text = "$allergyCount reported"
         binding.tvConditionsCount.text = "$conditionCount active"
         binding.tvVaccinationsCount.text = "$vaccCount recorded"
+    }
+
+    private fun syncReminders() {
+        val targetId = currentProfile?.id
+        val reminderRepo = ReminderRepository.getInstance(this)
+        val reminders = reminderRepo.getRemindersForProfile(targetId)
+
+        if (reminders.isEmpty()) {
+            binding.layoutEmptyReminder.visibility = View.VISIBLE
+            binding.layoutReminderList.visibility = View.GONE
+            binding.tvViewAllReminders.visibility = View.GONE
+        } else {
+            binding.layoutEmptyReminder.visibility = View.GONE
+            binding.layoutReminderList.visibility = View.VISIBLE
+            binding.tvViewAllReminders.visibility = View.VISIBLE
+            binding.layoutReminderList.removeAllViews()
+
+            val profile = currentProfile ?: profileRepository.getPrimaryProfile()
+
+            val sorted = reminders.sortedWith(
+                compareBy<ReminderItem> { it.isDone }
+                    .thenBy { it.timeList.firstOrNull() ?: "" }
+            )
+
+            for (reminder in sorted.take(2)) {
+                val cardBinding = ItemReminderCardBinding.inflate(
+                    layoutInflater,
+                    binding.layoutReminderList,
+                    false
+                )
+
+                cardBinding.ivReminderIcon.setImageResource(reminder.getIconResId())
+                cardBinding.tvReminderTitle.text = reminder.name
+
+                val desc = reminder.getDisplayDescription()
+                if (desc.isNotBlank()) {
+                    cardBinding.tvReminderDesc.visibility = View.VISIBLE
+                    cardBinding.tvReminderDesc.text = desc
+                } else {
+                    cardBinding.tvReminderDesc.visibility = View.GONE
+                }
+
+                val time = reminder.getDisplayTime()
+                if (time.isNotBlank()) {
+                    cardBinding.tvReminderTime.visibility = View.VISIBLE
+                    cardBinding.tvReminderTime.text = time
+                } else {
+                    cardBinding.tvReminderTime.visibility = View.GONE
+                }
+
+                if (reminder.isDone) {
+                    cardBinding.btnMarkDone.visibility = View.GONE
+                    cardBinding.layoutTakenUndo.visibility = View.VISIBLE
+                } else {
+                    cardBinding.btnMarkDone.visibility = View.VISIBLE
+                    cardBinding.layoutTakenUndo.visibility = View.GONE
+                }
+
+                cardBinding.btnMarkDone.setOnClickListener {
+                    reminderRepo.setReminderDone(reminder.id, true)
+                    Toast.makeText(this, R.string.msg_marked_as_done, Toast.LENGTH_SHORT).show()
+                    syncReminders()
+                }
+
+                cardBinding.btnUndo.setOnClickListener {
+                    reminderRepo.setReminderDone(reminder.id, false)
+                    Toast.makeText(this, R.string.msg_marked_as_undone, Toast.LENGTH_SHORT).show()
+                    syncReminders()
+                }
+
+                cardBinding.cardReminderRoot.setOnClickListener {
+                    ReminderDetailBottomSheetDialog.show(
+                        supportFragmentManager,
+                        reminder.id,
+                        onUpdated = { syncReminders() },
+                        onDeleted = { syncReminders() }
+                    )
+                }
+
+                binding.layoutReminderList.addView(cardBinding.root)
+            }
+        }
     }
 
     companion object {

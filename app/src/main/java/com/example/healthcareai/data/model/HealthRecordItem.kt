@@ -5,6 +5,7 @@ import java.util.UUID
 
 data class HealthRecordItem(
     val id: String = UUID.randomUUID().toString(),
+    val profileId: String? = null,
     val category: String, // "Medication", "Allergies", "Conditions", "Vaccinations"
     val name: String,
     val details: String = "",

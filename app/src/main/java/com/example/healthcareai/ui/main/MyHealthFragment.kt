@@ -15,6 +15,7 @@ import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.FragmentMyHealthBinding
 import com.example.healthcareai.databinding.ItemReminderCardBinding
@@ -110,11 +111,12 @@ class MyHealthFragment : Fragment() {
 
     private fun syncHealthRecordCounts() {
         val context = context ?: return
+        val primaryId = ProfileRepository.getInstance(context).getPrimaryProfile().id
         val repo = HealthRecordRepository.getInstance(context)
-        val medCount = repo.getRecordsByCategory("Medication").size
-        val allergyCount = repo.getRecordsByCategory("Allergies").size
-        val conditionCount = repo.getRecordsByCategory("Conditions").size
-        val vaccCount = repo.getRecordsByCategory("Vaccinations").size
+        val medCount = repo.getRecordsByCategory("Medication", primaryId).size
+        val allergyCount = repo.getRecordsByCategory("Allergies", primaryId).size
+        val conditionCount = repo.getRecordsByCategory("Conditions", primaryId).size
+        val vaccCount = repo.getRecordsByCategory("Vaccinations", primaryId).size
 
         binding.tvMedicationsCount.text = "$medCount active"
         binding.tvAllergiesCount.text = "$allergyCount reported"
@@ -145,27 +147,33 @@ class MyHealthFragment : Fragment() {
             AddProfileActivity.start(requireContext())
         }
 
-        // Health Records Cards
+        // Health Records Cards (Admin / Primary Profile)
         binding.cardMedications.setOnClickListener {
-            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_MEDICATION)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_MEDICATION, primaryId)
         }
         binding.cardAllergies.setOnClickListener {
-            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_ALLERGIES)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_ALLERGIES, primaryId)
         }
         binding.cardConditions.setOnClickListener {
-            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_CONDITIONS)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_CONDITIONS, primaryId)
         }
         binding.cardVaccinations.setOnClickListener {
-            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_VACCINATIONS)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            HealthRecordListActivity.start(requireContext(), HealthRecordListActivity.CATEGORY_VACCINATIONS, primaryId)
         }
 
-        // Reminder View All and Add
+        // Reminder View All and Add (Admin / Primary Profile)
         binding.tvViewAllReminders.setOnClickListener {
-            startActivity(Intent(requireContext(), ReminderActivity::class.java))
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            ReminderActivity.start(requireContext(), profileId = primaryId)
         }
 
         binding.btnAddReminder.setOnClickListener {
-            startActivity(Intent(requireContext(), NewReminderActivity::class.java))
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            NewReminderActivity.start(requireContext(), profileId = primaryId)
         }
 
         // AI scan history
@@ -191,8 +199,9 @@ class MyHealthFragment : Fragment() {
      */
     private fun syncReminders() {
         val ctx = context ?: return
+        val primaryProfile = ProfileRepository.getInstance(ctx).getPrimaryProfile()
         val reminderRepo = ReminderRepository.getInstance(ctx)
-        val reminders = reminderRepo.getAllReminders()
+        val reminders = reminderRepo.getRemindersForProfile(primaryProfile.id)
 
         if (reminders.isEmpty()) {
             binding.layoutEmptyReminder.visibility = View.VISIBLE
@@ -204,7 +213,11 @@ class MyHealthFragment : Fragment() {
             binding.tvViewAllReminders.visibility = View.VISIBLE
 
             binding.layoutReminderList.removeAllViews()
-            for (item in reminders) {
+            val sorted = reminders.sortedWith(
+                compareBy<ReminderItem> { it.isDone }
+                    .thenBy { it.timeList.firstOrNull() ?: "" }
+            )
+            for (item in sorted.take(2)) {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
                 cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
                 cardBinding.tvReminderTitle.text = item.name

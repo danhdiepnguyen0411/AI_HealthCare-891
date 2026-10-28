@@ -25,6 +25,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHealthRecordDetailBinding
     private var recordId: String? = null
+    private var profileId: String? = null
     private var currentRecord: HealthRecordItem? = null
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.US)
 
@@ -34,6 +35,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
         setContentView(binding.root)
 
         recordId = intent.getStringExtra(EXTRA_RECORD_ID)
+        profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
         if (recordId.isNullOrEmpty()) {
             finish()
             return
@@ -129,7 +131,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
         // Bottom button
         binding.tvEditButtonText.text = "Edit medication"
         binding.btnEditRecord.setOnClickListener {
-            AddMedicationActivity.start(this, record.id)
+            AddMedicationActivity.start(this, record.id, record.profileId ?: profileId)
         }
         binding.btnUpdateStatus.visibility = View.GONE
     }
@@ -168,7 +170,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
         // Bottom button
         binding.tvEditButtonText.text = "Edit allergy"
         binding.btnEditRecord.setOnClickListener {
-            AddAllergyActivity.start(this, record.id)
+            AddAllergyActivity.start(this, record.id, record.profileId ?: profileId)
         }
         binding.btnUpdateStatus.visibility = View.GONE
     }
@@ -205,7 +207,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
         // Bottom buttons
         binding.tvEditButtonText.text = "Edit condition"
         binding.btnEditRecord.setOnClickListener {
-            AddConditionActivity.start(this, record.id)
+            AddConditionActivity.start(this, record.id, record.profileId ?: profileId)
         }
 
         binding.btnUpdateStatus.visibility = View.VISIBLE
@@ -255,7 +257,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
         // Bottom button
         binding.tvEditButtonText.text = "Edit vaccination"
         binding.btnEditRecord.setOnClickListener {
-            AddVaccinationActivity.start(this, record.id)
+            AddVaccinationActivity.start(this, record.id, record.profileId ?: profileId)
         }
         binding.btnUpdateStatus.visibility = View.GONE
     }
@@ -277,18 +279,20 @@ open class HealthRecordDetailActivity : BaseActivity() {
     companion object {
         const val EXTRA_RECORD_ID = "extra_record_id"
         const val EXTRA_CATEGORY = "extra_category"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
 
-        fun start(context: Context, recordId: String, category: String? = null) {
+        fun start(context: Context, recordId: String, category: String? = null, profileId: String? = null) {
             val cat = category?.trim()?.lowercase().orEmpty()
             when {
-                cat == "medication" || cat == "medications" -> MedicationDetailActivity.start(context, recordId)
-                cat == "allergy" || cat == "allergies" -> AllergyDetailActivity.start(context, recordId)
-                cat == "condition" || cat == "conditions" -> ConditionDetailActivity.start(context, recordId)
-                cat == "vaccination" || cat == "vaccinations" -> VaccinationDetailActivity.start(context, recordId)
+                cat == "medication" || cat == "medications" -> MedicationDetailActivity.start(context, recordId, profileId)
+                cat == "allergy" || cat == "allergies" -> AllergyDetailActivity.start(context, recordId, profileId)
+                cat == "condition" || cat == "conditions" -> ConditionDetailActivity.start(context, recordId, profileId)
+                cat == "vaccination" || cat == "vaccinations" -> VaccinationDetailActivity.start(context, recordId, profileId)
                 else -> {
                     val intent = Intent(context, HealthRecordDetailActivity::class.java).apply {
                         putExtra(EXTRA_RECORD_ID, recordId)
                         category?.let { putExtra(EXTRA_CATEGORY, it) }
+                        profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
                     }
                     context.startActivity(intent)
                 }
@@ -299,10 +303,11 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
 class MedicationDetailActivity : HealthRecordDetailActivity() {
     companion object {
-        fun start(context: Context, recordId: String) {
+        fun start(context: Context, recordId: String, profileId: String? = null) {
             val intent = Intent(context, MedicationDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD_ID, recordId)
                 putExtra(EXTRA_CATEGORY, "Medication")
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }
@@ -311,10 +316,11 @@ class MedicationDetailActivity : HealthRecordDetailActivity() {
 
 class AllergyDetailActivity : HealthRecordDetailActivity() {
     companion object {
-        fun start(context: Context, recordId: String) {
+        fun start(context: Context, recordId: String, profileId: String? = null) {
             val intent = Intent(context, AllergyDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD_ID, recordId)
                 putExtra(EXTRA_CATEGORY, "Allergies")
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }
@@ -323,10 +329,11 @@ class AllergyDetailActivity : HealthRecordDetailActivity() {
 
 class ConditionDetailActivity : HealthRecordDetailActivity() {
     companion object {
-        fun start(context: Context, recordId: String) {
+        fun start(context: Context, recordId: String, profileId: String? = null) {
             val intent = Intent(context, ConditionDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD_ID, recordId)
                 putExtra(EXTRA_CATEGORY, "Conditions")
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }
@@ -335,10 +342,11 @@ class ConditionDetailActivity : HealthRecordDetailActivity() {
 
 class VaccinationDetailActivity : HealthRecordDetailActivity() {
     companion object {
-        fun start(context: Context, recordId: String) {
+        fun start(context: Context, recordId: String, profileId: String? = null) {
             val intent = Intent(context, VaccinationDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD_ID, recordId)
                 putExtra(EXTRA_CATEGORY, "Vaccinations")
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }

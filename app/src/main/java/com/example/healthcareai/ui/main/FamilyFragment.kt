@@ -93,6 +93,12 @@ class FamilyFragment : Fragment() {
         }
     }
 
+    fun refreshData() {
+        if (_binding != null) {
+            updateUiState()
+        }
+    }
+
     /**
      * Updates UI based on whether family members exist:
      * - Top right "+" button is hidden (GONE) when no members exist, visible when members exist.
@@ -108,7 +114,14 @@ class FamilyFragment : Fragment() {
         binding.rvFamilyMembers.visibility = if (hasMembers) View.VISIBLE else View.GONE
 
         if (hasMembers) {
-            memberAdapter.submitList(familyMembers)
+            val reminderRepo = com.example.healthcareai.data.repository.ReminderRepository.getInstance(requireContext())
+            val items = familyMembers.map { member ->
+                val count = reminderRepo.getRemindersForProfile(member.id).size
+                FamilyMemberItem(member, count)
+            }
+            memberAdapter.submitList(items)
+        } else {
+            memberAdapter.submitList(emptyList())
         }
     }
 

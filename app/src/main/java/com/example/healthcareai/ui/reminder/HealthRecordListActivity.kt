@@ -21,6 +21,7 @@ class HealthRecordListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHealthRecordListBinding
     private var currentCategory: String = CATEGORY_MEDICATION
+    private var profileId: String? = null
 
     private lateinit var adapter: HealthRecordListAdapter
     private val dateFormat = SimpleDateFormat("MMM d", Locale.US)
@@ -31,6 +32,7 @@ class HealthRecordListActivity : BaseActivity() {
         setContentView(binding.root)
 
         currentCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_MEDICATION
+        profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
 
         setupUI()
         setupRecyclerView()
@@ -82,25 +84,25 @@ class HealthRecordListActivity : BaseActivity() {
 
         binding.btnAddRecord.setOnClickListener {
             when (currentCategory.trim().lowercase()) {
-                CATEGORY_MEDICATION.lowercase(), "medications" -> AddMedicationActivity.start(this)
-                CATEGORY_ALLERGIES.lowercase(), "allergy" -> AddAllergyActivity.start(this)
-                CATEGORY_CONDITIONS.lowercase(), "condition" -> AddConditionActivity.start(this)
-                CATEGORY_VACCINATIONS.lowercase(), "vaccination" -> AddVaccinationActivity.start(this)
-                else -> AddMedicationActivity.start(this)
+                CATEGORY_MEDICATION.lowercase(), "medications" -> AddMedicationActivity.start(this, profileId = profileId)
+                CATEGORY_ALLERGIES.lowercase(), "allergy" -> AddAllergyActivity.start(this, profileId = profileId)
+                CATEGORY_CONDITIONS.lowercase(), "condition" -> AddConditionActivity.start(this, profileId = profileId)
+                CATEGORY_VACCINATIONS.lowercase(), "vaccination" -> AddVaccinationActivity.start(this, profileId = profileId)
+                else -> AddMedicationActivity.start(this, profileId = profileId)
             }
         }
     }
 
     private fun setupRecyclerView() {
         adapter = HealthRecordListAdapter(emptyList()) { item ->
-            HealthRecordDetailActivity.start(this, item.id, currentCategory)
+            HealthRecordDetailActivity.start(this, item.id, currentCategory, profileId = profileId ?: item.profileId)
         }
         binding.rvHealthRecords.layoutManager = LinearLayoutManager(this)
         binding.rvHealthRecords.adapter = adapter
     }
 
     private fun loadData() {
-        val records = HealthRecordRepository.getInstance(this).getRecordsByCategory(currentCategory)
+        val records = HealthRecordRepository.getInstance(this).getRecordsByCategory(currentCategory, profileId)
         if (records.isEmpty()) {
             binding.rvHealthRecords.visibility = View.GONE
             binding.layoutEmptyState.visibility = View.VISIBLE
@@ -211,15 +213,17 @@ class HealthRecordListActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
 
         const val CATEGORY_MEDICATION = "Medication"
         const val CATEGORY_ALLERGIES = "Allergies"
         const val CATEGORY_CONDITIONS = "Conditions"
         const val CATEGORY_VACCINATIONS = "Vaccinations"
 
-        fun start(context: Context, category: String) {
+        fun start(context: Context, category: String, profileId: String? = null) {
             val intent = Intent(context, HealthRecordListActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }

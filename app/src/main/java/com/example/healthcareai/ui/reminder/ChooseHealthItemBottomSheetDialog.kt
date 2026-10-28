@@ -29,6 +29,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var currentCategory: String = SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
     private var selectedItemId: String? = null
+    private var profileId: String? = null
     private var onItemSelectedListener: ((HealthRecordItem) -> Unit)? = null
 
     private lateinit var adapter: HealthRecordAdapter
@@ -42,7 +43,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
             // If newly added item exists, auto-select it and notify listener
             if (newlyCreatedId != null) {
                 val createdRecord = HealthRecordRepository.getInstance(requireContext())
-                    .getRecordsByCategory(currentCategory)
+                    .getRecordsByCategory(currentCategory, profileId)
                     .find { it.id == newlyCreatedId }
                 if (createdRecord != null) {
                     onItemSelectedListener?.invoke(createdRecord)
@@ -67,6 +68,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         currentCategory = arguments?.getString(ARG_CATEGORY) ?: SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
         selectedItemId = arguments?.getString(ARG_SELECTED_ITEM_ID)
+        profileId = arguments?.getString(ARG_PROFILE_ID)
 
         setupUI()
         setupRecyclerView()
@@ -102,7 +104,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         binding.btnAddRecord.setOnClickListener {
-            val intent = AddHealthRecordActivity.getIntent(requireContext(), currentCategory)
+            val intent = AddHealthRecordActivity.getIntent(requireContext(), currentCategory, profileId = profileId)
             addRecordLauncher.launch(intent)
         }
     }
@@ -122,7 +124,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
 
     private fun loadRecords(selectedId: String? = null) {
         val repo = HealthRecordRepository.getInstance(requireContext())
-        val records = repo.getRecordsByCategory(currentCategory)
+        val records = repo.getRecordsByCategory(currentCategory, profileId)
 
         if (records.isEmpty()) {
             binding.rvHealthItems.visibility = View.GONE
@@ -227,11 +229,13 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
         const val TAG = "ChooseHealthItemBottomSheetDialog"
         private const val ARG_CATEGORY = "arg_category"
         private const val ARG_SELECTED_ITEM_ID = "arg_selected_item_id"
+        private const val ARG_PROFILE_ID = "arg_profile_id"
 
         fun show(
             fragmentManager: FragmentManager,
             category: String,
             selectedItemId: String? = null,
+            profileId: String? = null,
             onSelected: (HealthRecordItem) -> Unit
         ): ChooseHealthItemBottomSheetDialog {
             val existing = fragmentManager.findFragmentByTag(TAG) as? ChooseHealthItemBottomSheetDialog
@@ -242,6 +246,7 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
                 arguments = Bundle().apply {
                     putString(ARG_CATEGORY, category)
                     putString(ARG_SELECTED_ITEM_ID, selectedItemId)
+                    putString(ARG_PROFILE_ID, profileId)
                 }
                 this.onItemSelectedListener = onSelected
             }
