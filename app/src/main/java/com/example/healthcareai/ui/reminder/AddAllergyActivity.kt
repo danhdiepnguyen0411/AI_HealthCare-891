@@ -24,6 +24,7 @@ class AddAllergyActivity : BaseActivity() {
     private lateinit var binding: ActivityAddAllergyBinding
     private var editingRecordId: String? = null
     private var existingRecord: HealthRecordItem? = null
+    private var profileId: String? = null
     private var selectedType: String = "Medication"
     private var selectedDateFormatted: String = ""
 
@@ -35,8 +36,12 @@ class AddAllergyActivity : BaseActivity() {
         setContentView(binding.root)
 
         editingRecordId = intent.getStringExtra(EXTRA_RECORD_ID)
+        profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
         if (!editingRecordId.isNullOrEmpty()) {
             existingRecord = HealthRecordRepository.getInstance(this).getAllRecords().find { it.id == editingRecordId }
+            if (profileId.isNullOrEmpty()) {
+                profileId = existingRecord?.profileId
+            }
         }
 
         setupListeners()
@@ -126,6 +131,10 @@ class AddAllergyActivity : BaseActivity() {
                 else -> selectedType
             }
 
+            val effectiveProfileId = existingRecord?.profileId 
+                ?: profileId 
+                ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
+
             val record = existingRecord?.copy(
                 name = allergenName,
                 details = details,
@@ -133,9 +142,11 @@ class AddAllergyActivity : BaseActivity() {
                 reaction = reaction,
                 severity = severity,
                 firstNoticedDate = selectedDateFormatted,
-                notes = notes
+                notes = notes,
+                profileId = effectiveProfileId
             ) ?: HealthRecordItem(
                 id = UUID.randomUUID().toString(),
+                profileId = effectiveProfileId,
                 category = "Allergies",
                 name = allergenName,
                 details = details,
@@ -192,10 +203,12 @@ class AddAllergyActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_RECORD_ID = "extra_record_id"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
 
-        fun start(context: Context, recordId: String? = null) {
+        fun start(context: Context, recordId: String? = null, profileId: String? = null) {
             val intent = Intent(context, AddAllergyActivity::class.java).apply {
                 recordId?.let { putExtra(EXTRA_RECORD_ID, it) }
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)
         }

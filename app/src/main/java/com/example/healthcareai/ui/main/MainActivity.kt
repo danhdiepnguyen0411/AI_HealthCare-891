@@ -73,6 +73,9 @@ class MainActivity : BaseActivity() {
                 if (activeTabId != targetTabId) {
                     updateTabState(targetTabId, animate = true)
                 }
+                if (position == 3) {
+                    (supportFragmentManager.findFragmentByTag("f3") as? FamilyFragment)?.refreshData()
+                }
             }
         })
     }

@@ -1,6 +1,7 @@
 package com.example.healthcareai.ui.reminder
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthcareai.R
+import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityReminderBinding
 import com.example.healthcareai.ui.base.BaseActivity
@@ -21,6 +23,7 @@ class ReminderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReminderBinding
     private lateinit var reminderAdapter: ReminderAdapter
+    private var profileId: String? = null
 
     private var selectedCalendarDay: Calendar = Calendar.getInstance()
     private val weekDaysCalendar = mutableListOf<Calendar>()
@@ -34,6 +37,8 @@ class ReminderActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReminderBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
 
         setupTopBar()
         setupCalendar()
@@ -51,11 +56,11 @@ class ReminderActivity : BaseActivity() {
         }
 
         binding.btnAddReminder.setOnClickListener {
-            startActivity(Intent(this, NewReminderActivity::class.java))
+            NewReminderActivity.start(this, profileId = profileId)
         }
 
         binding.btnEmptyAddReminder.setOnClickListener {
-            startActivity(Intent(this, NewReminderActivity::class.java))
+            NewReminderActivity.start(this, profileId = profileId)
         }
     }
 
@@ -187,14 +192,30 @@ class ReminderActivity : BaseActivity() {
     }
 
     private fun loadReminders() {
-        val reminders = ReminderRepository.getInstance(this).getAllReminders()
+        val effectiveProfileId = profileId ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
+        val reminders = ReminderRepository.getInstance(this).getRemindersForProfile(effectiveProfileId)
         if (reminders.isEmpty()) {
             binding.rvReminders.visibility = View.GONE
             binding.layoutEmptyState.visibility = View.VISIBLE
         } else {
             binding.rvReminders.visibility = View.VISIBLE
             binding.layoutEmptyState.visibility = View.GONE
-            reminderAdapter.submitList(reminders)
+            val sorted = reminders.sortedWith(
+                compareBy<ReminderItem> { it.isDone }
+                    .thenBy { it.timeList.firstOrNull() ?: "" }
+            )
+            reminderAdapter.submitList(sorted)
+        }
+    }
+
+    companion object {
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
+
+        fun start(context: Context, profileId: String? = null) {
+            val intent = Intent(context, ReminderActivity::class.java).apply {
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
+            }
+            context.startActivity(intent)
         }
     }
 }

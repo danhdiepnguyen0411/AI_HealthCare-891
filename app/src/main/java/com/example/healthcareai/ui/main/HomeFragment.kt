@@ -22,6 +22,7 @@ import com.example.healthcareai.databinding.ItemHomeFamilyAvatarBinding
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.ui.chat.AiChatActivity
@@ -130,11 +131,13 @@ class HomeFragment : Fragment() {
 
         // Today's reminder: "View all" and "Add reminder"
         binding.tvViewAllReminders.setOnClickListener {
-            startActivity(Intent(requireContext(), ReminderActivity::class.java))
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            ReminderActivity.start(requireContext(), profileId = primaryId)
         }
 
         binding.btnAddReminder.setOnClickListener {
-            startActivity(Intent(requireContext(), NewReminderActivity::class.java))
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            NewReminderActivity.start(requireContext(), profileId = primaryId)
         }
 
         // AI scan history: "View all" and "Start first scan"
@@ -318,7 +321,8 @@ class HomeFragment : Fragment() {
     private fun syncReminders() {
         val ctx = context ?: return
         val reminderRepo = ReminderRepository.getInstance(ctx)
-        val reminders = reminderRepo.getAllReminders()
+        val primaryId = ProfileRepository.getInstance(ctx).getPrimaryProfile().id
+        val reminders = reminderRepo.getRemindersForProfile(primaryId)
 
         if (reminders.isEmpty()) {
             binding.layoutEmptyReminder.visibility = View.VISIBLE
@@ -330,7 +334,11 @@ class HomeFragment : Fragment() {
             binding.tvViewAllReminders.visibility = View.VISIBLE
 
             binding.layoutReminderList.removeAllViews()
-            for (item in reminders) {
+            val sorted = reminders.sortedWith(
+                compareBy<ReminderItem> { it.isDone }
+                    .thenBy { it.timeList.firstOrNull() ?: "" }
+            )
+            for (item in sorted.take(2)) {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
                 cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
                 cardBinding.tvReminderTitle.text = item.name

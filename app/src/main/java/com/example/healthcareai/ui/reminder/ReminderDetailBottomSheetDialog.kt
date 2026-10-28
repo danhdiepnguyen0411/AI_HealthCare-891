@@ -90,10 +90,8 @@ class ReminderDetailBottomSheetDialog : BottomSheetDialogFragment() {
 
         // 1. Edit reminder
         binding.layoutEditReminder.setOnClickListener {
-            val intent = Intent(requireContext(), NewReminderActivity::class.java).apply {
-                putExtra(NewReminderActivity.EXTRA_REMINDER_ID, id)
-            }
-            startActivity(intent)
+            val reminder = ReminderRepository.getInstance(requireContext()).getReminder(id)
+            NewReminderActivity.start(requireContext(), reminderId = id, profileId = reminder?.profileId)
             dismiss()
         }
 

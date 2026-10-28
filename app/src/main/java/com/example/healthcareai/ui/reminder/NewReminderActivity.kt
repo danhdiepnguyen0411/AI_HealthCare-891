@@ -2,6 +2,7 @@ package com.example.healthcareai.ui.reminder
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -36,6 +37,7 @@ class NewReminderActivity : BaseActivity() {
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
 
     private var editingReminderId: String? = null
+    private var profileId: String? = null
     private var selectedHealthRecordItem: HealthRecordItem? = null
 
     private var lastImeInsetsBottom = 0
@@ -49,6 +51,7 @@ class NewReminderActivity : BaseActivity() {
         setContentView(binding.root)
 
         editingReminderId = intent.getStringExtra(EXTRA_REMINDER_ID)
+        profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
 
         setupTopBar()
         setupWindowInsetsAndKeyboard()
@@ -130,7 +133,8 @@ class NewReminderActivity : BaseActivity() {
             ChooseHealthItemBottomSheetDialog.show(
                 supportFragmentManager,
                 category = currentCategory,
-                selectedItemId = selectedHealthRecordItem?.id ?: binding.tvChooseItem.text.toString()
+                selectedItemId = selectedHealthRecordItem?.id ?: binding.tvChooseItem.text.toString(),
+                profileId = profileId
             ) { item ->
                 selectedHealthRecordItem = item
                 binding.tvChooseItem.text = item.name
@@ -329,8 +333,13 @@ class NewReminderActivity : BaseActivity() {
                 binding.tvForm.text?.toString()?.trim().orEmpty()
             } else ""
 
+            val effectiveProfileId = existing?.profileId
+                ?: profileId
+                ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
+
             val itemToSave = ReminderItem(
                 id = existing?.id ?: UUID.randomUUID().toString(),
+                profileId = effectiveProfileId,
                 name = reminderName,
                 category = chosenCategory,
                 strength = strength,
@@ -532,5 +541,14 @@ class NewReminderActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_REMINDER_ID = "extra_reminder_id"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
+
+        fun start(context: Context, reminderId: String? = null, profileId: String? = null) {
+            val intent = Intent(context, NewReminderActivity::class.java).apply {
+                reminderId?.let { putExtra(EXTRA_REMINDER_ID, it) }
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
+            }
+            context.startActivity(intent)
+        }
     }
 }

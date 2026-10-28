@@ -8,8 +8,9 @@ import com.google.gson.reflect.TypeToken
 
 class ReminderRepository private constructor(context: Context) {
 
+    private val appContext: Context = context.applicationContext
     private val prefs: SharedPreferences =
-        context.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
     companion object {
@@ -48,6 +49,20 @@ class ReminderRepository private constructor(context: Context) {
     }
 
     @Synchronized
+    fun getRemindersForProfile(profileId: String?): List<ReminderItem> {
+        if (profileId.isNullOrEmpty()) return getAllReminders()
+        val primaryId = ProfileRepository.getInstance(appContext).getPrimaryProfile().id
+        val isPrimary = (profileId == primaryId)
+        return getAllReminders().filter { reminder ->
+            if (isPrimary) {
+                reminder.profileId.isNullOrEmpty() || reminder.profileId == profileId
+            } else {
+                reminder.profileId == profileId
+            }
+        }
+    }
+
+    @Synchronized
     fun getReminder(id: String): ReminderItem? {
         return getAllReminders().firstOrNull { it.id == id }
     }
@@ -68,6 +83,13 @@ class ReminderRepository private constructor(context: Context) {
     fun deleteReminder(id: String) {
         val currentList = getAllReminders().toMutableList()
         currentList.removeAll { it.id == id }
+        saveList(currentList)
+    }
+
+    @Synchronized
+    fun deleteRemindersForProfile(profileId: String) {
+        val currentList = getAllReminders().toMutableList()
+        currentList.removeAll { it.profileId == profileId }
         saveList(currentList)
     }
 

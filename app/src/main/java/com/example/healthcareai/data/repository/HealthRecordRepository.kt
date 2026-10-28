@@ -8,8 +8,9 @@ import com.google.gson.reflect.TypeToken
 
 class HealthRecordRepository private constructor(context: Context) {
 
+    private val appContext: Context = context.applicationContext
     private val prefs: SharedPreferences =
-        context.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
 
     companion object {
@@ -38,9 +39,24 @@ class HealthRecordRepository private constructor(context: Context) {
     }
 
     @Synchronized
-    fun getRecordsByCategory(category: String): List<HealthRecordItem> {
-        val target = category.trim().lowercase()
+    fun getRecordsForProfile(profileId: String?): List<HealthRecordItem> {
+        if (profileId.isNullOrEmpty()) return getAllRecords()
+        val primaryProfileId = ProfileRepository.getInstance(appContext).getPrimaryProfile().id
+        val isPrimary = (profileId == primaryProfileId)
         return getAllRecords().filter { item ->
+            if (isPrimary) {
+                item.profileId.isNullOrEmpty() || item.profileId == profileId
+            } else {
+                item.profileId == profileId
+            }
+        }
+    }
+
+    @Synchronized
+    fun getRecordsByCategory(category: String, profileId: String? = null): List<HealthRecordItem> {
+        val target = category.trim().lowercase()
+        val records = if (profileId.isNullOrEmpty()) getAllRecords() else getRecordsForProfile(profileId)
+        return records.filter { item ->
             val cat = item.category.trim().lowercase()
             when {
                 cat == target -> true
@@ -70,6 +86,14 @@ class HealthRecordRepository private constructor(context: Context) {
     fun deleteRecord(id: String) {
         val current = getAllRecords().toMutableList()
         current.removeAll { it.id == id }
+        val json = gson.toJson(current)
+        prefs.edit().putString(KEY_RECORDS_LIST, json).apply()
+    }
+
+    @Synchronized
+    fun deleteRecordsForProfile(profileId: String) {
+        val current = getAllRecords().toMutableList()
+        current.removeAll { it.profileId == profileId }
         val json = gson.toJson(current)
         prefs.edit().putString(KEY_RECORDS_LIST, json).apply()
     }
