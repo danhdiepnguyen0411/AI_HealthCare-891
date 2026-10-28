@@ -1,15 +1,17 @@
 package com.example.healthcareai.ui.reminder
 
 import android.app.Dialog
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.FragmentManager
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.BottomSheetSelectCategoryBinding
@@ -23,7 +25,7 @@ class SelectCategoryBottomSheetDialog : BottomSheetDialogFragment() {
     private var _binding: BottomSheetSelectCategoryBinding? = null
     private val binding get() = _binding!!
 
-    private var currentSelectedCategory: String = CATEGORY_HEALTH_MONITORING
+    private var currentSelectedCategory: String = CATEGORY_TEMPERATURE
     private var onCategorySelectedListener: ((String) -> Unit)? = null
 
     override fun getTheme(): Int = R.style.TransparentBottomSheetDialogTheme
@@ -53,74 +55,42 @@ class SelectCategoryBottomSheetDialog : BottomSheetDialogFragment() {
 
     private data class CategoryViewBundle(
         val key: String,
-        val card: FrameLayout,
-        val tvTitle: TextView,
-        val tvDesc: TextView,
-        val ivCheck: ImageView
+        val card: LinearLayout,
+        val ivIcon: ImageView,
+        val tvTitle: TextView
     )
 
     private fun setupCategorySelection() {
         val categories = listOf(
-            CategoryViewBundle(
-                CATEGORY_HEALTH_MONITORING,
-                binding.cardCategoryHealthMonitoring,
-                binding.tvTitleHealthMonitoring,
-                binding.tvDescHealthMonitoring,
-                binding.ivCheckHealthMonitoring
-            ),
-            CategoryViewBundle(
-                CATEGORY_MEDICATION,
-                binding.cardCategoryMedication,
-                binding.tvTitleMedication,
-                binding.tvDescMedication,
-                binding.ivCheckMedication
-            ),
-            CategoryViewBundle(
-                CATEGORY_HEALTHY_HABITS,
-                binding.cardCategoryHealthyHabits,
-                binding.tvTitleHealthyHabits,
-                binding.tvDescHealthyHabits,
-                binding.ivCheckHealthyHabits
-            ),
-            CategoryViewBundle(
-                CATEGORY_APPOINTMENTS,
-                binding.cardCategoryAppointments,
-                binding.tvTitleAppointments,
-                binding.tvDescAppointments,
-                binding.ivCheckAppointments
-            ),
-            CategoryViewBundle(
-                CATEGORY_VACCINATIONS,
-                binding.cardCategoryVaccinations,
-                binding.tvTitleVaccinations,
-                binding.tvDescVaccinations,
-                binding.ivCheckVaccinations
-            ),
-            CategoryViewBundle(
-                CATEGORY_OTHER,
-                binding.cardCategoryOther,
-                binding.tvTitleOther,
-                binding.tvDescOther,
-                binding.ivCheckOther
-            )
+            CategoryViewBundle(CATEGORY_TEMPERATURE, binding.cardCategoryTemperature, binding.ivIconTemperature, binding.tvTitleTemperature),
+            CategoryViewBundle(CATEGORY_HEART_RATE, binding.cardCategoryHeartRate, binding.ivIconHeartRate, binding.tvTitleHeartRate),
+            CategoryViewBundle(CATEGORY_MEDICATION, binding.cardCategoryMedication, binding.ivIconMedication, binding.tvTitleMedication),
+            CategoryViewBundle(CATEGORY_DRINK_WATER, binding.cardCategoryDrinkWater, binding.ivIconDrinkWater, binding.tvTitleDrinkWater),
+            CategoryViewBundle(CATEGORY_EXERCISE, binding.cardCategoryExercise, binding.ivIconExercise, binding.tvTitleExercise),
+            CategoryViewBundle(CATEGORY_SLEEP, binding.cardCategorySleep, binding.ivIconSleep, binding.tvTitleSleep),
+            CategoryViewBundle(CATEGORY_APPOINTMENTS, binding.cardCategoryAppointments, binding.ivIconAppointments, binding.tvTitleAppointments),
+            CategoryViewBundle(CATEGORY_VACCINATION, binding.cardCategoryVaccination, binding.ivIconVaccination, binding.tvTitleVaccination)
         )
 
         fun updateUI(selectedKey: String) {
             currentSelectedCategory = selectedKey
             val context = context ?: return
 
+            val whiteColor = ContextCompat.getColor(context, R.color.white)
+            val textColor = ContextCompat.getColor(context, R.color.color_text)
+            val blueTint = ColorStateList.valueOf(Color.parseColor("#4E75F7"))
+            val whiteTint = ColorStateList.valueOf(whiteColor)
+
             for (bundle in categories) {
                 val isSelected = bundle.key.equals(selectedKey, ignoreCase = true)
                 if (isSelected) {
-                    bundle.card.setBackgroundResource(R.drawable.bg_category_card_selected)
-                    bundle.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
-                    bundle.tvDesc.setTextColor(Color.parseColor("#DCE6FF"))
-                    bundle.ivCheck.setImageResource(R.drawable.bg_checkbox_selected_white)
+                    bundle.card.setBackgroundResource(R.drawable.bg_category_grid_selected)
+                    bundle.tvTitle.setTextColor(whiteColor)
+                    ImageViewCompat.setImageTintList(bundle.ivIcon, whiteTint)
                 } else {
-                    bundle.card.setBackgroundResource(R.drawable.bg_category_card_unselected)
-                    bundle.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.color_text))
-                    bundle.tvDesc.setTextColor(ContextCompat.getColor(context, R.color.color_subtext))
-                    bundle.ivCheck.setImageResource(R.drawable.bg_checkbox_unchecked)
+                    bundle.card.setBackgroundResource(R.drawable.bg_category_grid_unselected)
+                    bundle.tvTitle.setTextColor(textColor)
+                    ImageViewCompat.setImageTintList(bundle.ivIcon, blueTint)
                 }
             }
         }
@@ -168,16 +138,18 @@ class SelectCategoryBottomSheetDialog : BottomSheetDialogFragment() {
         const val TAG = "SelectCategoryBottomSheetDialog"
         private const val ARG_SELECTED_CATEGORY = "arg_selected_category"
 
-        const val CATEGORY_HEALTH_MONITORING = "Health monitoring"
+        const val CATEGORY_TEMPERATURE = "Temperature"
+        const val CATEGORY_HEART_RATE = "Heart rate"
         const val CATEGORY_MEDICATION = "Medication"
-        const val CATEGORY_HEALTHY_HABITS = "Healthy habits"
+        const val CATEGORY_DRINK_WATER = "Drink Water"
+        const val CATEGORY_EXERCISE = "Exercise"
+        const val CATEGORY_SLEEP = "Sleep"
         const val CATEGORY_APPOINTMENTS = "Appointments"
-        const val CATEGORY_VACCINATIONS = "Vaccinations"
-        const val CATEGORY_OTHER = "Other"
+        const val CATEGORY_VACCINATION = "Vaccination"
 
         fun show(
             fragmentManager: FragmentManager,
-            selectedCategory: String = CATEGORY_HEALTH_MONITORING,
+            selectedCategory: String = CATEGORY_MEDICATION,
             onSelected: (String) -> Unit
         ): SelectCategoryBottomSheetDialog {
             val existing = fragmentManager.findFragmentByTag(TAG) as? SelectCategoryBottomSheetDialog

@@ -14,11 +14,16 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.UserProfile
+import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.ActivityProfileDetailBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
+import com.example.healthcareai.ui.reminder.AddAllergyActivity
+import com.example.healthcareai.ui.reminder.AddConditionActivity
+import com.example.healthcareai.ui.reminder.AddMedicationActivity
+import com.example.healthcareai.ui.reminder.HealthRecordListActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -41,11 +46,13 @@ class ProfileDetailActivity : BaseActivity() {
         setupWindowInsets()
         setupListeners()
         loadProfileData()
+        syncHealthRecordCounts()
     }
 
     override fun onResume() {
         super.onResume()
         loadProfileData()
+        syncHealthRecordCounts()
     }
 
     private fun setupWindowInsets() {
@@ -136,16 +143,16 @@ class ProfileDetailActivity : BaseActivity() {
 
         // Health Records
         binding.cardMedications.setOnClickListener {
-            Toast.makeText(this, R.string.record_medications, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_MEDICATION)
         }
         binding.cardAllergies.setOnClickListener {
-            Toast.makeText(this, R.string.record_allergies, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_ALLERGIES)
         }
         binding.cardConditions.setOnClickListener {
-            Toast.makeText(this, R.string.record_conditions, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_CONDITIONS)
         }
         binding.cardVaccinations.setOnClickListener {
-            Toast.makeText(this, R.string.record_vaccinations, Toast.LENGTH_SHORT).show()
+            HealthRecordListActivity.start(this, HealthRecordListActivity.CATEGORY_VACCINATIONS)
         }
 
         // Today's reminder
@@ -168,6 +175,19 @@ class ProfileDetailActivity : BaseActivity() {
                 finish()
             }
         )
+    }
+
+    private fun syncHealthRecordCounts() {
+        val repo = HealthRecordRepository.getInstance(this)
+        val medCount = repo.getRecordsByCategory("Medication").size
+        val allergyCount = repo.getRecordsByCategory("Allergies").size
+        val conditionCount = repo.getRecordsByCategory("Conditions").size
+        val vaccCount = repo.getRecordsByCategory("Vaccinations").size
+
+        binding.tvMedicationsCount.text = "$medCount active"
+        binding.tvAllergiesCount.text = "$allergyCount reported"
+        binding.tvConditionsCount.text = "$conditionCount active"
+        binding.tvVaccinationsCount.text = "$vaccCount recorded"
     }
 
     companion object {

@@ -133,6 +133,69 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Health Record List Activity -->
+        <activity
+            android:name=".ui.reminder.HealthRecordListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Add Health Record Activities -->
+        <activity
+            android:name=".ui.reminder.AddHealthRecordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.reminder.AddMedicationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.reminder.AddAllergyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.reminder.AddConditionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.reminder.AddVaccinationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Health Record Detail Activities -->
+        <activity
+            android:name=".ui.reminder.HealthRecordDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.reminder.MedicationDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.reminder.AllergyDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.reminder.ConditionDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.reminder.VaccinationDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Reminder View All Activity -->
         <activity
             android:name=".ui.reminder.ReminderActivity"

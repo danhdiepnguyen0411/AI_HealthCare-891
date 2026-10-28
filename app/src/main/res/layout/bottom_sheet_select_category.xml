@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootSelectCategory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,329 +29,355 @@
         android:fontFamily="@font/urbanist_bold"
         android:includeFontPadding="false"
         android:text="@string/title_select_category"
-        android:textColor="#172044"
+        android:textColor="@color/color_text"
         android:textSize="22sp" />
 
-    <!-- 1. Health monitoring -->
-    <FrameLayout
-        android:id="@+id/cardCategoryHealthMonitoring"
+    <!-- Grid: 4 rows x 2 cols -->
+    <!-- Row 1: Temperature & Heart rate -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_selected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
+        <!-- Temperature -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
+            android:id="@+id/cardCategoryTemperature"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconTemperature"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_temperature"
+                app:tint="#4E75F7" />
 
             <TextView
-                android:id="@+id/tvTitleHealthMonitoring"
+                android:id="@+id/tvTitleTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_health_monitoring_title"
-                android:textColor="@color/white"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescHealthMonitoring"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
-                android:includeFontPadding="false"
-                android:text="@string/category_health_monitoring_desc"
-                android:textColor="#DCE6FF"
-                android:textSize="12.5sp" />
+                android:maxLines="1"
+                android:text="Temperature"
+                android:textColor="@color/color_text"
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivCheckHealthMonitoring"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_selected_white" />
-    </FrameLayout>
-
-    <!-- 2. Medication -->
-    <FrameLayout
-        android:id="@+id/cardCategoryMedication"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
-
+        <!-- Heart rate -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
+            android:id="@+id/cardCategoryHeartRate"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconHeartRate"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_heart_rate"
+                app:tint="#4E75F7" />
+
+            <TextView
+                android:id="@+id/tvTitleHeartRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="Heart rate"
+                android:textColor="@color/color_text"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Row 2: Medication & Drink Water -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- Medication -->
+        <LinearLayout
+            android:id="@+id/cardCategoryMedication"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconMedication"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_medications"
+                app:tint="#4E75F7" />
 
             <TextView
                 android:id="@+id/tvTitleMedication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_medication_title"
+                android:maxLines="1"
+                android:text="Medication"
                 android:textColor="@color/color_text"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescMedication"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
-                android:includeFontPadding="false"
-                android:text="@string/category_medication_desc"
-                android:textColor="@color/color_subtext"
-                android:textSize="12.5sp" />
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivCheckMedication"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 3. Healthy habits -->
-    <FrameLayout
-        android:id="@+id/cardCategoryHealthyHabits"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
-
+        <!-- Drink Water -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
+            android:id="@+id/cardCategoryDrinkWater"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconDrinkWater"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_drink_water"
+                app:tint="#4E75F7" />
 
             <TextView
-                android:id="@+id/tvTitleHealthyHabits"
+                android:id="@+id/tvTitleDrinkWater"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_healthy_habits_title"
+                android:maxLines="1"
+                android:text="Drink Water"
                 android:textColor="@color/color_text"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Row 3: Exercise & Sleep -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- Exercise -->
+        <LinearLayout
+            android:id="@+id/cardCategoryExercise"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconExercise"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_do_exercise"
+                app:tint="#4E75F7" />
 
             <TextView
-                android:id="@+id/tvDescHealthyHabits"
+                android:id="@+id/tvTitleExercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_healthy_habits_desc"
-                android:textColor="@color/color_subtext"
-                android:textSize="12.5sp" />
+                android:maxLines="1"
+                android:text="Exercise"
+                android:textColor="@color/color_text"
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivCheckHealthyHabits"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 4. Appointments -->
-    <FrameLayout
-        android:id="@+id/cardCategoryAppointments"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
-
+        <!-- Sleep -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
+            android:id="@+id/cardCategorySleep"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconSleep"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_sleep"
+                app:tint="#4E75F7" />
+
+            <TextView
+                android:id="@+id/tvTitleSleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="Sleep"
+                android:textColor="@color/color_text"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Row 4: Appointments & Vaccination -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!-- Appointments -->
+        <LinearLayout
+            android:id="@+id/cardCategoryAppointments"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconAppointments"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_appointments"
+                app:tint="#4E75F7" />
 
             <TextView
                 android:id="@+id/tvTitleAppointments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_appointments_title"
+                android:maxLines="1"
+                android:text="Appointments"
                 android:textColor="@color/color_text"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescAppointments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
-                android:includeFontPadding="false"
-                android:text="@string/category_appointments_desc"
-                android:textColor="@color/color_subtext"
-                android:textSize="12.5sp" />
+                android:textSize="15sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivCheckAppointments"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 5. Vaccinations -->
-    <FrameLayout
-        android:id="@+id/cardCategoryVaccinations"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
-
+        <!-- Vaccination -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
+            android:id="@+id/cardCategoryVaccination"
+            android:layout_width="0dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_category_grid_unselected"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp">
+
+            <ImageView
+                android:id="@+id/ivIconVaccination"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_vaccination"
+                app:tint="#4E75F7" />
 
             <TextView
-                android:id="@+id/tvTitleVaccinations"
+                android:id="@+id/tvTitleVaccination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
-                android:text="@string/category_vaccinations_title"
+                android:maxLines="1"
+                android:text="Vaccination"
                 android:textColor="@color/color_text"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescVaccinations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
-                android:includeFontPadding="false"
-                android:text="@string/category_vaccinations_desc"
-                android:textColor="@color/color_subtext"
-                android:textSize="12.5sp" />
+                android:textSize="15sp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivCheckVaccinations"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 6. Other -->
-    <FrameLayout
-        android:id="@+id/cardCategoryOther"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvTitleOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/urbanist"
-                android:includeFontPadding="false"
-                android:text="@string/category_other_title"
-                android:textColor="@color/color_text"
-                android:textSize="15.5sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/urbanist_medium"
-                android:includeFontPadding="false"
-                android:text="@string/category_other_desc"
-                android:textColor="@color/color_subtext"
-                android:textSize="12.5sp" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivCheckOther"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
+    </LinearLayout>
 
     <!-- Continue Button -->
-    <FrameLayout
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/bg_pill_btn_blue"
+        android:background="@drawable/bg_btn_submit_rating"
         android:clickable="true"
-        android:focusable="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/urbanist"
-            android:includeFontPadding="false"
-            android:text="@string/btn_continue"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </FrameLayout>
+        android:focusable="true"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/btn_continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

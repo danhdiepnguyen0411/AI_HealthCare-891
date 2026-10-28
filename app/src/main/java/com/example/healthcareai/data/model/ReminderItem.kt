@@ -38,7 +38,12 @@ data class ReminderItem(
         val lowerName = name.lowercase()
         return when {
             lowerCat.contains("water") || lowerName.contains("water") -> com.example.healthcareai.R.drawable.ic_drink_water
-            lowerCat.contains("exercise") || lowerName.contains("exercise") || lowerCat.contains("workout") || lowerName.contains("workout") -> com.example.healthcareai.R.drawable.ic_do_exercise
+            lowerCat.contains("exercise") || lowerName.contains("exercise") -> com.example.healthcareai.R.drawable.ic_do_exercise
+            lowerCat.contains("sleep") || lowerName.contains("sleep") -> com.example.healthcareai.R.drawable.ic_sleep
+            lowerCat.contains("temperature") || lowerName.contains("temp") -> com.example.healthcareai.R.drawable.ic_temperature
+            lowerCat.contains("heart") -> com.example.healthcareai.R.drawable.ic_heart_rate
+            lowerCat.contains("appointment") -> com.example.healthcareai.R.drawable.ic_appointments
+            lowerCat.contains("vaccin") -> com.example.healthcareai.R.drawable.ic_vaccination
             else -> com.example.healthcareai.R.drawable.ic_medications
         }
     }
