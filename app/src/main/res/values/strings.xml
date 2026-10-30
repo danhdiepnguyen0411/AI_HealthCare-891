@@ -313,12 +313,14 @@
     <string name="title_symptom_checker">Symptom Checker</string>
     <string name="symptom_checker_subtitle">Let\'s understand how you\'re feeling\nto provide the best guidance.</string>
     <string name="symptom_checker_privacy_notice">Your data is encrypted and private.</string>
-    <string name="symptom_checker_est_time_label">EST. TIME</string>
+    <string name="symptom_checker_est_time_label">Estimated time</string>
     <string name="symptom_checker_est_time_val">3 min</string>
-    <string name="symptom_checker_length_label">LENGTH</string>
-    <string name="symptom_checker_length_val">10 Qs</string>
+    <string name="symptom_checker_after_assessment_label">After assessment</string>
+    <string name="symptom_checker_after_assessment_val">Health insights</string>
+    <string name="symptom_checker_length_label">After assessment</string>
+    <string name="symptom_checker_length_val">Health insights</string>
     <string name="symptom_checker_btn_start">Start Assessment</string>
-    <string name="symptom_checker_start_toast">Starting 10-question AI Symptom Assessment...</string>
+    <string name="symptom_checker_start_toast">Starting AI Symptom Assessment...</string>
 
     <!-- Symptom Assessment Onboard -->
     <string name="assessment_age_title">What is your age?</string>
@@ -327,6 +329,17 @@
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
     <string name="assessment_symptoms_title">What are your symptoms?</string>
+    <string name="assessment_symptoms_subtitle">Tap any body part to highlight and select symptoms</string>
+    <string name="tab_body_map">Body Map</string>
+    <string name="tab_all_symptoms">All Symptoms</string>
+    <string name="region_all">All</string>
+    <string name="region_head">Head</string>
+    <string name="region_neck">Neck</string>
+    <string name="region_shoulders">Shoulders</string>
+    <string name="region_chest">Chest</string>
+    <string name="region_abdomen">Abdomen</string>
+    <string name="region_arms">Arms</string>
+    <string name="region_legs">Legs</string>
     <string name="search_symptoms_hint">Type your main symptom here</string>
     <string name="no_symptoms_found">No symptoms matching \"%s\"</string>
     <string name="assessment_related_symptoms_title">Do you have any of the following symptoms?</string>
