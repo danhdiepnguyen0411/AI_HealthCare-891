@@ -121,6 +121,17 @@
                 android:textSize="14sp" />
         </FrameLayout>
 
+        <!-- Circular 5s Countdown Timer (Visible on First Launch before Done button appears) -->
+        <com.example.healthcareai.ui.widget.CircularCountdownView
+            android:id="@+id/viewCountdown"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Language Items List -->
@@ -136,19 +147,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topBar"
         tools:listitem="@layout/item_language" />
-
-    <!-- Floating Hand Icon (80dp, renders above all cards, flies to Done) -->
-    <ImageView
-        android:id="@+id/ivFloatingHand"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
-        android:elevation="100dp"
-        android:focusable="true"
-        android:src="@drawable/hand_click"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
