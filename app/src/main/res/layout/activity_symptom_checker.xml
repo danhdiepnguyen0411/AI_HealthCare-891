@@ -185,24 +185,23 @@
                             android:contentDescription="@null"
                             android:src="@drawable/ic_est__time" />
 
-                        <!-- EST. TIME: Figma Size 12px, Line height 16px, Weight 600 SemiBold, Letter spacing 0.6px, Uppercase, Color #56627A -->
+                        <!-- Estimated time: Size 13sp, Medium, Color #56627A -->
                         <TextView
                             android:id="@+id/tvEstTimeLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:fontFamily="@font/urbanist_semibold"
-                            app:fontFamily="@font/urbanist_semibold"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:letterSpacing="0.05"
-                            android:lineHeight="16sp"
+                            android:lineHeight="18sp"
                             android:text="@string/symptom_checker_est_time_label"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             android:textColor="@color/color_subtext"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
-                        <!-- 3 min: Figma Weight 700 Bold, Color #242E49, Size 20sp, Line height 24sp -->
+                        <!-- 3 min: Bold, Color #242E49, Size 18sp, Line height 24sp -->
                         <TextView
                             android:id="@+id/tvEstTimeValue"
                             android:layout_width="wrap_content"
@@ -214,11 +213,11 @@
                             android:lineHeight="24sp"
                             android:text="@string/symptom_checker_est_time_val"
                             android:textColor="@color/color_text"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Right Card: LENGTH -->
+                <!-- Right Card: AFTER ASSESSMENT / HEALTH INSIGHTS -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardLength"
                     android:layout_width="0dp"
@@ -237,33 +236,32 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingHorizontal="12dp"
+                        android:paddingHorizontal="10dp"
                         android:paddingVertical="18dp">
 
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:contentDescription="@null"
-                            android:src="@drawable/ic_length" />
+                            android:src="@drawable/ic_after_assessment" />
 
-                        <!-- LENGTH: Figma Size 12px, Line height 16px, Weight 600 SemiBold, Letter spacing 0.6px, Uppercase, Color #56627A -->
+                        <!-- After assessment: Size 13sp, Medium, Color #56627A -->
                         <TextView
                             android:id="@+id/tvLengthLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:fontFamily="@font/urbanist_semibold"
-                            app:fontFamily="@font/urbanist_semibold"
+                            android:fontFamily="@font/urbanist_medium"
+                            app:fontFamily="@font/urbanist_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:letterSpacing="0.05"
-                            android:lineHeight="16sp"
-                            android:text="@string/symptom_checker_length_label"
-                            android:textAllCaps="true"
+                            android:lineHeight="18sp"
+                            android:text="@string/symptom_checker_after_assessment_label"
+                            android:textAllCaps="false"
                             android:textColor="@color/color_subtext"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
-                        <!-- 10 Qs: Figma Weight 700 Bold, Color #242E49, Size 20sp, Line height 24sp -->
+                        <!-- Health insights: Bold, Color #242E49, Size 18sp, Line height 24sp -->
                         <TextView
                             android:id="@+id/tvLengthValue"
                             android:layout_width="wrap_content"
@@ -271,11 +269,12 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/urbanist_bold"
                             app:fontFamily="@font/urbanist_bold"
+                            android:gravity="center"
                             android:includeFontPadding="false"
                             android:lineHeight="24sp"
-                            android:text="@string/symptom_checker_length_val"
+                            android:text="@string/symptom_checker_after_assessment_val"
                             android:textColor="@color/color_text"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

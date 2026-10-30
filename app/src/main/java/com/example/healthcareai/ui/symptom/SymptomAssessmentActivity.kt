@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.Toast
+import android.graphics.Color
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
 import android.text.InputFilter
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -38,24 +41,29 @@ class SymptomAssessmentActivity : BaseActivity() {
     private var selectedGender: Gender = Gender.MALE
 
     companion object {
-        const val TOTAL_QUESTIONS = 10
+        const val TOTAL_QUESTIONS = 6
     }
 
     private lateinit var gestureDetector: GestureDetector
     private var accumulatedScrollY = 0f
     private val scrollThresholdDp = 32f
 
-    // Question 3: Symptoms data & adapter
+    // Question 3: Body Anatomy selection
+    private var selectedBodyRegionId: String = "arms"
+    private var selectedBodyRegionName: String = "Arm"
+
+    // Question 4: Specific symptoms selection
     private lateinit var symptomsAdapter: SymptomsAdapter
     private val allSymptoms = mutableListOf<SymptomItem>()
     private val selectedSymptomIds = mutableSetOf<String>()
 
-    // Question 4: Related Symptoms data & adapter
-    private lateinit var relatedSymptomsAdapter: SymptomsAdapter
-    private val relatedSymptoms = mutableListOf<SymptomItem>()
-    private val selectedRelatedSymptomIds = mutableSetOf<String>()
+    // Question 5: Related symptoms (dynamically filtered)
+    private lateinit var q5SymptomsAdapter: SymptomsAdapter
+    private val q5Symptoms = mutableListOf<SymptomItem>()
+    private val selectedQ5SymptomIds = mutableSetOf<String>()
+    private var lastLoadedQ5Category: String = ""
 
-    // Question 5: Insect bite selection
+    // Question 6: Insect bite selection
     enum class InsectBiteOption {
         YES, NO, DONT_KNOW
     }
@@ -70,12 +78,13 @@ class SymptomAssessmentActivity : BaseActivity() {
         setupBackNavigation()
         initAgeWheel()
         initGenderSelection()
-        initSymptomsList()
-        initRelatedSymptoms()
+        initBodyAnatomyWebView()
+        initQuestion4Symptoms()
+        initQuestion5Symptoms()
         initInsectBiteSelection()
         setupListeners()
 
-        // Display initial question 1 (1/10) without animation
+        // Display initial question 1 (1/6) without animation
         goToQuestion(1, animate = false)
     }
 
@@ -270,21 +279,94 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     // =========================================================================
-    // QUESTION 3: SYMPTOMS LIST & REAL-TIME SEARCH (Max 50 chars)
+    // QUESTION 3: INTERACTIVE BODY ANATOMY MODEL (SCREENSHOT 1)
     // =========================================================================
-    private fun initSymptomsList() {
+    private fun initBodyAnatomyWebView() {
+        binding.webViewBodyAnatomy.apply {
+            setBackgroundColor(Color.TRANSPARENT)
+            setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                allowFileAccess = true
+                useWideViewPort = true
+                loadWithOverviewMode = true
+                displayZoomControls = false
+                builtInZoomControls = false
+                setSupportZoom(false)
+            }
+            isVerticalScrollBarEnabled = false
+            isHorizontalScrollBarEnabled = false
+            addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun onRegionSelected(regionId: String, regionName: String) {
+                    runOnUiThread {
+                        handleBodyPartSelected(regionId, regionName)
+                    }
+                }
+            }, "AndroidBridge")
+            loadUrl("file:///android_asset/body_anatomy.html")
+        }
+
+        binding.etBodyPartSearch.filters = arrayOf(InputFilter.LengthFilter(50))
+        binding.etBodyPartSearch.doAfterTextChanged { text ->
+            val query = text?.toString().orEmpty().trim()
+            binding.ivClearBodyPartSearch.visibility = if (query.isNotEmpty()) View.VISIBLE else View.GONE
+            highlightBodyPartFromSearch(query)
+        }
+
+        binding.ivClearBodyPartSearch.setOnClickListener {
+            binding.etBodyPartSearch.text?.clear()
+            selectedBodyRegionId = ""
+            selectedBodyRegionName = ""
+            binding.webViewBodyAnatomy.evaluateJavascript("clearAllHighlights();", null)
+        }
+    }
+
+    private fun handleBodyPartSelected(regionId: String, regionName: String) {
+        selectedBodyRegionId = regionId
+        selectedBodyRegionName = if (regionName.isNotEmpty()) regionName else "Arm"
+        binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+
+        if (regionName.isNotEmpty()) {
+            binding.etBodyPartSearch.setText(regionName)
+            binding.etBodyPartSearch.setSelection(regionName.length)
+        } else {
+            binding.etBodyPartSearch.text?.clear()
+        }
+    }
+
+    private fun highlightBodyPartFromSearch(query: String) {
+        if (query.isEmpty()) return
+        val lower = query.lowercase()
+        val targetRegion = when {
+            lower.contains("arm") || lower.contains("hand") || lower.contains("wrist") || lower.contains("elbow") || lower.contains("finger") || lower.contains("tay") -> "arms" to "Arm"
+            lower.contains("head") || lower.contains("face") || lower.contains("eye") || lower.contains("ear") || lower.contains("đầu") -> "head" to "Head"
+            lower.contains("neck") || lower.contains("throat") || lower.contains("cổ") -> "neck" to "Neck"
+            lower.contains("shoulder") || lower.contains("vai") -> "shoulders" to "Shoulders"
+            lower.contains("chest") || lower.contains("breast") || lower.contains("ngực") -> "chest" to "Chest"
+            lower.contains("abdom") || lower.contains("stomach") || lower.contains("belly") || lower.contains("bụng") -> "abdomen" to "Abdomen"
+            lower.contains("leg") || lower.contains("knee") || lower.contains("foot") || lower.contains("ankle") || lower.contains("chân") -> "legs" to "Legs"
+            else -> null
+        }
+
+        targetRegion?.let { (rId, rName) ->
+            selectedBodyRegionId = rId
+            selectedBodyRegionName = rName
+            binding.webViewBodyAnatomy.evaluateJavascript("highlightRegion('$rId', '$rName', true);", null)
+        }
+    }
+
+    // =========================================================================
+    // QUESTION 4: SPECIFIC SYMPTOMS LIST (SCREENSHOT 2)
+    // =========================================================================
+    private fun initQuestion4Symptoms() {
         populateSymptomsData()
 
         symptomsAdapter = SymptomsAdapter(
             isItemSelected = { id -> selectedSymptomIds.contains(id) },
             onItemClick = { item ->
-                if (selectedSymptomIds.contains(item.id)) {
-                    selectedSymptomIds.remove(item.id)
-                } else {
-                    selectedSymptomIds.add(item.id)
-                }
-                updateSelectedChips()
-                binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                toggleQ4SymptomSelection(item)
             }
         )
 
@@ -299,11 +381,6 @@ class SymptomAssessmentActivity : BaseActivity() {
             })
         }
 
-        symptomsAdapter.submitList(allSymptoms)
-        binding.rvSymptoms.post { updateScrollIndicator() }
-        updateSelectedChips()
-
-        // Strict 50-character limit & real-time smooth search
         binding.etSearchSymptoms.filters = arrayOf(InputFilter.LengthFilter(50))
         binding.etSearchSymptoms.doAfterTextChanged { text ->
             val query = text?.toString().orEmpty()
@@ -313,6 +390,34 @@ class SymptomAssessmentActivity : BaseActivity() {
 
         binding.ivClearSearch.setOnClickListener {
             binding.etSearchSymptoms.text?.clear()
+        }
+    }
+
+    private fun prepareQuestion4View() {
+        val regionName = if (selectedBodyRegionName.isNotEmpty()) selectedBodyRegionName else "Arm"
+        binding.etSearchSymptoms.setText(regionName)
+        binding.etSearchSymptoms.setSelection(regionName.length)
+
+        // Seed with "Erythema of upper arm" (symptom_1) if nothing selected yet to match Screenshot 2
+        if (selectedSymptomIds.isEmpty()) {
+            selectedSymptomIds.add("symptom_1")
+        }
+        updateSelectedChips()
+        filterSymptoms(regionName)
+    }
+
+    private fun toggleQ4SymptomSelection(item: SymptomItem) {
+        if (selectedSymptomIds.contains(item.id)) {
+            selectedSymptomIds.remove(item.id)
+        } else {
+            selectedSymptomIds.add(item.id)
+        }
+        updateSelectedChips()
+        binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+
+        val pos = symptomsAdapter.currentList.indexOfFirst { it.id == item.id }
+        if (pos >= 0) {
+            symptomsAdapter.notifyItemChanged(pos, SymptomsAdapter.PAYLOAD_SELECTION_CHANGED)
         }
     }
 
@@ -507,6 +612,16 @@ class SymptomAssessmentActivity : BaseActivity() {
         val cleanQuery = query.trim()
         val filtered = if (cleanQuery.isEmpty()) {
             allSymptoms
+        } else if (cleanQuery.equals("Arm", ignoreCase = true)) {
+            // First 5 items exactly match Screenshot 2, followed by remaining arm items
+            allSymptoms.filter { item ->
+                item.name in listOf("Arm ache", "Erythema of upper arm", "Arm rash", "Arid tongue", "Achy left arm") ||
+                item.name.contains("arm", ignoreCase = true)
+            }.sortedBy { item ->
+                val priorityOrder = listOf("Arm ache", "Erythema of upper arm", "Arm rash", "Arid tongue", "Achy left arm")
+                val idx = priorityOrder.indexOf(item.name)
+                if (idx >= 0) idx else 100
+            }
         } else {
             allSymptoms.filter {
                 it.name.contains(cleanQuery, ignoreCase = true)
@@ -536,114 +651,125 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     // =========================================================================
-    // QUESTION 4: RELATED SYMPTOMS (Dynamically driven by Q3 selection)
+    // QUESTION 5: RELATED SYMPTOMS (DYNAMICALLY FILTERED)
     // =========================================================================
-    private fun initRelatedSymptoms() {
-        relatedSymptomsAdapter = SymptomsAdapter(
-            isItemSelected = { id -> selectedRelatedSymptomIds.contains(id) },
+    private fun initQuestion5Symptoms() {
+        q5SymptomsAdapter = SymptomsAdapter(
+            isItemSelected = { id -> selectedQ5SymptomIds.contains(id) },
             onItemClick = { item ->
-                if (selectedRelatedSymptomIds.contains(item.id)) {
-                    selectedRelatedSymptomIds.remove(item.id)
+                if (selectedQ5SymptomIds.contains(item.id)) {
+                    selectedQ5SymptomIds.remove(item.id)
                 } else {
-                    selectedRelatedSymptomIds.add(item.id)
+                    selectedQ5SymptomIds.add(item.id)
                 }
                 binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
             }
         )
 
-        binding.rvRelatedSymptoms.apply {
+        binding.rvQ5Symptoms.apply {
             layoutManager = LinearLayoutManager(this@SymptomAssessmentActivity)
-            adapter = relatedSymptomsAdapter
+            adapter = q5SymptomsAdapter
             setHasFixedSize(true)
         }
     }
 
-    private fun loadRelatedSymptomsForQuestion4() {
-        relatedSymptoms.clear()
+    private fun loadRelatedSymptomsForQuestion5() {
+        val selectedNames = selectedSymptomIds.mapNotNull { id ->
+            allSymptoms.firstOrNull { it.id == id }?.name
+        }
+        val combinedText = (selectedNames.joinToString(" ") + " " + selectedBodyRegionName).lowercase()
 
-        val selectedNames = allSymptoms
-            .filter { selectedSymptomIds.contains(it.id) }
-            .map { it.name.lowercase() }
+        val category = when {
+            combinedText.contains("head") || combinedText.contains("migraine") || combinedText.contains("dizzy") ||
+            combinedText.contains("vertigo") || combinedText.contains("brain") || combinedText.contains("light") ||
+            combinedText.contains("ear") || combinedText.contains("throat") || combinedText.contains("swallow") ||
+            selectedBodyRegionName.equals("Head", ignoreCase = true) || selectedBodyRegionName.equals("Neck", ignoreCase = true) -> "HEAD"
 
-        val relatedList = mutableListOf<String>()
+            combinedText.contains("chest") || combinedText.contains("breath") || combinedText.contains("cough") ||
+            combinedText.contains("heart") || combinedText.contains("wheez") || combinedText.contains("lung") ||
+            combinedText.contains("palpitation") || selectedBodyRegionName.equals("Chest", ignoreCase = true) -> "CHEST"
 
-        val hasArmSkin = selectedNames.any {
-            it.contains("arm") || it.contains("erythema") || it.contains("rash") ||
-            it.contains("skin") || it.contains("itch") || it.contains("limb") || it.contains("wound")
-        } || selectedNames.isEmpty() // Default to Figma inspect screenshot items
+            combinedText.contains("stomach") || combinedText.contains("abdomen") || combinedText.contains("acid") ||
+            combinedText.contains("reflux") || combinedText.contains("nausea") || combinedText.contains("vomit") ||
+            combinedText.contains("cramp") || combinedText.contains("bloat") || combinedText.contains("diarrhea") ||
+            combinedText.contains("digest") || selectedBodyRegionName.equals("Abdomen", ignoreCase = true) -> "ABDOMEN"
 
-        if (hasArmSkin) {
-            // Exact Figma inspect screenshot items
-            relatedList.add("Swelling")
-            relatedList.add("Itching")
-            relatedList.add("Skin pain")
-            relatedList.add("Pain when pressing upper limb")
-            relatedList.add("Skin wound")
+            combinedText.contains("leg") || combinedText.contains("knee") || combinedText.contains("ankle") ||
+            combinedText.contains("foot") || combinedText.contains("calf") || combinedText.contains("toe") ||
+            combinedText.contains("sciatica") || selectedBodyRegionName.equals("Legs", ignoreCase = true) -> "LEGS"
+
+            else -> "ARM_SKIN" // Default matches Arm / Skin / Allergy (Screenshot 3)
         }
 
-        val hasHeadNeuro = selectedNames.any {
-            it.contains("head") || it.contains("migraine") || it.contains("dizz") ||
-            it.contains("vertigo") || it.contains("fog") || it.contains("brain")
-        }
-        if (hasHeadNeuro) {
-            relatedList.add("Sensitivity to light (Photophobia)")
-            relatedList.add("Nausea or queasiness")
-            relatedList.add("Throbbing or pulsing pain")
-            relatedList.add("Dizziness or unsteady balance")
-            relatedList.add("Neck stiffness & tension")
+        if (category == lastLoadedQ5Category && q5Symptoms.isNotEmpty()) {
+            q5SymptomsAdapter.notifyDataSetChanged()
+            return
         }
 
-        val hasRespEnt = selectedNames.any {
-            it.contains("cough") || it.contains("throat") || it.contains("breath") ||
-            it.contains("nose") || it.contains("sinus") || it.contains("ear")
-        }
-        if (hasRespEnt) {
-            relatedList.add("Difficulty swallowing")
-            relatedList.add("Fever or chills")
-            relatedList.add("Runny or blocked nasal passage")
-            relatedList.add("Chest tightness or congestion")
-            relatedList.add("Phlegm or mucus coughing")
-        }
+        lastLoadedQ5Category = category
+        selectedQ5SymptomIds.clear()
+        q5Symptoms.clear()
 
-        val hasDigestive = selectedNames.any {
-            it.contains("stomach") || it.contains("nausea") || it.contains("reflux") ||
-            it.contains("bloat") || it.contains("cramp") || it.contains("diarrhea")
-        }
-        if (hasDigestive) {
-            relatedList.add("Acid reflux or heartburn")
-            relatedList.add("Abdominal bloating & tightness")
-            relatedList.add("Loss of appetite")
-            relatedList.add("Vomiting or dry heaving")
-            relatedList.add("Stomach cramps after eating")
-        }
-
-        val hasJointMusculo = selectedNames.any {
-            it.contains("back") || it.contains("knee") || it.contains("joint") ||
-            it.contains("hip") || it.contains("shoulder") || it.contains("muscle")
-        }
-        if (hasJointMusculo) {
-            relatedList.add("Morning stiffness lasting > 30 min")
-            relatedList.add("Joint swelling or tenderness")
-            relatedList.add("Pain when walking or climbing stairs")
-            relatedList.add("Reduced range of motion")
-        }
-
-        val distinctItems = relatedList.distinct()
-
-        distinctItems.forEachIndexed { index, name ->
-            relatedSymptoms.add(
-                SymptomItem(
-                    id = "related_$index",
-                    name = name
-                )
+        val rawList = when (category) {
+            "HEAD" -> listOf(
+                "Sensitivity to light (Photophobia)",
+                "Nausea or vomiting",
+                "Throbbing or pulsing pain",
+                "Dizziness or lightheadedness",
+                "Neck stiffness or pain",
+                "Difficulty concentrating (Brain fog)"
+            )
+            "CHEST" -> listOf(
+                "Shortness of breath (Dyspnea)",
+                "Chest tightness or pressure",
+                "Wheezing when breathing",
+                "Rapid or fluttering heartbeat",
+                "Sharp chest pain when inhaling",
+                "Persistent coughing or mucus"
+            )
+            "ABDOMEN" -> listOf(
+                "Stomach cramps or burning sensation",
+                "Nausea or vomiting",
+                "Abdominal bloating or gas",
+                "Acid reflux or heartburn",
+                "Loss of appetite",
+                "Diarrhea or indigestion"
+            )
+            "LEGS" -> listOf(
+                "Swelling in legs or ankles",
+                "Sharp pain when walking or climbing stairs",
+                "Joint stiffness in the morning",
+                "Calf muscle cramps or tightness",
+                "Numbness or tingling sensation",
+                "Shooting pain down the leg (Sciatica)"
+            )
+            else -> listOf(
+                "Swelling",
+                "Itching",
+                "Skin pain",
+                "Pain when pressing upper limb",
+                "Skin wound",
+                "Contact with allergen"
             )
         }
 
-        relatedSymptomsAdapter.submitList(relatedSymptoms.toList())
+        rawList.forEachIndexed { index, name ->
+            val id = "q5_${category}_$index"
+            q5Symptoms.add(SymptomItem(id, name))
+        }
+
+        // For default ARM_SKIN category, pre-select "Itching" (item index 1) to match Screenshot 3
+        if (category == "ARM_SKIN") {
+            selectedQ5SymptomIds.add("q5_ARM_SKIN_1")
+        }
+
+        q5SymptomsAdapter.submitList(q5Symptoms.toList()) {
+            binding.rvQ5Symptoms.scrollToPosition(0)
+        }
     }
 
     // =========================================================================
-    // QUESTION 5: INSECT BITE SELECTION (Yes, No, Don't know)
+    // QUESTION 6: INSECT BITE SELECTION (Yes, No, Don't know)
     // =========================================================================
     private fun initInsectBiteSelection() {
         applyInsectBiteUi(selectedInsectBiteOption, animate = false)
@@ -752,9 +878,15 @@ class SymptomAssessmentActivity : BaseActivity() {
             when (currentQuestionIndex) {
                 1 -> goToQuestion(2, animate = true)
                 2 -> goToQuestion(3, animate = true)
-                3 -> goToQuestion(4, animate = true)
+                3 -> {
+                    if (selectedBodyRegionName.isEmpty()) {
+                        selectedBodyRegionName = "Arm"
+                    }
+                    goToQuestion(4, animate = true)
+                }
                 4 -> goToQuestion(5, animate = true)
-                5 -> {
+                5 -> goToQuestion(6, animate = true)
+                6 -> {
                     val label = when (selectedInsectBiteOption) {
                         InsectBiteOption.YES -> getString(R.string.option_yes)
                         InsectBiteOption.NO -> getString(R.string.option_no)
@@ -762,7 +894,7 @@ class SymptomAssessmentActivity : BaseActivity() {
                     }
                     Toast.makeText(
                         this,
-                        "Insect bite: $label. Proceeding to question 6...",
+                        "Assessment complete! Results are ready.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -774,7 +906,7 @@ class SymptomAssessmentActivity : BaseActivity() {
         val prevIndex = currentQuestionIndex
         currentQuestionIndex = index.coerceIn(1, TOTAL_QUESTIONS)
 
-        // Update progress counter (e.g. "1/10", "2/10", "3/10", "4/10", "5/10")
+        // Update progress counter (e.g. "1/6", "2/6", etc.)
         binding.tvProgressCount.text = getString(
             R.string.assessment_progress_format,
             currentQuestionIndex,
@@ -815,37 +947,51 @@ class SymptomAssessmentActivity : BaseActivity() {
             1 -> {
                 binding.layoutAgeQuestion.visibility = View.VISIBLE
                 binding.layoutGenderQuestion.visibility = View.GONE
+                binding.layoutBodyPartQuestion.visibility = View.GONE
                 binding.layoutSymptomsQuestion.visibility = View.GONE
-                binding.layoutRelatedSymptomsQuestion.visibility = View.GONE
+                binding.layoutQuestion5.visibility = View.GONE
                 binding.layoutInsectBiteQuestion.visibility = View.GONE
             }
             2 -> {
                 binding.layoutAgeQuestion.visibility = View.GONE
                 binding.layoutGenderQuestion.visibility = View.VISIBLE
+                binding.layoutBodyPartQuestion.visibility = View.GONE
                 binding.layoutSymptomsQuestion.visibility = View.GONE
-                binding.layoutRelatedSymptomsQuestion.visibility = View.GONE
+                binding.layoutQuestion5.visibility = View.GONE
                 binding.layoutInsectBiteQuestion.visibility = View.GONE
             }
             3 -> {
                 binding.layoutAgeQuestion.visibility = View.GONE
                 binding.layoutGenderQuestion.visibility = View.GONE
-                binding.layoutSymptomsQuestion.visibility = View.VISIBLE
-                binding.layoutRelatedSymptomsQuestion.visibility = View.GONE
+                binding.layoutBodyPartQuestion.visibility = View.VISIBLE
+                binding.layoutSymptomsQuestion.visibility = View.GONE
+                binding.layoutQuestion5.visibility = View.GONE
                 binding.layoutInsectBiteQuestion.visibility = View.GONE
             }
             4 -> {
                 binding.layoutAgeQuestion.visibility = View.GONE
                 binding.layoutGenderQuestion.visibility = View.GONE
-                binding.layoutSymptomsQuestion.visibility = View.GONE
-                binding.layoutRelatedSymptomsQuestion.visibility = View.VISIBLE
+                binding.layoutBodyPartQuestion.visibility = View.GONE
+                binding.layoutSymptomsQuestion.visibility = View.VISIBLE
+                binding.layoutQuestion5.visibility = View.GONE
                 binding.layoutInsectBiteQuestion.visibility = View.GONE
-                loadRelatedSymptomsForQuestion4()
+                prepareQuestion4View()
             }
             5 -> {
                 binding.layoutAgeQuestion.visibility = View.GONE
                 binding.layoutGenderQuestion.visibility = View.GONE
+                binding.layoutBodyPartQuestion.visibility = View.GONE
                 binding.layoutSymptomsQuestion.visibility = View.GONE
-                binding.layoutRelatedSymptomsQuestion.visibility = View.GONE
+                binding.layoutQuestion5.visibility = View.VISIBLE
+                binding.layoutInsectBiteQuestion.visibility = View.GONE
+                loadRelatedSymptomsForQuestion5()
+            }
+            6 -> {
+                binding.layoutAgeQuestion.visibility = View.GONE
+                binding.layoutGenderQuestion.visibility = View.GONE
+                binding.layoutBodyPartQuestion.visibility = View.GONE
+                binding.layoutSymptomsQuestion.visibility = View.GONE
+                binding.layoutQuestion5.visibility = View.GONE
                 binding.layoutInsectBiteQuestion.visibility = View.VISIBLE
             }
         }
