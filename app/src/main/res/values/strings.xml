@@ -156,6 +156,18 @@
     <string name="noti_msg_afternoon">Take a brief pause, stretch, and log your afternoon energy status.</string>
     <string name="noti_title_evening">Evening Care &amp; Review 🌙</string>
     <string name="noti_msg_evening">Review your daily progress and consult your AI Health Assistant.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">Notification</string>
+    <string name="dialog_notification_permission_desc">Don\'t miss out on important updates, photo generation status, and new features.</string>
+    <string name="dialog_notification_btn_settings">Go to settings</string>
+    <string name="dialog_notification_btn_dont_allow">Don’t allow</string>
+
+    <!-- Medication & Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">Medication &amp; Health Reminders</string>
+    <string name="noti_reminders_channel_desc">Timely alarms and notifications for medications, hydration, and health tasks.</string>
+    <string name="noti_reminder_action_done">Mark as done</string>
+    <string name="noti_reminder_default_desc">Time for your %s reminder.</string>
     
     <!-- Permission Dialog -->
     <string name="permission_title">Permission Needed</string>
@@ -163,10 +175,11 @@
     <string name="permission_btn_settings">Go to Settings</string>
     <string name="permission_btn_cancel">Not Now</string>
     
-    <!-- Camera Permission Custom Dialog -->
-    <string name="dialog_camera_permission_title">Camera Access Needed</string>
-    <string name="dialog_camera_permission_desc">To scan and assess your health symptoms accurately, HealthCare AI requires camera access. Please enable Camera in Settings.</string>
-    <string name="dialog_camera_btn_settings">Go to Settings</string>
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">Enable Camera Access</string>
+    <string name="dialog_camera_permission_desc">Allow camera access to scan and analyze your health information</string>
+    <string name="dialog_camera_btn_settings">Go to settings</string>
+    <string name="dialog_camera_btn_dont_allow">Don’t allow</string>
     <string name="dialog_camera_btn_cancel">Not Now</string>
 
     <!-- Camera Screen & Guide -->
@@ -349,10 +362,14 @@
     <string name="option_no">No</string>
     <string name="option_dont_know">Don’t know</string>
     <!-- Exit Confirmation Dialog -->
-    <string name="dialog_exit_assessment_title">Exit Symptom Checker?</string>
-    <string name="dialog_exit_assessment_desc">Do you want to continue your symptom assessment, or exit to the main screen? Your current progress will not be saved.</string>
-    <string name="dialog_exit_btn_continue">Continue Assessment</string>
-    <string name="dialog_exit_btn_exit">Exit to Main Screen</string>
+    <string name="dialog_exit_app_title">Exit</string>
+    <string name="dialog_exit_app_desc">Are you sure you want to exit?\nUnsaved changes may be lost.</string>
+    <string name="dialog_exit_app_btn_stay">Stay</string>
+    <string name="dialog_exit_app_btn_exit">Exit</string>
+    <string name="dialog_exit_assessment_title">Exit</string>
+    <string name="dialog_exit_assessment_desc">Are you sure you want to exit?\nUnsaved changes may be lost.</string>
+    <string name="dialog_exit_btn_continue">Stay</string>
+    <string name="dialog_exit_btn_exit">Exit</string>
     <string name="assessment_progress_format">%1$d/%2$d</string>
     <string name="btn_continue">Continue</string>
     <string name="btn_back">Back</string>

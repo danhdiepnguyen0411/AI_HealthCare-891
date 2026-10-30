@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.ActivitySymptomAssessmentBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.CustomExitAppDialog
 import kotlin.math.abs
 
 class SymptomAssessmentActivity : BaseActivity() {
@@ -998,34 +999,14 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     private fun showExitConfirmationDialog() {
-        val dialog = android.app.Dialog(this)
-        val dialogBinding = com.example.healthcareai.databinding.DialogExitAssessmentBinding.inflate(layoutInflater)
-        dialog.setContentView(dialogBinding.root)
-        dialog.setCancelable(true)
-
-        dialog.window?.let { window ->
-            window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
-            window.setLayout(
-                (resources.displayMetrics.widthPixels * 0.88).toInt(),
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        dialog.setOnDismissListener {
-            hideNavigationBar()
-        }
-
-        // Action: Continue Assessment (Stay)
-        dialogBinding.btnContinueAssessment.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        // Action: Exit to Main Screen (Leave and return to SymptomCheckerActivity)
-        dialogBinding.btnExitAssessment.setOnClickListener {
-            dialog.dismiss()
-            finish()
-        }
-
-        dialog.show()
+        CustomExitAppDialog.show(
+            activity = this,
+            onStay = {
+                // Stay in assessment
+            },
+            onExit = {
+                finish()
+            }
+        )
     }
 }

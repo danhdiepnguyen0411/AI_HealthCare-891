@@ -9,6 +9,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
+import android.Manifest
+import android.app.Dialog
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.ActivitySplashBinding
 import com.example.healthcareai.ui.base.BaseActivity
@@ -16,6 +20,10 @@ import com.example.healthcareai.ui.intro.IntroActivity
 import com.example.healthcareai.ui.language.LanguageActivity
 import com.example.healthcareai.ui.main.MainActivity
 import com.example.healthcareai.ui.uninstall.UninstallActivity
+import com.example.healthcareai.util.NotificationPermissionHelper
+import com.example.healthcareai.util.NotificationScheduler
+import com.example.healthcareai.util.PermissionReturnHelper
+import com.example.healthcareai.util.ReminderScheduler
 import com.example.healthcareai.util.ShortcutHelper
 
 @SuppressLint("CustomSplashScreen")
@@ -26,6 +34,16 @@ class SplashActivity : BaseActivity() {
     private var progressAnimator: ValueAnimator? = null
     private var isNavigatingOrFinished = false
     private var isPendingNavigation = false
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            preferenceHelper.notiDenialCount = 0
+        } else {
+            preferenceHelper.notiDenialCount++
+        }
+        onNotificationHandledAndNavigate()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferenceHelper = PreferenceHelper.getInstance(this)
@@ -139,6 +157,33 @@ class SplashActivity : BaseActivity() {
             return
         }
 
+        handleNotificationPermissionAtSplashEnd()
+    }
+
+    private fun handleNotificationPermissionAtSplashEnd() {
+        if (PermissionReturnHelper.isNotificationGranted(this)) {
+            preferenceHelper.notiDenialCount = 0
+            NotificationScheduler.scheduleDailyNotifications(this)
+            ReminderScheduler.rescheduleAllReminders(this)
+            navigateNext()
+            return
+        }
+
+        val denialCount = preferenceHelper.notiDenialCount
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && denialCount < 2) {
+            // First 2 times: Launch native OS notification permission dialog on Splash
+            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            // 3rd time onwards (denialCount >= 2): Do not show on Splash,
+            // defer custom notification dialog to be shown when entering Home (MainActivity)
+            navigateNext()
+        }
+    }
+
+    private fun onNotificationHandledAndNavigate() {
+        if (isNavigatingOrFinished || isFinishing || isDestroyed) return
+        NotificationScheduler.scheduleDailyNotifications(this)
+        ReminderScheduler.rescheduleAllReminders(this)
         navigateNext()
     }
 

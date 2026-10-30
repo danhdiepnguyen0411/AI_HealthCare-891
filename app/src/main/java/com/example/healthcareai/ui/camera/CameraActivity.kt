@@ -24,9 +24,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.healthcareai.R
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.ActivityCameraBinding
-import com.example.healthcareai.databinding.DialogCameraPermissionBinding
 import com.example.healthcareai.databinding.DialogPhotoGuideBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.CustomCameraPermissionDialog
 import com.example.healthcareai.util.DialogImmersiveHelper
 import com.example.healthcareai.util.PermissionReturnHelper
 import kotlinx.coroutines.Dispatchers
@@ -58,9 +58,6 @@ class CameraActivity : BaseActivity() {
         } else {
             preferenceHelper.cameraDenialCount++
             Log.d(TAG, "Native camera permission DENIED. Total denials: ${preferenceHelper.cameraDenialCount}")
-            if (preferenceHelper.cameraDenialCount >= 2) {
-                showCustomCameraPermissionDialog()
-            }
         }
     }
 
@@ -106,8 +103,6 @@ class CameraActivity : BaseActivity() {
             if (cameraProvider == null) {
                 startCamera()
             }
-        } else if (preferenceHelper.cameraDenialCount >= 2 && permissionDialog?.isShowing != true) {
-            showCustomCameraPermissionDialog()
         }
     }
 
@@ -149,50 +144,16 @@ class CameraActivity : BaseActivity() {
     private fun showCustomCameraPermissionDialog() {
         if (isFinishing || isDestroyed || permissionDialog?.isShowing == true) return
 
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val dialogBinding = DialogCameraPermissionBinding.inflate(layoutInflater)
-        dialog.setContentView(dialogBinding.root)
-
-        dialog.window?.apply {
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        dialog.setCancelable(true)
-        dialog.setCanceledOnTouchOutside(false)
-
-        dialogBinding.btnGoToSettings.setOnClickListener {
-            // 1. Open App Details Settings without FLAG_ACTIVITY_NEW_TASK so app stays stacked directly below
-            PermissionReturnHelper.openAppSettings(this)
-
-            // 2. Start background polling (200ms) with instant auto-return when user toggles permission
-            PermissionReturnHelper.startPollingForPermission(
-                context = this,
-                checkGranted = {
-                    PermissionReturnHelper.isPermissionGranted(this, Manifest.permission.CAMERA)
-                },
-                onGranted = {
-                    preferenceHelper.cameraDenialCount = 0
-                    dialog.dismiss()
-                    startCamera()
-                }
-            )
-        }
-
-        dialogBinding.btnCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.setOnDismissListener {
-            permissionDialog = null
-        }
-
-        permissionDialog = dialog
-        DialogImmersiveHelper.showImmersive(dialog)
+        permissionDialog = CustomCameraPermissionDialog.show(
+            activity = this,
+            onGranted = {
+                preferenceHelper.cameraDenialCount = 0
+                startCamera()
+            },
+            onDenied = {
+                // User dismissed
+            }
+        )
     }
 
     private fun dismissPermissionDialog() {

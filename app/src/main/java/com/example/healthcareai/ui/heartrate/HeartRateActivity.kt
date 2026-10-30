@@ -27,10 +27,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.HrvResult
 import com.example.healthcareai.data.model.MeasureError
+import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.data.model.MeasureState
 import com.example.healthcareai.data.model.SignalQuality
 import com.example.healthcareai.databinding.ActivityHeartRateBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.CustomCameraPermissionDialog
 import com.example.healthcareai.ui.heartrate.engine.CameraFrameSource
 import com.example.healthcareai.util.PermissionReturnHelper
 import kotlinx.coroutines.launch
@@ -39,6 +41,7 @@ import kotlin.math.roundToInt
 class HeartRateActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHeartRateBinding
+    private lateinit var preferenceHelper: PreferenceHelper
     private val viewModel: HeartRateViewModel by viewModels()
 
     private var heartbeatAnimatorSet: AnimatorSet? = null
@@ -47,17 +50,15 @@ class HeartRateActivity : BaseActivity() {
     private var cameraFrameSource: CameraFrameSource? = null
     private var isCameraActive = false
     private var hasMeasuredSuccessfully = false
+    private var permissionDialog: Dialog? = null
 
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
+                preferenceHelper.cameraDenialCount = 0
                 startHeartRateMeasurement()
             } else {
-                Toast.makeText(
-                    this,
-                    R.string.permission_desc,
-                    Toast.LENGTH_SHORT
-                ).show()
+                preferenceHelper.cameraDenialCount++
             }
         }
 
@@ -66,6 +67,7 @@ class HeartRateActivity : BaseActivity() {
         binding = ActivityHeartRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        preferenceHelper = PreferenceHelper.getInstance(this)
         cameraFrameSource = CameraFrameSource(this, this)
 
         setupWindowInsets()
@@ -97,16 +99,20 @@ class HeartRateActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (hasMeasuredSuccessfully) {
-            hasMeasuredSuccessfully = false
-            binding.layoutCheckmarkBadge.visibility = View.GONE
-            binding.tvProgressPill.text = "--"
-            binding.tvProgressPill.setTextColor(Color.parseColor("#242E49"))
-            binding.viewProgressFill.updateLayoutParams { width = 0 }
-            binding.tvLiveBpm.text = "--"
-            checkPermissionAndStartMeasurement()
-        } else if (!isCameraActive) {
-            checkPermissionAndStartMeasurement()
+        if (PermissionReturnHelper.isPermissionGranted(this, android.Manifest.permission.CAMERA)) {
+            preferenceHelper.cameraDenialCount = 0
+            dismissPermissionDialog()
+            if (hasMeasuredSuccessfully) {
+                hasMeasuredSuccessfully = false
+                binding.layoutCheckmarkBadge.visibility = View.GONE
+                binding.tvProgressPill.text = "--"
+                binding.tvProgressPill.setTextColor(Color.parseColor("#242E49"))
+                binding.viewProgressFill.updateLayoutParams { width = 0 }
+                binding.tvLiveBpm.text = "--"
+                startHeartRateMeasurement()
+            } else if (!isCameraActive) {
+                startHeartRateMeasurement()
+            }
         }
         if (heartbeatAnimatorSet?.isPaused == true) {
             heartbeatAnimatorSet?.resume()
@@ -125,6 +131,8 @@ class HeartRateActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        PermissionReturnHelper.stopPolling()
+        dismissPermissionDialog()
         stopCamera()
         cameraFrameSource?.destroy()
         cameraFrameSource = null
@@ -195,10 +203,40 @@ class HeartRateActivity : BaseActivity() {
             android.Manifest.permission.CAMERA
         )
         if (isCameraGranted) {
+            preferenceHelper.cameraDenialCount = 0
             startHeartRateMeasurement()
-        } else {
-            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            return
         }
+
+        val denialCount = preferenceHelper.cameraDenialCount
+        when {
+            denialCount < 2 -> {
+                requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            }
+            else -> {
+                showCustomCameraPermissionDialog()
+            }
+        }
+    }
+
+    private fun showCustomCameraPermissionDialog() {
+        if (isFinishing || isDestroyed || permissionDialog?.isShowing == true) return
+
+        permissionDialog = CustomCameraPermissionDialog.show(
+            activity = this,
+            onGranted = {
+                preferenceHelper.cameraDenialCount = 0
+                startHeartRateMeasurement()
+            },
+            onDenied = {
+                // User dismissed
+            }
+        )
+    }
+
+    private fun dismissPermissionDialog() {
+        permissionDialog?.dismiss()
+        permissionDialog = null
     }
 
     /**

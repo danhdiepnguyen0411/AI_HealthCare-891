@@ -22,6 +22,11 @@ import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityNewReminderBinding
 import com.example.healthcareai.databinding.ItemReminderTimeChipBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import android.app.Dialog
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.healthcareai.data.local.PreferenceHelper
+import com.example.healthcareai.util.NotificationPermissionHelper
+import com.example.healthcareai.util.PermissionReturnHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,6 +44,22 @@ class NewReminderActivity : BaseActivity() {
     private var editingReminderId: String? = null
     private var profileId: String? = null
     private var selectedHealthRecordItem: HealthRecordItem? = null
+    private var notificationPermissionDialog: Dialog? = null
+
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        notificationPermissionDialog = NotificationPermissionHelper.onPermissionResult(
+            activity = this,
+            isGranted = isGranted,
+            onGranted = {
+                finish()
+            },
+            onDenied = {
+                finish()
+            }
+        )
+    }
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -357,7 +378,21 @@ class NewReminderActivity : BaseActivity() {
 
             val msg = if (existing != null) R.string.msg_reminder_updated else R.string.msg_reminder_saved
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-            finish()
+
+            if (!PermissionReturnHelper.isNotificationGranted(this)) {
+                notificationPermissionDialog = NotificationPermissionHelper.checkAndRequest(
+                    activity = this,
+                    launcher = requestNotificationPermissionLauncher,
+                    onGranted = {
+                        finish()
+                    },
+                    onDenied = {
+                        finish()
+                    }
+                )
+            } else {
+                finish()
+            }
         }
 
         binding.btnCancel.setOnClickListener {
@@ -534,6 +569,10 @@ class NewReminderActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        PermissionReturnHelper.stopPolling()
+        if (notificationPermissionDialog?.isShowing == true) {
+            try { notificationPermissionDialog?.dismiss() } catch (_: Exception) {}
+        }
         globalLayoutListener?.let {
             window.decorView.viewTreeObserver.removeOnGlobalLayoutListener(it)
         }
