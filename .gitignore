@@ -8,3 +8,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Build outputs & release folders
+/app/release/
+release/
+*.apk
+*.aab
+
+# Keystore & signing credentials
+*.jks
+*.keystore
