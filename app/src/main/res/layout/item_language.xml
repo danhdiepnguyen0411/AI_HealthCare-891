@@ -84,21 +84,6 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/unsellect_lang" />
-
-        <!-- In-item hand hint exactly like VIDEO_762Y4 with fingertip centered on ivRadio -->
-        <ImageView
-            android:id="@+id/ivItemTapHint"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            android:elevation="10dp"
-            android:focusable="false"
-            android:src="@drawable/hand_click"
-            android:translationX="1dp"
-            android:translationY="10dp"
-            android:visibility="gone"
-            tools:visibility="visible" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

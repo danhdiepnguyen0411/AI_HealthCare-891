@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.LanguageModel
 import com.example.healthcareai.databinding.ItemLanguageBinding
 
 class LanguageAdapter(
     private val items: MutableList<LanguageModel>,
-    private val onItemSelected: (LanguageModel, View) -> Unit
+    private val onItemSelected: (LanguageModel) -> Unit
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
 
     var onItemBound: ((position: Int, itemView: View) -> Unit)? = null
@@ -59,29 +58,17 @@ class LanguageAdapter(
                 binding.ivRadio.setImageResource(R.drawable.unsellect_lang)
             }
 
-            // Hand hint exactly like VIDEO_762Y4
-            if (item.showTapHint) {
-                binding.ivItemTapHint.visibility = View.VISIBLE
-                binding.ivItemTapHint.load(R.drawable.hand_click)
-            } else {
-                binding.ivItemTapHint.visibility = View.GONE
-            }
-
             binding.root.setOnClickListener {
                 val currentPosition = bindingAdapterPosition
                 if (currentPosition == RecyclerView.NO_POSITION) return@setOnClickListener
 
-                val clickedRadioView = binding.ivRadio
-
-                // Clear tap hint across all items once user makes a selection
                 items.forEach {
-                    it.showTapHint = false
                     it.isSelected = false
                 }
                 items[currentPosition].isSelected = true
                 notifyDataSetChanged()
 
-                onItemSelected(items[currentPosition], clickedRadioView)
+                onItemSelected(items[currentPosition])
             }
         }
     }
