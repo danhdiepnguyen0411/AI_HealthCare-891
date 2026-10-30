@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="24dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="24dp"
-    app:cardElevation="10dp"
-    app:cardMaxElevation="12dp"
+    app:cardElevation="8dp"
+    app:cardMaxElevation="10dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false">
 
@@ -21,20 +20,13 @@
         android:paddingTop="28dp"
         android:paddingBottom="24dp">
 
-        <!-- Top Icon Badge -->
-        <FrameLayout
+        <!-- Top Exit Graphic Icon -->
+        <ImageView
+            android:id="@+id/ivExitIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/bg_circle_symptom">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/symptom_checker"
-                app:tint="@color/primary_color" />
-        </FrameLayout>
+            android:contentDescription="@null"
+            android:src="@drawable/exit" />
 
         <!-- Dialog Title -->
         <TextView
@@ -42,60 +34,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/urbanist_bold"
-            app:fontFamily="@font/urbanist_bold"
-            android:gravity="center"
-            android:includeFontPadding="false"
+            android:fontFamily="@font/urbanist"
             android:text="@string/dialog_exit_assessment_title"
             android:textColor="@color/color_text"
-            android:textSize="20sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <!-- Dialog Description -->
         <TextView
             android:id="@+id/tvExitDialogDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/urbanist_regular"
-            app:fontFamily="@font/urbanist_regular"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/urbanist"
             android:gravity="center"
-            android:includeFontPadding="false"
             android:lineSpacingExtra="3dp"
             android:text="@string/dialog_exit_assessment_desc"
-            android:textColor="@color/color_subtext"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
-        <!-- Action: Continue Assessment (Stay) -->
+        <!-- Action: Stay / Continue Assessment -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnContinueAssessment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_pill_btn_blue"
-            android:fontFamily="@font/urbanist_bold"
-            app:fontFamily="@font/urbanist_bold"
-            android:includeFontPadding="false"
+            android:fontFamily="@font/urbanist"
             android:stateListAnimator="@null"
             android:text="@string/dialog_exit_btn_continue"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-        <!-- Action: Exit to Main Screen (Leave) -->
+        <!-- Action: Exit Assessment / Exit App -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnExitAssessment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_button_secondary"
-            android:fontFamily="@font/urbanist_bold"
-            app:fontFamily="@font/urbanist_bold"
-            android:includeFontPadding="false"
+            android:background="@drawable/bg_pill_btn_light_blue"
+            android:fontFamily="@font/urbanist"
             android:stateListAnimator="@null"
             android:text="@string/dialog_exit_btn_exit"
             android:textAllCaps="false"
             android:textColor="@color/primary_color"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

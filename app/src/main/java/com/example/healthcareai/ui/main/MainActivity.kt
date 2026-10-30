@@ -17,22 +17,44 @@ import androidx.transition.TransitionSet
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.healthcareai.R
+import android.app.Dialog
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.ActivityMainBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.CustomExitAppDialog
+import com.example.healthcareai.ui.dialog.CustomNotificationDialog
+import com.example.healthcareai.util.NotificationPermissionHelper
 import com.example.healthcareai.util.NotificationScheduler
+import com.example.healthcareai.util.PermissionReturnHelper
+import com.example.healthcareai.util.ReminderScheduler
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var activeTabId = R.id.tabHome
+    private var notificationPermissionDialog: Dialog? = null
+
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        notificationPermissionDialog = NotificationPermissionHelper.onPermissionResult(
+            activity = this,
+            isGranted = isGranted,
+            onGranted = {
+                onNotificationPermissionGranted()
+            }
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Schedule daily reminder alarms
+        // Schedule daily reminders and user alarms
         NotificationScheduler.scheduleDailyNotifications(this)
+        ReminderScheduler.rescheduleAllReminders(this)
 
         setupViewPager()
         setupBottomNav()
@@ -45,6 +67,64 @@ class MainActivity : BaseActivity() {
         binding.bottomNavBar.post {
             updateTabState(activeTabId, animate = false)
         }
+
+        // Show custom notification pop-up upon entering Home if user has denied native prompt >= 2 times
+        val skipNotiPopup = intent.getBooleanExtra(EXTRA_SKIP_NOTI_POPUP, false)
+        if (!skipNotiPopup) {
+            binding.root.post {
+                checkAndShowCustomNotificationPopupOnHome()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (PermissionReturnHelper.isNotificationGranted(this)) {
+            val pref = PreferenceHelper.getInstance(this)
+            if (pref.notiDenialCount > 0) {
+                pref.notiDenialCount = 0
+            }
+            if (notificationPermissionDialog?.isShowing == true) {
+                try { notificationPermissionDialog?.dismiss() } catch (_: Exception) {}
+            }
+            NotificationScheduler.scheduleDailyNotifications(this)
+            ReminderScheduler.rescheduleAllReminders(this)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PermissionReturnHelper.stopPolling()
+        if (notificationPermissionDialog?.isShowing == true) {
+            try { notificationPermissionDialog?.dismiss() } catch (_: Exception) {}
+        }
+    }
+
+    /**
+     * Requirement: Custom notification pop-up is displayed after entering Home (MainActivity),
+     * only when the user has already denied the native prompt at least 2 times (denialCount >= 2).
+     */
+    private fun checkAndShowCustomNotificationPopupOnHome() {
+        if (isFinishing || isDestroyed || notificationPermissionDialog?.isShowing == true) return
+        val pref = PreferenceHelper.getInstance(this)
+        if (!PermissionReturnHelper.isNotificationGranted(this) && pref.notiDenialCount >= 2) {
+            notificationPermissionDialog = CustomNotificationDialog.show(
+                activity = this,
+                onGranted = {
+                    pref.notiDenialCount = 0
+                    NotificationScheduler.scheduleDailyNotifications(this)
+                    ReminderScheduler.rescheduleAllReminders(this)
+                },
+                onDenied = {
+                    // Dismissed
+                }
+            )
+        }
+    }
+
+    private fun onNotificationPermissionGranted() {
+        NotificationScheduler.scheduleDailyNotifications(this)
+        ReminderScheduler.rescheduleAllReminders(this)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -235,7 +315,15 @@ class MainActivity : BaseActivity() {
                 if (binding.viewPager.currentItem != 0) {
                     navigateToTab(0)
                 } else {
-                    finish()
+                    CustomExitAppDialog.show(
+                        activity = this@MainActivity,
+                        onStay = {
+                            // User chose to stay in app
+                        },
+                        onExit = {
+                            finish()
+                        }
+                    )
                 }
             }
         })

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="8dp"
+    app:cardMaxElevation="10dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="24dp">
+
+        <!-- Top Graphic Icon -->
+        <ImageView
+            android:id="@+id/ivNotificationIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_notification" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvNotificationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/urbanist"
+            android:text="@string/dialog_notification_permission_title"
+            android:textColor="@color/color_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- Subtitle / Description -->
+        <TextView
+            android:id="@+id/tvNotificationDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/dialog_notification_permission_desc"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <!-- Primary Action: Go to settings -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGoToSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_pill_btn_blue"
+            android:fontFamily="@font/urbanist"
+            android:stateListAnimator="@null"
+            android:text="@string/dialog_notification_btn_settings"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Secondary Action: Don't allow -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDontAllow"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_pill_btn_light_blue"
+            android:fontFamily="@font/urbanist"
+            android:stateListAnimator="@null"
+            android:text="@string/dialog_notification_btn_dont_allow"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_color"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -77,6 +77,7 @@ class ReminderRepository private constructor(context: Context) {
             currentList.add(0, reminder)
         }
         saveList(currentList)
+        com.example.healthcareai.util.ReminderScheduler.scheduleReminder(appContext, reminder)
     }
 
     @Synchronized
@@ -84,11 +85,16 @@ class ReminderRepository private constructor(context: Context) {
         val currentList = getAllReminders().toMutableList()
         currentList.removeAll { it.id == id }
         saveList(currentList)
+        com.example.healthcareai.util.ReminderScheduler.cancelReminder(appContext, id)
     }
 
     @Synchronized
     fun deleteRemindersForProfile(profileId: String) {
         val currentList = getAllReminders().toMutableList()
+        val toRemove = currentList.filter { it.profileId == profileId }
+        for (item in toRemove) {
+            com.example.healthcareai.util.ReminderScheduler.cancelReminder(appContext, item.id)
+        }
         currentList.removeAll { it.profileId == profileId }
         saveList(currentList)
     }
