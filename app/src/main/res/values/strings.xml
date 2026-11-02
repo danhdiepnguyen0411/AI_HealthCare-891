@@ -168,6 +168,8 @@
     <string name="noti_reminders_channel_desc">Timely alarms and notifications for medications, hydration, and health tasks.</string>
     <string name="noti_reminder_action_done">Mark as done</string>
     <string name="noti_reminder_default_desc">Time for your %s reminder.</string>
+    <string name="notification_app_title">Health Link</string>
+    <string name="noti_time_now">now</string>
     
     <!-- Permission Dialog -->
     <string name="permission_title">Permission Needed</string>

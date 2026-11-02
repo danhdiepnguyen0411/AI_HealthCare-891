@@ -5,9 +5,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
+import android.view.View
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.example.healthcareai.R
 import com.example.healthcareai.ui.main.MainActivity
 import com.example.healthcareai.ui.splash.SplashActivity
@@ -93,11 +97,29 @@ object NotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val (collapsedView, expandedView) = createCustomNotificationViews(
+            context = attachedContext,
+            title = title,
+            message = message,
+            isReminder = false,
+            contentPendingIntent = pendingIntent
+        )
+
+        val largeIconBitmap = BitmapFactory.decodeResource(
+            attachedContext.resources,
+            R.drawable.ic_noti_app_logo
+        )
+
         val notification = NotificationCompat.Builder(attachedContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(largeIconBitmap)
+            .setColor(androidx.core.content.ContextCompat.getColor(attachedContext, R.color.brand_primary))
             .setContentTitle(title)
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setCustomContentView(collapsedView)
+            .setCustomBigContentView(expandedView)
+            .setCustomHeadsUpContentView(collapsedView)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
@@ -163,11 +185,30 @@ object NotificationHelper {
             attachedContext.getString(R.string.noti_reminder_default_desc, name)
         }
 
+        val (collapsedView, expandedView) = createCustomNotificationViews(
+            context = attachedContext,
+            title = name,
+            message = bodyText,
+            isReminder = true,
+            donePendingIntent = donePendingIntent,
+            contentPendingIntent = openPendingIntent
+        )
+
+        val largeIconBitmap = BitmapFactory.decodeResource(
+            attachedContext.resources,
+            R.drawable.ic_noti_app_logo
+        )
+
         val notification = NotificationCompat.Builder(attachedContext, CHANNEL_REMINDERS_ID)
             .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(largeIconBitmap)
+            .setColor(androidx.core.content.ContextCompat.getColor(attachedContext, R.color.brand_primary))
             .setContentTitle(name)
             .setContentText(bodyText)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bodyText))
+            .setCustomContentView(collapsedView)
+            .setCustomBigContentView(expandedView)
+            .setCustomHeadsUpContentView(collapsedView)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setAutoCancel(true)
@@ -184,4 +225,62 @@ object NotificationHelper {
         } catch (_: SecurityException) {
         }
     }
+
+    /**
+     * Builds RemoteViews matching the device notification style from design:
+     * - Left: App icon (squircle shape with heart & AI cross)
+     * - Top line: Health Link • now
+     * - Title line: bold dark text
+     * - Message line: medium gray text
+     * - Expanded state: multi-line message and optional action button
+     */
+    private fun createCustomNotificationViews(
+        context: Context,
+        title: String,
+        message: String,
+        isReminder: Boolean = false,
+        donePendingIntent: PendingIntent? = null,
+        contentPendingIntent: PendingIntent? = null
+    ): Pair<android.widget.RemoteViews, android.widget.RemoteViews> {
+        val packageName = context.packageName
+
+        val collapsedView = android.widget.RemoteViews(
+            packageName,
+            R.layout.layout_custom_notification_collapsed
+        ).apply {
+            setImageViewResource(R.id.ivNotificationIcon, R.drawable.ic_noti_app_logo)
+            setTextViewText(R.id.tvNotificationAppName, context.getString(R.string.notification_app_title))
+            setTextViewText(R.id.tvNotificationTime, context.getString(R.string.noti_time_now))
+            setTextViewText(R.id.tvNotificationTitle, title)
+            setTextViewText(R.id.tvNotificationMessage, message)
+            if (contentPendingIntent != null) {
+                setOnClickPendingIntent(R.id.layoutNotificationRoot, contentPendingIntent)
+            }
+        }
+
+        val expandedView = android.widget.RemoteViews(
+            packageName,
+            R.layout.layout_custom_notification_expanded
+        ).apply {
+            setImageViewResource(R.id.ivNotificationIcon, R.drawable.ic_noti_app_logo)
+            setTextViewText(R.id.tvNotificationAppName, context.getString(R.string.notification_app_title))
+            setTextViewText(R.id.tvNotificationTime, context.getString(R.string.noti_time_now))
+            setTextViewText(R.id.tvNotificationTitle, title)
+            setTextViewText(R.id.tvNotificationMessage, message)
+
+            if (isReminder && donePendingIntent != null) {
+                setViewVisibility(R.id.layoutActionButtons, android.view.View.VISIBLE)
+                setOnClickPendingIntent(R.id.btnNotificationDone, donePendingIntent)
+            } else {
+                setViewVisibility(R.id.layoutActionButtons, android.view.View.GONE)
+            }
+
+            if (contentPendingIntent != null) {
+                setOnClickPendingIntent(R.id.layoutNotificationRoot, contentPendingIntent)
+            }
+        }
+
+        return Pair(collapsedView, expandedView)
+    }
 }
+
