@@ -34,9 +34,11 @@ class SplashActivity : BaseActivity() {
     private var progressAnimator: ValueAnimator? = null
     private var isNavigatingOrFinished = false
     private var isPendingNavigation = false
+    private var didRequestNativeInThisSession = false
     private val requestNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
+        NotificationPermissionHelper.hasPromptedInCurrentSession = true
         if (isGranted) {
             preferenceHelper.notiDenialCount = 0
         } else {
@@ -47,6 +49,9 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferenceHelper = PreferenceHelper.getInstance(this)
+        if (savedInstanceState == null) {
+            NotificationPermissionHelper.hasPromptedInCurrentSession = false
+        }
 
         // 1. Enforce reset if previous onboarding was incomplete
         if (!preferenceHelper.isIntroCompleted) {
@@ -172,6 +177,8 @@ class SplashActivity : BaseActivity() {
         val denialCount = preferenceHelper.notiDenialCount
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && denialCount < 2) {
             // First 2 times: Launch native OS notification permission dialog on Splash
+            didRequestNativeInThisSession = true
+            NotificationPermissionHelper.hasPromptedInCurrentSession = true
             requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         } else {
             // 3rd time onwards (denialCount >= 2): Do not show on Splash,
@@ -200,6 +207,9 @@ class SplashActivity : BaseActivity() {
                     if (intent?.getBooleanExtra("from_notification", false) == true) {
                         putExtra("from_notification", true)
                         putExtra(MainActivity.EXTRA_TARGET_TAB, intent?.getStringExtra(MainActivity.EXTRA_TARGET_TAB))
+                    }
+                    if (didRequestNativeInThisSession) {
+                        putExtra(MainActivity.EXTRA_SKIP_NOTI_POPUP, true)
                     }
                 }
             }

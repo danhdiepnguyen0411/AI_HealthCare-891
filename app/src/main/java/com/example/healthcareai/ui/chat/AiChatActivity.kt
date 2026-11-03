@@ -45,6 +45,8 @@ class AiChatActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_CONVERSATION_ID = "extra_conversation_id"
+        const val EXTRA_INITIAL_PROMPT = "extra_initial_prompt"
+        const val EXTRA_AUTO_SEND = "extra_auto_send"
     }
 
     private lateinit var binding: ActivityAiChatBinding
@@ -267,6 +269,21 @@ class AiChatActivity : BaseActivity() {
         currentSession = ConversationSession()
         chatAdapter.setMessages(emptyList())
         showWelcomeState()
+
+        val initialPrompt = intent?.getStringExtra(EXTRA_INITIAL_PROMPT) ?: intent?.getStringExtra("extra_initial_prompt")
+        val autoSend = intent?.getBooleanExtra(EXTRA_AUTO_SEND, false) ?: false
+
+        if (!initialPrompt.isNullOrBlank()) {
+            if (autoSend) {
+                binding.root.post {
+                    sendMessage(initialPrompt)
+                }
+            } else {
+                binding.etMessageInput.setText(initialPrompt)
+                binding.etMessageInput.setSelection(initialPrompt.length)
+                binding.etMessageInput.requestFocus()
+            }
+        }
     }
 
     private fun saveCurrentSessionIfActive() {

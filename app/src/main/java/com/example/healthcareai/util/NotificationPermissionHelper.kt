@@ -11,6 +11,14 @@ import com.example.healthcareai.ui.dialog.CustomNotificationDialog
 object NotificationPermissionHelper {
 
     /**
+     * Flag indicating whether a notification permission request (native or custom)
+     * has already been prompted or handled during the current app session/launch.
+     * Prevents displaying the custom rationale dialog immediately after denying the
+     * second native dialog in the same session.
+     */
+    var hasPromptedInCurrentSession: Boolean = false
+
+    /**
      * Checks notification permission and follows the strict 2 native attempts threshold:
      * - Attempt 1 & 2 (Android 13+): native system permission prompt via [launcher].
      * - Attempt 3+ (or whenever denialCount >= 2): custom rationale dialog matching design.
@@ -32,9 +40,11 @@ object NotificationPermissionHelper {
         val denialCount = preferenceHelper.notiDenialCount
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && denialCount < 2 && launcher != null) {
+            hasPromptedInCurrentSession = true
             launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
             null
         } else {
+            hasPromptedInCurrentSession = true
             CustomNotificationDialog.show(activity, onGranted = {
                 preferenceHelper.notiDenialCount = 0
                 onGranted()
@@ -54,6 +64,7 @@ object NotificationPermissionHelper {
         onDenied: (() -> Unit)? = null
     ): Dialog? {
         val preferenceHelper = PreferenceHelper.getInstance(activity)
+        hasPromptedInCurrentSession = true
         return if (isGranted) {
             preferenceHelper.notiDenialCount = 0
             onGranted()

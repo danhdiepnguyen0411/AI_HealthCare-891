@@ -1,11 +1,13 @@
 package com.example.healthcareai.ui.camera
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,17 +19,24 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import com.example.healthcareai.R
+import com.example.healthcareai.data.repository.LesionAnalysisRepository
+import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.ActivityConfirmPhotoBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.min
 
 class ConfirmPhotoActivity : BaseActivity() {
 
     private lateinit var binding: ActivityConfirmPhotoBinding
+    private lateinit var analysisRepo: LesionAnalysisRepository
+    private lateinit var profileRepo: ProfileRepository
 
     enum class Ratio(val w: Float, val h: Float, val title: String) {
         RATIO_9_16(9f, 16f, "9:16"),
@@ -52,6 +61,9 @@ class ConfirmPhotoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        analysisRepo = LesionAnalysisRepository.getInstance(this)
+        profileRepo = ProfileRepository.getInstance(this)
 
         setupWindowInsets()
         initRatioViews()
@@ -202,13 +214,95 @@ class ConfirmPhotoActivity : BaseActivity() {
         }
 
         binding.btnUsePhoto.setOnClickListener {
-            val croppedBitmap: Bitmap? = binding.cropImageView.cropVisibleBitmap()
-            Toast.makeText(
-                this,
-                "Photo confirmed (${activeRatio.title})! Ready for AI analysis.",
-                Toast.LENGTH_SHORT
-            ).show()
+            binding.btnUsePhoto.isEnabled = false
+            val processingDialog = AiProcessingDialog.show(supportFragmentManager)
+
+            lifecycleScope.launch {
+                var tempFile: File? = null
+                val category = intent.getStringExtra(CameraActivity.EXTRA_CATEGORY) ?: "SKIN"
+
+                try {
+                    val croppedBitmap: Bitmap? = withContext(Dispatchers.IO) {
+                        binding.cropImageView.cropVisibleBitmap() ?: CapturedImageHolder.bitmap
+                    }
+                    tempFile = withContext(Dispatchers.IO) {
+                        val file = File(cacheDir, "crop_lesion_${System.currentTimeMillis()}.jpg")
+                        if (croppedBitmap != null) {
+                            file.outputStream().use { out ->
+                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 92, out)
+                            }
+                        }
+                        file
+                    }
+
+                    val profile = profileRepo.getPrimaryProfile()
+                    val age = calculateAge(profile.dateOfBirth)
+                    val gender = if (profile.gender.equals("FEMALE", ignoreCase = true)) "FEMALE" else "MALE"
+
+                    val scanResult = analysisRepo.scanAi(
+                        imageFile = tempFile,
+                        category = category,
+                        age = age,
+                        gender = gender
+                    )
+
+                    processingDialog.dismissSafely()
+                    binding.btnUsePhoto.isEnabled = true
+
+                    val data = scanResult.getOrNull()
+                    val isIdentified = scanResult.isSuccess && data != null && LesionAnalysisRepository.isIdentified(data)
+
+                    val intent = Intent(this@ConfirmPhotoActivity, AnalysisResultsActivity::class.java).apply {
+                        putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, tempFile.absolutePath)
+                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, category)
+                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, isIdentified)
+                        if (isIdentified) {
+                            putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, data)
+                        }
+                    }
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error during AI scan", e)
+                    processingDialog.dismissSafely()
+                    binding.btnUsePhoto.isEnabled = true
+
+                    val intent = Intent(this@ConfirmPhotoActivity, AnalysisResultsActivity::class.java).apply {
+                        if (tempFile != null && tempFile.exists()) {
+                            putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, tempFile.absolutePath)
+                        }
+                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, category)
+                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, false)
+                    }
+                    startActivity(intent)
+                }
+            }
         }
+    }
+
+    private fun calculateAge(dobString: String?): Int {
+        if (dobString.isNullOrBlank()) return 20
+        val formats = listOf(
+            SimpleDateFormat("MMM dd, yyyy", Locale.US),
+            SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()),
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()),
+            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        )
+        for (sdf in formats) {
+            try {
+                val birthDate = sdf.parse(dobString)
+                if (birthDate != null) {
+                    val birthCal = Calendar.getInstance().apply { time = birthDate }
+                    val today = Calendar.getInstance()
+                    var age = today.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR)
+                    if (today.get(Calendar.DAY_OF_YEAR) < birthCal.get(Calendar.DAY_OF_YEAR)) {
+                        age--
+                    }
+                    if (age in 1..120) return age
+                }
+            } catch (_: Exception) {}
+        }
+        return 20
     }
 
     override fun onDestroy() {
@@ -217,6 +311,7 @@ class ConfirmPhotoActivity : BaseActivity() {
     }
 
     companion object {
+        private const val TAG = "ConfirmPhotoActivity"
         const val EXTRA_IMAGE_URI = "extra_image_uri"
         const val EXTRA_IMAGE_PATH = "extra_image_path"
     }

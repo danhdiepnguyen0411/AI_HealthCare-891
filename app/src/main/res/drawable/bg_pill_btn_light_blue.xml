@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="#330F67FE">
-    <item>
+    <!-- Mask to strictly clip ripple and hover to 100dp pill radius -->
+    <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <corners android:radius="100dp" />
-            <solid android:color="#DCE8FF" />
+            <solid android:color="#FFFFFF" />
         </shape>
+    </item>
+    <item>
+        <selector>
+            <item android:state_hovered="true">
+                <shape android:shape="rectangle">
+                    <corners android:radius="100dp" />
+                    <solid android:color="#CFE0FF" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="100dp" />
+                    <solid android:color="#DCE8FF" />
+                </shape>
+            </item>
+        </selector>
     </item>
 </ripple>

@@ -142,10 +142,12 @@
             app:layout_constraintTop_toTopOf="@+id/btnCapture">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:id="@+id/ivAlbumIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_album" />
+                android:src="@drawable/ic_album"
+                app:tint="@color/white" />
         </FrameLayout>
 
         <!-- Shutter / Capture Button (Center) -->

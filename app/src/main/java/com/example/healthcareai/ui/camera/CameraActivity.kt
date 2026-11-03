@@ -62,17 +62,23 @@ class CameraActivity : BaseActivity() {
     }
 
     // Gallery Picker Launcher
+    private var isPhotoPickerActive = false
+    private var lastPickerLaunchTime = 0L
+
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
+        isPhotoPickerActive = false
         if (uri != null) {
             lifecycleScope.launch(Dispatchers.IO) {
                 val bitmap = CapturedImageHolder.decodeScreenScaledBitmap(this@CameraActivity, uri)
                 CapturedImageHolder.bitmap = bitmap
                 CapturedImageHolder.imageUri = uri
                 withContext(Dispatchers.Main) {
+                    val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
                     val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
                         putExtra(ConfirmPhotoActivity.EXTRA_IMAGE_URI, uri.toString())
+                        putExtra(EXTRA_CATEGORY, scanCategory)
                     }
                     startActivity(intent)
                 }
@@ -95,6 +101,7 @@ class CameraActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        isPhotoPickerActive = false
         binding.btnCapture.isEnabled = true
         // Synchronous check if permission was granted via Settings while paused
         if (PermissionReturnHelper.isPermissionGranted(this, Manifest.permission.CAMERA)) {
@@ -289,7 +296,18 @@ class CameraActivity : BaseActivity() {
 
         // Album Button
         binding.btnAlbum.setOnClickListener {
-            pickImageLauncher.launch("image/*")
+            val now = android.os.SystemClock.elapsedRealtime()
+            if (isPhotoPickerActive || now - lastPickerLaunchTime < 1000L) {
+                return@setOnClickListener
+            }
+            lastPickerLaunchTime = now
+            isPhotoPickerActive = true
+            try {
+                pickImageLauncher.launch("image/*")
+            } catch (e: Exception) {
+                isPhotoPickerActive = false
+                Log.e(TAG, "Failed to launch image picker", e)
+            }
         }
 
         // Flip Camera Button
@@ -349,8 +367,10 @@ class CameraActivity : BaseActivity() {
 
                             runOnUiThread {
                                 binding.btnCapture.isEnabled = true
+                                val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
                                 val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
                                     putExtra(ConfirmPhotoActivity.EXTRA_IMAGE_PATH, photoFile.absolutePath)
+                                    putExtra(EXTRA_CATEGORY, scanCategory)
                                 }
                                 startActivity(intent)
                             }
@@ -362,7 +382,10 @@ class CameraActivity : BaseActivity() {
                             CapturedImageHolder.bitmap = fallbackBmp
                             runOnUiThread {
                                 binding.btnCapture.isEnabled = true
-                                val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java)
+                                val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                                val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
+                                    putExtra(EXTRA_CATEGORY, scanCategory)
+                                }
                                 startActivity(intent)
                             }
                         }
@@ -372,7 +395,10 @@ class CameraActivity : BaseActivity() {
                 val fallbackBmp = binding.previewView.bitmap
                 CapturedImageHolder.bitmap = fallbackBmp
                 binding.btnCapture.isEnabled = true
-                val intent = Intent(this, ConfirmPhotoActivity::class.java)
+                val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                val intent = Intent(this, ConfirmPhotoActivity::class.java).apply {
+                    putExtra(EXTRA_CATEGORY, scanCategory)
+                }
                 startActivity(intent)
             }
         }
