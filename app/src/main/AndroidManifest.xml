@@ -84,6 +84,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- AI Lesion Analysis Results Activity -->
+        <activity
+            android:name=".ui.camera.AnalysisResultsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- Heart Rate Screen Activity (Single-screen direct measurement) -->
         <activity
             android:name=".ui.heartrate.HeartRateActivity"
@@ -111,6 +117,18 @@
         <!-- Symptom Assessment Question Onboard Activity -->
         <activity
             android:name=".ui.symptom.SymptomAssessmentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Symptom Assessment Result Activity -->
+        <activity
+            android:name=".ui.symptom.SymptomResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Care Advice Activity -->
+        <activity
+            android:name=".ui.symptom.CareAdviceActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

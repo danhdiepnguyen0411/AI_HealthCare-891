@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardAiProcessing"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_ai_processing_dialog"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Visual Area with rotating ring, centered robot and sparkles (252dp x 132dp) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutVisualContainer"
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:layout_gravity="center_horizontal">
+
+        <!-- Rotating Circle Progress Ring (116dp x 116dp) -->
+        <com.example.healthcareai.ui.camera.AiRotatingRingView
+            android:id="@+id/viewRotatingRing"
+            android:layout_width="116dp"
+            android:layout_height="116dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Centered AI Robot Graphic (56dp x 56dp) -->
+        <ImageView
+            android:id="@+id/ivRobotGraphic"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_ai_processing"
+            app:layout_constraintBottom_toBottomOf="@+id/viewRotatingRing"
+            app:layout_constraintEnd_toEndOf="@+id/viewRotatingRing"
+            app:layout_constraintStart_toStartOf="@+id/viewRotatingRing"
+            app:layout_constraintTop_toTopOf="@+id/viewRotatingRing" />
+
+        <!-- Sparkle 1 (Large, Left ~9 o'clock) - 18dp away from ring -->
+        <ImageView
+            android:id="@+id/ivSparkleLeft"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="18dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini"
+            app:layout_constraintBottom_toBottomOf="@+id/viewRotatingRing"
+            app:layout_constraintEnd_toStartOf="@+id/viewRotatingRing"
+            app:layout_constraintTop_toTopOf="@+id/viewRotatingRing"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <!-- Sparkle 2 (Small, Bottom-Left ~8 o'clock) -->
+        <ImageView
+            android:id="@+id/ivSparkleBottomLeft"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini"
+            app:layout_constraintStart_toStartOf="@+id/ivSparkleLeft"
+            app:layout_constraintTop_toBottomOf="@+id/ivSparkleLeft" />
+
+        <!-- Sparkle 3 (Large, Right ~2:30 o'clock) - 18dp away from ring -->
+        <ImageView
+            android:id="@+id/ivSparkleTopRight"
+            android:layout_width="17dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="18dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini"
+            app:layout_constraintBottom_toBottomOf="@+id/viewRotatingRing"
+            app:layout_constraintStart_toEndOf="@+id/viewRotatingRing"
+            app:layout_constraintTop_toTopOf="@+id/viewRotatingRing"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <!-- Sparkle 4 (Small, Top-Right ~1:30 o'clock) -->
+        <ImageView
+            android:id="@+id/ivSparkleTopRightSmall"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="14dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini"
+            app:layout_constraintBottom_toTopOf="@+id/ivSparkleTopRight"
+            app:layout_constraintEnd_toEndOf="@+id/ivSparkleTopRight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        android:text="AI processing..."
+        android:textColor="#172044"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        android:text="Your result will be ready in a few moments"
+        android:textColor="#7A808C"
+        android:textSize="14sp" />
+
+</LinearLayout>

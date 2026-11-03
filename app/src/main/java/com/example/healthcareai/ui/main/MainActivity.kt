@@ -102,12 +102,15 @@ class MainActivity : BaseActivity() {
 
     /**
      * Requirement: Custom notification pop-up is displayed after entering Home (MainActivity),
-     * only when the user has already denied the native prompt at least 2 times (denialCount >= 2).
+     * only when the user has already denied the native prompt at least 2 times (denialCount >= 2),
+     * and has NOT just been prompted in the current session (e.g. at Splash).
      */
     private fun checkAndShowCustomNotificationPopupOnHome() {
         if (isFinishing || isDestroyed || notificationPermissionDialog?.isShowing == true) return
+        if (NotificationPermissionHelper.hasPromptedInCurrentSession) return
         val pref = PreferenceHelper.getInstance(this)
         if (!PermissionReturnHelper.isNotificationGranted(this) && pref.notiDenialCount >= 2) {
+            NotificationPermissionHelper.hasPromptedInCurrentSession = true
             notificationPermissionDialog = CustomNotificationDialog.show(
                 activity = this,
                 onGranted = {

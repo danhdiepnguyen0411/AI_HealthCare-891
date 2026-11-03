@@ -350,7 +350,8 @@
                     android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_album" />
+                    android:src="@drawable/ic_album"
+                    app:tint="#56627A" />
             </FrameLayout>
 
             <!-- Capsule Input Box with Mic inside -->

@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="#25FFFFFF">
+    <!-- Mask to clip ripple strictly to 18dp rounded corners -->
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+    <!-- Outer halo ring (Figma Chosen shadow: Spread 4, Color: #0F67FE 25%) -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
-            <solid android:color="#4E75F7" />
+            <corners android:radius="18dp" />
+            <solid android:color="#400F67FE" />
         </shape>
+    </item>
+    <!-- Selected Card Surface: #4E75F7 with 16dp radius, inset by 3dp -->
+    <item
+        android:bottom="3dp"
+        android:left="3dp"
+        android:right="3dp"
+        android:top="3dp">
+        <selector>
+            <item android:state_hovered="true">
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp" />
+                    <solid android:color="#436AE8" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="16dp" />
+                    <solid android:color="#4E75F7" />
+                </shape>
+            </item>
+        </selector>
     </item>
 </ripple>

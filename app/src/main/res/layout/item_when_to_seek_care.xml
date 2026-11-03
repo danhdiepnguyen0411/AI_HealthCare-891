@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:paddingVertical="5dp">
+
+    <!-- 6dp red bullet dot -->
+    <View
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_bullet_seek_care" />
+
+    <!-- Text -->
+    <TextView
+        android:id="@+id/tvSeekText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/urbanist"
+        android:lineSpacingExtra="2dp"
+        android:textColor="#BE000D"
+        android:textSize="15sp" />
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.healthcareai.ui.symptom
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.HapticFeedbackConstants
@@ -20,11 +21,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthcareai.R
+import com.example.healthcareai.data.repository.SymptomAssessmentRepository
 import com.example.healthcareai.databinding.ActivitySymptomAssessmentBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.camera.AiProcessingDialog
 import com.example.healthcareai.ui.dialog.CustomExitAppDialog
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 class SymptomAssessmentActivity : BaseActivity() {
@@ -308,54 +313,21 @@ class SymptomAssessmentActivity : BaseActivity() {
             }, "AndroidBridge")
             loadUrl("file:///android_asset/body_anatomy.html")
         }
-
-        binding.etBodyPartSearch.filters = arrayOf(InputFilter.LengthFilter(50))
-        binding.etBodyPartSearch.doAfterTextChanged { text ->
-            val query = text?.toString().orEmpty().trim()
-            binding.ivClearBodyPartSearch.visibility = if (query.isNotEmpty()) View.VISIBLE else View.GONE
-            highlightBodyPartFromSearch(query)
-        }
-
-        binding.ivClearBodyPartSearch.setOnClickListener {
-            binding.etBodyPartSearch.text?.clear()
-            selectedBodyRegionId = ""
-            selectedBodyRegionName = ""
-            binding.webViewBodyAnatomy.evaluateJavascript("clearAllHighlights();", null)
-        }
     }
 
     private fun handleBodyPartSelected(regionId: String, regionName: String) {
         selectedBodyRegionId = regionId
-        selectedBodyRegionName = if (regionName.isNotEmpty()) regionName else "Arm"
+        selectedBodyRegionName = when (regionId.lowercase()) {
+            "arms" -> "Arm"
+            "head" -> "Head"
+            "neck" -> "Neck"
+            "shoulders" -> "Shoulder"
+            "chest" -> "Chest"
+            "abdomen" -> "Abdomen"
+            "legs" -> "Leg"
+            else -> if (regionName.isNotBlank()) regionName else "Arm"
+        }
         binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
-
-        if (regionName.isNotEmpty()) {
-            binding.etBodyPartSearch.setText(regionName)
-            binding.etBodyPartSearch.setSelection(regionName.length)
-        } else {
-            binding.etBodyPartSearch.text?.clear()
-        }
-    }
-
-    private fun highlightBodyPartFromSearch(query: String) {
-        if (query.isEmpty()) return
-        val lower = query.lowercase()
-        val targetRegion = when {
-            lower.contains("arm") || lower.contains("hand") || lower.contains("wrist") || lower.contains("elbow") || lower.contains("finger") || lower.contains("tay") -> "arms" to "Arm"
-            lower.contains("head") || lower.contains("face") || lower.contains("eye") || lower.contains("ear") || lower.contains("đầu") -> "head" to "Head"
-            lower.contains("neck") || lower.contains("throat") || lower.contains("cổ") -> "neck" to "Neck"
-            lower.contains("shoulder") || lower.contains("vai") -> "shoulders" to "Shoulders"
-            lower.contains("chest") || lower.contains("breast") || lower.contains("ngực") -> "chest" to "Chest"
-            lower.contains("abdom") || lower.contains("stomach") || lower.contains("belly") || lower.contains("bụng") -> "abdomen" to "Abdomen"
-            lower.contains("leg") || lower.contains("knee") || lower.contains("foot") || lower.contains("ankle") || lower.contains("chân") -> "legs" to "Legs"
-            else -> null
-        }
-
-        targetRegion?.let { (rId, rName) ->
-            selectedBodyRegionId = rId
-            selectedBodyRegionName = rName
-            binding.webViewBodyAnatomy.evaluateJavascript("highlightRegion('$rId', '$rName', true);", null)
-        }
     }
 
     // =========================================================================
@@ -395,16 +367,10 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     private fun prepareQuestion4View() {
-        val regionName = if (selectedBodyRegionName.isNotEmpty()) selectedBodyRegionName else "Arm"
-        binding.etSearchSymptoms.setText(regionName)
-        binding.etSearchSymptoms.setSelection(regionName.length)
-
-        // Seed with "Erythema of upper arm" (symptom_1) if nothing selected yet to match Screenshot 2
-        if (selectedSymptomIds.isEmpty()) {
-            selectedSymptomIds.add("symptom_1")
-        }
+        binding.etSearchSymptoms.text?.clear()
+        binding.ivClearSearch.visibility = View.GONE
         updateSelectedChips()
-        filterSymptoms(regionName)
+        filterSymptoms("")
     }
 
     private fun toggleQ4SymptomSelection(item: SymptomItem) {
@@ -609,20 +575,116 @@ class SymptomAssessmentActivity : BaseActivity() {
         }
     }
 
+    private fun getSymptomsForRegion(regionId: String): List<SymptomItem> {
+        val prioritySymptoms: List<String> = when (regionId.lowercase()) {
+            "abdomen" -> listOf(
+                "Stomach cramps & spasms",
+                "Abdominal bloating & gas",
+                "Upper abdominal pain",
+                "Lower abdominal pain",
+                "Acid reflux & heartburn",
+                "Nausea & queasiness",
+                "Vomiting",
+                "Indigestion (Dyspepsia)",
+                "Loss of appetite",
+                "Diarrhea",
+                "Constipation",
+                "Difficulty digesting food",
+                "Skin rash & hives",
+                "Skin redness & itching"
+            )
+            "head" -> listOf(
+                "Headache",
+                "Migraine",
+                "Tension headache",
+                "Cluster headache",
+                "Dizziness & lightheadedness",
+                "Vertigo (spinning sensation)",
+                "Brain fog & mental fatigue",
+                "Red or bloodshot eyes",
+                "Dry or burning eyes",
+                "Watery or itchy eyes",
+                "Blurred or distorted vision",
+                "Sensitivity to light (Photophobia)",
+                "Earache & ear fullness",
+                "Tinnitus (Ringing in ears)",
+                "Loss of smell (Anosmia)",
+                "Loss of taste (Ageusia)",
+                "Runny or congested nose",
+                "Sinus pressure & pain",
+                "Frequent sneezing"
+            )
+            "neck" -> listOf(
+                "Neck stiffness & pain",
+                "Difficulty swallowing",
+                "Hoarse or raspy voice",
+                "Swollen lymph nodes in neck",
+                "Sore throat"
+            )
+            "chest" -> listOf(
+                "Chest tightness & pressure",
+                "Sharp chest pain when inhaling",
+                "Shortness of breath (Dyspnea)",
+                "Wheezing when breathing",
+                "Dry cough",
+                "Productive / Chest cough",
+                "Persistent coughing fit",
+                "Rapid or fluttering heartbeat"
+            )
+            "legs" -> listOf(
+                "Lower back pain (Lumbago)",
+                "Sciatica (Shooting leg pain)",
+                "Hip pain & stiffness",
+                "Joint pain & stiffness",
+                "Knee pain & swelling",
+                "Calf muscle cramps",
+                "Shin splints",
+                "Ankle sprain & swelling",
+                "Foot pain or heel ache",
+                "Cold feet & toes",
+                "Burning feet sensation",
+                "Restless legs at night"
+            )
+            "shoulders" -> listOf(
+                "Shoulder pain & stiffness",
+                "Frozen shoulder",
+                "Upper back pain",
+                "Arm ache",
+                "Neck stiffness & pain",
+                "Arm weakness"
+            )
+            else -> listOf(
+                "Arm ache",
+                "Erythema of upper arm",
+                "Arm rash",
+                "Arid tongue",
+                "Achy left arm",
+                "Achy right arm",
+                "Arm numbness or tingling",
+                "Arm muscle twitching",
+                "Arm weakness",
+                "Shoulder pain & stiffness",
+                "Frozen shoulder",
+                "Elbow joint pain",
+                "Wrist pain & soreness",
+                "Numbness in fingers",
+                "Tingling sensation in hands",
+                "Cold hands & pale fingers",
+                "Hand tremor & shaking",
+                "Swollen hands or fingers"
+            )
+        }
+
+        val priorityMap = prioritySymptoms.withIndex().associate { it.value.lowercase() to it.index }
+        return allSymptoms.sortedBy { item ->
+            priorityMap[item.name.lowercase()] ?: (1000 + item.name.hashCode())
+        }
+    }
+
     private fun filterSymptoms(query: String) {
         val cleanQuery = query.trim()
         val filtered = if (cleanQuery.isEmpty()) {
-            allSymptoms
-        } else if (cleanQuery.equals("Arm", ignoreCase = true)) {
-            // First 5 items exactly match Screenshot 2, followed by remaining arm items
-            allSymptoms.filter { item ->
-                item.name in listOf("Arm ache", "Erythema of upper arm", "Arm rash", "Arid tongue", "Achy left arm") ||
-                item.name.contains("arm", ignoreCase = true)
-            }.sortedBy { item ->
-                val priorityOrder = listOf("Arm ache", "Erythema of upper arm", "Arm rash", "Arid tongue", "Achy left arm")
-                val idx = priorityOrder.indexOf(item.name)
-                if (idx >= 0) idx else 100
-            }
+            getSymptomsForRegion(selectedBodyRegionId)
         } else {
             allSymptoms.filter {
                 it.name.contains(cleanQuery, ignoreCase = true)
@@ -759,11 +821,6 @@ class SymptomAssessmentActivity : BaseActivity() {
             q5Symptoms.add(SymptomItem(id, name))
         }
 
-        // For default ARM_SKIN category, pre-select "Itching" (item index 1) to match Screenshot 3
-        if (category == "ARM_SKIN") {
-            selectedQ5SymptomIds.add("q5_ARM_SKIN_1")
-        }
-
         q5SymptomsAdapter.submitList(q5Symptoms.toList()) {
             binding.rvQ5Symptoms.scrollToPosition(0)
         }
@@ -888,17 +945,77 @@ class SymptomAssessmentActivity : BaseActivity() {
                 4 -> goToQuestion(5, animate = true)
                 5 -> goToQuestion(6, animate = true)
                 6 -> {
-                    val label = when (selectedInsectBiteOption) {
-                        InsectBiteOption.YES -> getString(R.string.option_yes)
-                        InsectBiteOption.NO -> getString(R.string.option_no)
-                        InsectBiteOption.DONT_KNOW -> getString(R.string.option_dont_know)
+                    performSymptomAssessment()
+                }
+            }
+        }
+    }
+
+    private var isAssessing = false
+
+    private fun performSymptomAssessment() {
+        if (isAssessing) return
+        isAssessing = true
+
+        val aiDialog = AiProcessingDialog.show(supportFragmentManager)
+
+        lifecycleScope.launch {
+            try {
+                val genderStr = selectedGender.name
+                val bodyRegion = selectedBodyRegionName.ifBlank { "Arm" }
+
+                // Map selected symptom IDs to human-readable names
+                val q4Names = allSymptoms.filter { selectedSymptomIds.contains(it.id) }.map { it.name }
+                val q5Names = q5Symptoms.filter { selectedQ5SymptomIds.contains(it.id) }.map { it.name }
+
+                val primarySymptoms = if (q4Names.isNotEmpty()) q4Names else listOf("Skin redness & itching")
+                val relatedSymptoms = q5Names
+                val insectBiteStr = selectedInsectBiteOption.name
+
+                val repo = SymptomAssessmentRepository.getInstance(this@SymptomAssessmentActivity)
+                val result = repo.assessSymptoms(
+                    age = currentAge,
+                    gender = genderStr,
+                    bodyRegion = bodyRegion,
+                    symptoms = primarySymptoms,
+                    relatedSymptoms = relatedSymptoms,
+                    insectBite = insectBiteStr
+                )
+
+                aiDialog.dismissAllowingStateLoss()
+                isAssessing = false
+
+                val assessmentResult = result.getOrNull()
+                if (assessmentResult != null) {
+                    val intent = Intent(this@SymptomAssessmentActivity, SymptomResultActivity::class.java).apply {
+                        putExtra(SymptomResultActivity.EXTRA_ASSESSMENT_RESULT, assessmentResult)
+                        putExtra(SymptomResultActivity.EXTRA_BODY_REGION, bodyRegion)
+                        putStringArrayListExtra(
+                            SymptomResultActivity.EXTRA_SELECTED_SYMPTOMS,
+                            ArrayList(primarySymptoms + relatedSymptoms)
+                        )
+                        putExtra(
+                            SymptomResultActivity.EXTRA_INSECT_BITE,
+                            insectBiteStr
+                        )
                     }
+                    startActivity(intent)
+                    finish()
+                } else {
                     Toast.makeText(
-                        this,
-                        "Assessment complete! Results are ready.",
+                        this@SymptomAssessmentActivity,
+                        "Unable to complete symptom assessment. Please try again.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            } catch (e: Exception) {
+                isAssessing = false
+                aiDialog.dismissAllowingStateLoss()
+                Toast.makeText(
+                    this@SymptomAssessmentActivity,
+                    "An error occurred during assessment: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
