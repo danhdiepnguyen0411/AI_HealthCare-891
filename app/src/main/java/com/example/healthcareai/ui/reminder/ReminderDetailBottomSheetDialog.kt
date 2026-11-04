@@ -62,8 +62,8 @@ class ReminderDetailBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         binding.ivReminderIcon.setImageResource(reminder.getIconResId())
-        binding.tvReminderTitle.text = reminder.name
-        val desc = reminder.getDisplayDescription()
+        binding.tvReminderTitle.text = reminder.getLocalizedName(requireContext())
+        val desc = reminder.getLocalizedDescription(requireContext())
         if (desc.isNotBlank()) {
             binding.tvReminderDesc.visibility = View.VISIBLE
             binding.tvReminderDesc.text = desc

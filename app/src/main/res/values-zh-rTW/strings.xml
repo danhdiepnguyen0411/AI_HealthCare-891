@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">首页</string>
+    <string name="tab_scan">扫描</string>
+    <string name="tab_my_health">我的健康</string>
+    <string name="tab_family">家庭中心</string>
+    <string name="tab_settings">设置</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">主屏幕</string>
+    <string name="screen_scan">扫描屏幕</string>
+    <string name="screen_my_health">健康屏幕</string>
+    <string name="screen_family">家庭屏幕</string>
+    <string name="screen_settings">设置屏幕</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">AI 扫描</string>
+    <string name="headline_ai_scan">您想要检查哪个部位？</string>
+    <string name="category_skin">皮肤</string>
+    <string name="category_skin_desc">斑点、皮疹或皮肤异常变化</string>
+    <string name="category_mouth">口腔</string>
+    <string name="category_mouth_desc">唇、牙龈、舌头或牙齿</string>
+    <string name="category_eye">眼部</string>
+    <string name="category_eyes">眼部</string>
+    <string name="category_eyes_desc">眼周可见的明显异常</string>
+    <string name="category_nails">指甲</string>
+    <string name="category_nail">指甲</string>
+    <string name="category_nail_desc">手指甲或脚趾甲</string>
+    <string name="category_other_area">其他部位</string>
+    <string name="category_other_area_desc">身体其他可见部位</string>
+    <string name="btn_start_scan">开始扫描</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">正在加载...</string>
+    <string name="splash_ads_notice">此操作可能包含广告</string>
+    
+    <!-- Language -->
+    <string name="title_language">语言</string>
+    <string name="subtitle_select_language">请选择语言以继续</string>
+    <string name="btn_done">完成</string>
+    <string name="hint_tap_device_language">点击以选择您的语言</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">跳过</string>
+    <string name="btn_next">下一步</string>
+    <string name="btn_get_started">立即开始</string>
+    <string name="intro_title_1">更好地了解\n您的身体健康</string>
+    <string name="intro_desc_1">通过照片分析、症状问答和 AI 助手轻松探查健康疑虑。</string>
+    <string name="intro_title_2">健康档案，\n一站式管理</string>
+    <string name="intro_desc_2">记录健康数据、追踪变化趋势，定制符合生活习惯的提醒。</string>
+    <string name="intro_title_3">量身定制的\n护理健康指导</string>
+    <string name="intro_desc_3">获取个性化的护理建议、每日健康提示和 AI 持续关怀。</string>
+    <string name="intro_title_4">关爱自己\n守护全家健康</string>
+    <string name="intro_desc_4">井井有条地管理家庭成员档案，悉心照顾您所爱之人。</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">添加档案</string>
+    <string name="title_add_member">添加成员</string>
+    <string name="title_detail_profile">档案详情</string>
+    <string name="title_profile_detail">档案详情</string>
+    <string name="msg_member_added">已将成员添加到家庭中心！</string>
+    <string name="add_avatar">更换头像</string>
+    <string name="label_full_name">姓名</string>
+    <string name="hint_full_name">请输入姓名</string>
+    <string name="label_date_of_birth">出生日期</string>
+    <string name="hint_date_of_birth">选择出生日期</string>
+    <string name="label_gender">性别</string>
+    <string name="hint_gender">选择性别</string>
+    <string name="gender_other">其他</string>
+    <string name="label_height">身高</string>
+    <string name="hint_height">身高</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">体重</string>
+    <string name="hint_weight">体重</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">创建档案</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_close">关闭</string>
+    <string name="title_gender_sheet">性别</string>
+    <string name="select_gender_title">选择性别</string>
+    <string name="error_name_empty">请输入您的姓名</string>
+    <string name="error_dob_empty">请选择您的出生日期</string>
+    <string name="error_gender_empty">请选择您的性别</string>
+    <string name="error_height_empty">请输入您的身高</string>
+    <string name="error_weight_empty">请输入您的体重</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">亲属关系</string>
+    <string name="hint_relationship">选择亲属关系</string>
+    <string name="title_relationship_sheet">亲属关系</string>
+    <string name="select_relationship_title">选择亲属关系</string>
+    <string name="rel_father">父亲</string>
+    <string name="rel_mother">母亲</string>
+    <string name="rel_spouse">配偶</string>
+    <string name="rel_husband">丈夫</string>
+    <string name="rel_wife">妻子</string>
+    <string name="rel_son">儿子</string>
+    <string name="rel_daughter">女儿</string>
+    <string name="rel_brother">兄弟</string>
+    <string name="rel_sister">姐妹</string>
+    <string name="rel_grandparent">祖父母</string>
+    <string name="rel_other">其他</string>
+    <string name="dialog_delete_member_title">删除成员</string>
+    <string name="dialog_delete_member_msg">确定要将 %1$s 从家庭中心移除吗？</string>
+    <string name="btn_remove">删除</string>
+    <string name="msg_member_removed">已从家庭中心移除成员</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">我的健康</string>
+    <string name="label_age">年龄</string>
+    <string name="label_reminder">提醒</string>
+    <string name="title_health_records">健康档案</string>
+    <string name="record_medications">药物</string>
+    <string name="record_allergies">过敏史</string>
+    <string name="record_conditions">健康状况</string>
+    <string name="record_vaccinations">疫苗接种</string>
+    <string name="record_active_format">%1$d 项正在使用</string>
+    <string name="record_reported_format">%1$d 项已报告</string>
+    <string name="record_recorded_format">%1$d 项已记录</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">语言设置</string>
+    <string name="settings_notifications">每日提醒</string>
+    <string name="settings_version">版本 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">您在体验中遇到了什么问题？</string>
+    <string name="uninstall_card1_title">无法使用功能或保存结果</string>
+    <string name="uninstall_card1_desc">检测到网络连接或服务器内部错误。</string>
+    <string name="uninstall_card2_title">当前不可用</string>
+    <string name="uninstall_card2_desc">此功能正在维护或受到区域限制。</string>
+    <string name="uninstall_btn_try_again">重试</string>
+    <string name="uninstall_btn_explore">探索其他功能</string>
+    <string name="uninstall_btn_dont_uninstall">暂不卸载</string>
+    <string name="uninstall_btn_still_uninstall">仍要卸载</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">为什么要卸载 HealthCare AI？</string>
+    <string name="uninstall_reason_subtitle">非常遗憾看到您离开。请告诉我们如何改进。</string>
+    <string name="uninstall_reason_1">操作太复杂</string>
+    <string name="uninstall_reason_2">广告过多</string>
+    <string name="uninstall_reason_3">界面设计欠佳</string>
+    <string name="uninstall_reason_4">其他原因</string>
+    <string name="uninstall_reason_hint">请在此填写具体反馈..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">每日健康提醒</string>
+    <string name="noti_channel_desc">关于饮水、健康检查和生活习惯的每日提醒。</string>
+    <string name="noti_title_morning">晨间健康自查 ☀️</string>
+    <string name="noti_msg_morning">喝一杯温水开启新的一天，并查看今天的健康目标。</string>
+    <string name="noti_title_afternoon">午后活力补给 💧</string>
+    <string name="noti_msg_afternoon">适当伸展放松，记录您下午的精力状态。</string>
+    <string name="noti_title_evening">晚间关怀与回顾 🌙</string>
+    <string name="noti_msg_evening">总结今天的健康情况，并咨询您的 AI 健康助手。</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">通知提醒</string>
+    <string name="dialog_notification_permission_desc">及时接收重要更新、照片分析结果及新功能通知。</string>
+    <string name="dialog_notification_btn_settings">前往设置</string>
+    <string name="dialog_notification_btn_dont_allow">不允许</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">用药与健康提醒</string>
+    <string name="noti_reminders_channel_desc">针对用药、喝水与日常健康任务的准时闹钟与通知。</string>
+    <string name="noti_reminder_action_done">标为完成</string>
+    <string name="noti_reminder_default_desc">您的 %s 提醒时间已到。</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">需要授权</string>
+    <string name="permission_desc">为了启用定时提醒与智能照片扫描，请在系统设置中开启权限。</string>
+    <string name="permission_btn_settings">前往设置</string>
+    <string name="permission_btn_cancel">暂不</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">开启相机访问权限</string>
+    <string name="dialog_camera_permission_desc">允许使用相机以拍摄、扫描并分析您的健康状况</string>
+    <string name="dialog_camera_btn_settings">前往设置</string>
+    <string name="dialog_camera_btn_dont_allow">不允许</string>
+    <string name="dialog_camera_btn_cancel">暂不</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">拍照指导</string>
+    <string name="camera_guide_tip_1">1. 将需要检查的部位居中对准取景框。</string>
+    <string name="camera_guide_tip_2">2. 确保在充足清晰的自然光下，避免阴影遮挡。</string>
+    <string name="camera_guide_tip_3">3. 保持相机平稳，距离大约 10–15 厘米。</string>
+    <string name="camera_guide_btn_got_it">我知道了</string>
+    <string name="camera_capture_success">拍照成功！正在分析中...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">确认照片</string>
+    <string name="label_aspect_ratio">照片比例</string>
+    <string name="btn_use_photo">使用这张照片</string>
+    <string name="btn_retake_photo">重新拍摄</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">早上好</string>
+    <string name="home_greeting_afternoon">下午好</string>
+    <string name="home_greeting_evening">晚上好</string>
+    <string name="home_subtitle">您今天的健康状态看起来很棒。</string>
+    <string name="home_ai_assistant_badge">AI 健康助手</string>
+    <string name="home_ai_assistant_title">您的专属\n健康私人助手</string>
+    <string name="home_btn_chat_ai">与 AI 对话</string>
+    <string name="home_feature_health_scan">健康\n扫描</string>
+    <string name="home_feature_measure_heart_rate">测量\n心率</string>
+    <string name="home_feature_symptom_checker">症状\n自查</string>
+    <string name="home_section_today_reminder">今日提醒</string>
+    <string name="home_section_ai_scan_history">AI 扫描记录</string>
+    <string name="home_view_all">查看全部</string>
+    <string name="home_no_reminder_title">暂无提醒</string>
+    <string name="home_no_reminder_desc">添加用药或喝水提醒，轻松保持健康规律。</string>
+    <string name="home_btn_add_reminder">添加提醒</string>
+    <string name="home_no_scans_title">暂无扫描记录</string>
+    <string name="home_no_scans_desc">首次体检后，您的扫描结果将在此处展示。</string>
+    <string name="home_btn_start_first_scan">开始首次扫描</string>
+    <string name="home_btn_get_pro">升级 Pro</string>
+    <string name="home_manage">管理</string>
+    <string name="btn_mark_as_done">标为完成</string>
+    <string name="msg_marked_as_done">已标记为完成！</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">喝水</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">手臂皮肤检查</string>
+    <string name="scan_arm_skin_check_date">10月5日</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">心率测量</string>
+    <string name="heart_rate_how_to_measure">如何测量</string>
+    <string name="heart_rate_instruction">将手指轻轻覆盖在摄像头\n与闪光灯上即可开始测量。</string>
+    <string name="heart_rate_btn_start">开始测量</string>
+    <string name="heart_rate_statistics_coming_soon">心率趋势与统计图表将在此处展示。</string>
+    <string name="how_to_measure_title">如何测量</string>
+    <string name="how_to_measure_step1_title">将手指放在摄像头和闪光灯上</string>
+    <string name="how_to_measure_step1_desc">用指腹完全遮盖后置摄像头，并确认闪光灯已开启。</string>
+    <string name="how_to_measure_step2_title">确认闪光灯亮起</string>
+    <string name="how_to_measure_step2_desc">闪光灯将照亮指腹毛细血管，以获得精准测量结果。</string>
+    <string name="how_to_measure_step3_title">保持手指静止</string>
+    <string name="how_to_measure_step3_desc">在测量过程中请勿移动手指。</string>
+    <string name="heart_rate_guide_title">测量指导</string>
+    <string name="heart_rate_guide_tip_1">1. 将食指指腹轻轻按在后置镜头和闪光灯上。</string>
+    <string name="heart_rate_guide_tip_2">2. 保持轻柔均匀的压力，切勿用力过猛。</string>
+    <string name="heart_rate_guide_tip_3">3. 保持身体放松，平静呼吸，等待测量完成。</string>
+    <string name="heart_rate_guide_btn_got_it">我知道了</string>
+    <string name="heart_rate_measuring_title">正在测量心率</string>
+    <string name="heart_rate_measuring_banner_title">正在测量您的心率…</string>
+    <string name="heart_rate_measuring_banner_sub">请保持手指平稳静止。</string>
+    <string name="heart_rate_waiting_finger">遮盖摄像头与闪光灯</string>
+    <string name="heart_rate_waiting_finger_desc">轻轻将食指放在摄像头与闪光灯上</string>
+    <string name="heart_rate_measuring_desc">测量中... 请保持静止并平稳呼吸</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">结果</string>
+    <string name="heart_rate_result_summary">结果摘要</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">偏慢</string>
+    <string name="heart_rate_normal_label">正常</string>
+    <string name="heart_rate_fast_label">偏快</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">删除记录</string>
+    <string name="heart_rate_delete_confirm_msg">确定要删除这条心率记录吗？</string>
+    <string name="heart_rate_delete_btn">删除</string>
+    <string name="heart_rate_cancel_btn">取消</string>
+    <string name="heart_rate_deleted">记录已删除</string>
+    <string name="heart_rate_normal">正常（静息状态）</string>
+    <string name="heart_rate_slow">心动过缓</string>
+    <string name="heart_rate_fast">心动过速</string>
+    <string name="heart_rate_quality_label">信号质量</string>
+    <string name="heart_rate_hrv_title">心率变异性 (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">重新测量</string>
+    <string name="heart_rate_btn_done">Done</string>
+    <string name="heart_rate_error_finger_lost_title">手指已移开</string>
+    <string name="heart_rate_error_finger_lost">手指移开导致测量暂停。请重新轻轻放回镜头上。</string>
+    <string name="heart_rate_error_low_quality_title">测量结果不确定</string>
+    <string name="heart_rate_error_low_quality">信号干扰较大或不稳定。请保持放松，不要按压过重。</string>
+    <string name="heart_rate_error_no_flash">您的设备似乎没有闪光灯。</string>
+    <string name="heart_rate_btn_try_again">重试</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">数据统计</string>
+    <string name="statistics_tab_overview">总览</string>
+    <string name="statistics_tab_history">历史</string>
+    <string name="statistics_average">平均</string>
+    <string name="statistics_highest">最高</string>
+    <string name="statistics_lowest">最低</string>
+    <string name="statistics_no_history_title">暂无历史数据</string>
+    <string name="statistics_no_history_desc">首次测量后，您的心率记录将显示在此处。</string>
+    <string name="statistics_no_data_title">暂无心率数据</string>
+    <string name="statistics_no_data_desc">测量心率以查看您的每周统计图表。</string>
+    <string name="statistics_btn_measure_now">立即测量</string>
+    <string name="statistics_heart_rate_chart_title">心率 (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">家庭中心</string>
+    <string name="family_no_members_title">暂无家庭成员</string>
+    <string name="family_no_members_desc">添加亲友，共同管理医疗档案、用药、过敏与健康记录。</string>
+    <string name="family_btn_add_first_member">添加第一位成员</string>
+    <string name="family_add_member_hint">家庭成员功能即将上线。</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">设置</string>
+    <string name="settings_section_general">通用</string>
+    <string name="settings_section_support">帮助与支持</string>
+    <string name="settings_item_language">语言</string>
+    <string name="settings_item_permission">应用权限</string>
+    <string name="settings_item_share">推荐给朋友</string>
+    <string name="settings_item_rate">评价我们</string>
+    <string name="settings_item_privacy">隐私政策</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">症状自查</string>
+    <string name="symptom_checker_subtitle">向我们描述您当前的感受，\n以便获取最佳健康指导。</string>
+    <string name="symptom_checker_privacy_notice">您的数据全程加密，安全私密。</string>
+    <string name="symptom_checker_est_time_label">预计用时</string>
+    <string name="symptom_checker_est_time_val">3 分钟</string>
+    <string name="symptom_checker_after_assessment_label">评估后可得</string>
+    <string name="symptom_checker_after_assessment_val">健康分析见解</string>
+    <string name="symptom_checker_length_label">评估后可得</string>
+    <string name="symptom_checker_length_val">健康分析见解</string>
+    <string name="symptom_checker_btn_start">开始自查</string>
+    <string name="symptom_checker_start_toast">正在启动 AI 症状自查...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">您的年龄是？</string>
+    <string name="assessment_gender_title">您的生理性别是？</string>
+    <string name="assessment_gender_subtitle">请选择性别，以获得更个性化的健康分析。</string>
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="assessment_symptoms_title">您目前有哪些不适症状？</string>
+    <string name="assessment_symptoms_subtitle">点击身体部位以快速选择对应症状</string>
+    <string name="tab_body_map">人体图谱</string>
+    <string name="tab_all_symptoms">全部症状</string>
+    <string name="region_all">全部</string>
+    <string name="region_head">头部</string>
+    <string name="region_neck">颈部</string>
+    <string name="region_shoulders">肩部</string>
+    <string name="region_chest">胸部</string>
+    <string name="region_abdomen">腹部</string>
+    <string name="region_arms">手臂</string>
+    <string name="region_legs">腿部</string>
+    <string name="search_symptoms_hint">在此输入主要症状</string>
+    <string name="no_symptoms_found">未找到与“%s”匹配的症状</string>
+    <string name="assessment_related_symptoms_title">您是否还伴有以下症状？</string>
+    <string name="assessment_related_symptoms_subtitle">请选择所有符合的项</string>
+    <string name="assessment_insect_bite_title">您是否曾被昆虫叮咬（如蚊子、蜱虫、跳蚤、蜘蛛、臭虫等）？</string>
+    <string name="option_yes">是</string>
+    <string name="option_no">否</string>
+    <string name="option_dont_know">不清楚</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">退出</string>
+    <string name="dialog_exit_app_desc">确定要退出吗？\n未保存的更改将会丢失。</string>
+    <string name="dialog_exit_app_btn_stay">留在当前页</string>
+    <string name="dialog_exit_app_btn_exit">确认退出</string>
+    <string name="dialog_exit_assessment_title">退出自查</string>
+    <string name="dialog_exit_assessment_desc">确定要退出自查吗？\n已选答项将会丢失。</string>
+    <string name="dialog_exit_btn_continue">继续填写</string>
+    <string name="dialog_exit_btn_exit">退出</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">继续</string>
+    <string name="btn_back">返回</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">AI 健康助手</string>
+    <string name="ai_chat_welcome_title">今天有什么健康疑问\n我可以帮您解答？</string>
+    <string name="ai_chat_suggestion_1_title">健康生活建议</string>
+    <string name="ai_chat_suggestion_1_desc">帮助改善身体健康的每日习惯...</string>
+    <string name="ai_chat_suggestion_1_query">请给我一些改善整体身体健康的日常好习惯建议。</string>
+    <string name="ai_chat_suggestion_2_title">解读扫描结果</string>
+    <string name="ai_chat_suggestion_2_desc">协助理解皮肤或口腔扫描结论。</string>
+    <string name="ai_chat_suggestion_2_query">请帮我解读刚刚的皮肤扫描结果并提供针对性护理建议。</string>
+    <string name="ai_chat_suggestion_3_title">健康数据复盘</string>
+    <string name="ai_chat_suggestion_3_desc">综合分析心率、睡眠与运动数据。</string>
+    <string name="ai_chat_suggestion_3_query">请分析我的心率与睡眠数据，给出专业健康建议。</string>
+    <string name="ai_chat_input_hint">随时向我提问...</string>
+    <string name="ai_chat_new_chat">开启新对话</string>
+    <string name="ai_chat_clear_confirm_title">开启新对话？</string>
+    <string name="ai_chat_clear_confirm_msg">确定要清空当前聊天记录并开启新对话吗？</string>
+    <string name="ai_chat_listening">正在倾听... 请说话</string>
+    <string name="ai_chat_mic_permission_required">发送语音消息需要麦克风录音权限。</string>
+    <string name="ai_chat_error_fallback">抱歉，暂时无法处理该请求。请检查网络并重试。</string>
+    <string name="ai_chat_today">今天</string>
+    <string name="ai_chat_yesterday">昨天</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">历史对话</string>
+    <string name="conversation_empty_title">暂无对话记录</string>
+    <string name="conversation_empty_desc">发起对话以获得个性化\n健康咨询与专业建议。</string>
+    <string name="time_just_now">刚刚</string>
+    <string name="time_minute_ago">1 分钟前</string>
+    <string name="time_minutes_ago">%d 分钟前</string>
+    <string name="time_hour_ago">1 小时前</string>
+    <string name="time_hours_ago">%d 小时前</string>
+    <string name="time_day_ago">1 天前</string>
+    <string name="time_days_ago">%d 天前</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">新建提醒</string>
+    <string name="label_reminder_category">类别</string>
+    <string name="hint_select_category">选择类别</string>
+    <string name="label_reminder_name">名称</string>
+    <string name="label_reminder_strength">剂量</string>
+    <string name="hint_reminder_strength">例如：10 mg</string>
+    <string name="label_reminder_form">剂型</string>
+    <string name="hint_reminder_form">选择剂型</string>
+    <string name="label_reminder_repeat">重复频次</string>
+    <string name="hint_repeat_schedule">选择重复频次</string>
+    <string name="label_reminder_time">时间</string>
+    <string name="time_no_times_added">尚未添加时间</string>
+    <string name="label_reminder_start_date">开始日期</string>
+    <string name="label_reminder_end_date">结束日期</string>
+    <string name="hint_select_date">选择日期</string>
+    <string name="label_reminder_notes">备注（可选）</string>
+    <string name="hint_reminder_name">输入提醒名称</string>
+    <string name="hint_enter_medication_name">输入药品名称</string>
+    <string name="hint_add_notes">添加备注</string>
+    <string name="reminder_btn_add_time">添加时间</string>
+    <string name="btn_save_reminder">保存提醒</string>
+    <string name="repeat_every_day">每天</string>
+    <string name="repeat_weekdays">工作日</string>
+    <string name="repeat_weekends">周末</string>
+    <string name="repeat_weekly">每周</string>
+    <string name="repeat_monthly">每月</string>
+    <string name="repeat_once">仅一次</string>
+    <string name="form_tablet">片剂</string>
+    <string name="form_capsule">胶囊</string>
+    <string name="form_liquid">口服液</string>
+    <string name="form_drops">滴剂</string>
+    <string name="form_injection">注射液</string>
+    <string name="form_inhaler">吸入剂</string>
+    <string name="form_other">其他</string>
+    <string name="msg_reminder_saved">提醒已成功保存</string>
+    <string name="msg_enter_reminder_name">请输入提醒名称</string>
+    <string name="msg_time_already_added">该时间已添加过了</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">选择类别</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">重复频次</string>
+    <string name="category_health_monitoring_title">健康监测</string>
+    <string name="category_health_monitoring_desc">体温、心率监测等</string>
+    <string name="category_medication_title">用药计划</string>
+    <string name="category_medication_desc">服药、维生素、营养品等</string>
+    <string name="category_healthy_habits_title">健康习惯</string>
+    <string name="category_healthy_habits_desc">饮水、运动锻炼、作息等</string>
+    <string name="category_appointments_title">就医预约</string>
+    <string name="category_appointments_desc">门诊就诊、定期体检</string>
+    <string name="category_vaccinations_title">疫苗接种</string>
+    <string name="category_vaccinations_desc">疫苗接种与加强针计划</string>
+    <string name="category_other_title">其他</string>
+    <string name="category_other_desc">个人健康提醒</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">提醒事项</string>
+    <string name="title_edit_reminder">编辑提醒</string>
+    <string name="reminder_action_edit">编辑</string>
+    <string name="reminder_action_delete">删除</string>
+    <string name="reminder_status_taken">已服/已做</string>
+    <string name="reminder_action_undo">撤销</string>
+    <string name="msg_reminder_deleted">提醒已删除</string>
+    <string name="msg_reminder_updated">提醒已更新</string>
+    <string name="msg_marked_as_undone">已标记为未完成</string>
+    <string name="delete_reminder_confirm">确定要删除这条提醒吗？</string>
+    <string name="delete_confirm_title">删除此记录？</string>
+    <string name="delete_confirm_message">确定要删除此条记录吗？\n此操作无法撤销。</string>
+    <string name="btn_delete">删除</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">评价体验</string>
+    <string name="rate_dialog_message">您的反馈能帮我们做得更好。\n请点击星级进行评价。</string>
+    <string name="rate_dialog_submit">提交评价</string>
+    <string name="rate_dialog_maybe_later">以后再说</string>
+    <string name="rate_dialog_thank_you">感谢您的宝贵建议！</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">药物详情</string>
+    <string name="title_allergy_details">过敏详情</string>
+    <string name="title_condition_details">健康状况详情</string>
+    <string name="title_vaccination_details">疫苗详情</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">选择剂型</string>
+    <string name="title_select_severity">选择严重程度</string>
+    <string name="severity_mild">轻微</string>
+    <string name="severity_moderate">中度</string>
+    <string name="severity_severe">严重</string>
+    <string name="severity_not_sure">不确定</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">更新状态</string>
+    <string name="btn_save_status">保存状态</string>
+    <string name="status_ongoing_title">持续中</string>
+    <string name="status_ongoing_sub">仍为您当前身体健康状况的一部分</string>
+    <string name="status_resolved_title">已痊愈/已解决</string>
+    <string name="status_resolved_sub">已康复或不再持续</string>
+    <string name="status_unsure_title">不确定</string>
+    <string name="status_unsure_sub">目前无法确切确定状态</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">添加时间</string>
+    <string name="label_hour">时</string>
+    <string name="label_minute">分</string>
+    <string name="label_already_add">已添加</string>
+    <string name="btn_add_time">添加时间</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">AI 评估完成</string>
+    <string name="care_advice_title">护理建议</string>
+    <string name="care_advice_subtitle_format">基于您报告的症状（%1$s），以下是推荐的下一步护理措施，以助您安全康复。</string>
+    <string name="care_advice_self_care">日常自护</string>
+    <string name="care_advice_monitor_symptoms">症状监测</string>
+    <string name="care_advice_when_to_seek_care">何时应就医</string>
+    <string name="care_advice_self_care_bullet_1">保证至少 8 小时充足睡眠，促进机体恢复。</string>
+    <string name="care_advice_self_care_bullet_2">大量饮用温水或清淡液体，保持充足水分。</string>
+    <string name="care_advice_monitor_bullet_1">每天测量两次体温。</string>
+    <string name="care_advice_monitor_bullet_2">通过可穿戴设备监测静息心率。</string>
+    <string name="care_advice_seek_care_bullet_1">若体温超过 39.4°C、疼痛持续超过 48 小时或出现呼吸急促，请立即就医。</string>
+    <string name="btn_return_to_home">返回首页</string>
+    <string name="btn_set_a_reminder">设置提醒</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">诊断结果</string>
+    <string name="symptom_result_doctor_title">建议咨询医生</string>
+    <string name="symptom_result_doctor_desc">您的症状可能需要专业医学检查。请预约医生问诊。若症状恶化，请立即就诊。</string>
+    <string name="title_possible_conditions">可能患有的状况</string>
+    <string name="title_recommended_actions">建议采取的行动</string>
+    <string name="btn_view_care_advice">查看护理建议</string>
+    <string name="match_strong">高度吻合</string>
+    <string name="match_moderate">中度吻合</string>
+    <string name="match_possible">可能相关</string>
+    <string name="btn_ask_ai_about_result">就该结果咨询 AI</string>
+    <string name="medical_disclaimer_title">免责声明</string>
+    <string name="medical_disclaimer_desc">本工具仅提供健康参考信息，不可替代专业医疗诊断、医嘱或临床治疗。</string>
+    <string name="label_selected">已选择：</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">分析结果</string>
+    <string name="analysis_loading_title">AI 正在分析患处...</string>
+    <string name="analysis_loading_desc">正在深度比对形态纹理、边缘色泽与病变结构。</string>
+    <string name="analysis_unable_title">无法识别</string>
+    <string name="analysis_unable_desc">无法通过此照片确定具体状况。\n请尝试拍摄一张更清晰的照片。</string>
+    <string name="analysis_tips_title">拍摄小窍门</string>
+    <string name="analysis_tip_1">在充足、明亮的自然光线下拍摄</string>
+    <string name="analysis_tip_2">确保患处部位清晰对焦</string>
+    <string name="analysis_tip_3">确保要检查的区域完全露出可见</string>
+    <string name="btn_rescan">重新扫描</string>
+    <string name="btn_choose_from_gallery">从相册选择</string>
+    <string name="title_save_result_to">保存结果到</string>
+    <string name="title_key_findings">关键体征发现</string>
+    <string name="title_care_suggestions">护理建议</string>
+    <string name="title_when_to_seek_care">何时就医</string>
+    <string name="ai_processing_title">AI 处理中...</string>
+    <string name="ai_processing_desc">您的分析结果马上就好</string>
+    <string name="title_report_result">反馈结果</string>
+    <string name="btn_report">反馈</string>
+    <string name="title_choose_reminders">选择您的提醒项</string>
+    <string name="btn_save_reminders_count">保存 %1$d 项提醒</string>
+    <string name="btn_save_reminder_single">保存 1 项提醒</string>
+    <string name="btn_edit">编辑</string>
+    <string name="btn_understood">了解</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">添加过敏</string>
+    <string name="title_edit_allergy">编辑过敏</string>
+    <string name="label_allergen_name">过敏原名称</string>
+    <string name="label_type">类型</string>
+    <string name="type_food">食物</string>
+    <string name="label_reaction">过敏反应</string>
+    <string name="label_first_noticed">首次发现时间</string>
+    <string name="date_not_provided">未提供日期</string>
+    <string name="btn_save_allergy">保存过敏</string>
+    <string name="title_add_condition">添加健康状况</string>
+    <string name="title_edit_condition">编辑健康状况</string>
+    <string name="label_condition_name">疾病/状况名称</string>
+    <string name="label_status">状态</string>
+    <string name="label_clinician">就诊医生</string>
+    <string name="label_clinic">诊所 / 医院</string>
+    <string name="not_provided">未填写</string>
+    <string name="label_diagnosis_date">确诊日期</string>
+    <string name="btn_save_condition">保存健康状况</string>
+    <string name="title_add_vaccination">添加疫苗接种</string>
+    <string name="title_edit_vaccination">编辑疫苗接种</string>
+    <string name="label_vaccine_name">疫苗名称</string>
+    <string name="label_dose_number">剂次</string>
+    <string name="label_batch_number">生产批号</string>
+    <string name="btn_save_vaccination">保存疫苗接种</string>
+    <string name="title_add_medication">添加药物</string>
+    <string name="title_edit_medication">编辑药物</string>
+    <string name="label_reason">用药原因</string>
+    <string name="btn_save_medication">保存药物</string>
+    <string name="label_additional_details">其他信息（可选）</string>
+    <string name="label_medication_name">药品名称</string>
+    <string name="no_records_yet_format">暂无 %1$s 记录</string>
+    <string name="empty_records_desc">点击下方按钮添加您的第一条记录</string>
+    <string name="btn_add_record_format">添加 %1$s</string>
+    <string name="title_choose_item_format">选择 %1$s</string>
+    <string name="no_items_added_yet_format">尚未添加 %1$s</string>
+    <string name="add_records_quick_select_desc">提前录入档案以便快速选择</string>
+    <string name="btn_add_item_format">+ 添加 %1$s</string>
+    <string name="time_am">上午</string>
+    <string name="time_pm">下午</string>
+    <string name="cat_temperature">体温</string>
+    <string name="cat_drink_water">喝水</string>
+    <string name="cat_exercise">运动</string>
+    <string name="cat_sleep">睡眠</string>
+    <string name="label_date_received">接种日期</string>
+    <string name="label_updated">更新时间</string>
+    <string name="record_diagnosed_format">%1$d 项已确诊</string>
+    <string name="label_notes">备注</string>
+    <string name="label_note">备注</string>
+    <string name="label_severity">严重程度</string>
+    <string name="label_strength">用量</string>
+    <string name="label_form">剂型</string>
+    <string name="status_ongoing">持续中</string>
+    <string name="status_updated_format">状态已更新为 %1$s</string>
+    <string name="toast_photo_load_failed">加载所选照片失败</string>
+    <string name="toast_healthlink_pro">HealthLink Pro：无限次 AI 扫描与全天候关怀！</string>
+    <string name="toast_opening_privacy_policy">正在打开隐私政策…</string>
+    <string name="medical_disclaimer_dialog_title">医学免责声明</string>
+    <string name="ai_health_disclaimer_title">AI 健康分析声明</string>
+    <string name="ai_health_disclaimer_desc">本图像分析技术基于 AI 驱动，仅供初步健康参考与日常追踪。不可替代正规临床诊断或皮肤科医疗结论。\n\n若出现出血、迅速扩散或持续剧烈疼痛，请立即前往医院就医。</string>
+    <string name="medical_disclaimer_full_text">本症状自查工具仅用于健康科普与参考，不构成任何医疗建议、临床诊断或治疗方案。\n\n如有任何身体不适或疾病疑问，请务必咨询专业持证医师。</string>
+    <string name="msg_please_choose_item_format">请选择一项 %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">低烧、全身乏力</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">有害內容</string>
+    <string name="report_illegal_content">違法內容</string>
+    <string name="report_offensive_content">冒犯性內容</string>
+    <string name="report_biased_content">帶有偏見的內容</string>
+    <string name="report_trademark_violation">侵犯商標權</string>
+    <string name="report_copyright_violation">侵犯版權</string>
+    <string name="report_nudity_sexual_content">裸露/色情內容</string>
+    <string name="report_violence_gore">暴力/血腥</string>
+    <string name="report_others">其他</string>
+    <string name="toast_report_submitted">感謝您的舉報，我們將儘快審核此結果。</string>
+
+    <string name="label_relationship_you">本人</string>
+    <string name="reminder_water_notes">充足的水分可加速組織修復並恢復皮膚屏障。</string>
+    <string name="reminder_check_temperature_title">測量體溫</string>
+    <string name="reminder_check_temperature_notes">監測體溫以及早發現發燒或感染跡象。</string>
+    <string name="reminder_observe_area_title">皮膚護理與觀察</string>
+    <string name="reminder_observe_area_notes">觀察紅腫、大小或感覺是否有任何變化。</string>
+</resources>

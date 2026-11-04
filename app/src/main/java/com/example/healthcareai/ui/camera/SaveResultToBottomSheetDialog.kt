@@ -157,9 +157,9 @@ class SaveResultToBottomSheetDialog : BottomSheetDialogFragment() {
 
             // Relationship / Subtitle
             val relationship = if (profile.isPrimary || profile.relationship.isNullOrBlank()) {
-                "You"
+                getString(R.string.label_relationship_you)
             } else {
-                profile.relationship
+                com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(requireContext(), profile.relationship)
             }
             holder.itemBinding.tvProfileRelationship.text = relationship
 

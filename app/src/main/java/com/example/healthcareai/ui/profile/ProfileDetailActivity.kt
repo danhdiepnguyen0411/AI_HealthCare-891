@@ -105,12 +105,11 @@ class ProfileDetailActivity : BaseActivity() {
         binding.tvProfileName.text = if (profile.name.isNotBlank()) profile.name else "--"
 
         // Gender & Relationship
-        val genderStr = if (profile.gender.isNotBlank()) profile.gender else "--"
-        binding.tvProfileGender.text = if (!profile.relationship.isNullOrEmpty()) {
-            "$genderStr (${profile.relationship})"
-        } else {
-            genderStr
-        }
+        binding.tvProfileGender.text = com.example.healthcareai.util.ProfileLocalizationHelper.formatGenderAndRelationship(
+            this,
+            profile.gender,
+            profile.relationship
+        )
 
         // Stats: Age, Height, Weight
         binding.tvAge.text = calculateAge(profile.dateOfBirth)
@@ -194,10 +193,10 @@ class ProfileDetailActivity : BaseActivity() {
         val conditionCount = repo.getRecordsByCategory("Conditions", targetId).size
         val vaccCount = repo.getRecordsByCategory("Vaccinations", targetId).size
 
-        binding.tvMedicationsCount.text = "$medCount active"
-        binding.tvAllergiesCount.text = "$allergyCount reported"
-        binding.tvConditionsCount.text = "$conditionCount active"
-        binding.tvVaccinationsCount.text = "$vaccCount recorded"
+        binding.tvMedicationsCount.text = getString(R.string.record_active_format, medCount)
+        binding.tvAllergiesCount.text = getString(R.string.record_reported_format, allergyCount)
+        binding.tvConditionsCount.text = getString(R.string.record_reported_format, conditionCount)
+        binding.tvVaccinationsCount.text = getString(R.string.record_recorded_format, vaccCount)
     }
 
     private fun syncReminders() {
@@ -230,9 +229,9 @@ class ProfileDetailActivity : BaseActivity() {
                 )
 
                 cardBinding.ivReminderIcon.setImageResource(reminder.getIconResId())
-                cardBinding.tvReminderTitle.text = reminder.name
+                cardBinding.tvReminderTitle.text = reminder.getLocalizedName(this)
 
-                val desc = reminder.getDisplayDescription()
+                val desc = reminder.getLocalizedDescription(this)
                 if (desc.isNotBlank()) {
                     cardBinding.tvReminderDesc.visibility = View.VISIBLE
                     cardBinding.tvReminderDesc.text = desc

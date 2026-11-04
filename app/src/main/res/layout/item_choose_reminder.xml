@@ -83,7 +83,7 @@
             android:fontFamily="@font/urbanist"
             android:paddingHorizontal="8dp"
             android:paddingVertical="6dp"
-            android:text="Edit"
+            android:text="@string/btn_edit"
             android:textColor="#2F65F6"
             android:textSize="15sp"
             android:textStyle="bold" />

@@ -44,6 +44,7 @@ class NewReminderActivity : BaseActivity() {
     private var editingReminderId: String? = null
     private var profileId: String? = null
     private var selectedHealthRecordItem: HealthRecordItem? = null
+    private var currentCategoryKey: String = SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
     private var notificationPermissionDialog: Dialog? = null
 
     private val requestNotificationPermissionLauncher = registerForActivityResult(
@@ -97,14 +98,25 @@ class NewReminderActivity : BaseActivity() {
         }
     }
 
+    private fun getLocalizedCategoryName(categoryKey: String): String {
+        return when (categoryKey.lowercase()) {
+            SelectCategoryBottomSheetDialog.CATEGORY_TEMPERATURE.lowercase() -> getString(R.string.cat_temperature)
+            SelectCategoryBottomSheetDialog.CATEGORY_HEART_RATE.lowercase() -> getString(R.string.title_heart_rate)
+            SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase() -> getString(R.string.record_medications)
+            SelectCategoryBottomSheetDialog.CATEGORY_DRINK_WATER.lowercase() -> getString(R.string.cat_drink_water)
+            SelectCategoryBottomSheetDialog.CATEGORY_EXERCISE.lowercase() -> getString(R.string.cat_exercise)
+            SelectCategoryBottomSheetDialog.CATEGORY_SLEEP.lowercase() -> getString(R.string.cat_sleep)
+            SelectCategoryBottomSheetDialog.CATEGORY_APPOINTMENTS.lowercase() -> getString(R.string.category_appointments_title)
+            SelectCategoryBottomSheetDialog.CATEGORY_VACCINATION.lowercase() -> getString(R.string.record_vaccinations)
+            else -> categoryKey
+        }
+    }
+
     private fun setupCategoryField() {
         binding.cardCategory.setOnClickListener {
             hideKeyboard()
-            val currentCategory = binding.tvCategory.text.toString().ifEmpty {
-                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
-            }
-            SelectCategoryBottomSheetDialog.show(supportFragmentManager, currentCategory) { selected ->
-                if (!selected.equals(binding.tvCategory.text.toString(), ignoreCase = true)) {
+            SelectCategoryBottomSheetDialog.show(supportFragmentManager, currentCategoryKey) { selected ->
+                if (!selected.equals(currentCategoryKey, ignoreCase = true)) {
                     selectedHealthRecordItem = null
                     binding.tvChooseItem.text = ""
                     binding.etStrength.setText("")
@@ -116,24 +128,25 @@ class NewReminderActivity : BaseActivity() {
     }
 
     private fun updateCategoryState(category: String) {
-        binding.tvCategory.text = category
+        currentCategoryKey = category
+        binding.tvCategory.text = getLocalizedCategoryName(category)
         when (category.lowercase()) {
             SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase() -> {
                 binding.layoutChooseItem.visibility = View.VISIBLE
-                binding.tvLabelChooseItem.text = "Choose medication"
-                binding.tvChooseItem.hint = "Medication"
+                binding.tvLabelChooseItem.text = getString(R.string.title_choose_item_format, getString(R.string.record_medications))
+                binding.tvChooseItem.hint = getString(R.string.record_medications)
                 binding.layoutStrengthForm.visibility = View.VISIBLE
             }
             SelectCategoryBottomSheetDialog.CATEGORY_VACCINATION.lowercase() -> {
                 binding.layoutChooseItem.visibility = View.VISIBLE
-                binding.tvLabelChooseItem.text = "Choose vaccination"
-                binding.tvChooseItem.hint = "Vaccination"
+                binding.tvLabelChooseItem.text = getString(R.string.title_choose_item_format, getString(R.string.record_vaccinations))
+                binding.tvChooseItem.hint = getString(R.string.record_vaccinations)
                 binding.layoutStrengthForm.visibility = View.GONE
             }
             SelectCategoryBottomSheetDialog.CATEGORY_APPOINTMENTS.lowercase() -> {
                 binding.layoutChooseItem.visibility = View.VISIBLE
-                binding.tvLabelChooseItem.text = "Choose appointment"
-                binding.tvChooseItem.hint = "Appointment"
+                binding.tvLabelChooseItem.text = getString(R.string.title_choose_item_format, getString(R.string.category_appointments_title))
+                binding.tvChooseItem.hint = getString(R.string.category_appointments_title)
                 binding.layoutStrengthForm.visibility = View.GONE
             }
             else -> {
@@ -148,9 +161,7 @@ class NewReminderActivity : BaseActivity() {
     private fun setupChooseItemField() {
         binding.cardChooseItem.setOnClickListener {
             hideKeyboard()
-            val currentCategory = binding.tvCategory.text.toString().ifEmpty {
-                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
-            }
+            val currentCategory = currentCategoryKey
             ChooseHealthItemBottomSheetDialog.show(
                 supportFragmentManager,
                 category = currentCategory,
@@ -234,7 +245,7 @@ class NewReminderActivity : BaseActivity() {
                 SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
             }
             SelectRepeatBottomSheetDialog.show(supportFragmentManager, currentRepeat) { selected ->
-                binding.tvRepeat.text = selected
+                binding.tvRepeat.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedRepeat(this, selected)
             }
         }
     }
@@ -289,13 +300,13 @@ class NewReminderActivity : BaseActivity() {
 
         binding.tvTitle.text = getString(R.string.title_edit_reminder)
         updateCategoryState(existing.category)
-        binding.tvChooseItem.text = existing.name
+        binding.tvChooseItem.text = existing.getLocalizedName(this)
         binding.etStrength.setText(existing.strength)
         if (existing.form.isNotBlank()) {
             binding.tvForm.text = existing.form
         }
         if (existing.repeat.isNotBlank()) {
-            binding.tvRepeat.text = existing.repeat
+            binding.tvRepeat.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedRepeat(this, existing.repeat)
         }
 
         if (existing.timeList.isNotEmpty()) {
@@ -309,9 +320,7 @@ class NewReminderActivity : BaseActivity() {
 
     private fun setupActionButtons() {
         binding.btnSaveReminder.setOnClickListener {
-            val chosenCategory = binding.tvCategory.text.toString().ifBlank {
-                SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
-            }
+            val chosenCategory = currentCategoryKey
 
             val isSelectableCategory = when (chosenCategory.lowercase()) {
                 SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase(),
@@ -323,12 +332,13 @@ class NewReminderActivity : BaseActivity() {
             val reminderName = if (isSelectableCategory) {
                 binding.tvChooseItem.text?.toString()?.trim().orEmpty()
             } else {
-                chosenCategory
+                getLocalizedCategoryName(chosenCategory)
             }
 
             if (reminderName.isEmpty()) {
                 if (isSelectableCategory) {
-                    Toast.makeText(this, "Please choose a $chosenCategory", Toast.LENGTH_SHORT).show()
+                    val displayName = getLocalizedCategoryName(chosenCategory)
+                    Toast.makeText(this, getString(R.string.msg_please_choose_item_format, displayName), Toast.LENGTH_SHORT).show()
                     binding.cardChooseItem.performClick()
                 } else {
                     Toast.makeText(this, R.string.msg_enter_reminder_name, Toast.LENGTH_SHORT).show()

@@ -159,7 +159,7 @@
                         android:includeFontPadding="false"
                         android:paddingHorizontal="14dp"
                         android:paddingVertical="5dp"
-                        android:text="Ongoing"
+                        tools:text="Ongoing"
                         android:textColor="#3772FF"
                         android:textSize="13sp"
                         android:visibility="gone"
@@ -407,7 +407,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/urbanist"
                 android:includeFontPadding="false"
-                android:text="Update status"
+                android:text="@string/title_update_status"
                 android:textColor="#2F69FF"
                 android:textSize="16sp"
                 android:textStyle="bold" />

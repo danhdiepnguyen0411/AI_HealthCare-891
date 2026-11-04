@@ -452,7 +452,7 @@ class AddProfileActivity : BaseActivity() {
 
         sheetBinding.btnSaveRelationship.setOnClickListener {
             selectedRelationship = tempRelationship
-            binding.tvRelationship.text = tempRelationship
+            binding.tvRelationship.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(this, tempRelationship)
             bottomSheet.dismiss()
         }
 

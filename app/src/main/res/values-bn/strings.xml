@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">হোম</string>
+    <string name="tab_scan">স্ক্যান</string>
+    <string name="tab_my_health">আমার স্বাস্থ্য</string>
+    <string name="tab_family">পরিবার</string>
+    <string name="tab_settings">সেটিংস</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">হোম স্ক্রিন</string>
+    <string name="screen_scan">স্ক্যান স্ক্রিন</string>
+    <string name="screen_my_health">আমার স্বাস্থ্য স্ক্রিন</string>
+    <string name="screen_family">পরিবার স্ক্রিন</string>
+    <string name="screen_settings">সেটিংস স্ক্রিন</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">এআই স্ক্যান</string>
+    <string name="headline_ai_scan">আপনি কোন অংশটি পরীক্ষা করতে চান?</string>
+    <string name="category_skin">ত্বক</string>
+    <string name="category_skin_desc">দাগ, ফুসকুড়ি বা ত্বকের পরিবর্তন</string>
+    <string name="category_mouth">মুখ</string>
+    <string name="category_mouth_desc">ঠোঁট, মাড়ি, জিহ্বা বা দাঁত</string>
+    <string name="category_eye">চোখ</string>
+    <string name="category_eyes">চোখ</string>
+    <string name="category_eyes_desc">চোখের চারপাশের লক্ষণীয় পরিবর্তন</string>
+    <string name="category_nails">নখ</string>
+    <string name="category_nail">নখ</string>
+    <string name="category_nail_desc">হাত বা পায়ের নখ</string>
+    <string name="category_other_area">অন্যান্য অংশ</string>
+    <string name="category_other_area_desc">শরীরের অন্য কোনো দৃশ্যমান অংশ</string>
+    <string name="btn_start_scan">স্ক্যান শুরু করুন</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">লোড হচ্ছে...</string>
+    <string name="splash_ads_notice">এই কার্যক্রমে বিজ্ঞাপন থাকতে পারে</string>
+    
+    <!-- Language -->
+    <string name="title_language">ভাষা</string>
+    <string name="subtitle_select_language">চালিয়ে যেতে একটি ভাষা নির্বাচন করুন</string>
+    <string name="btn_done">সম্পন্ন</string>
+    <string name="hint_tap_device_language">ভাষা নির্বাচন করতে ট্যাপ করুন</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">এড়িয়ে যান</string>
+    <string name="btn_next">পরবর্তী</string>
+    <string name="btn_get_started">শুরু করুন</string>
+    <string name="intro_title_1">আপনার স্বাস্থ্য\nআরও ভালোভাবে বুঝুন</string>
+    <string name="intro_desc_1">ছবির বিশ্লেষণ, লক্ষণ মূল্যায়ন এবং এআই সহকারীর মাধ্যমে আপনার স্বাস্থ্য উদ্বেগগুলো বুঝুন।</string>
+    <string name="intro_title_2">আপনার স্বাস্থ্য,\nএক জায়গায়</string>
+    <string name="intro_desc_2">রেকর্ড সংরক্ষণ করুন, পরিবর্তন পর্যবেক্ষণ করুন এবং সুবিধাজনক রিমাইন্ডার সেট করুন।</string>
+    <string name="intro_title_3">ব্যক্তিগত যত্ন\nনির্দেশিকা</string>
+    <string name="intro_desc_3">আপনার উপযোগী স্বাস্থ্য পরামর্শ, দৈনন্দিন টিপস এবং এআই থেকে নিয়মিত সহায়তা পান।</string>
+    <string name="intro_title_4">নিজের ও পরিবারের\nযত্ন নিন</string>
+    <string name="intro_desc_4">পারিবারিক প্রোফাইল সাজিয়ে রাখুন এবং প্রিয়জনদের স্বাস্থ্যের যত্ন নিন।</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">প্রোফাইল যোগ করুন</string>
+    <string name="title_add_member">পরিবারের সদস্য যোগ করুন</string>
+    <string name="title_detail_profile">প্রোফাইল বিবরণ</string>
+    <string name="title_profile_detail">প্রোফাইল বিবরণ</string>
+    <string name="msg_member_added">সদস্য সফলভাবে যোগ করা হয়েছে!</string>
+    <string name="add_avatar">ছবি পরিবর্তন করুন</string>
+    <string name="label_full_name">পুরো নাম</string>
+    <string name="hint_full_name">পুরো নাম লিখুন</string>
+    <string name="label_date_of_birth">জন্ম তারিখ</string>
+    <string name="hint_date_of_birth">জন্ম তারিখ নির্বাচন করুন</string>
+    <string name="label_gender">লিঙ্গ</string>
+    <string name="hint_gender">লিঙ্গ নির্বাচন করুন</string>
+    <string name="gender_other">অন্যান্য</string>
+    <string name="label_height">উচ্চতা</string>
+    <string name="hint_height">উচ্চতা</string>
+    <string name="unit_cm">সেমি</string>
+    <string name="label_weight">ওজন</string>
+    <string name="hint_weight">ওজন</string>
+    <string name="unit_kg">কেজি</string>
+    <string name="btn_create_profile">প্রোফাইল তৈরি করুন</string>
+    <string name="btn_save">সংরক্ষণ করুন</string>
+    <string name="btn_cancel">বাতিল</string>
+    <string name="btn_close">বন্ধ করুন</string>
+    <string name="title_gender_sheet">লিঙ্গ</string>
+    <string name="select_gender_title">লিঙ্গ নির্বাচন করুন</string>
+    <string name="error_name_empty">অনুগ্রহ করে আপনার নাম লিখুন</string>
+    <string name="error_dob_empty">অনুগ্রহ করে আপনার জন্ম তারিখ নির্বাচন করুন</string>
+    <string name="error_gender_empty">অনুগ্রহ করে আপনার লিঙ্গ নির্বাচন করুন</string>
+    <string name="error_height_empty">অনুগ্রহ করে আপনার উচ্চতা লিখুন</string>
+    <string name="error_weight_empty">অনুগ্রহ করে আপনার ওজন লিখুন</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">সম্পর্ক</string>
+    <string name="hint_relationship">সম্পর্ক নির্বাচন করুন</string>
+    <string name="title_relationship_sheet">সম্পর্ক</string>
+    <string name="select_relationship_title">সম্পর্ক নির্বাচন করুন</string>
+    <string name="rel_father">বাবা</string>
+    <string name="rel_mother">মা</string>
+    <string name="rel_spouse">স্বামী/স্ত্রী</string>
+    <string name="rel_husband">স্বামী</string>
+    <string name="rel_wife">স্ত্রী</string>
+    <string name="rel_son">ছেলে</string>
+    <string name="rel_daughter">মেয়ে</string>
+    <string name="rel_brother">ভাই</string>
+    <string name="rel_sister">বোন</string>
+    <string name="rel_grandparent">দাদা-দাদি / নানা-নানি</string>
+    <string name="rel_other">অন্যান্য</string>
+    <string name="dialog_delete_member_title">সদস্য মুছুন</string>
+    <string name="dialog_delete_member_msg">আপনি কি নিশ্চিতভাবে এই পরিবারের সদস্যকে মুছে ফেলতে চান?</string>
+    <string name="btn_remove">মুছুন</string>
+    <string name="msg_member_removed">সদস্য মুছে ফেলা হয়েছে</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">আমার স্বাস্থ্য</string>
+    <string name="label_age">বয়স</string>
+    <string name="label_reminder">রিমাইন্ডার</string>
+    <string name="title_health_records">স্বাস্থ্য রেকর্ড</string>
+    <string name="record_medications">ওষুধ</string>
+    <string name="record_allergies">অ্যালার্জি</string>
+    <string name="record_conditions">স্বাস্থ্য সমস্যা</string>
+    <string name="record_vaccinations">টিকা</string>
+    <string name="record_active_format">%1$d সক্রিয়</string>
+    <string name="record_reported_format">%1$d তালিকাভুক্ত</string>
+    <string name="record_recorded_format">%1$d রেকর্ডকৃত</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">ভাষা</string>
+    <string name="settings_notifications">বিজ্ঞপ্তি</string>
+    <string name="settings_version">সংস্করণ</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">আপনি কি চলে যাচ্ছেন?</string>
+    <string name="uninstall_card1_title">আপনার ব্যক্তিগত স্বাস্থ্য তথ্য সুরক্ষিত রাখুন</string>
+    <string name="uninstall_card1_desc">আপনার সংরক্ষিত মেডিকেল রেকর্ড, লক্ষণ ইতিহাস এবং গুরুত্বপূর্ণ স্বাস্থ্য তথ্য এই ডিভাইসেই থাকে।</string>
+    <string name="uninstall_card2_title">নিয়মিত স্বাস্থ্য পর্যবেক্ষণ</string>
+    <string name="uninstall_card2_desc">এআই থেকে দ্রুত অন্তর্দৃষ্টি পান এবং কখনোই ওষুধের সময় মিস করবেন না।</string>
+    <string name="uninstall_btn_try_again">অ্যাপ ব্যবহার চালিয়ে যান</string>
+    <string name="uninstall_btn_explore">নতুন ফিচারগুলো দেখুন</string>
+    <string name="uninstall_btn_dont_uninstall">আনইনস্টল করবেন না</string>
+    <string name="uninstall_btn_still_uninstall">তবুও আনইনস্টল করুন</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">আপনার মতামত আমাদের জানান</string>
+    <string name="uninstall_reason_subtitle">অনুগ্রহ করে জানান কেন অ্যাপটি আনইনস্টল করছেন যাতে আমরা উন্নতি করতে পারি:</string>
+    <string name="uninstall_reason_1">আমার আর এটি প্রয়োজন নেই</string>
+    <string name="uninstall_reason_2">ফিচারগুলো আমার প্রত্যাশা পূরণ করেনি</string>
+    <string name="uninstall_reason_3">ব্যবহার করা খুব জটিল</string>
+    <string name="uninstall_reason_4">কারিগরি সমস্যা বা ক্র্যাশ হয়েছে</string>
+    <string name="uninstall_reason_hint">অন্য কোনো কারণ বা মতামত...</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">দৈনন্দিন স্বাস্থ্য রিমাইন্ডার</string>
+    <string name="noti_channel_desc">সময়মতো ওষুধ গ্রহণ এবং স্বাস্থ্য পরীক্ষার বিজ্ঞপ্তি</string>
+    <string name="noti_title_morning">শুভ সকাল!</string>
+    <string name="noti_msg_morning">এক গ্লাস জল দিয়ে দিন শুরু করুন এবং আপনার সকালের ওষুধগুলো পরীক্ষা করুন।</string>
+    <string name="noti_title_afternoon">দুপুরের স্বাস্থ্য পরীক্ষা</string>
+    <string name="noti_msg_afternoon">দুপুরের ওষুধ গ্রহণ এবং পর্যাপ্ত জল পানের সময় হয়েছে।</string>
+    <string name="noti_title_evening">সন্ধ্যার রুটিন</string>
+    <string name="noti_msg_evening">দিনের স্বাস্থ্য রেকর্ড লিপিবদ্ধ করুন এবং পর্যাপ্ত বিশ্রাম নিন।</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">ওষুধের সময় কখনোই ভুলবেন না</string>
+    <string name="dialog_notification_permission_desc">সময়মতো গুরুত্বপূর্ণ স্বাস্থ্য রিমাইন্ডার পেতে বিজ্ঞপ্তি চালু করুন।</string>
+    <string name="dialog_notification_btn_settings">সেটিংসে চালু করুন</string>
+    <string name="dialog_notification_btn_dont_allow">অনুমতি দেবেন না</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">ওষুধ রিমাইন্ডার</string>
+    <string name="noti_reminders_channel_desc">ওষুধ এবং স্বাস্থ্যসূচির জন্য সময়মতো নোটিফিকেশন</string>
+    <string name="noti_reminder_action_done">সম্পন্ন চিহ্নিত করুন</string>
+    <string name="noti_reminder_default_desc">আপনার নির্ধারিত স্বাস্থ্যসূচির সময় হয়েছে</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">অনুমতি প্রয়োজন</string>
+    <string name="permission_desc">এই ফিচারটি ব্যবহার করতে অনুগ্রহ করে প্রয়োজনীয় অনুমতি প্রদান করুন।</string>
+    <string name="permission_btn_settings">সেটিংস</string>
+    <string name="permission_btn_cancel">বাতিল</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">ক্যামেরার অনুমতি প্রয়োজন</string>
+    <string name="dialog_camera_permission_desc">স্বাস্থ্য বিশ্লেষণ এবং হৃদস্পন্দন পরিমাপের জন্য ক্যামেরার অনুমতি আবশ্যক।</string>
+    <string name="dialog_camera_btn_settings">সেটিংস খুলুন</string>
+    <string name="dialog_camera_btn_dont_allow">অনুমতি দেবেন না</string>
+    <string name="dialog_camera_btn_cancel">বাতিল</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">সঠিক ছবির জন্য টিপস</string>
+    <string name="camera_guide_tip_1">উজ্জ্বল ও পর্যাপ্ত আলোতে ছবি তুলুন</string>
+    <string name="camera_guide_tip_2">ক্যামেরা স্থির রাখুন এবং ফোকাস স্পষ্ট করুন</string>
+    <string name="camera_guide_tip_3">আক্রান্ত অংশটি ফ্রেমের মাঝখানে রাখুন</string>
+    <string name="camera_guide_btn_got_it">বুঝেছি</string>
+    <string name="camera_capture_success">ছবি সফলভাবে নেওয়া হয়েছে</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">ছবি নিশ্চিত করুন</string>
+    <string name="label_aspect_ratio">অনুপাত</string>
+    <string name="btn_use_photo">এই ছবি ব্যবহার করুন</string>
+    <string name="btn_retake_photo">আবার তুলুন</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">শুভ সকাল,</string>
+    <string name="home_greeting_afternoon">শুভ দুপুর,</string>
+    <string name="home_greeting_evening">শুভ সন্ধ্যা,</string>
+    <string name="home_subtitle">আজ আপনি কেমন অনুভব করছেন?</string>
+    <string name="home_ai_assistant_badge">এআই সহকারী</string>
+    <string name="home_ai_assistant_title">স্বাস্থ্য সম্পর্কিত যেকোনো প্রশ্ন জিজ্ঞাসা করুন</string>
+    <string name="home_btn_chat_ai">এআই চ্যাট শুরু করুন</string>
+    <string name="home_feature_health_scan">স্বাস্থ্য স্ক্যান</string>
+    <string name="home_feature_measure_heart_rate">হৃদস্পন্দন পরিমাপ</string>
+    <string name="home_feature_symptom_checker">লক্ষণ পরীক্ষক</string>
+    <string name="home_section_today_reminder">আজকের রিমাইন্ডার</string>
+    <string name="home_section_ai_scan_history">সাম্প্রতিক স্ক্যান</string>
+    <string name="home_view_all">সব দেখুন</string>
+    <string name="home_no_reminder_title">আজ কোনো রিমাইন্ডার নেই</string>
+    <string name="home_no_reminder_desc">আপনার ওষুধ ও স্বাস্থ্যরুটিন সময়মতো মেনে চলতে রিমাইন্ডার যোগ করুন।</string>
+    <string name="home_btn_add_reminder">রিমাইন্ডার যোগ করুন</string>
+    <string name="home_no_scans_title">কোনো স্ক্যান ইতিহাস নেই</string>
+    <string name="home_no_scans_desc">ত্বক, মুখ, চোখ বা নখ পরীক্ষার জন্য স্ক্যান শুরু করুন।</string>
+    <string name="home_btn_start_first_scan">প্রথম স্ক্যান শুরু করুন</string>
+    <string name="home_btn_get_pro">Pro নিন</string>
+    <string name="home_manage">পরিচালনা করুন</string>
+    <string name="btn_mark_as_done">সম্পন্ন চিহ্নিত করুন</string>
+    <string name="msg_marked_as_done">সম্পন্ন হিসেবে চিহ্নিত হয়েছে!</string>
+    <string name="reminder_cetirizine_title">সিটিরিজিন</string>
+    <string name="reminder_cetirizine_desc">১০ মিগ্রা · ১টি ট্যাবলেট</string>
+    <string name="reminder_cetirizine_time">রাত ৮:০০</string>
+    <string name="reminder_water_title">জল পান করুন</string>
+    <string name="reminder_water_desc">২০০ মিলি</string>
+    <string name="reminder_water_time">রাত ১০:০০</string>
+    <string name="scan_arm_skin_check_title">হাতের ত্বকের পরীক্ষা</string>
+    <string name="scan_arm_skin_check_date">গতকাল, ১৪:৩০</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">হৃদস্পন্দন</string>
+    <string name="heart_rate_how_to_measure">কীভাবে পরিমাপ করবেন</string>
+    <string name="heart_rate_instruction">আপনার তর্জনী আঙুলটি পেছনের ক্যামেরার ওপর আলতো করে রাখুন</string>
+    <string name="heart_rate_btn_start">পরিমাপ শুরু করুন</string>
+    <string name="heart_rate_statistics_coming_soon">বিস্তারিত পরিসংখ্যান শীঘ্রই আসছে</string>
+    <string name="how_to_measure_title">কীভাবে মাপবেন</string>
+    <string name="how_to_measure_step1_title">ক্যামেরার লেন্স আলতো করে ঢাকুন</string>
+    <string name="how_to_measure_step1_desc">আপনার তর্জনী আঙুলটি ক্যামেরা এবং ফ্ল্যাশের ওপর আলতো করে রাখুন। অতিরিক্ত চাপ দেবেন না।</string>
+    <string name="how_to_measure_step2_title">স্থির ও শান্ত থাকুন</string>
+    <string name="how_to_measure_step2_desc">পরিমাপ চলাকালে নড়াচড়া করবেন না এবং স্বাভাবিকভাবে শ্বাস নিন।</string>
+    <string name="how_to_measure_step3_title">সম্পন্ন হওয়া পর্যন্ত অপেক্ষা করুন</string>
+    <string name="how_to_measure_step3_desc">অগ্রগতি ১০০% না হওয়া পর্যন্ত আঙুল সরাবেন না।</string>
+    <string name="heart_rate_guide_title">সঠিক পরিমাপের টিপস</string>
+    <string name="heart_rate_guide_tip_1">আঙুল দিয়ে ক্যামেরার লেন্স সম্পূর্ণভাবে ঢাকুন</string>
+    <string name="heart_rate_guide_tip_2">হালকা ও সমান চাপ বজায় রাখুন</string>
+    <string name="heart_rate_guide_tip_3">পরিমাপের সময় শান্ত থাকুন এবং কথা বলবেন না</string>
+    <string name="heart_rate_guide_btn_got_it">বুঝেছি</string>
+    <string name="heart_rate_measuring_title">হৃদস্পন্দন পরিমাপ করা হচ্ছে</string>
+    <string name="heart_rate_measuring_banner_title">পরিমাপ হচ্ছে...</string>
+    <string name="heart_rate_measuring_banner_sub">অনুগ্রহ করে আঙুল স্থির রাখুন</string>
+    <string name="heart_rate_waiting_finger">আঙুল শনাক্ত করা হচ্ছে...</string>
+    <string name="heart_rate_waiting_finger_desc">অনুগ্রহ করে ক্যামেরার লেন্সে আঙুল রাখুন</string>
+    <string name="heart_rate_measuring_desc">পালস সিগন্যাল বিশ্লেষণ করা হচ্ছে...</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">পরিমাপ ফলাফল</string>
+    <string name="heart_rate_result_summary">হৃদস্পন্দন স্বাভাবিক সীমার মধ্যে রয়েছে</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">ধীর</string>
+    <string name="heart_rate_normal_label">স্বাভাবিক</string>
+    <string name="heart_rate_fast_label">দ্রুত</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">> 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">পরিমাপ মুছুন</string>
+    <string name="heart_rate_delete_confirm_msg">আপনি কি নিশ্চিতভাবে এই পরিমাপ রেকর্ডটি মুছে ফেলতে চান?</string>
+    <string name="heart_rate_delete_btn">মুছুন</string>
+    <string name="heart_rate_cancel_btn">বাতিল</string>
+    <string name="heart_rate_deleted">পরিমাপ মুছে ফেলা হয়েছে</string>
+    <string name="heart_rate_normal">স্বাভাবিক</string>
+    <string name="heart_rate_slow">ধীর গতি</string>
+    <string name="heart_rate_fast">দ্রুত গতি</string>
+    <string name="heart_rate_quality_label">সিগন্যাল গুণমান</string>
+    <string name="heart_rate_hrv_title">হৃদস্পন্দন পরিবর্তনশীলতা (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">আবার পরিমাপ করুন</string>
+    <string name="heart_rate_btn_done">সম্পন্ন</string>
+    <string name="heart_rate_error_finger_lost_title">আঙুল সরে গেছে</string>
+    <string name="heart_rate_error_finger_lost">পরিমাপের সময় আঙুল ক্যামেরা থেকে সরে গিয়েছিল। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="heart_rate_error_low_quality_title">দুর্বল সিগন্যাল</string>
+    <string name="heart_rate_error_low_quality">সিগন্যাল স্পষ্ট ছিল না। অনুগ্রহ করে লেন্সের ওপর আঙুলটি সঠিকভাবে রাখুন।</string>
+    <string name="heart_rate_error_no_flash">এই ডিভাইসে ফ্ল্যাশ উপলব্ধ নেই</string>
+    <string name="heart_rate_btn_try_again">আবার চেষ্টা করুন</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">স্বাস্থ্য পরিসংখ্যান</string>
+    <string name="statistics_tab_overview">সারসংক্ষেপ</string>
+    <string name="statistics_tab_history">ইতিহাস</string>
+    <string name="statistics_average">গড়</string>
+    <string name="statistics_highest">সর্বোচ্চ</string>
+    <string name="statistics_lowest">সর্বনিম্ন</string>
+    <string name="statistics_no_history_title">কোনো ইতিহাস তথ্য নেই</string>
+    <string name="statistics_no_history_desc">পরিসংখ্যান দেখতে আপনার প্রথম পরিমাপ সম্পন্ন করুন।</string>
+    <string name="statistics_no_data_title">কোনো তথ্য পাওয়া যায়নি</string>
+    <string name="statistics_no_data_desc">এই সময়ের জন্য কোনো পরিমাপ তথ্য পাওয়া যায়নি।</string>
+    <string name="statistics_btn_measure_now">এখন পরিমাপ করুন</string>
+    <string name="statistics_heart_rate_chart_title">হৃদস্পন্দনের প্রবণতা</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">পরিবার হাব</string>
+    <string name="family_no_members_title">পরিবারের কোনো সদস্য নেই</string>
+    <string name="family_no_members_desc">প্রিয়জনদের স্বাস্থ্য রেকর্ড ও যত্ন পরিচালনা করতে প্রোফাইল যোগ করুন।</string>
+    <string name="family_btn_add_first_member">প্রথম সদস্য যোগ করুন</string>
+    <string name="family_add_member_hint">পরিবারের সদস্য যোগ করুন</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">সেটিংস</string>
+    <string name="settings_section_general">সাধারণ</string>
+    <string name="settings_section_support">সহায়তা ও নীতিমালা</string>
+    <string name="settings_item_language">ভাষা</string>
+    <string name="settings_item_permission">অনুমতিসমূহ</string>
+    <string name="settings_item_share">অ্যাপ শেয়ার করুন</string>
+    <string name="settings_item_rate">অ্যাপ রেটিং দিন</string>
+    <string name="settings_item_privacy">গোপনীয়তা নীতি</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">লক্ষণ পরীক্ষক</string>
+    <string name="symptom_checker_subtitle">এআই-চালিত স্বাস্থ্য মূল্যায়ন</string>
+    <string name="symptom_checker_privacy_notice">আপনার স্বাস্থ্য তথ্য গোপন ও নিরাপদ রাখা হয়</string>
+    <string name="symptom_checker_est_time_label">আনুমানিক সময়</string>
+    <string name="symptom_checker_est_time_val">২-৩ মিনিট</string>
+    <string name="symptom_checker_after_assessment_label">মূল্যায়নের পর</string>
+    <string name="symptom_checker_after_assessment_val">সম্ভাব্য সমস্যা ও যত্নের পরামর্শ</string>
+    <string name="symptom_checker_length_label">দৈর্ঘ্য</string>
+    <string name="symptom_checker_length_val">৫-৮টি প্রশ্ন</string>
+    <string name="symptom_checker_btn_start">মূল্যায়ন শুরু করুন</string>
+    <string name="symptom_checker_start_toast">লক্ষণ মূল্যায়ন শুরু হচ্ছে...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">আপনার বয়স কত?</string>
+    <string name="assessment_gender_title">আপনার জৈবিক লিঙ্গ কোনটি?</string>
+    <string name="assessment_gender_subtitle">সঠিক চিকিৎসা মূল্যায়ন প্রদানে সহায়ক</string>
+    <string name="gender_male">পুরুষ</string>
+    <string name="gender_female">মহিলা</string>
+    <string name="assessment_symptoms_title">আপনার কী কী লক্ষণ রয়েছে?</string>
+    <string name="assessment_symptoms_subtitle">শারীরিক অঞ্চল নির্বাচন করে লক্ষণ খুঁজুন</string>
+    <string name="tab_body_map">শারীরিক মানচিত্র</string>
+    <string name="tab_all_symptoms">সব লক্ষণ</string>
+    <string name="region_all">সকল</string>
+    <string name="region_head">মাথা ও ঘাড়</string>
+    <string name="region_neck">ঘাড়</string>
+    <string name="region_shoulders">কাঁধ</string>
+    <string name="region_chest">বুক</string>
+    <string name="region_abdomen">পেট</string>
+    <string name="region_arms">হাত</string>
+    <string name="region_legs">পা</string>
+    <string name="search_symptoms_hint">লক্ষণ খুঁজুন...</string>
+    <string name="no_symptoms_found">কোনো লক্ষণ খুঁজে পাওয়া যায়নি</string>
+    <string name="assessment_related_symptoms_title">সম্পর্কিত লক্ষণ</string>
+    <string name="assessment_related_symptoms_subtitle">আপনি কি এর কোনোটি অনুভব করছেন?</string>
+    <string name="assessment_insect_bite_title">সম্প্রতি কি কোনো পোকা কামড়েছে?</string>
+    <string name="option_yes">হ্যাঁ</string>
+    <string name="option_no">না</string>
+    <string name="option_dont_know">জানি না</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">অ্যাপ থেকে বের হবেন?</string>
+    <string name="dialog_exit_app_desc">আপনি কি নিশ্চিতভাবে HealthCare AI থেকে বের হতে চান?</string>
+    <string name="dialog_exit_app_btn_stay">থাকুন</string>
+    <string name="dialog_exit_app_btn_exit">বের হন</string>
+    <string name="dialog_exit_assessment_title">মূল্যায়ন ছেড়ে যাবেন?</string>
+    <string name="dialog_exit_assessment_desc">আপনার বর্তমান অগ্রগতি সংরক্ষিত হবে না। আপনি কি বের হতে চান?</string>
+    <string name="dialog_exit_btn_continue">চালিয়ে যান</string>
+    <string name="dialog_exit_btn_exit">বের হন</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">চালিয়ে যান</string>
+    <string name="btn_back">ফিরে যান</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">এআই স্বাস্থ্য সহকারী</string>
+    <string name="ai_chat_welcome_title">আমি কীভাবে আপনার স্বাস্থ্য পরিচালনায় সাহায্য করতে পারি?</string>
+    <string name="ai_chat_suggestion_1_title">লক্ষণ বিশ্লেষণ</string>
+    <string name="ai_chat_suggestion_1_desc">আপনার অনুভূতির কথা বলুন</string>
+    <string name="ai_chat_suggestion_1_query">আমার সামান্য মাথাব্যথা ও ক্লান্তি লাগছে, আমার কী করা উচিত?</string>
+    <string name="ai_chat_suggestion_2_title">ওষুধ সংক্রান্ত প্রশ্ন</string>
+    <string name="ai_chat_suggestion_2_desc">ব্যবহার ও মাত্রা সম্পর্কে জানুন</string>
+    <string name="ai_chat_suggestion_2_query">প্যারাসিটামল খাওয়ার সময় কী কী সতর্কতা মানা উচিত?</string>
+    <string name="ai_chat_suggestion_3_title">দৈনন্দিন স্বাস্থ্য টিপস</string>
+    <string name="ai_chat_suggestion_3_desc">জীবনযাত্রা ও সুস্থতার পরামর্শ</string>
+    <string name="ai_chat_suggestion_3_query">ঘুমের গুণমান উন্নত করার সেরা উপায়গুলো কী?</string>
+    <string name="ai_chat_input_hint">স্বাস্থ্য সম্পর্কিত যেকোনো প্রশ্ন জিজ্ঞাসা করুন...</string>
+    <string name="ai_chat_new_chat">নতুন চ্যাট</string>
+    <string name="ai_chat_clear_confirm_title">চ্যাট মুছে ফেলুন</string>
+    <string name="ai_chat_clear_confirm_msg">আপনি কি নিশ্চিতভাবে এই কথোপকথন ইতিহাস মুছে ফেলতে চান?</string>
+    <string name="ai_chat_listening">শুনছি...</string>
+    <string name="ai_chat_mic_permission_required">ভয়েস ইনপুটের জন্য মাইক্রোফোন অনুমতি প্রয়োজন</string>
+    <string name="ai_chat_error_fallback">দুঃখিত, উত্তর প্রক্রিয়া করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="ai_chat_today">আজ</string>
+    <string name="ai_chat_yesterday">গতকাল</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">কথোপকথন</string>
+    <string name="conversation_empty_title">কোনো বার্তা নেই</string>
+    <string name="conversation_empty_desc">স্বাস্থ্য সংক্রান্ত যেকোনো প্রশ্নের উত্তর পেতে এআই সহকারীর সাথে চ্যাট শুরু করুন।</string>
+    <string name="time_just_now">এখনই</string>
+    <string name="time_minute_ago">১ মিনিট আগে</string>
+    <string name="time_minutes_ago">%1$d মিনিট আগে</string>
+    <string name="time_hour_ago">১ ঘণ্টা আগে</string>
+    <string name="time_hours_ago">%1$d ঘণ্টা আগে</string>
+    <string name="time_day_ago">১ দিন আগে</string>
+    <string name="time_days_ago">%1$d দিন আগে</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">নতুন রিমাইন্ডার</string>
+    <string name="label_reminder_category">বিভাগ</string>
+    <string name="hint_select_category">বিভাগ নির্বাচন করুন</string>
+    <string name="label_reminder_name">নাম</string>
+    <string name="label_reminder_strength">মাত্রা / পরিমাণ</string>
+    <string name="hint_reminder_strength">যেমন: ৫০০ মিগ্রা</string>
+    <string name="label_reminder_form">ধরন</string>
+    <string name="hint_reminder_form">যেমন: ট্যাবলেট, ক্যাপসুল</string>
+    <string name="label_reminder_repeat">পুনরাবৃত্তি</string>
+    <string name="hint_repeat_schedule">সময়সূচি নির্বাচন করুন</string>
+    <string name="label_reminder_time">সময়</string>
+    <string name="time_no_times_added">কোনো সময় যোগ করা হয়নি</string>
+    <string name="label_reminder_start_date">শুরুর তারিখ</string>
+    <string name="label_reminder_end_date">শেষের তারিখ</string>
+    <string name="hint_select_date">তারিখ নির্বাচন করুন</string>
+    <string name="label_reminder_notes">নোট (ঐচ্ছিক)</string>
+    <string name="hint_reminder_name">রিমাইন্ডারের নাম লিখুন</string>
+    <string name="hint_enter_medication_name">ওষুধের নাম লিখুন</string>
+    <string name="hint_add_notes">অতিরিক্ত নির্দেশ বা নোট যোগ করুন...</string>
+    <string name="reminder_btn_add_time">+ সময় যোগ করুন</string>
+    <string name="btn_save_reminder">রিমাইন্ডার সংরক্ষণ করুন</string>
+    <string name="repeat_every_day">প্রতিদিন</string>
+    <string name="repeat_weekdays">সপ্তাহের দিনগুলো (সোম-শুক্র)</string>
+    <string name="repeat_weekends">সাপ্তাহিক ছুটি (শনি-রবি)</string>
+    <string name="repeat_weekly">সাপ্তাহিক</string>
+    <string name="repeat_monthly">মাসিক</string>
+    <string name="repeat_once">একবারই মাত্র</string>
+    <string name="form_tablet">ট্যাবলেট</string>
+    <string name="form_capsule">ক্যাপসুল</string>
+    <string name="form_liquid">তরল / সিরাপ</string>
+    <string name="form_drops">ড্রপস</string>
+    <string name="form_injection">ইনজেকশন</string>
+    <string name="form_inhaler">ইনহেলার</string>
+    <string name="form_other">অন্যান্য ধরন</string>
+    <string name="msg_reminder_saved">রিমাইন্ডার সফলভাবে সংরক্ষিত হয়েছে!</string>
+    <string name="msg_enter_reminder_name">অনুগ্রহ করে রিমাইন্ডারের নাম লিখুন</string>
+    <string name="msg_time_already_added">এই সময়টি ইতিমধ্যে যোগ করা হয়েছে</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">বিভাগ নির্বাচন করুন</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">পুনরাবৃত্তি নির্বাচন করুন</string>
+    <string name="category_health_monitoring_title">স্বাস্থ্য পর্যবেক্ষণ</string>
+    <string name="category_health_monitoring_desc">রক্তচাপ, হৃদস্পন্দন, গ্লুকোজ পর্যবেক্ষণ</string>
+    <string name="category_medication_title">ওষুধ</string>
+    <string name="category_medication_desc">দৈনিক ওষুধ ও পুষ্টিকর সম্পূরক</string>
+    <string name="category_healthy_habits_title">স্বাস্থ্যকর অভ্যাস</string>
+    <string name="category_healthy_habits_desc">জল পান, শরীরচর্চা, ধ্যান</string>
+    <string name="category_appointments_title">ডাক্তারের অ্যাপয়েন্টমেন্ট</string>
+    <string name="category_appointments_desc">ক্লিনিক বা ডাক্তারের পরামর্শ</string>
+    <string name="category_vaccinations_title">টিকা</string>
+    <string name="category_vaccinations_desc">টিকা ও বুস্টার ডোজ</string>
+    <string name="category_other_title">অন্যান্য</string>
+    <string name="category_other_desc">কাস্টম স্বাস্থ্য রিমাইন্ডার</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">রিমাইন্ডার বিবরণ</string>
+    <string name="title_edit_reminder">রিমাইন্ডার সম্পাদনা করুন</string>
+    <string name="reminder_action_edit">সম্পাদনা করুন</string>
+    <string name="reminder_action_delete">মুছুন</string>
+    <string name="reminder_status_taken">গ্রহণ করা হয়েছে</string>
+    <string name="reminder_action_undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="msg_reminder_deleted">রিমাইন্ডার মুছে ফেলা হয়েছে</string>
+    <string name="msg_reminder_updated">রিমাইন্ডার আপডেট করা হয়েছে</string>
+    <string name="msg_marked_as_undone">অসম্পন্ন হিসেবে চিহ্নিত হয়েছে</string>
+    <string name="delete_reminder_confirm">আপনি কি নিশ্চিতভাবে এই রিমাইন্ডারটি মুছে ফেলতে চান?</string>
+    <string name="delete_confirm_title">মুছে ফেলার নিশ্চিতকরণ</string>
+    <string name="delete_confirm_message">আপনি কি নিশ্চিতভাবে এই রেকর্ডটি মুছে ফেলতে চান? এটি আর ফিরিয়ে আনা যাবে না।</string>
+    <string name="btn_delete">মুছুন</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">HealthCare AI আপনার কেমন লাগছে?</string>
+    <string name="rate_dialog_message">আপনার মতামত আমাদের সেবার মান উন্নত করতে এবং আরও ভালো স্বাস্থ্যসেবা দিতে সাহায্য করে।</string>
+    <string name="rate_dialog_submit">রেটিং দিন</string>
+    <string name="rate_dialog_maybe_later">পরে</string>
+    <string name="rate_dialog_thank_you">আপনার মূল্যবান মতামতের জন্য ধন্যবাদ!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">ওষুধের বিবরণ</string>
+    <string name="title_allergy_details">অ্যালার্জির বিবরণ</string>
+    <string name="title_condition_details">স্বাস্থ্য সমস্যার বিবরণ</string>
+    <string name="title_vaccination_details">টিকার বিবরণ</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">ধরন নির্বাচন করুন</string>
+    <string name="title_select_severity">তীব্রতা নির্বাচন করুন</string>
+    <string name="severity_mild">মৃদু</string>
+    <string name="severity_moderate">মাঝারি</string>
+    <string name="severity_severe">তীব্র</string>
+    <string name="severity_not_sure">নিশ্চিত নয়</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">স্ট্যাটাস আপডেট করুন</string>
+    <string name="btn_save_status">স্ট্যাটাস সংরক্ষণ করুন</string>
+    <string name="status_ongoing_title">চলমান</string>
+    <string name="status_ongoing_sub">বর্তমানে সক্রিয় ও চিকিৎসা চলছে</string>
+    <string name="status_resolved_title">উপশমিত</string>
+    <string name="status_resolved_sub">লক্ষণ সম্পূর্ণ সেরে গেছে</string>
+    <string name="status_unsure_title">অনিশ্চিত</string>
+    <string name="status_unsure_sub">বর্তমান অবস্থা পরিষ্কার নয়</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">সময় যোগ করুন</string>
+    <string name="label_hour">ঘণ্টা</string>
+    <string name="label_minute">মিনিট</string>
+    <string name="label_already_add">ইতিমধ্যে যোগ করা সময়</string>
+    <string name="btn_add_time">সময় যোগ করুন</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">এআই মূল্যায়ন সম্পন্ন</string>
+    <string name="care_advice_title">যত্ন পরামর্শ</string>
+    <string name="care_advice_subtitle_format">আপনার উল্লেখিত লক্ষণগুলোর (%1$s) ওপর ভিত্তি করে সুস্থ হয়ে ওঠার জন্য সুপারিশকৃত পদক্ষেপ:</string>
+    <string name="care_advice_self_care">নিজের যত্ন</string>
+    <string name="care_advice_monitor_symptoms">লক্ষণ পর্যবেক্ষণ করুন</string>
+    <string name="care_advice_when_to_seek_care">কখন চিকিৎসা সেবা নিতে হবে</string>
+    <string name="care_advice_self_care_bullet_1">শরীর সেরে ওঠার জন্য কমপক্ষে ৮ ঘণ্টা ঘুম নিশ্চিত করুন।</string>
+    <string name="care_advice_self_care_bullet_2">শরীরে জলের ঘাটতি দূর করতে পর্যাপ্ত জল বা তরল খাবার পান করুন।</string>
+    <string name="care_advice_monitor_bullet_1">দিনে দুইবার আপনার শরীরের তাপমাত্রা মাপুন।</string>
+    <string name="care_advice_monitor_bullet_2">আপনার স্বাভাবিক হৃদস্পন্দনের দিকে খেয়াল রাখুন।</string>
+    <string name="care_advice_seek_care_bullet_1">যদি জ্বর ৩৯.৪°C ছাড়িয়ে যায়, ব্যথা ৪৮ ঘণ্টার বেশি থাকে, বা শ্বাসকষ্ট দেখা দেয় তবে অবিলম্বে চিকিৎসকের কাছে যান।</string>
+    <string name="btn_return_to_home">হোমে ফিরে যান</string>
+    <string name="btn_set_a_reminder">রিমাইন্ডার সেট করুন</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">ফলাফল</string>
+    <string name="symptom_result_doctor_title">ডাক্তারের পরামর্শ নিন</string>
+    <string name="symptom_result_doctor_desc">এই বিশ্লেষণটি ব্যক্তিগত চিকিৎসা নির্ণয়ের বিকল্প নয়। সঠিক রোগ নির্ণয়ের জন্য চিকিৎসকের পরামর্শ নিন।</string>
+    <string name="title_possible_conditions">সম্ভাব্য কারণ</string>
+    <string name="title_recommended_actions">সুপারিশকৃত পদক্ষেপ</string>
+    <string name="btn_view_care_advice">যত্ন পরামর্শ দেখুন</string>
+    <string name="match_strong">উচ্চ মিল</string>
+    <string name="match_moderate">মাঝারি মিল</string>
+    <string name="match_possible">সম্ভাব্য মিল</string>
+    <string name="btn_ask_ai_about_result">এই ফলাফল সম্পর্কে এআই-কে জিজ্ঞাসা করুন</string>
+    <string name="medical_disclaimer_title">চিকিৎসা সংক্রান্ত দাবিত্যাগ</string>
+    <string name="medical_disclaimer_desc">এই টুলটি কেবল তথ্যগত উদ্দেশ্যে তৈরি এবং এটি পেশাদার চিকিৎসা পরামর্শের বিকল্প নয়।</string>
+    <string name="label_selected">নির্বাচিত</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">বিশ্লেষণ ফলাফল</string>
+    <string name="analysis_loading_title">ছবি বিশ্লেষণ করা হচ্ছে...</string>
+    <string name="analysis_loading_desc">এআই দৃশ্যমান বৈশিষ্ট্য বিশ্লেষণ করছে। অনুগ্রহ করে অপেক্ষা করুন।</string>
+    <string name="analysis_unable_title">বিশ্লেষণ করা সম্ভব হয়নি</string>
+    <string name="analysis_unable_desc">ছবি স্পষ্ট ছিল না বা কোনো দৃশ্যমান লক্ষণ পাওয়া যায়নি। অনুগ্রহ করে ভালো আলোতে আবার চেষ্টা করুন।</string>
+    <string name="analysis_tips_title">সঠিক ছবির জন্য টিপস</string>
+    <string name="analysis_tip_1">পর্যাপ্ত আলো নিশ্চিত করুন</string>
+    <string name="analysis_tip_2">ক্যামেরা স্থির রাখুন এবং ফোকাস সঠিক রাখুন</string>
+    <string name="analysis_tip_3">ঝাপসা বা অতিরিক্ত আলোর ছবি পরিহার করুন</string>
+    <string name="btn_rescan">আবার স্ক্যান করুন</string>
+    <string name="btn_choose_from_gallery">গ্যালারি থেকে বেছে নিন</string>
+    <string name="title_save_result_to">ফলাফল সংরক্ষণ করুন</string>
+    <string name="title_key_findings">প্রধান প্রাপ্তি</string>
+    <string name="title_care_suggestions">যত্ন পরামর্শ</string>
+    <string name="title_when_to_seek_care">কখন চিকিৎসা সেবা নিতে হবে</string>
+    <string name="ai_processing_title">এআই মূল্যায়ন চলছে</string>
+    <string name="ai_processing_desc">আপনার লক্ষণ ও দৃশ্যমান তথ্য বিশ্লেষণ করা হচ্ছে...</string>
+    <string name="title_report_result">ফলাফল রিপোর্ট</string>
+    <string name="btn_report">রিপোর্ট</string>
+    <string name="title_choose_reminders">রিমাইন্ডার বেছে নিন</string>
+    <string name="btn_save_reminders_count">%1$dটি রিমাইন্ডার সংরক্ষণ করুন</string>
+    <string name="btn_save_reminder_single">রিমাইন্ডার সংরক্ষণ করুন</string>
+    <string name="btn_edit">সম্পাদনা করুন</string>
+    <string name="btn_understood">বুঝেছি</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">অ্যালার্জি যোগ করুন</string>
+    <string name="title_edit_allergy">অ্যালার্জি সম্পাদনা করুন</string>
+    <string name="label_allergen_name">অ্যালার্জেনের নাম</string>
+    <string name="label_type">ধরন</string>
+    <string name="type_food">খাবার</string>
+    <string name="label_reaction">প্রতিক্রিয়া</string>
+    <string name="label_first_noticed">প্রথম কবে দেখা গেছে</string>
+    <string name="date_not_provided">তথ্য নেই</string>
+    <string name="btn_save_allergy">অ্যালার্জি সংরক্ষণ করুন</string>
+    <string name="title_add_condition">স্বাস্থ্য সমস্যা যোগ করুন</string>
+    <string name="title_edit_condition">সমস্যা সম্পাদনা করুন</string>
+    <string name="label_condition_name">সমস্যার নাম</string>
+    <string name="label_status">স্ট্যাটাস</string>
+    <string name="label_clinician">চিকিৎসক</string>
+    <string name="label_clinic">ক্লিনিক / হাসপাতাল</string>
+    <string name="not_provided">তথ্য নেই</string>
+    <string name="label_diagnosis_date">নির্ণয়ের তারিখ</string>
+    <string name="btn_save_condition">সমস্যা সংরক্ষণ করুন</string>
+    <string name="title_add_vaccination">টিকা যোগ করুন</string>
+    <string name="title_edit_vaccination">টিকা সম্পাদনা করুন</string>
+    <string name="label_vaccine_name">টিকার নাম</string>
+    <string name="label_dose_number">ডোজ নম্বর</string>
+    <string name="label_batch_number">ব্যাচ নম্বর</string>
+    <string name="btn_save_vaccination">টিকা সংরক্ষণ করুন</string>
+    <string name="title_add_medication">ওষুধ যোগ করুন</string>
+    <string name="title_edit_medication">ওষুধ সম্পাদনা করুন</string>
+    <string name="label_reason">গ্রহণের কারণ</string>
+    <string name="btn_save_medication">ওষুধ সংরক্ষণ করুন</string>
+    <string name="label_additional_details">অতিরিক্ত বিবরণ (ঐচ্ছিক)</string>
+    <string name="label_medication_name">ওষুধের নাম</string>
+    <string name="no_records_yet_format">এখনও কোনো %1$s রেকর্ড নেই</string>
+    <string name="empty_records_desc">নিচের বোতাম ব্যবহার করে আপনার প্রথম রেকর্ডটি যোগ করুন</string>
+    <string name="btn_add_record_format">%1$s যোগ করুন</string>
+    <string name="title_choose_item_format">%1$s বেছে নিন</string>
+    <string name="no_items_added_yet_format">এখনও কোনো %1$s যোগ করা হয়নি</string>
+    <string name="add_records_quick_select_desc">সহজে বেছে নিতে আপনার রেকর্ডগুলো যোগ করুন</string>
+    <string name="btn_add_item_format">+ %1$s যোগ করুন</string>
+    <string name="time_am">AM</string>
+    <string name="time_pm">PM</string>
+    <string name="cat_temperature">শরীরের তাপমাত্রা</string>
+    <string name="cat_drink_water">জল পান করুন</string>
+    <string name="cat_exercise">শরীরচর্চা</string>
+    <string name="cat_sleep">ঘুম</string>
+    <string name="label_date_received">গ্রহণের তারিখ</string>
+    <string name="label_updated">আপডেট করা হয়েছে</string>
+    <string name="record_diagnosed_format">%1$d নির্ণীত</string>
+    <string name="label_notes">নোট</string>
+    <string name="label_note">নোট</string>
+    <string name="label_severity">তীব্রতা</string>
+    <string name="label_strength">মাত্রা</string>
+    <string name="label_form">ধরন</string>
+    <string name="status_ongoing">চলমান</string>
+    <string name="status_updated_format">স্ট্যাটাস %1$s হিসেবে আপডেট করা হয়েছে</string>
+    <string name="toast_photo_load_failed">নির্বাচিত ছবি লোড করা যায়নি</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: আনলিমিটেড স্ক্যান ও ২৪/৭ সেবা!</string>
+    <string name="toast_opening_privacy_policy">গোপনীয়তা নীতি খোলা হচ্ছে…</string>
+    <string name="medical_disclaimer_dialog_title">চিকিৎসা সংক্রান্ত দাবিত্যাগ</string>
+    <string name="ai_health_disclaimer_title">এআই স্বাস্থ্য দাবিত্যাগ</string>
+    <string name="ai_health_disclaimer_desc">এই ভিজ্যুয়াল বিশ্লেষণটি এআই-চালিত এবং সাধারণ সুস্থতা পর্যবেক্ষণ ও শিক্ষামূলক উদ্দেশ্যে প্রস্তুত। এটি কোনো পেশাদার চিকিৎসক বা চর্মরোগ বিশেষজ্ঞের রোগ নির্ণয়ের বিকল্প নয়।\n\nযদি আপনার রক্তপাত, দ্রুত পরিবর্তন বা তীব্র ব্যথা হয়, তবে অবিলম্বে একজন ডাক্তারের কাছে যান।</string>
+    <string name="medical_disclaimer_full_text">এই লক্ষণ মূল্যায়ন কেবল শিক্ষামূলক ও তথ্যগত পরামর্শ প্রদান করে। এটি পেশাদার চিকিৎসা পরামর্শ, ক্লিনিকাল ডায়াগনোসিস বা চিকিৎসার বিকল্প নয়।\n\nযেকোনো শারীরিক সমস্যা সম্পর্কে সর্বদা আপনার চিকিৎসক বা যোগ্যতাসম্পন্ন স্বাস্থ্যসেবা প্রদানকারীর পরামর্শ নিন।</string>
+    <string name="msg_please_choose_item_format">অনুগ্রহ করে একটি %1$s নির্বাচন করুন</string>
+    <string name="symptom_sample_mild_fever_fatigue">সামান্য জ্বর, ক্লান্তি</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">ক্ষতিকর বিষয়বস্তু</string>
+    <string name="report_illegal_content">অবৈধ বিষয়বস্তু</string>
+    <string name="report_offensive_content">আপত্তিকর বিষয়বস্তু</string>
+    <string name="report_biased_content">পক্ষপাতমূলক বিষয়বস্তু</string>
+    <string name="report_trademark_violation">ট্রেডমার্ক লঙ্ঘন</string>
+    <string name="report_copyright_violation">কপিরাইট লঙ্ঘন</string>
+    <string name="report_nudity_sexual_content">নগ্নতা/যৌন বিষয়বস্তু</string>
+    <string name="report_violence_gore">সহিংসতা/রক্তাক্ত দৃশ্য</string>
+    <string name="report_others">অন্যান্য</string>
+    <string name="toast_report_submitted">রিপোর্ট করার জন্য ধন্যবাদ। আমরা এই ফলাফলটি পর্যালোচনা করব।</string>
+
+    <string name="label_relationship_you">আপনি</string>
+    <string name="reminder_water_notes">পর্যাপ্ত জল পান টিস্যু মেরামত ও ত্বকের সুরক্ষা স্তর পুনরুদ্ধার দ্রুত করে।</string>
+    <string name="reminder_check_temperature_title">তাপমাত্রা পরীক্ষা করুন</string>
+    <string name="reminder_check_temperature_notes">জ্বর বা সংক্রমণের প্রাথমিক সতর্কতার জন্য তাপমাত্রা পর্যবেক্ষণ করুন।</string>
+    <string name="reminder_observe_area_title">ত্বকের যত্ন ও পর্যবেক্ষণ</string>
+    <string name="reminder_observe_area_notes">লালভাব, আকার বা অনুভূতিতে কোনো পরিবর্তন আছে কিনা তা পরীক্ষা করুন।</string>
+</resources>

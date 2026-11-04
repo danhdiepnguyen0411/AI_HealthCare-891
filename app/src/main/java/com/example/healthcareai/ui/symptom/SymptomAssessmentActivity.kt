@@ -29,6 +29,7 @@ import com.example.healthcareai.databinding.ActivitySymptomAssessmentBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.camera.AiProcessingDialog
 import com.example.healthcareai.ui.dialog.CustomExitAppDialog
+import com.example.healthcareai.util.SymptomLocalizationHelper
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -565,11 +566,13 @@ class SymptomAssessmentActivity : BaseActivity() {
             "Stress & mental burnout"
         )
 
-        rawList.forEachIndexed { index, name ->
+        rawList.forEachIndexed { index, rawName ->
+            val localizedName = SymptomLocalizationHelper.getLocalizedSymptom(this, rawName)
             allSymptoms.add(
                 SymptomItem(
                     id = "symptom_$index",
-                    name = name
+                    name = localizedName,
+                    originalName = rawName
                 )
             )
         }
@@ -677,7 +680,7 @@ class SymptomAssessmentActivity : BaseActivity() {
 
         val priorityMap = prioritySymptoms.withIndex().associate { it.value.lowercase() to it.index }
         return allSymptoms.sortedBy { item ->
-            priorityMap[item.name.lowercase()] ?: (1000 + item.name.hashCode())
+            priorityMap[item.originalName.lowercase()] ?: (1000 + item.originalName.hashCode())
         }
     }
 
@@ -687,10 +690,10 @@ class SymptomAssessmentActivity : BaseActivity() {
             getSymptomsForRegion(selectedBodyRegionId)
         } else {
             allSymptoms.filter {
-                it.name.contains(cleanQuery, ignoreCase = true)
+                it.name.contains(cleanQuery, ignoreCase = true) || it.originalName.contains(cleanQuery, ignoreCase = true)
             }.sortedWith(
                 compareByDescending<SymptomItem> {
-                    it.name.startsWith(cleanQuery, ignoreCase = true)
+                    it.name.startsWith(cleanQuery, ignoreCase = true) || it.originalName.startsWith(cleanQuery, ignoreCase = true)
                 }.thenBy {
                     it.name.indexOf(cleanQuery, ignoreCase = true)
                 }
@@ -737,9 +740,10 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     private fun loadRelatedSymptomsForQuestion5() {
-        val selectedNames = selectedSymptomIds.mapNotNull { id ->
-            allSymptoms.firstOrNull { it.id == id }?.name
+        val selectedItems = selectedSymptomIds.mapNotNull { id ->
+            allSymptoms.firstOrNull { it.id == id }
         }
+        val selectedNames = selectedItems.flatMap { listOf(it.originalName, it.name) }
         val combinedText = (selectedNames.joinToString(" ") + " " + selectedBodyRegionName).lowercase()
 
         val category = when {
@@ -816,9 +820,10 @@ class SymptomAssessmentActivity : BaseActivity() {
             )
         }
 
-        rawList.forEachIndexed { index, name ->
+        rawList.forEachIndexed { index, rawName ->
             val id = "q5_${category}_$index"
-            q5Symptoms.add(SymptomItem(id, name))
+            val localizedName = SymptomLocalizationHelper.getLocalizedSymptom(this, rawName)
+            q5Symptoms.add(SymptomItem(id, localizedName, rawName))
         }
 
         q5SymptomsAdapter.submitList(q5Symptoms.toList()) {

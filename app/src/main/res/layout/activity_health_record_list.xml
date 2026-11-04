@@ -92,9 +92,9 @@
             android:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="No medications yet"
             android:textColor="@color/color_text"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="No medications yet" />
 
         <TextView
             android:id="@+id/tvEmptySubtitle"
@@ -105,7 +105,7 @@
             android:fontFamily="@font/urbanist_medium"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="Add your first record using the button below"
+            android:text="@string/empty_records_desc"
             android:textColor="@color/color_subtext"
             android:textSize="14sp" />
     </LinearLayout>
@@ -152,10 +152,10 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/urbanist"
                     android:includeFontPadding="false"
-                    android:text="Add medication"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Add medication" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

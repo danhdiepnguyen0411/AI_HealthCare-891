@@ -38,16 +38,21 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var onReportSubmittedListener: ((String) -> Unit)? = null
 
+    data class ReportOption(
+        val titleRes: Int,
+        val key: String
+    )
+
     private val reportOptions = listOf(
-        "Harmful content",
-        "Illegal content",
-        "Offensive content",
-        "Biased content",
-        "Trademark violation",
-        "Copyright violation",
-        "Nudity/sexual content",
-        "Violence/gore",
-        "Others"
+        ReportOption(R.string.report_harmful_content, "Harmful content"),
+        ReportOption(R.string.report_illegal_content, "Illegal content"),
+        ReportOption(R.string.report_offensive_content, "Offensive content"),
+        ReportOption(R.string.report_biased_content, "Biased content"),
+        ReportOption(R.string.report_trademark_violation, "Trademark violation"),
+        ReportOption(R.string.report_copyright_violation, "Copyright violation"),
+        ReportOption(R.string.report_nudity_sexual_content, "Nudity/sexual content"),
+        ReportOption(R.string.report_violence_gore, "Violence/gore"),
+        ReportOption(R.string.report_others, "Others")
     )
 
     private var selectedOptionIndex = 0
@@ -89,9 +94,10 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
         // Report Button
         binding.btnReport.setOnClickListener {
-            val selectedReason = reportOptions.getOrElse(selectedOptionIndex) { "Others" }
-            val finalReason = if (selectedReason.equals("Others", ignoreCase = true) && customFeedbackText.isNotBlank()) {
-                "Others: ${customFeedbackText.trim()}"
+            val selectedOption = reportOptions.getOrElse(selectedOptionIndex) { reportOptions.last() }
+            val selectedReason = getString(selectedOption.titleRes)
+            val finalReason = if (selectedOption.key.equals("Others", ignoreCase = true) && customFeedbackText.isNotBlank()) {
+                "$selectedReason: ${customFeedbackText.trim()}"
             } else {
                 selectedReason
             }
@@ -99,7 +105,7 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
             onReportSubmittedListener?.invoke(finalReason)
             Toast.makeText(
                 requireContext(),
-                "Thank you for reporting. We will review this result.",
+                R.string.toast_report_submitted,
                 Toast.LENGTH_SHORT
             ).show()
             dismiss()
@@ -258,7 +264,7 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private inner class ReportOptionsAdapter(
-        private val options: List<String>
+        private val options: List<ReportOption>
     ) : RecyclerView.Adapter<ReportOptionsAdapter.OptionViewHolder>() {
 
         inner class OptionViewHolder(val itemBinding: ItemBottomSheetReportOptionBinding) :
@@ -276,15 +282,15 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
-            val title = options[position]
+            val option = options[position]
             val isSelected = position == selectedOptionIndex
-            val isOthers = title.equals("Others", ignoreCase = true)
+            val isOthers = option.key.equals("Others", ignoreCase = true)
             val context = holder.itemView.context
 
             // Detach previous text watcher to prevent duplicate callbacks
             holder.textWatcher?.let { holder.itemBinding.etCustomFeedback.removeTextChangedListener(it) }
 
-            holder.itemBinding.tvOptionTitle.text = title
+            holder.itemBinding.tvOptionTitle.text = context.getString(option.titleRes)
 
             // Selection Visuals
             if (isSelected) {

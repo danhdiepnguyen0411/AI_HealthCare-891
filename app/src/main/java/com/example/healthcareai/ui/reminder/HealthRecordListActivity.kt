@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.databinding.ActivityHealthRecordListBinding
@@ -51,34 +52,34 @@ class HealthRecordListActivity : BaseActivity() {
 
         when (currentCategory.trim().lowercase()) {
             CATEGORY_MEDICATION.lowercase(), "medications" -> {
-                binding.tvTitle.text = "Medications"
-                binding.tvAddButtonText.text = "Add medication"
-                binding.tvEmptyTitle.text = "No medications yet"
-                binding.tvEmptySubtitle.text = "Add your first record using the button below"
+                binding.tvTitle.text = getString(R.string.record_medications)
+                binding.tvAddButtonText.text = getString(R.string.title_add_medication)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.record_medications).lowercase())
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
             CATEGORY_ALLERGIES.lowercase(), "allergy" -> {
-                binding.tvTitle.text = "Allergies"
-                binding.tvAddButtonText.text = "Add allergy"
-                binding.tvEmptyTitle.text = "No allergies yet"
-                binding.tvEmptySubtitle.text = "Add your first record using the button below"
+                binding.tvTitle.text = getString(R.string.record_allergies)
+                binding.tvAddButtonText.text = getString(R.string.title_add_allergy)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.record_allergies).lowercase())
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
             CATEGORY_CONDITIONS.lowercase(), "condition" -> {
-                binding.tvTitle.text = "Conditions"
-                binding.tvAddButtonText.text = "Add condition"
-                binding.tvEmptyTitle.text = "No conditions yet"
-                binding.tvEmptySubtitle.text = "Add your first record using the button below"
+                binding.tvTitle.text = getString(R.string.record_conditions)
+                binding.tvAddButtonText.text = getString(R.string.title_add_condition)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.record_conditions).lowercase())
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
             CATEGORY_VACCINATIONS.lowercase(), "vaccination" -> {
-                binding.tvTitle.text = "Vaccinations"
-                binding.tvAddButtonText.text = "Add vaccination"
-                binding.tvEmptyTitle.text = "No vaccinations yet"
-                binding.tvEmptySubtitle.text = "Add your first record using the button below"
+                binding.tvTitle.text = getString(R.string.record_vaccinations)
+                binding.tvAddButtonText.text = getString(R.string.title_add_vaccination)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.record_vaccinations).lowercase())
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
             else -> {
                 binding.tvTitle.text = currentCategory
-                binding.tvAddButtonText.text = "Add $currentCategory"
-                binding.tvEmptyTitle.text = "No $currentCategory yet"
-                binding.tvEmptySubtitle.text = "Add your first record using the button below"
+                binding.tvAddButtonText.text = getString(R.string.btn_add_record_format, currentCategory)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, currentCategory)
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
         }
 

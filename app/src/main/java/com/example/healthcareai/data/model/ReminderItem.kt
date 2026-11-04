@@ -29,6 +29,14 @@ data class ReminderItem(
         }
     }
 
+    fun getLocalizedName(context: android.content.Context): String {
+        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, name)
+    }
+
+    fun getLocalizedDescription(context: android.content.Context): String {
+        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedDescription(context, getDisplayDescription())
+    }
+
     fun getDisplayTime(): String {
         return timeList.firstOrNull().orEmpty()
     }

@@ -11,7 +11,8 @@ import com.example.healthcareai.databinding.ItemSymptomBinding
 
 data class SymptomItem(
     val id: String,
-    val name: String
+    val name: String,
+    val originalName: String = name
 )
 
 class SymptomsAdapter(

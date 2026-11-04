@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">Beranda</string>
+    <string name="tab_scan">Pindai</string>
+    <string name="tab_my_health">Kesehatan Saya</string>
+    <string name="tab_family">Keluarga</string>
+    <string name="tab_settings">Pengaturan</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">Layar Beranda</string>
+    <string name="screen_scan">Layar Pindai</string>
+    <string name="screen_my_health">Layar Kesehatan Saya</string>
+    <string name="screen_family">Layar Keluarga</string>
+    <string name="screen_settings">Layar Pengaturan</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">Pemindaian AI</string>
+    <string name="headline_ai_scan">Bagian tubuh mana yang ingin Anda periksa?</string>
+    <string name="category_skin">Kulit</string>
+    <string name="category_skin_desc">Bintik, ruam, atau perubahan kulit</string>
+    <string name="category_mouth">Mulut</string>
+    <string name="category_mouth_desc">Bibir, gusi, lidah, atau gigi</string>
+    <string name="category_eye">Mata</string>
+    <string name="category_eyes">Mata</string>
+    <string name="category_eyes_desc">Perubahan yang terlihat di sekitar mata</string>
+    <string name="category_nails">Kuku</string>
+    <string name="category_nail">Kuku</string>
+    <string name="category_nail_desc">Kuku tangan atau kuku kaki</string>
+    <string name="category_other_area">Area lainnya</string>
+    <string name="category_other_area_desc">Bagian tubuh lainnya yang terlihat</string>
+    <string name="btn_start_scan">Mulai Pindai</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">Memuat...</string>
+    <string name="splash_ads_notice">Tindakan ini mungkin mengandung iklan</string>
+    
+    <!-- Language -->
+    <string name="title_language">Bahasa</string>
+    <string name="subtitle_select_language">Pilih bahasa untuk melanjutkan</string>
+    <string name="btn_done">Selesai</string>
+    <string name="hint_tap_device_language">Ketuk untuk memilih bahasa Anda</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">Lewati</string>
+    <string name="btn_next">Lanjut</string>
+    <string name="btn_get_started">Mulai Sekarang</string>
+    <string name="intro_title_1">Pahami kesehatan\nAnda lebih baik</string>
+    <string name="intro_desc_1">Analisis keluhan melalui foto, pertanyaan gejala, dan asisten AI pintar.</string>
+    <string name="intro_title_2">Kesehatan Anda,\nsemua di satu tempat</string>
+    <string name="intro_desc_2">Simpan riwayat, pantau perubahan, dan atur pengingat sesuai rutinitas Anda.</string>
+    <string name="intro_title_3">Panduan perawatan\nyang dipersonalisasi</string>
+    <string name="intro_desc_3">Dapatkan saran perawatan yang tepat, tips harian, dan panduan dari AI.</string>
+    <string name="intro_title_4">Rawat diri Anda\ndan keluarga tercinta</string>
+    <string name="intro_desc_4">Kelola profil keluarga secara teratur dan pantau kesehatan orang terkasih.</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">Tambah profil</string>
+    <string name="title_add_member">Tambah anggota</string>
+    <string name="title_detail_profile">Detail Profil</string>
+    <string name="title_profile_detail">Detail Profil</string>
+    <string name="msg_member_added">Anggota berhasil ditambahkan ke Keluarga!</string>
+    <string name="add_avatar">Ganti avatar</string>
+    <string name="label_full_name">Nama lengkap</string>
+    <string name="hint_full_name">Masukkan nama lengkap</string>
+    <string name="label_date_of_birth">Tanggal lahir</string>
+    <string name="hint_date_of_birth">Pilih tanggal lahir</string>
+    <string name="label_gender">Jenis kelamin</string>
+    <string name="hint_gender">Pilih jenis kelamin</string>
+    <string name="gender_other">Lainnya</string>
+    <string name="label_height">Tinggi badan</string>
+    <string name="hint_height">Tinggi</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">Berat badan</string>
+    <string name="hint_weight">Berat</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">Buat profil</string>
+    <string name="btn_save">Simpan</string>
+    <string name="btn_cancel">Batal</string>
+    <string name="btn_close">Tutup</string>
+    <string name="title_gender_sheet">Jenis kelamin</string>
+    <string name="select_gender_title">Pilih Jenis Kelamin</string>
+    <string name="error_name_empty">Silakan masukkan nama Anda</string>
+    <string name="error_dob_empty">Silakan pilih tanggal lahir Anda</string>
+    <string name="error_gender_empty">Silakan pilih jenis kelamin Anda</string>
+    <string name="error_height_empty">Silakan masukkan tinggi badan Anda</string>
+    <string name="error_weight_empty">Silakan masukkan berat badan Anda</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">Hubungan keluarga</string>
+    <string name="hint_relationship">Pilih hubungan keluarga</string>
+    <string name="title_relationship_sheet">Hubungan keluarga</string>
+    <string name="select_relationship_title">Pilih Hubungan</string>
+    <string name="rel_father">Ayah</string>
+    <string name="rel_mother">Ibu</string>
+    <string name="rel_spouse">Pasangan</string>
+    <string name="rel_husband">Suami</string>
+    <string name="rel_wife">Istri</string>
+    <string name="rel_son">Anak laki-laki</string>
+    <string name="rel_daughter">Anak perempuan</string>
+    <string name="rel_brother">Saudara laki-laki</string>
+    <string name="rel_sister">Saudara perempuan</string>
+    <string name="rel_grandparent">Kakek/Nenek</string>
+    <string name="rel_other">Lainnya</string>
+    <string name="dialog_delete_member_title">Hapus Anggota</string>
+    <string name="dialog_delete_member_msg">Apakah Anda yakin ingin menghapus %1$s dari Keluarga?</string>
+    <string name="btn_remove">Hapus</string>
+    <string name="msg_member_removed">Anggota berhasil dihapus dari Keluarga</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">Kesehatan Saya</string>
+    <string name="label_age">Usia</string>
+    <string name="label_reminder">Pengingat</string>
+    <string name="title_health_records">Catatan Kesehatan</string>
+    <string name="record_medications">Obat-obatan</string>
+    <string name="record_allergies">Alergi</string>
+    <string name="record_conditions">Kondisi Medis</string>
+    <string name="record_vaccinations">Vaksinasi</string>
+    <string name="record_active_format">%1$d aktif</string>
+    <string name="record_reported_format">%1$d dilaporkan</string>
+    <string name="record_recorded_format">%1$d dicatat</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">Pengaturan Bahasa</string>
+    <string name="settings_notifications">Pengingat Harian</string>
+    <string name="settings_version">Versi 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">Kendala apa yang Anda alami saat menggunakan aplikasi?</string>
+    <string name="uninstall_card1_title">Tidak bisa menggunakan fitur atau menyimpan</string>
+    <string name="uninstall_card1_desc">Terdeteksi masalah koneksi atau kendala server internal.</string>
+    <string name="uninstall_card2_title">Saat ini belum tersedia</string>
+    <string name="uninstall_card2_desc">Alat ini sedang dalam pemeliharaan atau dibatasi wilayah.</string>
+    <string name="uninstall_btn_try_again">Coba lagi</string>
+    <string name="uninstall_btn_explore">Jelajahi</string>
+    <string name="uninstall_btn_dont_uninstall">Batal hapus aplikasi</string>
+    <string name="uninstall_btn_still_uninstall">Tetap hapus aplikasi</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">Mengapa Anda mencopot HealthCare AI?</string>
+    <string name="uninstall_reason_subtitle">Kami sedih melihat Anda pergi. Beri tahu kami apa yang bisa kami tingkatkan.</string>
+    <string name="uninstall_reason_1">Sulit digunakan</string>
+    <string name="uninstall_reason_2">Terlalu banyak iklan</string>
+    <string name="uninstall_reason_3">Desain antarmuka kurang bagus</string>
+    <string name="uninstall_reason_4">Alasan lainnya</string>
+    <string name="uninstall_reason_hint">Tuliskan masukan Anda di sini..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">Pengingat Kesehatan Harian</string>
+    <string name="noti_channel_desc">Pengingat rutin untuk hidrasi, cek kesehatan, dan kebiasaan baik.</string>
+    <string name="noti_title_morning">Cek Kesehatan Pagi ☀️</string>
+    <string name="noti_msg_morning">Awali hari dengan segelas air putih dan cek target kesehatan harian Anda.</string>
+    <string name="noti_title_afternoon">Kebugaran Siang Hari 💧</string>
+    <string name="noti_msg_afternoon">Luangkan waktu istirahat sejenak, regangkan otot, dan pantau energi Anda.</string>
+    <string name="noti_title_evening">Evaluasi &amp; Relaksasi Malam 🌙</string>
+    <string name="noti_msg_evening">Tinjau perkembangan hari ini dan konsultasikan dengan Asisten AI Anda.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">Pemberitahuan</string>
+    <string name="dialog_notification_permission_desc">Jangan lewatkan pembaruan penting, hasil analisis foto, dan fitur terbaru.</string>
+    <string name="dialog_notification_btn_settings">Ke pengaturan</string>
+    <string name="dialog_notification_btn_dont_allow">Jangan izinkan</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">Pengingat Obat &amp; Kesehatan</string>
+    <string name="noti_reminders_channel_desc">Alarm dan notifikasi tepat waktu untuk jadwal obat, minum air, dan kesehatan.</string>
+    <string name="noti_reminder_action_done">Tandai selesai</string>
+    <string name="noti_reminder_default_desc">Waktunya untuk pengingat %s Anda.</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">Izin Diperlukan</string>
+    <string name="permission_desc">Untuk mengaktifkan pengingat dan pemindaian foto pintar, mohon izinkan di Pengaturan.</string>
+    <string name="permission_btn_settings">Buka Pengaturan</string>
+    <string name="permission_btn_cancel">Nanti Saja</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">Izinkan Akses Kamera</string>
+    <string name="dialog_camera_permission_desc">Berikan izin kamera untuk memindai dan menganalisis informasi kesehatan Anda</string>
+    <string name="dialog_camera_btn_settings">Ke pengaturan</string>
+    <string name="dialog_camera_btn_dont_allow">Jangan izinkan</string>
+    <string name="dialog_camera_btn_cancel">Nanti Saja</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">Panduan Foto</string>
+    <string name="camera_guide_tip_1">1. Posisikan area yang diperiksa tepat di tengah bingkai.</string>
+    <string name="camera_guide_tip_2">2. Pastikan pencahayaan alami terang dan tidak tertutup bayangan.</string>
+    <string name="camera_guide_tip_3">3. Pegang kamera dengan stabil pada jarak sekitar 10–15 cm.</string>
+    <string name="camera_guide_btn_got_it">Mengerti</string>
+    <string name="camera_capture_success">Foto berhasil diambil! Sedang menganalisis...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">Konfirmasi Foto</string>
+    <string name="label_aspect_ratio">Rasio Foto</string>
+    <string name="btn_use_photo">Gunakan foto ini</string>
+    <string name="btn_retake_photo">Ambil ulang</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">Selamat pagi</string>
+    <string name="home_greeting_afternoon">Selamat siang</string>
+    <string name="home_greeting_evening">Selamat malam</string>
+    <string name="home_subtitle">Kondisi kesehatan Anda tampak sangat baik hari ini.</string>
+    <string name="home_ai_assistant_badge">Asisten Kesehatan AI</string>
+    <string name="home_ai_assistant_title">Asisten kesehatan\npribadi Anda</string>
+    <string name="home_btn_chat_ai">Tanya AI</string>
+    <string name="home_feature_health_scan">Pindai\nKesehatan</string>
+    <string name="home_feature_measure_heart_rate">Ukur\nDetak Jantung</string>
+    <string name="home_feature_symptom_checker">Pemeriksa\nGejala</string>
+    <string name="home_section_today_reminder">Pengingat hari ini</string>
+    <string name="home_section_ai_scan_history">Riwayat pemindaian AI</string>
+    <string name="home_view_all">Lihat semua</string>
+    <string name="home_no_reminder_title">Belum ada pengingat</string>
+    <string name="home_no_reminder_desc">Tambahkan jadwal obat atau minum air untuk menjaga rutinitas sehat Anda.</string>
+    <string name="home_btn_add_reminder">Tambah pengingat</string>
+    <string name="home_no_scans_title">Belum ada riwayat pindai</string>
+    <string name="home_no_scans_desc">Hasil pemeriksaan Anda akan muncul di sini setelah pemindaian pertama.</string>
+    <string name="home_btn_start_first_scan">Mulai pemindaian pertama</string>
+    <string name="home_btn_get_pro">Tingkatkan ke Pro</string>
+    <string name="home_manage">Kelola</string>
+    <string name="btn_mark_as_done">Tandai sudah diminum</string>
+    <string name="msg_marked_as_done">Ditandai selesai!</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">Minum air</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">Pemeriksaan kulit lengan</string>
+    <string name="scan_arm_skin_check_date">5 Okt</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">Detak Jantung</string>
+    <string name="heart_rate_how_to_measure">Cara mengukur</string>
+    <string name="heart_rate_instruction">Tempelkan ujung jari pada kamera\ndan lampu kilat untuk mulai mengukur.</string>
+    <string name="heart_rate_btn_start">Mulai Pengukuran</string>
+    <string name="heart_rate_statistics_coming_soon">Statistik dan tren detak jantung akan muncul di sini.</string>
+    <string name="how_to_measure_title">Cara mengukur</string>
+    <string name="how_to_measure_step1_title">Tempelkan jari pada kamera &amp; lampu kilat</string>
+    <string name="how_to_measure_step1_desc">Tutup kamera belakang secara penuh dengan ujung jari Anda.</string>
+    <string name="how_to_measure_step2_title">Pastikan lampu kilat menyala</string>
+    <string name="how_to_measure_step2_desc">Lampu kilat menyinari pembuluh darah jari untuk pengukuran yang akurat.</string>
+    <string name="how_to_measure_step3_title">Jaga jari tetap diam</string>
+    <string name="how_to_measure_step3_desc">Hindari menggerakkan jari selama proses pengukuran.</string>
+    <string name="heart_rate_guide_title">Panduan pengukuran</string>
+    <string name="heart_rate_guide_tip_1">1. Tempelkan ujung jari telunjuk dengan lembut di atas lensa dan lampu kilat.</string>
+    <string name="heart_rate_guide_tip_2">2. Berikan tekanan ringan dan konstan, jangan menekan terlalu keras.</string>
+    <string name="heart_rate_guide_tip_3">3. Tetap diam, bernapas teratur, dan tunggu hingga selesai.</string>
+    <string name="heart_rate_guide_btn_got_it">Mengerti</string>
+    <string name="heart_rate_measuring_title">Mengukur Detak Jantung</string>
+    <string name="heart_rate_measuring_banner_title">Sedang mengukur detak jantung Anda…</string>
+    <string name="heart_rate_measuring_banner_sub">Mohon jangan gerakkan jari Anda.</string>
+    <string name="heart_rate_waiting_finger">Tutup kamera dan lampu kilat</string>
+    <string name="heart_rate_waiting_finger_desc">Letakkan jari telunjuk secara perlahan di atas kamera dan lampu kilat</string>
+    <string name="heart_rate_measuring_desc">Mengukur... Harap diam dan bernapas teratur</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">Hasil</string>
+    <string name="heart_rate_result_summary">Ringkasan Hasil</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">Lambat</string>
+    <string name="heart_rate_normal_label">Normal</string>
+    <string name="heart_rate_fast_label">Cepat</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">Hapus Catatan</string>
+    <string name="heart_rate_delete_confirm_msg">Apakah Anda yakin ingin menghapus catatan detak jantung ini?</string>
+    <string name="heart_rate_delete_btn">Hapus</string>
+    <string name="heart_rate_cancel_btn">Batal</string>
+    <string name="heart_rate_deleted">Catatan berhasil dihapus</string>
+    <string name="heart_rate_normal">Normal (Saat Istirahat)</string>
+    <string name="heart_rate_slow">Detak Jantung Rendah (Bradikardia)</string>
+    <string name="heart_rate_fast">Detak Jantung Tinggi (Takikardia)</string>
+    <string name="heart_rate_quality_label">Kualitas Sinyal</string>
+    <string name="heart_rate_hrv_title">Variabilitas Detak Jantung (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">Ukur Ulang</string>
+    <string name="heart_rate_btn_done">Done</string>
+    <string name="heart_rate_error_finger_lost_title">Jari Terlepas</string>
+    <string name="heart_rate_error_finger_lost">Pengukuran terhenti karena jari Anda terangkat dari lensa.</string>
+    <string name="heart_rate_error_low_quality_title">Hasil Pengukuran Belum Pasti</string>
+    <string name="heart_rate_error_low_quality">Sinyal tidak stabil. Harap diam dan jangan menekan terlalu kuat.</string>
+    <string name="heart_rate_error_no_flash">Perangkat Anda tampaknya tidak memiliki lampu kilat kamera.</string>
+    <string name="heart_rate_btn_try_again">Coba Lagi</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">Statistik</string>
+    <string name="statistics_tab_overview">Ringkasan</string>
+    <string name="statistics_tab_history">Riwayat</string>
+    <string name="statistics_average">Rata-rata</string>
+    <string name="statistics_highest">Tertinggi</string>
+    <string name="statistics_lowest">Terendah</string>
+    <string name="statistics_no_history_title">Belum ada riwayat</string>
+    <string name="statistics_no_history_desc">Hasil pengukuran Anda akan tercatat di sini setelah pemindaian pertama.</string>
+    <string name="statistics_no_data_title">Belum ada data detak jantung</string>
+    <string name="statistics_no_data_desc">Ukur detak jantung Anda untuk melihat grafik statistik mingguan.</string>
+    <string name="statistics_btn_measure_now">Ukur sekarang</string>
+    <string name="statistics_heart_rate_chart_title">Detak Jantung (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">Keluarga</string>
+    <string name="family_no_members_title">Belum ada anggota keluarga</string>
+    <string name="family_no_members_desc">Tambahkan keluarga untuk memantau catatan medis, obat, dan kesehatan bersama.</string>
+    <string name="family_btn_add_first_member">Tambah anggota pertama</string>
+    <string name="family_add_member_hint">Fitur tambah keluarga akan segera hadir.</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">Pengaturan</string>
+    <string name="settings_section_general">Umum</string>
+    <string name="settings_section_support">Bantuan</string>
+    <string name="settings_item_language">Bahasa</string>
+    <string name="settings_item_permission">Izin Aplikasi</string>
+    <string name="settings_item_share">Bagikan ke teman</string>
+    <string name="settings_item_rate">Beri Nilai Aplikasi</string>
+    <string name="settings_item_privacy">Kebijakan Privasi</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">Pemeriksa Gejala</string>
+    <string name="symptom_checker_subtitle">Ceritakan keluhan Anda saat ini\nagar kami dapat memberikan panduan terbaik.</string>
+    <string name="symptom_checker_privacy_notice">Data Anda terenkripsi dan bersifat sangat rahasia.</string>
+    <string name="symptom_checker_est_time_label">Perkiraan waktu</string>
+    <string name="symptom_checker_est_time_val">3 mnt</string>
+    <string name="symptom_checker_after_assessment_label">Setelah evaluasi</string>
+    <string name="symptom_checker_after_assessment_val">Wawasan kesehatan</string>
+    <string name="symptom_checker_length_label">Setelah evaluasi</string>
+    <string name="symptom_checker_length_val">Wawasan kesehatan</string>
+    <string name="symptom_checker_btn_start">Mulai Evaluasi</string>
+    <string name="symptom_checker_start_toast">Memulai pemeriksaan gejala AI...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">Berapa usia Anda?</string>
+    <string name="assessment_gender_title">Apa jenis kelamin biologis Anda?</string>
+    <string name="assessment_gender_subtitle">Pilih jenis kelamin untuk hasil analisis kesehatan yang lebih akurat.</string>
+    <string name="gender_male">Laki-laki</string>
+    <string name="gender_female">Perempuan</string>
+    <string name="assessment_symptoms_title">Apa saja gejala yang Anda rasakan?</string>
+    <string name="assessment_symptoms_subtitle">Ketuk bagian tubuh untuk menandai dan memilih gejala</string>
+    <string name="tab_body_map">Peta Tubuh</string>
+    <string name="tab_all_symptoms">Semua Gejala</string>
+    <string name="region_all">Semua</string>
+    <string name="region_head">Kepala</string>
+    <string name="region_neck">Leher</string>
+    <string name="region_shoulders">Bahu</string>
+    <string name="region_chest">Dada</string>
+    <string name="region_abdomen">Perut</string>
+    <string name="region_arms">Lengan</string>
+    <string name="region_legs">Kaki</string>
+    <string name="search_symptoms_hint">Ketik gejala utama Anda di sini</string>
+    <string name="no_symptoms_found">Tidak ada gejala yang cocok dengan "%s"</string>
+    <string name="assessment_related_symptoms_title">Apakah Anda merasakan gejala berikut?</string>
+    <string name="assessment_related_symptoms_subtitle">Pilih semua jawaban yang sesuai</string>
+    <string name="assessment_insect_bite_title">Apakah Anda digigit atau disengat serangga (kutu, nyamuk, caplak, laba-laba, tungau…)?</string>
+    <string name="option_yes">Ya</string>
+    <string name="option_no">Tidak</string>
+    <string name="option_dont_know">Tidak tahu</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">Keluar</string>
+    <string name="dialog_exit_app_desc">Apakah Anda yakin ingin keluar?\nPerubahan yang belum disimpan akan hilang.</string>
+    <string name="dialog_exit_app_btn_stay">Tetap di sini</string>
+    <string name="dialog_exit_app_btn_exit">Keluar</string>
+    <string name="dialog_exit_assessment_title">Keluar dari evaluasi</string>
+    <string name="dialog_exit_assessment_desc">Apakah Anda yakin ingin keluar?\nJawaban Anda akan hilang.</string>
+    <string name="dialog_exit_btn_continue">Tetap di sini</string>
+    <string name="dialog_exit_btn_exit">Keluar</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">Lanjutkan</string>
+    <string name="btn_back">Kembali</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">Asisten Kesehatan AI</string>
+    <string name="ai_chat_welcome_title">Ada yang bisa saya bantu\ntentang kesehatan Anda hari ini?</string>
+    <string name="ai_chat_suggestion_1_title">Tips gaya hidup sehat</string>
+    <string name="ai_chat_suggestion_1_desc">Kebiasaan harian untuk menjaga kebugaran...</string>
+    <string name="ai_chat_suggestion_1_query">Beri saya saran kebiasaan harian untuk meningkatkan kebugaran tubuh secara menyeluruh.</string>
+    <string name="ai_chat_suggestion_2_title">Penjelasan hasil scan</string>
+    <string name="ai_chat_suggestion_2_desc">Bantu saya memahami hasil scan kulit atau mulut.</string>
+    <string name="ai_chat_suggestion_2_query">Bantu saya memahami hasil pemeriksaan scan dan saran perawatan yang diberikan.</string>
+    <string name="ai_chat_suggestion_3_title">Tinjau data kesehatan</string>
+    <string name="ai_chat_suggestion_3_desc">Analisis detak jantung, tidur, dan aktivitas.</string>
+    <string name="ai_chat_suggestion_3_query">Analisis data detak jantung dan tidur saya untuk memberikan saran perbaikan gaya hidup.</string>
+    <string name="ai_chat_input_hint">Tanyakan apa saja kepada saya...</string>
+    <string name="ai_chat_new_chat">Percakapan Baru</string>
+    <string name="ai_chat_clear_confirm_title">Mulai obrolan baru?</string>
+    <string name="ai_chat_clear_confirm_msg">Apakah Anda ingin menghapus obrolan saat ini dan memulai dari awal?</string>
+    <string name="ai_chat_listening">Mendengarkan... silakan bicara</string>
+    <string name="ai_chat_mic_permission_required">Izin mikrofon diperlukan untuk mengirim pesan suara.</string>
+    <string name="ai_chat_error_fallback">Maaf, permintaan tidak dapat diproses saat ini. Periksa koneksi dan coba lagi.</string>
+    <string name="ai_chat_today">Hari ini</string>
+    <string name="ai_chat_yesterday">Kemarin</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">Riwayat Obrolan</string>
+    <string name="conversation_empty_title">Belum ada percakapan</string>
+    <string name="conversation_empty_desc">Mulai percakapan untuk mendapatkan saran\ndan panduan kesehatan pribadi.</string>
+    <string name="time_just_now">Baru saja</string>
+    <string name="time_minute_ago">1 menit yang lalu</string>
+    <string name="time_minutes_ago">%d menit yang lalu</string>
+    <string name="time_hour_ago">1 jam yang lalu</string>
+    <string name="time_hours_ago">%d jam yang lalu</string>
+    <string name="time_day_ago">1 hari yang lalu</string>
+    <string name="time_days_ago">%d hari yang lalu</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">Pengingat Baru</string>
+    <string name="label_reminder_category">Kategori</string>
+    <string name="hint_select_category">Pilih kategori</string>
+    <string name="label_reminder_name">Nama</string>
+    <string name="label_reminder_strength">Dosis</string>
+    <string name="hint_reminder_strength">misal 10 mg</string>
+    <string name="label_reminder_form">Bentuk obat</string>
+    <string name="hint_reminder_form">Pilih bentuk obat</string>
+    <string name="label_reminder_repeat">Pengulangan</string>
+    <string name="hint_repeat_schedule">Pilih jadwal pengulangan</string>
+    <string name="label_reminder_time">Waktu</string>
+    <string name="time_no_times_added">Belum ada waktu yang ditambahkan</string>
+    <string name="label_reminder_start_date">Tanggal mulai</string>
+    <string name="label_reminder_end_date">Tanggal selesai</string>
+    <string name="hint_select_date">Pilih tanggal</string>
+    <string name="label_reminder_notes">Catatan (opsional)</string>
+    <string name="hint_reminder_name">Masukkan nama pengingat</string>
+    <string name="hint_enter_medication_name">Masukkan nama obat</string>
+    <string name="hint_add_notes">Tambahkan catatan</string>
+    <string name="reminder_btn_add_time">Tambah waktu</string>
+    <string name="btn_save_reminder">Simpan pengingat</string>
+    <string name="repeat_every_day">Setiap hari</string>
+    <string name="repeat_weekdays">Hari kerja</string>
+    <string name="repeat_weekends">Akhir pekan</string>
+    <string name="repeat_weekly">Mingguan</string>
+    <string name="repeat_monthly">Bulanan</string>
+    <string name="repeat_once">Sekali saja</string>
+    <string name="form_tablet">Tablet</string>
+    <string name="form_capsule">Kapsul</string>
+    <string name="form_liquid">Cair / Sirup</string>
+    <string name="form_drops">Tetes</string>
+    <string name="form_injection">Suntik</string>
+    <string name="form_inhaler">Inhaler</string>
+    <string name="form_other">Lainnya</string>
+    <string name="msg_reminder_saved">Pengingat berhasil disimpan</string>
+    <string name="msg_enter_reminder_name">Silakan masukkan nama pengingat</string>
+    <string name="msg_time_already_added">Waktu ini sudah ditambahkan sebelumnya</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">Pilih kategori</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">Pengulangan</string>
+    <string name="category_health_monitoring_title">Pemantauan kesehatan</string>
+    <string name="category_health_monitoring_desc">Suhu tubuh, detak jantung, dll.</string>
+    <string name="category_medication_title">Minum obat</string>
+    <string name="category_medication_desc">Konsumsi obat, vitamin, suplemen</string>
+    <string name="category_healthy_habits_title">Kebiasaan sehat</string>
+    <string name="category_healthy_habits_desc">Minum air, olahraga, tidur, dll.</string>
+    <string name="category_appointments_title">Jadwal kontrol</string>
+    <string name="category_appointments_desc">Kunjungan dokter, pemeriksaan rutin</string>
+    <string name="category_vaccinations_title">Vaksinasi</string>
+    <string name="category_vaccinations_desc">Jadwal vaksin dan dosis penguat</string>
+    <string name="category_other_title">Lainnya</string>
+    <string name="category_other_desc">Pengingat kesehatan pribadi</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">Pengingat</string>
+    <string name="title_edit_reminder">Edit pengingat</string>
+    <string name="reminder_action_edit">Edit</string>
+    <string name="reminder_action_delete">Hapus</string>
+    <string name="reminder_status_taken">Sudah diminum</string>
+    <string name="reminder_action_undo">Urungkan</string>
+    <string name="msg_reminder_deleted">Pengingat berhasil dihapus</string>
+    <string name="msg_reminder_updated">Pengingat berhasil diperbarui</string>
+    <string name="msg_marked_as_undone">Ditandai belum diminum</string>
+    <string name="delete_reminder_confirm">Apakah Anda yakin ingin menghapus pengingat ini?</string>
+    <string name="delete_confirm_title">Hapus catatan ini?</string>
+    <string name="delete_confirm_message">Apakah Anda yakin ingin menghapus catatan ini?\nTindakan ini tidak dapat dibatalkan.</string>
+    <string name="btn_delete">Hapus</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">Beri Nilai Pengalaman Anda</string>
+    <string name="rate_dialog_message">Masukan Anda sangat berharga bagi kami.\nKetuk bintang untuk memberi penilaian.</string>
+    <string name="rate_dialog_submit">Kirim penilaian</string>
+    <string name="rate_dialog_maybe_later">Nanti saja</string>
+    <string name="rate_dialog_thank_you">Terima kasih atas masukan Anda!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">Detail obat</string>
+    <string name="title_allergy_details">Detail alergi</string>
+    <string name="title_condition_details">Detail kondisi medis</string>
+    <string name="title_vaccination_details">Detail vaksinasi</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">Pilih bentuk obat</string>
+    <string name="title_select_severity">Pilih tingkat keparahan</string>
+    <string name="severity_mild">Ringan</string>
+    <string name="severity_moderate">Sedang</string>
+    <string name="severity_severe">Berat</string>
+    <string name="severity_not_sure">Tidak yakin</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">Perbarui status</string>
+    <string name="btn_save_status">Simpan status</string>
+    <string name="status_ongoing_title">Masih berlangsung</string>
+    <string name="status_ongoing_sub">Masih menjadi bagian dari kondisi kesehatan saat ini</string>
+    <string name="status_resolved_title">Sembuh / selesai</string>
+    <string name="status_resolved_sub">Dicatat sudah tidak berlanjut lagi</string>
+    <string name="status_unsure_title">Belum pasti</string>
+    <string name="status_unsure_sub">Anda tidak yakin dengan status saat ini</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">Tambah waktu</string>
+    <string name="label_hour">Jam</string>
+    <string name="label_minute">Menit</string>
+    <string name="label_already_add">Sudah ada</string>
+    <string name="btn_add_time">Tambah waktu</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">PENILAIAN AI SELESAI</string>
+    <string name="care_advice_title">Panduan Perawatan</string>
+    <string name="care_advice_subtitle_format">Berdasarkan gejala yang dilaporkan (%1$s), berikut adalah langkah-langkah yang dianjurkan untuk pemulihan yang aman.</string>
+    <string name="care_advice_self_care">Perawatan Mandiri</string>
+    <string name="care_advice_monitor_symptoms">Pantau Gejala</string>
+    <string name="care_advice_when_to_seek_care">Kapan Harus ke Dokter</string>
+    <string name="care_advice_self_care_bullet_1">Pastikan tidur minimal 8 jam untuk membantu pemulihan tubuh.</string>
+    <string name="care_advice_self_care_bullet_2">Perbanyak minum air putih agar tubuh tetap terhidrasi dengan baik.</string>
+    <string name="care_advice_monitor_bullet_1">Ukur suhu tubuh Anda dua kali sehari.</string>
+    <string name="care_advice_monitor_bullet_2">Pantau detak jantung istirahat melalui perangkat smartwatch Anda.</string>
+    <string name="care_advice_seek_care_bullet_1">Jika demam melebihi 39.4°C, nyeri berlanjut lebih dari 48 jam, atau sesak napas, segera cari pertolongan medis.</string>
+    <string name="btn_return_to_home">Kembali ke Beranda</string>
+    <string name="btn_set_a_reminder">Pasang pengingat</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">Hasil</string>
+    <string name="symptom_result_doctor_title">Konsultasikan ke dokter</string>
+    <string name="symptom_result_doctor_desc">Gejala Anda mungkin memerlukan pemeriksaan medis profesional. Buat jadwal kunjungan ke dokter. Jika gejala memburuk, segera periksakan diri.</string>
+    <string name="title_possible_conditions">Kemungkinan Kondisi Medis</string>
+    <string name="title_recommended_actions">Tindakan yang Disarankan</string>
+    <string name="btn_view_care_advice">Lihat Panduan Perawatan</string>
+    <string name="match_strong">Kecocokan Tinggi</string>
+    <string name="match_moderate">Kecocokan Sedang</string>
+    <string name="match_possible">Mungkin Cocok</string>
+    <string name="btn_ask_ai_about_result">Tanyakan hasil ini ke AI</string>
+    <string name="medical_disclaimer_title">DISCLAIMER MEDIS</string>
+    <string name="medical_disclaimer_desc">Alat ini hanya memberikan informasi umum dan tidak menggantikan nasihat medis, diagnosis, atau perawatan profesional.</string>
+    <string name="label_selected">Dipilih:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">Hasil Analisis</string>
+    <string name="analysis_loading_title">AI sedang menganalisis luka/lesi...</string>
+    <string name="analysis_loading_desc">Memindai tekstur morfologis, pola warna tepi, dan struktur permukaan.</string>
+    <string name="analysis_unable_title">Tidak dapat diidentifikasi</string>
+    <string name="analysis_unable_desc">Kami belum dapat mengidentifikasi kondisi dari foto ini.\nCoba ambil foto yang lebih jelas dan fokus.</string>
+    <string name="analysis_tips_title">Tips agar hasil lebih akurat</string>
+    <string name="analysis_tip_1">Gunakan pencahayaan alami yang terang</string>
+    <string name="analysis_tip_2">Fokuskan kamera tepat pada area yang bermasalah</string>
+    <string name="analysis_tip_3">Pastikan area terlihat menyeluruh dan jelas</string>
+    <string name="btn_rescan">Pindai ulang</string>
+    <string name="btn_choose_from_gallery">Pilih dari galeri</string>
+    <string name="title_save_result_to">Simpan hasil ke</string>
+    <string name="title_key_findings">Temuan Utama</string>
+    <string name="title_care_suggestions">Saran Perawatan</string>
+    <string name="title_when_to_seek_care">Kapan Harus ke Dokter</string>
+    <string name="ai_processing_title">AI sedang memproses...</string>
+    <string name="ai_processing_desc">Hasil Anda akan siap sebentar lagi</string>
+    <string name="title_report_result">Laporkan hasil</string>
+    <string name="btn_report">Laporkan</string>
+    <string name="title_choose_reminders">Pilih pengingat Anda</string>
+    <string name="btn_save_reminders_count">Simpan %1$d pengingat</string>
+    <string name="btn_save_reminder_single">Simpan 1 pengingat</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_understood">Mengerti</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">Tambah alergi</string>
+    <string name="title_edit_allergy">Edit alergi</string>
+    <string name="label_allergen_name">Nama alergen</string>
+    <string name="label_type">Tipe</string>
+    <string name="type_food">Makanan</string>
+    <string name="label_reaction">Reaksi</string>
+    <string name="label_first_noticed">Pertama kali diketahui</string>
+    <string name="date_not_provided">Tanggal tidak diisi</string>
+    <string name="btn_save_allergy">Simpan alergi</string>
+    <string name="title_add_condition">Tambah kondisi medis</string>
+    <string name="title_edit_condition">Edit kondisi medis</string>
+    <string name="label_condition_name">Nama kondisi medis</string>
+    <string name="label_status">Status</string>
+    <string name="label_clinician">Dokter pemeriksa</string>
+    <string name="label_clinic">Klinik / Rumah Sakit</string>
+    <string name="not_provided">Tidak diisi</string>
+    <string name="label_diagnosis_date">Tanggal diagnosis</string>
+    <string name="btn_save_condition">Simpan kondisi medis</string>
+    <string name="title_add_vaccination">Tambah vaksinasi</string>
+    <string name="title_edit_vaccination">Edit vaksinasi</string>
+    <string name="label_vaccine_name">Nama vaksin</string>
+    <string name="label_dose_number">Dosis ke-</string>
+    <string name="label_batch_number">Nomor batch</string>
+    <string name="btn_save_vaccination">Simpan vaksinasi</string>
+    <string name="title_add_medication">Tambah obat</string>
+    <string name="title_edit_medication">Edit obat</string>
+    <string name="label_reason">Alasan konsumsi</string>
+    <string name="btn_save_medication">Simpan obat</string>
+    <string name="label_additional_details">Detail tambahan (opsional)</string>
+    <string name="label_medication_name">Nama Obat</string>
+    <string name="no_records_yet_format">Belum ada catatan %1$s</string>
+    <string name="empty_records_desc">Tambahkan catatan pertama Anda menggunakan tombol di bawah</string>
+    <string name="btn_add_record_format">Tambah %1$s</string>
+    <string name="title_choose_item_format">Pilih %1$s</string>
+    <string name="no_items_added_yet_format">Belum ada %1$s yang ditambahkan</string>
+    <string name="add_records_quick_select_desc">Tambahkan catatan Anda agar mudah dipilih</string>
+    <string name="btn_add_item_format">+ Tambah %1$s</string>
+    <string name="time_am">AM</string>
+    <string name="time_pm">PM</string>
+    <string name="cat_temperature">Suhu Tubuh</string>
+    <string name="cat_drink_water">Minum Air</string>
+    <string name="cat_exercise">Olahraga</string>
+    <string name="cat_sleep">Tidur</string>
+    <string name="label_date_received">Tanggal penyuntikan</string>
+    <string name="label_updated">Diperbarui</string>
+    <string name="record_diagnosed_format">%1$d terdiagnosis</string>
+    <string name="label_notes">Catatan</string>
+    <string name="label_note">Catatan</string>
+    <string name="label_severity">Keparahan</string>
+    <string name="label_strength">Dosis</string>
+    <string name="label_form">Bentuk obat</string>
+    <string name="status_ongoing">Berlangsung</string>
+    <string name="status_updated_format">Status diperbarui menjadi %1$s</string>
+    <string name="toast_photo_load_failed">Gagal memuat foto yang dipilih</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: Pindai tanpa batas &amp; dukungan 24/7!</string>
+    <string name="toast_opening_privacy_policy">Membuka Kebijakan Privasi…</string>
+    <string name="medical_disclaimer_dialog_title">Disclaimer Medis</string>
+    <string name="ai_health_disclaimer_title">Peringatan Medis AI</string>
+    <string name="ai_health_disclaimer_desc">Analisis visual ini didukung AI dan dirancang untuk tujuan edukasi serta pemantauan umum. Ini bukan pengganti diagnosis klinis dokter atau dokter kulit.\n\nJika Anda mengalami pendarahan, perubahan bentuk yang cepat, atau nyeri hebat, segera periksakan ke dokter.</string>
+    <string name="medical_disclaimer_full_text">Pemeriksaan gejala ini hanya memberikan informasi edukatif dan referensi awal. Ini tidak ditujukan sebagai pengganti nasihat medis, diagnosis klinis, atau resep pengobatan.\n\nSelalu konsultasikan dengan dokter atau tenaga medis berwenang mengenai kondisi kesehatan Anda.</string>
+    <string name="msg_please_choose_item_format">Silakan pilih %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">demam ringan, lemas</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">Konten berbahaya</string>
+    <string name="report_illegal_content">Konten ilegal</string>
+    <string name="report_offensive_content">Konten menyinggung</string>
+    <string name="report_biased_content">Konten bias</string>
+    <string name="report_trademark_violation">Pelanggaran merek dagang</string>
+    <string name="report_copyright_violation">Pelanggaran hak cipta</string>
+    <string name="report_nudity_sexual_content">Ketelanjangan/konten seksual</string>
+    <string name="report_violence_gore">Kekerasan/kesadisan</string>
+    <string name="report_others">Lainnya</string>
+    <string name="toast_report_submitted">Terima kasih atas laporan Anda. Kami akan meninjau hasil ini.</string>
+
+    <string name="label_relationship_you">Anda</string>
+    <string name="reminder_water_notes">Hidrasi mempercepat perbaikan jaringan dan pemulihan pelindung kulit.</string>
+    <string name="reminder_check_temperature_title">Periksa suhu tubuh</string>
+    <string name="reminder_check_temperature_notes">Pantau suhu tubuh untuk deteksi dini demam atau tanda infeksi.</string>
+    <string name="reminder_observe_area_title">Perawatan &amp; Pengamatan Kulit</string>
+    <string name="reminder_observe_area_notes">Periksa apakah ada perubahan pada kemerahan, ukuran, atau sensasi.</string>
+</resources>

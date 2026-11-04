@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">الرئيسية</string>
+    <string name="tab_scan">المسح</string>
+    <string name="tab_my_health">صحتي</string>
+    <string name="tab_family">العائلة</string>
+    <string name="tab_settings">الإعدادات</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">شاشة الرئيسية</string>
+    <string name="screen_scan">شاشة المسح</string>
+    <string name="screen_my_health">شاشة صحتي</string>
+    <string name="screen_family">شاشة العائلة</string>
+    <string name="screen_settings">شاشة الإعدادات</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">المسح الذكي</string>
+    <string name="headline_ai_scan">ما هي المنطقة التي تود فحصها؟</string>
+    <string name="category_skin">الجلد</string>
+    <string name="category_skin_desc">بقع، طفح جلدي أو تغيرات في الجلد</string>
+    <string name="category_mouth">الفم</string>
+    <string name="category_mouth_desc">الشفاه، اللثة، اللسان أو الأسنان</string>
+    <string name="category_eye">العين</string>
+    <string name="category_eyes">العيون</string>
+    <string name="category_eyes_desc">تغيرات ملحوظة حول العينين</string>
+    <string name="category_nails">الأظافر</string>
+    <string name="category_nail">الأظافر</string>
+    <string name="category_nail_desc">أظافر اليدين أو القدمين</string>
+    <string name="category_other_area">منطقة أخرى</string>
+    <string name="category_other_area_desc">أي جزء مرئي آخر من الجسم</string>
+    <string name="btn_start_scan">بدء المسح</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">جاري التحميل...</string>
+    <string name="splash_ads_notice">قد يحتوي هذا الإجراء على إعلانات</string>
+    
+    <!-- Language -->
+    <string name="title_language">اللغة</string>
+    <string name="subtitle_select_language">اختر لغة للمتابعة</string>
+    <string name="btn_done">تم</string>
+    <string name="hint_tap_device_language">اضغط لاختيار لغة جهازك</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">تخطي</string>
+    <string name="btn_next">التالي</string>
+    <string name="btn_get_started">البدء</string>
+    <string name="intro_title_1">افهم صحتك\nبشكل أفضل</string>
+    <string name="intro_desc_1">استكشف مخاوفك الصحية من خلال تحليل الصور وفحص الأعراض بمساعدة الذكاء الاصطناعي.</string>
+    <string name="intro_title_2">صحتك كلها\nفي مكان واحد</string>
+    <string name="intro_desc_2">احفظ سجلاتك وتتبع التغيرات واضبط تذكيرات تناسب جدولك اليومي.</string>
+    <string name="intro_title_3">إرشادات رعاية\nمخصصة لك</string>
+    <string name="intro_desc_3">احصل على اقتراحات مخصصة ونصائح يومية ودعم مستمر من الذكاء الاصطناعي.</string>
+    <string name="intro_title_4">اعتنِ بنفسك\nوبعائلتك</string>
+    <string name="intro_desc_4">نظم الملفات الشخصية للعائلة وتابع الرعاية الصحية لأحبائك بسهولة.</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">إضافة ملف شخصي</string>
+    <string name="title_add_member">إضافة فرد من العائلة</string>
+    <string name="title_detail_profile">تفاصيل الملف الشخصي</string>
+    <string name="title_profile_detail">تفاصيل الملف الشخصي</string>
+    <string name="msg_member_added">تمت إضافة فرد العائلة بنجاح!</string>
+    <string name="add_avatar">تغيير الصورة</string>
+    <string name="label_full_name">الاسم الكامل</string>
+    <string name="hint_full_name">أدخل الاسم الكامل</string>
+    <string name="label_date_of_birth">تاريخ الميلاد</string>
+    <string name="hint_date_of_birth">اختر تاريخ الميلاد</string>
+    <string name="label_gender">الجنس</string>
+    <string name="hint_gender">اختر الجنس</string>
+    <string name="gender_other">آخر</string>
+    <string name="label_height">الطول</string>
+    <string name="hint_height">الطول</string>
+    <string name="unit_cm">سم</string>
+    <string name="label_weight">الوزن</string>
+    <string name="hint_weight">الوزن</string>
+    <string name="unit_kg">كجم</string>
+    <string name="btn_create_profile">إنشاء ملف</string>
+    <string name="btn_save">حفظ</string>
+    <string name="btn_cancel">إلغاء</string>
+    <string name="btn_close">إغلاق</string>
+    <string name="title_gender_sheet">الجنس</string>
+    <string name="select_gender_title">اختر الجنس</string>
+    <string name="error_name_empty">يرجى إدخال اسمك</string>
+    <string name="error_dob_empty">يرجى تحديد تاريخ ميلادك</string>
+    <string name="error_gender_empty">يرجى تحديد جنسك</string>
+    <string name="error_height_empty">يرجى إدخال طولك</string>
+    <string name="error_weight_empty">يرجى إدخال وزنك</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">صلة القرابة</string>
+    <string name="hint_relationship">اختر صلة القرابة</string>
+    <string name="title_relationship_sheet">صلة القرابة</string>
+    <string name="select_relationship_title">اختر صلة القرابة</string>
+    <string name="rel_father">أب</string>
+    <string name="rel_mother">أم</string>
+    <string name="rel_spouse">شريك الحياة</string>
+    <string name="rel_husband">زوج</string>
+    <string name="rel_wife">زوجة</string>
+    <string name="rel_son">ابن</string>
+    <string name="rel_daughter">ابنة</string>
+    <string name="rel_brother">أخ</string>
+    <string name="rel_sister">أخت</string>
+    <string name="rel_grandparent">جد / جدة</string>
+    <string name="rel_other">آخر</string>
+    <string name="dialog_delete_member_title">حذف الفرد</string>
+    <string name="dialog_delete_member_msg">هل أنت متأكد من رغبتك في حذف هذا الفرد من العائلة؟</string>
+    <string name="btn_remove">حذف</string>
+    <string name="msg_member_removed">تم حذف الفرد بنجاح</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">صحتي</string>
+    <string name="label_age">العمر</string>
+    <string name="label_reminder">تذكير</string>
+    <string name="title_health_records">السجلات الصحية</string>
+    <string name="record_medications">الأدوية</string>
+    <string name="record_allergies">الحساسية</string>
+    <string name="record_conditions">الحالات الصحية</string>
+    <string name="record_vaccinations">التطعيمات</string>
+    <string name="record_active_format">%1$d نشطة</string>
+    <string name="record_reported_format">%1$d مسجلة</string>
+    <string name="record_recorded_format">%1$d مقيدة</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">اللغة</string>
+    <string name="settings_notifications">الإشعارات</string>
+    <string name="settings_version">الإصدار</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">هل أنت متأكد من المغادرة؟</string>
+    <string name="uninstall_card1_title">حافظ على أمان بياناتك الصحية</string>
+    <string name="uninstall_card1_desc">سجلاتك الطبية المحفوظة وسجل الأعراض والمؤشرات الحيوية تبقى آمنة على هذا الجهاز.</string>
+    <string name="uninstall_card2_title">متابعة صحية مستمرة</string>
+    <string name="uninstall_card2_desc">احصل على رؤى فورية من الذكاء الاصطناعي ولا تفوت موعد دوائك أبداً.</string>
+    <string name="uninstall_btn_try_again">متابعة استخدام التطبيق</string>
+    <string name="uninstall_btn_explore">استكشاف الميزات الجديدة</string>
+    <string name="uninstall_btn_dont_uninstall">عدم إلغاء التثبيت</string>
+    <string name="uninstall_btn_still_uninstall">إلغاء التثبيت على أي حال</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">أخبرنا برأيك</string>
+    <string name="uninstall_reason_subtitle">يرجى إخبارنا بسبب المغادرة لنتمكن من تحسين التطبيق:</string>
+    <string name="uninstall_reason_1">لم أعد بحاجة إليه</string>
+    <string name="uninstall_reason_2">الميزات لم تطابق توقعاتي</string>
+    <string name="uninstall_reason_3">التطبيق معقد في الاستخدام</string>
+    <string name="uninstall_reason_4">واجهت مشاكل تقنية أو توقف مفاجئ</string>
+    <string name="uninstall_reason_hint">سبب آخر أو ملاحظات إضافية...</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">تذكيرات الصحة اليومية</string>
+    <string name="noti_channel_desc">إشعارات لتناول الأدوية والفحوصات في مواعيدها</string>
+    <string name="noti_title_morning">صباح الخير!</string>
+    <string name="noti_msg_morning">ابدأ يومك بكوب من الماء وتفقد أدويتك الصباحية.</string>
+    <string name="noti_title_afternoon">فحص الصحة في الظهيرة</string>
+    <string name="noti_msg_afternoon">حان وقت تناول أدوية الظهيرة والحفاظ على رطوبة جسمك.</string>
+    <string name="noti_title_evening">استرخاء المساء</string>
+    <string name="noti_msg_evening">سجل قياسات يومك واحرص على نيل قسط كافٍ من النوم.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">لا تفوت موعد دوائك</string>
+    <string name="dialog_notification_permission_desc">قم بتفعيل الإشعارات لتلقي تذكيرات هامة بصحتك في الوقت المناسب.</string>
+    <string name="dialog_notification_btn_settings">تفعيل في الإعدادات</string>
+    <string name="dialog_notification_btn_dont_allow">عدم السماح</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">تذكيرات الأدوية</string>
+    <string name="noti_reminders_channel_desc">تنبيهات في الموعد المحدد للأدوية والمهام الصحية</string>
+    <string name="noti_reminder_action_done">تم الإنجاز</string>
+    <string name="noti_reminder_default_desc">حان موعد جدولك الصحي الآن</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">الإذن مطلوب</string>
+    <string name="permission_desc">يرجى منح الأذونات المطلوبة لاستخدام هذه الميزة.</string>
+    <string name="permission_btn_settings">الإعدادات</string>
+    <string name="permission_btn_cancel">إلغاء</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">إذن الكاميرا مطلوب</string>
+    <string name="dialog_camera_permission_desc">يلزم إذن الكاميرا لتحليل الحالات الصحية وقياس معدل ضربات القلب.</string>
+    <string name="dialog_camera_btn_settings">فتح الإعدادات</string>
+    <string name="dialog_camera_btn_dont_allow">عدم السماح</string>
+    <string name="dialog_camera_btn_cancel">إلغاء</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">نصائح لالتقاط صورة دقيقة</string>
+    <string name="camera_guide_tip_1">تأكد من وجود إضاءة جيدة وكافية</string>
+    <string name="camera_guide_tip_2">حافظ على ثبات الكاميرا ووضوح التركيز</string>
+    <string name="camera_guide_tip_3">ضع المنطقة المعنية في منتصف الإطار</string>
+    <string name="camera_guide_btn_got_it">فهمت ذلك</string>
+    <string name="camera_capture_success">تم التقاط الصورة بنجاح</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">تأكيد الصورة</string>
+    <string name="label_aspect_ratio">نسبة الأبعاد</string>
+    <string name="btn_use_photo">استخدام هذه الصورة</string>
+    <string name="btn_retake_photo">إعادة الالتقاط</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">صباح الخير،</string>
+    <string name="home_greeting_afternoon">مساء الخير،</string>
+    <string name="home_greeting_evening">طاب مساؤك،</string>
+    <string name="home_subtitle">كيف تشعر اليوم؟</string>
+    <string name="home_ai_assistant_badge">مساعد ذكي</string>
+    <string name="home_ai_assistant_title">اسأل أي شيء عن صحتك</string>
+    <string name="home_btn_chat_ai">محادثة المساعد</string>
+    <string name="home_feature_health_scan">المسح الصحي</string>
+    <string name="home_feature_measure_heart_rate">قياس نبض القلب</string>
+    <string name="home_feature_symptom_checker">فاحص الأعراض</string>
+    <string name="home_section_today_reminder">تذكيرات اليوم</string>
+    <string name="home_section_ai_scan_history">عمليات المسح الأخيرة</string>
+    <string name="home_view_all">عرض الكل</string>
+    <string name="home_no_reminder_title">لا توجد تذكيرات اليوم</string>
+    <string name="home_no_reminder_desc">أضف تذكيرات لجدول أدويتك وروتينك الصحي لتنال رعاية منتظمة.</string>
+    <string name="home_btn_add_reminder">إضافة تذكير</string>
+    <string name="home_no_scans_title">لا يوجد سجل مسح</string>
+    <string name="home_no_scans_desc">ابدأ مسحاً لفحص الجلد أو الفم أو العينين أو الأظافر بصرياً.</string>
+    <string name="home_btn_start_first_scan">بدء أول مسح</string>
+    <string name="home_btn_get_pro">ترقية إلى Pro</string>
+    <string name="home_manage">إدارة</string>
+    <string name="btn_mark_as_done">تحديد كمكتمل</string>
+    <string name="msg_marked_as_done">تم التحديد كمكتمل بنجاح!</string>
+    <string name="reminder_cetirizine_title">سيتريزين</string>
+    <string name="reminder_cetirizine_desc">10 مجم · قرص واحد</string>
+    <string name="reminder_cetirizine_time">8:00 مساءً</string>
+    <string name="reminder_water_title">شرب الماء</string>
+    <string name="reminder_water_desc">200 مل</string>
+    <string name="reminder_water_time">10:00 مساءً</string>
+    <string name="scan_arm_skin_check_title">فحص جلد الذراع</string>
+    <string name="scan_arm_skin_check_date">أمس، 14:30</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">نبض القلب</string>
+    <string name="heart_rate_how_to_measure">طريقة القياس</string>
+    <string name="heart_rate_instruction">ضع إصبع السبابة برفق على الكاميرا الخلفية</string>
+    <string name="heart_rate_btn_start">بدء القياس</string>
+    <string name="heart_rate_statistics_coming_soon">الإحصائيات المفصلة قادمة قريباً</string>
+    <string name="how_to_measure_title">كيفية القياس</string>
+    <string name="how_to_measure_step1_title">غطِّ عدسة الكاميرا بلطف</string>
+    <string name="how_to_measure_step1_desc">ضع إصبع السبابة برفق فوق عدسة الكاميرا والفلاش دون ضغط شديد.</string>
+    <string name="how_to_measure_step2_title">ابقَ هادئاً وثابتاً</string>
+    <string name="how_to_measure_step2_desc">تجنب الحركة أثناء القياس وتنفس بشكل طبيعي.</string>
+    <string name="how_to_measure_step3_title">انتظر حتى يكتمل القياس</string>
+    <string name="how_to_measure_step3_desc">لا ترفع إصبعك حتى يصل شريط التقدم إلى 100%.</string>
+    <string name="heart_rate_guide_title">إرشادات لقياس دقيق</string>
+    <string name="heart_rate_guide_tip_1">غطِّ عدسة الكاميرا تماماً بطرف إصبعك</string>
+    <string name="heart_rate_guide_tip_2">حافظ على ضغط خفيف ومستمر</string>
+    <string name="heart_rate_guide_tip_3">استرخِ وتجنب التحدث أثناء القياس</string>
+    <string name="heart_rate_guide_btn_got_it">فهمت ذلك</string>
+    <string name="heart_rate_measuring_title">جاري قياس نبض القلب</string>
+    <string name="heart_rate_measuring_banner_title">جاري القياس...</string>
+    <string name="heart_rate_measuring_banner_sub">يرجى إبقاء إصبعك ثابتاً</string>
+    <string name="heart_rate_waiting_finger">جاري الكشف عن الإصبع...</string>
+    <string name="heart_rate_waiting_finger_desc">يرجى وضع إصبعك على عدسة الكاميرا</string>
+    <string name="heart_rate_measuring_desc">جاري تحليل إشارة النبض...</string>
+    <string name="heart_rate_bpm_unit">نبضة/د</string>
+    <string name="heart_rate_result_title">نتيجة القياس</string>
+    <string name="heart_rate_result_summary">معدل ضربات القلب ضمن النطاق الطبيعي</string>
+    <string name="heart_rate_bpm_lowercase">نبضة/د</string>
+    <string name="heart_rate_slow_label">بطيء</string>
+    <string name="heart_rate_normal_label">طبيعي</string>
+    <string name="heart_rate_fast_label">سريع</string>
+    <string name="heart_rate_range_slow">&lt; 60 نبضة/د</string>
+    <string name="heart_rate_range_normal">60-100 نبضة/د</string>
+    <string name="heart_rate_range_fast">> 100 نبضة/د</string>
+    <string name="heart_rate_delete_confirm_title">حذف القياس</string>
+    <string name="heart_rate_delete_confirm_msg">هل أنت متأكد من رغبتك في حذف سجل القياس هذا؟</string>
+    <string name="heart_rate_delete_btn">حذف</string>
+    <string name="heart_rate_cancel_btn">إلغاء</string>
+    <string name="heart_rate_deleted">تم حذف سجل القياس</string>
+    <string name="heart_rate_normal">طبيعي</string>
+    <string name="heart_rate_slow">بطيء</string>
+    <string name="heart_rate_fast">سريع</string>
+    <string name="heart_rate_quality_label">جودة الإشارة</string>
+    <string name="heart_rate_hrv_title">تقلب معدل ضربات القلب (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">مللي ثانية</string>
+    <string name="heart_rate_btn_measure_again">إعادة القياس</string>
+    <string name="heart_rate_btn_done">تم</string>
+    <string name="heart_rate_error_finger_lost_title">فُقدت الإشارة</string>
+    <string name="heart_rate_error_finger_lost">تمت إزالة الإصبع أثناء القياس. يرجى المحاولة مرة أخرى.</string>
+    <string name="heart_rate_error_low_quality_title">إشارة ضعيفة</string>
+    <string name="heart_rate_error_low_quality">لم تكن الإشارة واضحة تماماً. يرجى تثبيت الإصبع جيداً على العدسة.</string>
+    <string name="heart_rate_error_no_flash">ضوء الفلاش غير متاح على هذا الجهاز</string>
+    <string name="heart_rate_btn_try_again">إعادة المحاولة</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">الإحصائيات الصحية</string>
+    <string name="statistics_tab_overview">نظرة عامة</string>
+    <string name="statistics_tab_history">السجل</string>
+    <string name="statistics_average">المتوسط</string>
+    <string name="statistics_highest">الأعلى</string>
+    <string name="statistics_lowest">الأدنى</string>
+    <string name="statistics_no_history_title">لا يوجد سجل قياسات</string>
+    <string name="statistics_no_history_desc">قم بإجراء أول قياس لرؤية مؤشراتك الصحية وإحصاءاتك.</string>
+    <string name="statistics_no_data_title">لا توجد بيانات متاحة</string>
+    <string name="statistics_no_data_desc">لم يتم العثور على قياسات لهذه الفترة الزمنية.</string>
+    <string name="statistics_btn_measure_now">قياس الآن</string>
+    <string name="statistics_heart_rate_chart_title">مؤشر نبض القلب</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">ملف العائلة</string>
+    <string name="family_no_members_title">لا يوجد أفراد عائلة مسجلين</string>
+    <string name="family_no_members_desc">أضف أفراد عائلتك لمتابعة سجلاتهم الصحية وتقديم أفضل رعاية لهم.</string>
+    <string name="family_btn_add_first_member">إضافة أول فرد</string>
+    <string name="family_add_member_hint">إضافة أفراد العائلة</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">الإعدادات</string>
+    <string name="settings_section_general">عام</string>
+    <string name="settings_section_support">الدعم والسياسات</string>
+    <string name="settings_item_language">اللغة</string>
+    <string name="settings_item_permission">الأذونات</string>
+    <string name="settings_item_share">مشاركة التطبيق</string>
+    <string name="settings_item_rate">تقييم التطبيق</string>
+    <string name="settings_item_privacy">سياسة الخصوصية</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">فاحص الأعراض</string>
+    <string name="symptom_checker_subtitle">تقييم صحي مدعوم بالذكاء الاصطناعي</string>
+    <string name="symptom_checker_privacy_notice">بياناتك الصحية محفوظة بسرية وأمان تامين</string>
+    <string name="symptom_checker_est_time_label">الوقت المتوقع</string>
+    <string name="symptom_checker_est_time_val">2-3 دقائق</string>
+    <string name="symptom_checker_after_assessment_label">بعد التقييم</string>
+    <string name="symptom_checker_after_assessment_val">احتمالات الحالات وإرشادات الرعاية</string>
+    <string name="symptom_checker_length_label">المدة</string>
+    <string name="symptom_checker_length_val">5-8 أسئلة</string>
+    <string name="symptom_checker_btn_start">بدء التقييم</string>
+    <string name="symptom_checker_start_toast">جاري بدء تقييم الأعراض...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">ما هو عمرك؟</string>
+    <string name="assessment_gender_title">ما هو جنسك البيولوجي؟</string>
+    <string name="assessment_gender_subtitle">يساعدنا في تقديم تحليل طبي أدق</string>
+    <string name="gender_male">ذكر</string>
+    <string name="gender_female">أنثى</string>
+    <string name="assessment_symptoms_title">ما هي الأعراض التي تعاني منها؟</string>
+    <string name="assessment_symptoms_subtitle">اختر منطقة من الجسم للبحث عن الأعراض</string>
+    <string name="tab_body_map">خريطة الجسم</string>
+    <string name="tab_all_symptoms">جميع الأعراض</string>
+    <string name="region_all">الكل</string>
+    <string name="region_head">الرأس والرقبة</string>
+    <string name="region_neck">الرقبة</string>
+    <string name="region_shoulders">الكتفان</string>
+    <string name="region_chest">الصدر</string>
+    <string name="region_abdomen">البطن</string>
+    <string name="region_arms">الذراعان</string>
+    <string name="region_legs">الساقان</string>
+    <string name="search_symptoms_hint">ابحث عن الأعراض...</string>
+    <string name="no_symptoms_found">لم يتم العثور على أعراض مطابقة</string>
+    <string name="assessment_related_symptoms_title">أعراض ذات صلة</string>
+    <string name="assessment_related_symptoms_subtitle">هل تعاني من أي من الأعراض التالية؟</string>
+    <string name="assessment_insect_bite_title">هل تعرضت للدغة حشرة مؤخراً؟</string>
+    <string name="option_yes">نعم</string>
+    <string name="option_no">لا</string>
+    <string name="option_dont_know">لا أعلم</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">الخروج من التطبيق؟</string>
+    <string name="dialog_exit_app_desc">هل أنت متأكد من رغبتك في الخروج من HealthCare AI؟</string>
+    <string name="dialog_exit_app_btn_stay">البقاء</string>
+    <string name="dialog_exit_app_btn_exit">خروج</string>
+    <string name="dialog_exit_assessment_title">مغادرة التقييم؟</string>
+    <string name="dialog_exit_assessment_desc">لن يتم حفظ تقدمك الحالي في التقييم. هل تود الخروج؟</string>
+    <string name="dialog_exit_btn_continue">المتابعة</string>
+    <string name="dialog_exit_btn_exit">خروج</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">متابعة</string>
+    <string name="btn_back">رجوع</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">المساعد الصحي الذكي</string>
+    <string name="ai_chat_welcome_title">كيف يمكنني مساعدتك في صحتك اليوم؟</string>
+    <string name="ai_chat_suggestion_1_title">تحليل الأعراض</string>
+    <string name="ai_chat_suggestion_1_desc">صف ما تشعر به بالتفصيل</string>
+    <string name="ai_chat_suggestion_1_query">أشعر بصداع خفيف وإرهاق، ماذا علي أن أفعل؟</string>
+    <string name="ai_chat_suggestion_2_title">أسئلة عن الأدوية</string>
+    <string name="ai_chat_suggestion_2_desc">استفسر عن الاستخدام والجرعات</string>
+    <string name="ai_chat_suggestion_2_query">ما هي الاحتياطات عند تناول الباراسيتامول؟</string>
+    <string name="ai_chat_suggestion_3_title">نصائح صحية يومية</string>
+    <string name="ai_chat_suggestion_3_desc">إرشادات لنمط حياة صحي ومتوازن</string>
+    <string name="ai_chat_suggestion_3_query">ما هي أفضل الطرق لتحسين جودة النوم ليلاً؟</string>
+    <string name="ai_chat_input_hint">اطرح أي سؤال صحي...</string>
+    <string name="ai_chat_new_chat">محادثة جديدة</string>
+    <string name="ai_chat_clear_confirm_title">مسح المحادثة</string>
+    <string name="ai_chat_clear_confirm_msg">هل أنت متأكد من رغبتك في مسح سجل هذه المحادثة؟</string>
+    <string name="ai_chat_listening">جاري الاستماع...</string>
+    <string name="ai_chat_mic_permission_required">يلزم إذن الميكروفون لاستخدام الإدخال الصوتي</string>
+    <string name="ai_chat_error_fallback">عذراً، حدث خطأ أثناء معالجة الرد. يرجى المحاولة مرة أخرى.</string>
+    <string name="ai_chat_today">اليوم</string>
+    <string name="ai_chat_yesterday">أمس</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">المحادثة</string>
+    <string name="conversation_empty_title">لا توجد رسائل</string>
+    <string name="conversation_empty_desc">ابدأ محادثة مع المساعد الذكي للحصول على إجابات لأسئلتك الصحية.</string>
+    <string name="time_just_now">الآن</string>
+    <string name="time_minute_ago">منذ دقيقة واحدة</string>
+    <string name="time_minutes_ago">منذ %1$d دقيقة</string>
+    <string name="time_hour_ago">منذ ساعة واحدة</string>
+    <string name="time_hours_ago">منذ %1$d ساعة</string>
+    <string name="time_day_ago">منذ يوم واحد</string>
+    <string name="time_days_ago">منذ %1$d يوم</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">تذكير جديد</string>
+    <string name="label_reminder_category">الفئة</string>
+    <string name="hint_select_category">اختر الفئة</string>
+    <string name="label_reminder_name">الاسم</string>
+    <string name="label_reminder_strength">الجرعة / القوة</string>
+    <string name="hint_reminder_strength">مثال: 500 مجم</string>
+    <string name="label_reminder_form">الشكل الدوائي</string>
+    <string name="hint_reminder_form">مثال: أقراص، كبسولات</string>
+    <string name="label_reminder_repeat">التكرار</string>
+    <string name="hint_repeat_schedule">اختر الجدول</string>
+    <string name="label_reminder_time">الوقت</string>
+    <string name="time_no_times_added">لم تتم إضافة أوقات بعد</string>
+    <string name="label_reminder_start_date">تاريخ البدء</string>
+    <string name="label_reminder_end_date">تاريخ الانتهاء</string>
+    <string name="hint_select_date">اختر التاريخ</string>
+    <string name="label_reminder_notes">ملاحظات (اختياري)</string>
+    <string name="hint_reminder_name">أدخل اسم التذكير</string>
+    <string name="hint_enter_medication_name">أدخل اسم الدواء</string>
+    <string name="hint_add_notes">إرشادات إضافية أو ملاحظات...</string>
+    <string name="reminder_btn_add_time">+ إضافة وقت</string>
+    <string name="btn_save_reminder">حفظ التذكير</string>
+    <string name="repeat_every_day">كل يوم</string>
+    <string name="repeat_weekdays">أيام الأسبوع (الاثنين-الجمعة)</string>
+    <string name="repeat_weekends">عطلة نهاية الأسبوع</string>
+    <string name="repeat_weekly">أسبوعياً</string>
+    <string name="repeat_monthly">شهرياً</string>
+    <string name="repeat_once">مرة واحدة فقط</string>
+    <string name="form_tablet">أقراص</string>
+    <string name="form_capsule">كبسولات</string>
+    <string name="form_liquid">شراب / سائل</string>
+    <string name="form_drops">قطرات</string>
+    <string name="form_injection">حقن</string>
+    <string name="form_inhaler">بخاخ</string>
+    <string name="form_other">شكل آخر</string>
+    <string name="msg_reminder_saved">تم حفظ التذكير بنجاح!</string>
+    <string name="msg_enter_reminder_name">يرجى إدخال اسم التذكير</string>
+    <string name="msg_time_already_added">تمت إضافة هذا الوقت مسبقاً</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">اختر الفئة</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">اختر التكرار</string>
+    <string name="category_health_monitoring_title">متابعة الصحة</string>
+    <string name="category_health_monitoring_desc">تتبع الضغط، السكر، ومعدل النبض</string>
+    <string name="category_medication_title">الأدوية</string>
+    <string name="category_medication_desc">الأدوية اليومية والمكملات</string>
+    <string name="category_healthy_habits_title">عادات صحية</string>
+    <string name="category_healthy_habits_desc">شرب الماء، الرياضة، النوم</string>
+    <string name="category_appointments_title">مواعيد الأطباء</string>
+    <string name="category_appointments_desc">زيارات العيادة والاستشارات الطبية</string>
+    <string name="category_vaccinations_title">التطعيمات</string>
+    <string name="category_vaccinations_desc">اللقاحات والجرعات التنشيطية</string>
+    <string name="category_other_title">أخرى</string>
+    <string name="category_other_desc">تذكيرات صحية مخصصة</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">تفاصيل التذكير</string>
+    <string name="title_edit_reminder">تعديل التذكير</string>
+    <string name="reminder_action_edit">تعديل</string>
+    <string name="reminder_action_delete">حذف</string>
+    <string name="reminder_status_taken">تم تناوله</string>
+    <string name="reminder_action_undo">تراجع</string>
+    <string name="msg_reminder_deleted">تم حذف التذكير</string>
+    <string name="msg_reminder_updated">تم تحديث التذكير</string>
+    <string name="msg_marked_as_undone">تم إلغاء تحديد الاكتمال</string>
+    <string name="delete_reminder_confirm">هل أنت متأكد من رغبتك في حذف هذا التذكير؟</string>
+    <string name="delete_confirm_title">تأكيد الحذف</string>
+    <string name="delete_confirm_message">هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="btn_delete">حذف</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">ما رأيك في HealthCare AI؟</string>
+    <string name="rate_dialog_message">تقييمك يساعدنا على تحسين التطبيق وتقديم أفضل رعاية صحية لك.</string>
+    <string name="rate_dialog_submit">تقييم</string>
+    <string name="rate_dialog_maybe_later">لاحقاً</string>
+    <string name="rate_dialog_thank_you">شكراً جزيلاً على تقييمك!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">تفاصيل الدواء</string>
+    <string name="title_allergy_details">تفاصيل الحساسية</string>
+    <string name="title_condition_details">تفاصيل الحالة الصحية</string>
+    <string name="title_vaccination_details">تفاصيل التطعيم</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">اختر الشكل</string>
+    <string name="title_select_severity">اختر الشدة</string>
+    <string name="severity_mild">خفيفة</string>
+    <string name="severity_moderate">متوسطة</string>
+    <string name="severity_severe">شديدة</string>
+    <string name="severity_not_sure">غير متأكد</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">تحديث الحالة</string>
+    <string name="btn_save_status">حفظ الحالة</string>
+    <string name="status_ongoing_title">مستمرة</string>
+    <string name="status_ongoing_sub">نشطة حالياً وتخضع للعلاج</string>
+    <string name="status_resolved_title">تم الشفاء</string>
+    <string name="status_resolved_sub">اختفت الأعراض تماماً</string>
+    <string name="status_unsure_title">غير مؤكدة</string>
+    <string name="status_unsure_sub">الحالة الحالية غير واضحة</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">إضافة وقت</string>
+    <string name="label_hour">ساعة</string>
+    <string name="label_minute">دقيقة</string>
+    <string name="label_already_add">الأوقات المضافة بالفعل</string>
+    <string name="btn_add_time">إضافة وقت</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">اكتمل تقييم الذكاء الاصطناعي</string>
+    <string name="care_advice_title">نصائح الرعاية</string>
+    <string name="care_advice_subtitle_format">بناءً على الأعراض التي ذكرتها (%1$s)، إليك الخطوات الموصى بها لمساعدتك على التعافي بأمان:</string>
+    <string name="care_advice_self_care">الرعاية الذاتية</string>
+    <string name="care_advice_monitor_symptoms">مراقبة الأعراض</string>
+    <string name="care_advice_when_to_seek_care">متى يجب طلب الرعاية الطبية</string>
+    <string name="care_advice_self_care_bullet_1">احرص على أخذ قسط من النوم لا يقل عن 8 ساعات لمساعدة جسمك على التعافي.</string>
+    <string name="care_advice_self_care_bullet_2">اشرب كميات كافية من الماء والسوائل للحفاظ على ترطيب جسمك.</string>
+    <string name="care_advice_monitor_bullet_1">افحص درجة حرارتك مرتين يومياً.</string>
+    <string name="care_advice_monitor_bullet_2">تابع معدل ضربات قلبك في وضع الراحة.</string>
+    <string name="care_advice_seek_care_bullet_1">إذا تجاوزت الحرارة 39.4°C، أو استمر الألم لأكثر من 48 ساعة، أو شعرت بضيق في التنفس، فاطلب الرعاية الطبية فوراً.</string>
+    <string name="btn_return_to_home">العودة للرئيسية</string>
+    <string name="btn_set_a_reminder">ضبط تذكير</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">النتيجة</string>
+    <string name="symptom_result_doctor_title">استشر طبيباً</string>
+    <string name="symptom_result_doctor_desc">هذا التحليل ليس بديلاً عن التشخيص الطبي المتخصص. يرجى استشارة الطبيب للتقييم الدقيق.</string>
+    <string name="title_possible_conditions">الحالات المحتملة</string>
+    <string name="title_recommended_actions">الإجراءات الموصى بها</string>
+    <string name="btn_view_care_advice">عرض نصائح الرعاية</string>
+    <string name="match_strong">تطابق قوي</string>
+    <string name="match_moderate">تطابق متوسط</string>
+    <string name="match_possible">تطابق محتمل</string>
+    <string name="btn_ask_ai_about_result">اسأل الذكاء الاصطناعي عن النتيجة</string>
+    <string name="medical_disclaimer_title">إخلاء مسؤولية طبي</string>
+    <string name="medical_disclaimer_desc">هذه الأداة مصممة لأغراض إعلامية وتثقيفية فقط ولا تعد بديلاً عن المشورة الطبية المتخصصة.</string>
+    <string name="label_selected">المحدد</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">نتائج التحليل</string>
+    <string name="analysis_loading_title">جاري تحليل الصورة...</string>
+    <string name="analysis_loading_desc">يقوم الذكاء الاصطناعي بمقارنة الخصائص البصرية. يرجى الانتظار.</string>
+    <string name="analysis_unable_title">تعذر إجراء التحليل</string>
+    <string name="analysis_unable_desc">الصورة غير واضحة تماماً أو لم يتم التعرف على معالم محددة. يرجى المحاولة مجدداً في إضاءة أفضل.</string>
+    <string name="analysis_tips_title">إرشادات لصورة أوضح</string>
+    <string name="analysis_tip_1">تأكد من توفر إضاءة كافية ومناسبة</string>
+    <string name="analysis_tip_2">ثبت الكاميرا وقربها من المنطقة المستهدفة</string>
+    <string name="analysis_tip_3">تجنب الصور المشوشة أو المعتمة أو شديدة السطوع</string>
+    <string name="btn_rescan">إعادة المسح</string>
+    <string name="btn_choose_from_gallery">اختيار من المعرض</string>
+    <string name="title_save_result_to">حفظ النتيجة في</string>
+    <string name="title_key_findings">النتائج الرئيسية</string>
+    <string name="title_care_suggestions">اقتراحات الرعاية</string>
+    <string name="title_when_to_seek_care">متى يجب طلب الرعاية الطبية</string>
+    <string name="ai_processing_title">تقييم الذكاء الاصطناعي جاري</string>
+    <string name="ai_processing_desc">جاري تحليل المدخلات البصرية والأعراض...</string>
+    <string name="title_report_result">تقرير النتيجة</string>
+    <string name="btn_report">تقرير</string>
+    <string name="title_choose_reminders">اختيار التذكيرات</string>
+    <string name="btn_save_reminders_count">حفظ %1$d تذكيرات</string>
+    <string name="btn_save_reminder_single">حفظ التذكير</string>
+    <string name="btn_edit">تعديل</string>
+    <string name="btn_understood">فهمت ذلك</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">إضافة حساسية</string>
+    <string name="title_edit_allergy">تعديل الحساسية</string>
+    <string name="label_allergen_name">مسبب الحساسية</string>
+    <string name="label_type">النوع</string>
+    <string name="type_food">طعام</string>
+    <string name="label_reaction">رد الفعل التحسسي</string>
+    <string name="label_first_noticed">أول ظهور</string>
+    <string name="date_not_provided">غير محدد</string>
+    <string name="btn_save_allergy">حفظ الحساسية</string>
+    <string name="title_add_condition">إضافة حالة صحية</string>
+    <string name="title_edit_condition">تعديل الحالة الصحية</string>
+    <string name="label_condition_name">اسم الحالة</string>
+    <string name="label_status">الحالة</string>
+    <string name="label_clinician">الطبيب المعالج</string>
+    <string name="label_clinic">العيادة / المستشفى</string>
+    <string name="not_provided">غير محدد</string>
+    <string name="label_diagnosis_date">تاريخ التشخيص</string>
+    <string name="btn_save_condition">حفظ الحالة</string>
+    <string name="title_add_vaccination">إضافة تطعيم</string>
+    <string name="title_edit_vaccination">تعديل التطعيم</string>
+    <string name="label_vaccine_name">اسم اللقاح</string>
+    <string name="label_dose_number">رقم الجرعة</string>
+    <string name="label_batch_number">رقم التشغيلة</string>
+    <string name="btn_save_vaccination">حفظ التطعيم</string>
+    <string name="title_add_medication">إضافة دواء</string>
+    <string name="title_edit_medication">تعديل الدواء</string>
+    <string name="label_reason">سبب الاستخدام</string>
+    <string name="btn_save_medication">حفظ الدواء</string>
+    <string name="label_additional_details">تفاصيل إضافية (اختياري)</string>
+    <string name="label_medication_name">اسم الدواء</string>
+    <string name="no_records_yet_format">لا توجد سجلات %1$s بعد</string>
+    <string name="empty_records_desc">أضف سجلك الأول باستخدام الزر أدناه</string>
+    <string name="btn_add_record_format">إضافة %1$s</string>
+    <string name="title_choose_item_format">اختر %1$s</string>
+    <string name="no_items_added_yet_format">لم تتم إضافة أي %1$s بعد</string>
+    <string name="add_records_quick_select_desc">أضف سجلاتك لسهولة الاختيار السريع</string>
+    <string name="btn_add_item_format">+ إضافة %1$s</string>
+    <string name="time_am">ص</string>
+    <string name="time_pm">م</string>
+    <string name="cat_temperature">درجة حرارة الجسم</string>
+    <string name="cat_drink_water">شرب الماء</string>
+    <string name="cat_exercise">الرياضة</string>
+    <string name="cat_sleep">النوم</string>
+    <string name="label_date_received">تاريخ التلقي</string>
+    <string name="label_updated">تم التحديث</string>
+    <string name="record_diagnosed_format">%1$d تم تشخيصها</string>
+    <string name="label_notes">الملاحظات</string>
+    <string name="label_note">ملاحظة</string>
+    <string name="label_severity">الشدة</string>
+    <string name="label_strength">الجرعة</string>
+    <string name="label_form">الشكل</string>
+    <string name="status_ongoing">مستمرة</string>
+    <string name="status_updated_format">تم تحديث الحالة إلى %1$s</string>
+    <string name="toast_photo_load_failed">فشل تحميل الصورة المحددة</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: مسح غير محدود ودعم على مدار الساعة!</string>
+    <string name="toast_opening_privacy_policy">جاري فتح سياسة الخصوصية…</string>
+    <string name="medical_disclaimer_dialog_title">إخلاء مسؤولية طبي</string>
+    <string name="ai_health_disclaimer_title">تنبيه صحي بالذكاء الاصطناعي</string>
+    <string name="ai_health_disclaimer_desc">هذا التحليل البصري مدعوم بالذكاء الاصطناعي ومصمم لأغراض المتابعة العامة والتثقيف. لا يغني عن التقييم الطبي المتخصص أو تشخيص طبيب الجلدية.\n\nإذا كنت تعاني من نزيف أو تغيرات سريعة أو ألم حاد، يرجى مراجعة الطبيب على الفور.</string>
+    <string name="medical_disclaimer_full_text">يقدم تقييم الأعراض هذا رؤى تثقيفية وإرشادية فقط. وهو ليس بديلاً عن المشورة الطبية المتخصصة أو التشخيص السريري أو العلاج الطبي.\n\nاستشر دائماً طبيبك أو مقدم الرعاية الصحية المؤهل بشأن أي أسئلة تخص حالتك الصحية.</string>
+    <string name="msg_please_choose_item_format">يرجى اختيار %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">حمى خفيفة، إرهاق</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">محتوى ضار</string>
+    <string name="report_illegal_content">محتوى غير قانوني</string>
+    <string name="report_offensive_content">محتوى مسيء</string>
+    <string name="report_biased_content">محتوى متحيز</string>
+    <string name="report_trademark_violation">انتهاك العلامة التجارية</string>
+    <string name="report_copyright_violation">انتهاك حقوق النشر</string>
+    <string name="report_nudity_sexual_content">عري/محتوى جنسي</string>
+    <string name="report_violence_gore">عنف/مشاهد دموية</string>
+    <string name="report_others">أخرى</string>
+    <string name="toast_report_submitted">شكراً لإبلاغنا. سنقوم بمراجعة هذه النتيجة.</string>
+
+    <string name="label_relationship_you">أنت</string>
+    <string name="reminder_water_notes">الترطيب يسرع إصلاح الأنسجة واستعادة حاجز الجلد.</string>
+    <string name="reminder_check_temperature_title">قياس درجة الحرارة</string>
+    <string name="reminder_check_temperature_notes">راقب درجة الحرارة للكشف المبكر عن الحمى أو العدوى.</string>
+    <string name="reminder_observe_area_title">العناية بالبشرة والمراقبة</string>
+    <string name="reminder_observe_area_notes">تحقق من أي تغييرات في الاحمرار أو الحجم أو الإحساس.</string>
+</resources>

@@ -31,8 +31,10 @@ class NotificationReceiver : BroadcastReceiver() {
                 val reminderId = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_ID) ?: return
                 val timeIndex = intent.getIntExtra(ReminderScheduler.EXTRA_TIME_INDEX, 0)
                 val timeStr = intent.getStringExtra(ReminderScheduler.EXTRA_TIME_STR) ?: ""
-                val name = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_NAME) ?: "Reminder"
-                val desc = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_DESC) ?: ""
+                val rawName = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_NAME) ?: "Reminder"
+                val rawDesc = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_DESC) ?: ""
+                val name = ReminderLocalizationHelper.getLocalizedName(context, rawName)
+                val desc = ReminderLocalizationHelper.getLocalizedDescription(context, rawDesc)
                 val category = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_CATEGORY) ?: "Health"
                 val repeat = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_REPEAT) ?: "Every day"
 

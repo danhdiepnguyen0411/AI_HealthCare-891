@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.SymptomAssessmentResult
 import com.example.healthcareai.data.model.SymptomCareAdvice
 import com.example.healthcareai.data.model.SymptomCondition
@@ -66,9 +67,9 @@ class SymptomResultActivity : BaseActivity() {
         val extraResult = intent.getSerializableExtra(EXTRA_ASSESSMENT_RESULT) as? SymptomAssessmentResult
         if (extraResult != null) {
             assessmentResult = extraResult
-            binding.tvHeaderTitle.text = "Consult a doctor"
+            binding.tvHeaderTitle.text = getString(R.string.symptom_result_doctor_title)
             binding.tvHeaderSubtitle.text = extraResult.triageDescription.ifBlank {
-                "Your symptoms may require medical evaluation. Schedule an appointment with your doctor. If your symptoms get worse, see a doctor immediately."
+                getString(R.string.symptom_result_doctor_desc)
             }
             conditionsList.clear()
             conditionsList.addAll(extraResult.possibleConditions)
@@ -185,10 +186,13 @@ class SymptomResultActivity : BaseActivity() {
             )
         }
 
+        binding.tvHeaderTitle.text = getString(R.string.symptom_result_doctor_title)
+        binding.tvHeaderSubtitle.text = getString(R.string.symptom_result_doctor_desc)
+
         assessmentResult = SymptomAssessmentResult(
-            triageLevel = "Consult a doctor",
-            triageDescription = "Your symptoms may require medical evaluation. Schedule an appointment with your doctor. If your symptoms get worse, see a doctor immediately.",
-            reportedSymptomsSummary = intent.getStringArrayListExtra(EXTRA_SELECTED_SYMPTOMS)?.joinToString(", ") ?: "mild fever, fatigue",
+            triageLevel = getString(R.string.symptom_result_doctor_title),
+            triageDescription = getString(R.string.symptom_result_doctor_desc),
+            reportedSymptomsSummary = intent.getStringArrayListExtra(EXTRA_SELECTED_SYMPTOMS)?.joinToString(", ") ?: getString(R.string.symptom_sample_mild_fever_fatigue),
             possibleConditions = conditionsList,
             careAdvice = conditionsList.firstOrNull()?.careAdvice ?: SymptomCareAdvice()
         )
@@ -233,7 +237,13 @@ class SymptomResultActivity : BaseActivity() {
 
             // Progress & Match label
             itemBinding.pbMatch.progress = condition.matchProgress
-            itemBinding.tvMatchLabel.text = condition.matchLabel
+            val localizedMatchLabel = when {
+                condition.matchLabel.contains("Strong", ignoreCase = true) -> getString(R.string.match_strong)
+                condition.matchLabel.contains("Moderate", ignoreCase = true) -> getString(R.string.match_moderate)
+                condition.matchLabel.contains("Possible", ignoreCase = true) -> getString(R.string.match_possible)
+                else -> condition.matchLabel
+            }
+            itemBinding.tvMatchLabel.text = localizedMatchLabel
 
             // Title
             itemBinding.tvConditionTitle.text = condition.name
@@ -266,9 +276,9 @@ class SymptomResultActivity : BaseActivity() {
 
     private fun showInfoDisclaimerDialog() {
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Medical Disclaimer")
-            .setMessage("This symptom assessment provides educational and informational insights only. It is not intended to be a substitute for professional medical advice, clinical diagnosis, or medical treatment.\n\nAlways seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition.")
-            .setPositiveButton("Understood", null)
+            .setTitle(R.string.medical_disclaimer_dialog_title)
+            .setMessage(R.string.medical_disclaimer_full_text)
+            .setPositiveButton(R.string.btn_understood, null)
             .create()
 
         DialogImmersiveHelper.showImmersive(dialog)

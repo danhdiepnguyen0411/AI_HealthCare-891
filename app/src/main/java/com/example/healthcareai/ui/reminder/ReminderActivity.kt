@@ -29,10 +29,6 @@ class ReminderActivity : BaseActivity() {
     private val weekDaysCalendar = mutableListOf<Calendar>()
     private var selectedDayIndex = 3 // default to middle day or today
 
-    private val monthYearFormat = SimpleDateFormat("MMMM yyyy", Locale.US)
-    private val dayNumberFormat = SimpleDateFormat("d", Locale.US)
-    private val dayNameFormat = SimpleDateFormat("EEE", Locale.US) // "Mon", "Tue", etc.
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReminderBinding.inflate(layoutInflater)
@@ -113,8 +109,33 @@ class ReminderActivity : BaseActivity() {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
     }
 
+    private fun getDayOfWeekAbbreviation(cal: Calendar, locale: Locale): String {
+        val lang = locale.language.lowercase()
+        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+        if (lang.startsWith("vi")) {
+            return when (dayOfWeek) {
+                Calendar.MONDAY -> "T2"
+                Calendar.TUESDAY -> "T3"
+                Calendar.WEDNESDAY -> "T4"
+                Calendar.THURSDAY -> "T5"
+                Calendar.FRIDAY -> "T6"
+                Calendar.SATURDAY -> "T7"
+                Calendar.SUNDAY -> "CN"
+                else -> ""
+            }
+        }
+        val dayFormat = SimpleDateFormat("EEE", locale)
+        val formatted = dayFormat.format(cal.time)
+        return if (formatted.length > 3) formatted.take(3) else formatted
+    }
+
     private fun renderCalendar() {
-        binding.tvCalendarMonthYear.text = monthYearFormat.format(selectedCalendarDay.time)
+        val currentLocale = com.example.healthcareai.util.LocaleHelper.getSavedLocale(this)
+        val monthYearFormat = SimpleDateFormat("MMMM yyyy", currentLocale)
+        val dayNumberFormat = SimpleDateFormat("d", currentLocale)
+
+        val rawMonthYear = monthYearFormat.format(selectedCalendarDay.time)
+        binding.tvCalendarMonthYear.text = rawMonthYear.replaceFirstChar { it.uppercase(currentLocale) }
 
         val dayViews = listOf(
             binding.day0.root to (binding.day0.tvDayNumber to (binding.day0.tvDayName to binding.day0.viewDayDot)),
@@ -138,9 +159,7 @@ class ReminderActivity : BaseActivity() {
             val dayCal = weekDaysCalendar[i]
 
             tvNum.text = dayNumberFormat.format(dayCal.time)
-            // 2-letter abbreviation matching design e.g. Mo, Tu, We/Wed, Th, Fr, Sa, Su
-            val rawName = dayNameFormat.format(dayCal.time)
-            tvName.text = if (rawName.length >= 2) rawName.substring(0, 2) else rawName
+            tvName.text = getDayOfWeekAbbreviation(dayCal, currentLocale)
 
             val isSelected = (i == selectedDayIndex)
             if (isSelected) {

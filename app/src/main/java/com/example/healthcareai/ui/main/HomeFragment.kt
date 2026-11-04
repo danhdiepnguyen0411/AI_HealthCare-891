@@ -22,6 +22,7 @@ import com.example.healthcareai.databinding.ItemHomeFamilyAvatarBinding
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ItemReminderCardBinding
@@ -104,7 +105,7 @@ class HomeFragment : Fragment() {
         binding.btnGetPro.setOnClickListener {
             Toast.makeText(
                 requireContext(),
-                "HealthLink Pro: Unlimited AI scans & 24/7 care support!",
+                getString(R.string.toast_healthlink_pro),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -214,6 +215,7 @@ class HomeFragment : Fragment() {
                 marginStart = 0
             }
             binding.cardFamilyHub.selectMember(-1, animate = false, force = true)
+            updateFamilyStats(null)
             return
         }
 
@@ -264,6 +266,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardFamilyHub.selectMember(selectedFamilyMemberIndex, animate = false, force = true)
+        val initialProfile = familyMembers.getOrNull(selectedFamilyMemberIndex) ?: familyMembers.firstOrNull()
+        updateFamilyStats(initialProfile?.id)
     }
 
     /**
@@ -298,6 +302,11 @@ class HomeFragment : Fragment() {
         // Animate custom tab background in FamilyHubCardView
         binding.cardFamilyHub.selectMember(index, animate = true)
 
+        val profileRepo = ProfileRepository.getInstance(requireContext())
+        val familyMembers = profileRepo.getFamilyMembers()
+        val targetProfile = familyMembers.getOrNull(index)
+        updateFamilyStats(targetProfile?.id)
+
         // Smooth scroll to make selected member visible if near/beyond edge
         val selectedChild = row.getChildAt(index)
         if (selectedChild != null) {
@@ -313,6 +322,20 @@ class HomeFragment : Fragment() {
                 binding.scrollFamilyAvatars.smoothScrollTo(childRight + margin - scrollWidth, 0)
             }
         }
+    }
+
+    private fun updateFamilyStats(profileId: String?) {
+        val ctx = context ?: return
+        val repo = HealthRecordRepository.getInstance(ctx)
+        val medCount = if (profileId != null) repo.getRecordsByCategory("Medication", profileId).size else 0
+        val allergyCount = if (profileId != null) repo.getRecordsByCategory("Allergies", profileId).size else 0
+        val conditionCount = if (profileId != null) repo.getRecordsByCategory("Conditions", profileId).size else 0
+        val vaccCount = if (profileId != null) repo.getRecordsByCategory("Vaccinations", profileId).size else 0
+
+        binding.tvFamilyStatMedications.text = getString(R.string.record_active_format, medCount)
+        binding.tvFamilyStatAllergies.text = getString(R.string.record_reported_format, allergyCount)
+        binding.tvFamilyStatConditions.text = getString(R.string.record_reported_format, conditionCount)
+        binding.tvFamilyStatVaccinations.text = getString(R.string.record_recorded_format, vaccCount)
     }
 
     /**
@@ -341,8 +364,8 @@ class HomeFragment : Fragment() {
             for (item in sorted.take(2)) {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
                 cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
-                cardBinding.tvReminderTitle.text = item.name
-                val desc = item.getDisplayDescription()
+                cardBinding.tvReminderTitle.text = item.getLocalizedName(ctx)
+                val desc = item.getLocalizedDescription(ctx)
                 if (desc.isNotBlank()) {
                     cardBinding.tvReminderDesc.visibility = View.VISIBLE
                     cardBinding.tvReminderDesc.text = desc

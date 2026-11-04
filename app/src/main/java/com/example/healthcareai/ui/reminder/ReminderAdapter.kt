@@ -56,9 +56,10 @@ class ReminderAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ReminderItem) {
+            val context = binding.root.context
             binding.ivReminderIcon.setImageResource(item.getIconResId())
-            binding.tvReminderTitle.text = item.name
-            val desc = item.getDisplayDescription()
+            binding.tvReminderTitle.text = item.getLocalizedName(context)
+            val desc = item.getLocalizedDescription(context)
             if (desc.isNotBlank()) {
                 binding.tvReminderDesc.visibility = View.VISIBLE
                 binding.tvReminderDesc.text = desc

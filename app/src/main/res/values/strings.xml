@@ -32,7 +32,7 @@
     <string name="category_other_area_desc">Another visible area of the body</string>
     <string name="btn_start_scan">Start Scan</string>
     
-    <!-- Splash & Loading -->
+    <!-- Splash &amp; Loading -->
     <string name="splash_app_title">HealthLink</string>
     <string name="splash_loading">Loading...</string>
     <string name="splash_ads_notice">This action can contain ads</string>
@@ -163,7 +163,7 @@
     <string name="dialog_notification_btn_settings">Go to settings</string>
     <string name="dialog_notification_btn_dont_allow">Don’t allow</string>
 
-    <!-- Medication & Health Reminders Channel -->
+    <!-- Medication &amp; Health Reminders Channel -->
     <string name="noti_reminders_channel_name">Medication &amp; Health Reminders</string>
     <string name="noti_reminders_channel_desc">Timely alarms and notifications for medications, hydration, and health tasks.</string>
     <string name="noti_reminder_action_done">Mark as done</string>
@@ -182,7 +182,7 @@
     <string name="dialog_camera_btn_dont_allow">Don’t allow</string>
     <string name="dialog_camera_btn_cancel">Not Now</string>
 
-    <!-- Camera Screen & Guide -->
+    <!-- Camera Screen &amp; Guide -->
     <string name="camera_guide_title">Photo Guide</string>
     <string name="camera_guide_tip_1">1. Keep the target area well-centered in the frame.</string>
     <string name="camera_guide_tip_2">2. Ensure clear, natural lighting without harsh shadows.</string>
@@ -465,7 +465,7 @@
     <string name="category_other_title">Other</string>
     <string name="category_other_desc">Personal health reminders</string>
 
-    <!-- Reminder History & Detail Management -->
+    <!-- Reminder History &amp; Detail Management -->
     <string name="title_reminder">Reminder</string>
     <string name="title_edit_reminder">Edit reminder</string>
     <string name="reminder_action_edit">Edit reminder</string>
@@ -493,7 +493,7 @@
     <string name="title_condition_details">Condition details</string>
     <string name="title_vaccination_details">Vaccination details</string>
 
-    <!-- Select Form & Severity Bottom Sheets -->
+    <!-- Select Form &amp; Severity Bottom Sheets -->
     <string name="title_select_form">Select form</string>
     <string name="title_select_severity">Select severity</string>
     <string name="severity_mild">Mild</string>
@@ -517,4 +517,142 @@
     <string name="label_minute">Minute</string>
     <string name="label_already_add">Already add</string>
     <string name="btn_add_time">Add time</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">AI ASSESSMENT COMPLETE</string>
+    <string name="care_advice_title">Care Advice</string>
+    <string name="care_advice_subtitle_format">Based on your reported symptoms (%1$s), here are the recommended next steps to help you feel better safely.</string>
+    <string name="care_advice_self_care">Self-Care</string>
+    <string name="care_advice_monitor_symptoms">Monitor Symptoms</string>
+    <string name="care_advice_when_to_seek_care">When to Seek Medical Care</string>
+    <string name="care_advice_self_care_bullet_1">Ensure you get at least 8 hours of sleep to help your body recover.</string>
+    <string name="care_advice_self_care_bullet_2">Drink plenty of water or clear fluids to stay hydrated.</string>
+    <string name="care_advice_monitor_bullet_1">Check your temperature twice a day.</string>
+    <string name="care_advice_monitor_bullet_2">Keep an eye on your resting heart rate using your wearable.</string>
+    <string name="care_advice_seek_care_bullet_1">If your fever exceeds 39.4°C, pain persists for more than 48 hours, or you experience difficulty breathing, seek medical attention immediately.</string>
+    <string name="btn_return_to_home">Return to Home</string>
+    <string name="btn_set_a_reminder">Set a reminder</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">Result</string>
+    <string name="symptom_result_doctor_title">Consult a doctor</string>
+    <string name="symptom_result_doctor_desc">Your symptoms may require medical evaluation. Schedule an appointment with your doctor. If your symptoms get worse, see a doctor immediately.</string>
+    <string name="title_possible_conditions">Possible Conditions</string>
+    <string name="title_recommended_actions">Recommended Actions</string>
+    <string name="btn_view_care_advice">View Care Advice</string>
+    <string name="match_strong">Strong Match</string>
+    <string name="match_moderate">Moderate Match</string>
+    <string name="match_possible">Possible Match</string>
+    <string name="btn_ask_ai_about_result">Ask AI about this result</string>
+    <string name="medical_disclaimer_title">MEDICAL DISCLAIMER</string>
+    <string name="medical_disclaimer_desc">This tool provides informational insights only and is not a substitute for professional medical advice, diagnosis, or treatment.</string>
+    <string name="label_selected">Selected:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">Analysis Results</string>
+    <string name="analysis_loading_title">Analyzing lesion with AI...</string>
+    <string name="analysis_loading_desc">Scanning morphological textures, color borders, and structural patterns.</string>
+    <string name="analysis_unable_title">Unable to Identify</string>
+    <string name="analysis_unable_desc">We couldn\'t identify the condition from this image.\nTry taking a clearer photo.</string>
+    <string name="analysis_tips_title">Tips for better results</string>
+    <string name="analysis_tip_1">Use bright, natural lighting</string>
+    <string name="analysis_tip_2">Keep the affected area in focus</string>
+    <string name="analysis_tip_3">Make sure the area is clearly visible</string>
+    <string name="btn_rescan">Rescan</string>
+    <string name="btn_choose_from_gallery">Choose from gallery</string>
+    <string name="title_save_result_to">Save result to</string>
+    <string name="title_key_findings">Key Findings</string>
+    <string name="title_care_suggestions">Care Suggestions</string>
+    <string name="title_when_to_seek_care">When to Seek Medical Care</string>
+    <string name="ai_processing_title">AI processing...</string>
+    <string name="ai_processing_desc">Your result will be ready in a few moments</string>
+    <string name="title_report_result">Report result</string>
+    <string name="btn_report">Report</string>
+    <string name="title_choose_reminders">Choose your reminders</string>
+    <string name="btn_save_reminders_count">Save %1$d reminders</string>
+    <string name="btn_save_reminder_single">Save 1 reminder</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_understood">Understood</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">Add allergy</string>
+    <string name="title_edit_allergy">Edit allergy</string>
+    <string name="label_allergen_name">Allergen name</string>
+    <string name="label_type">Type</string>
+    <string name="type_food">Food</string>
+    <string name="label_reaction">Reaction</string>
+    <string name="label_first_noticed">First noticed</string>
+    <string name="date_not_provided">Date not provided</string>
+    <string name="btn_save_allergy">Save allergy</string>
+    <string name="title_add_condition">Add condition</string>
+    <string name="title_edit_condition">Edit condition</string>
+    <string name="label_condition_name">Condition name</string>
+    <string name="label_status">Status</string>
+    <string name="label_clinician">Clinician</string>
+    <string name="label_clinic">Clinic</string>
+    <string name="not_provided">Not provided</string>
+    <string name="label_diagnosis_date">Diagnosis date</string>
+    <string name="btn_save_condition">Save condition</string>
+    <string name="title_add_vaccination">Add vaccination</string>
+    <string name="title_edit_vaccination">Edit vaccination</string>
+    <string name="label_vaccine_name">Vaccine name</string>
+    <string name="label_dose_number">Dose number</string>
+    <string name="label_batch_number">Batch number</string>
+    <string name="btn_save_vaccination">Save vaccination</string>
+    <string name="title_add_medication">Add medication</string>
+    <string name="title_edit_medication">Edit medication</string>
+    <string name="label_reason">Reason</string>
+    <string name="btn_save_medication">Save medication</string>
+    <string name="label_additional_details">Additional Details (Optional)</string>
+    <string name="label_medication_name">Medication Name</string>
+    <string name="no_records_yet_format">No %1$s yet</string>
+    <string name="empty_records_desc">Add your first record using the button below</string>
+    <string name="btn_add_record_format">Add %1$s</string>
+    <string name="title_choose_item_format">Choose %1$s</string>
+    <string name="no_items_added_yet_format">No %1$s added yet</string>
+    <string name="add_records_quick_select_desc">Add your records to quickly select them</string>
+    <string name="btn_add_item_format">+ Add %1$s</string>
+    <string name="time_am">AM</string>
+    <string name="time_pm">PM</string>
+    <string name="cat_temperature">Temperature</string>
+    <string name="cat_drink_water">Drink Water</string>
+    <string name="cat_exercise">Exercise</string>
+    <string name="cat_sleep">Sleep</string>
+    <string name="label_date_received">Date received</string>
+    <string name="label_updated">Updated</string>
+    <string name="record_diagnosed_format">%1$d diagnosed</string>
+    <string name="label_notes">Notes</string>
+    <string name="label_note">Note</string>
+    <string name="label_severity">Severity</string>
+    <string name="label_strength">Strength</string>
+    <string name="label_form">Form</string>
+    <string name="status_ongoing">Ongoing</string>
+    <string name="status_updated_format">Status updated to %1$s</string>
+    <string name="toast_photo_load_failed">Failed to load selected photo</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: Unlimited AI scans &amp; 24/7 care support!</string>
+    <string name="toast_opening_privacy_policy">Opening Privacy Policy…</string>
+    <string name="medical_disclaimer_dialog_title">Medical Disclaimer</string>
+    <string name="ai_health_disclaimer_title">AI Health Disclaimer</string>
+    <string name="ai_health_disclaimer_desc">This visual analysis is powered by AI and designed for educational and preliminary wellness tracking. It does not replace professional clinical evaluation or dermatological diagnosis.\n\nIf you experience bleeding, rapid changes, or persistent pain, consult a medical doctor immediately.</string>
+    <string name="medical_disclaimer_full_text">This symptom assessment provides educational and informational insights only. It is not intended to be a substitute for professional medical advice, clinical diagnosis, or medical treatment.\n\nAlways seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition.</string>
+    <string name="msg_please_choose_item_format">Please choose a %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">mild fever, fatigue</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">Harmful content</string>
+    <string name="report_illegal_content">Illegal content</string>
+    <string name="report_offensive_content">Offensive content</string>
+    <string name="report_biased_content">Biased content</string>
+    <string name="report_trademark_violation">Trademark violation</string>
+    <string name="report_copyright_violation">Copyright violation</string>
+    <string name="report_nudity_sexual_content">Nudity/sexual content</string>
+    <string name="report_violence_gore">Violence/gore</string>
+    <string name="report_others">Others</string>
+    <string name="toast_report_submitted">Thank you for reporting. We will review this result.</string>
+
+    <string name="label_relationship_you">You</string>
+    <string name="reminder_water_notes">Hydration accelerates tissue repair and skin barrier restoration.</string>
+    <string name="reminder_check_temperature_title">Check temperature</string>
+    <string name="reminder_check_temperature_notes">Monitor temperature for early fever or infection warning.</string>
+    <string name="reminder_observe_area_title">Skin Care &amp; Observation</string>
+    <string name="reminder_observe_area_notes">Check for any changes in redness, size, or sensation.</string>
 </resources>

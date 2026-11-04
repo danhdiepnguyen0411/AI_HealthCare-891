@@ -28,15 +28,16 @@ class SymptomCheckerActivity : BaseActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootSymptomCheckerLayout) { _, insets ->
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val density = resources.displayMetrics.density
 
             if (statusBarTop > 0) {
                 binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
+                    topMargin = statusBarTop + (8 * density).toInt()
                 }
             }
             if (navBarBottom > 0) {
                 binding.btnStartAssessment.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    bottomMargin = navBarBottom + 24
+                    bottomMargin = navBarBottom + (16 * density).toInt()
                 }
             }
             insets

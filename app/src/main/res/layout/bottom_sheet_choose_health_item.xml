@@ -28,9 +28,9 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/urbanist_bold"
         android:includeFontPadding="false"
-        android:text="Choose medication"
         android:textColor="@color/color_text"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        tools:text="Choose medication" />
 
     <!-- RecyclerView for user-added items -->
     <androidx.recyclerview.widget.RecyclerView
@@ -70,9 +70,9 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
-            android:text="No medication added yet"
             android:textColor="@color/color_text"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="No medication added yet" />
 
         <TextView
             android:id="@+id/tvEmptySubtitle"
@@ -81,7 +81,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/urbanist_medium"
             android:includeFontPadding="false"
-            android:text="Add your records to quickly select them"
+            android:text="@string/add_records_quick_select_desc"
             android:textColor="@color/color_subtext"
             android:textSize="13sp" />
     </LinearLayout>

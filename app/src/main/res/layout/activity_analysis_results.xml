@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist"
-            android:text="Analysis Results"
+            android:text="@string/title_analysis_results"
             android:textColor="#242E49"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/urbanist"
-            android:text="Analyzing lesion with AI..."
+            android:text="@string/analysis_loading_title"
             android:textColor="#1E293B"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -114,7 +114,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/urbanist"
             android:gravity="center"
-            android:text="Scanning morphological textures, color borders, and structural patterns."
+            android:text="@string/analysis_loading_desc"
             android:textColor="#56627A"
             android:textSize="14sp" />
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Unable to Identify"
+                android:text="@string/analysis_unable_title"
                 android:textColor="#1E293B"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -171,7 +171,7 @@
                 android:fontFamily="@font/urbanist"
                 android:gravity="center"
                 android:lineSpacingExtra="3dp"
-                android:text="We couldn't identify the condition from this image.\nTry taking a clearer photo."
+                android:text="@string/analysis_unable_desc"
                 android:textColor="#56627A"
                 android:textSize="14sp" />
 
@@ -215,7 +215,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Tips for better results"
+                            android:text="@string/analysis_tips_title"
                             android:textColor="#0843C6"
                             android:textSize="17sp"
                             android:textStyle="bold" />
@@ -239,7 +239,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Use bright, natural lighting"
+                            android:text="@string/analysis_tip_1"
                             android:textColor="#242E49"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -261,7 +261,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Keep the affected area in focus"
+                            android:text="@string/analysis_tip_2"
                             android:textColor="#242E49"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -283,7 +283,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Make sure the area is clearly visible"
+                            android:text="@string/analysis_tip_3"
                             android:textColor="#242E49"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -306,7 +306,7 @@
                 android:background="@drawable/bg_button_primary"
                 android:fontFamily="@font/urbanist"
                 android:stateListAnimator="@null"
-                android:text="Rescan"
+                android:text="@string/btn_rescan"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -321,7 +321,7 @@
                 android:background="@drawable/bg_pill_btn_light_blue"
                 android:fontFamily="@font/urbanist"
                 android:stateListAnimator="@null"
-                android:text="Choose from gallery"
+                android:text="@string/btn_choose_from_gallery"
                 android:textAllCaps="false"
                 android:textColor="@color/primary_color"
                 android:textSize="16sp"
@@ -386,7 +386,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/urbanist"
-                            android:text="Save result to"
+                            android:text="@string/title_save_result_to"
                             android:textColor="#7A808C"
                             android:textSize="12sp" />
 
@@ -395,10 +395,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/urbanist"
-                            android:text="Alex Morgan"
                             android:textColor="#242E49"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="Alex Morgan" />
                     </LinearLayout>
 
                     <ImageView
@@ -483,7 +483,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Key Findings"
+                android:text="@string/title_key_findings"
                 android:textColor="#1A1B24"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -514,7 +514,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Care Suggestions"
+                android:text="@string/title_care_suggestions"
                 android:textColor="#1A1B24"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -573,7 +573,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:fontFamily="@font/urbanist"
-                        android:text="When to Seek Medical Care"
+                        android:text="@string/title_when_to_seek_care"
                         android:textColor="#BE000D"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -630,7 +630,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Set a reminder"
+                android:text="@string/btn_set_a_reminder"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -660,7 +660,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Ask AI about this result"
+                android:text="@string/btn_ask_ai_about_result"
                 android:textColor="#0843C6"
                 android:textSize="16sp"
                 android:textStyle="bold" />

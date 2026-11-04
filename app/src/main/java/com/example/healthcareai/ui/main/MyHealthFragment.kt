@@ -98,7 +98,7 @@ class MyHealthFragment : Fragment() {
 
         // Name & Gender
         binding.tvProfileName.text = if (profile.name.isNotBlank()) profile.name else "--"
-        binding.tvProfileGender.text = if (profile.gender.isNotBlank()) profile.gender else "--"
+        binding.tvProfileGender.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedGender(requireContext(), profile.gender)
 
         // Age calculation from DOB
         val ageStr = calculateAge(profile.dateOfBirth)
@@ -118,10 +118,10 @@ class MyHealthFragment : Fragment() {
         val conditionCount = repo.getRecordsByCategory("Conditions", primaryId).size
         val vaccCount = repo.getRecordsByCategory("Vaccinations", primaryId).size
 
-        binding.tvMedicationsCount.text = "$medCount active"
-        binding.tvAllergiesCount.text = "$allergyCount reported"
-        binding.tvConditionsCount.text = "$conditionCount active"
-        binding.tvVaccinationsCount.text = "$vaccCount recorded"
+        binding.tvMedicationsCount.text = getString(R.string.record_active_format, medCount)
+        binding.tvAllergiesCount.text = getString(R.string.record_reported_format, allergyCount)
+        binding.tvConditionsCount.text = getString(R.string.record_reported_format, conditionCount)
+        binding.tvVaccinationsCount.text = getString(R.string.record_recorded_format, vaccCount)
     }
 
     private fun calculateAge(dobString: String?): String {
@@ -219,9 +219,10 @@ class MyHealthFragment : Fragment() {
             )
             for (item in sorted.take(2)) {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
+                val cardCtx = cardBinding.root.context
                 cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
-                cardBinding.tvReminderTitle.text = item.name
-                val desc = item.getDisplayDescription()
+                cardBinding.tvReminderTitle.text = item.getLocalizedName(cardCtx)
+                val desc = item.getLocalizedDescription(cardCtx)
                 if (desc.isNotBlank()) {
                     cardBinding.tvReminderDesc.visibility = View.VISIBLE
                     cardBinding.tvReminderDesc.text = desc

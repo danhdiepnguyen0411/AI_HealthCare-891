@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat
 import com.example.healthcareai.R
@@ -143,9 +144,17 @@ object LocaleHelper {
         return PreferenceHelper.getInstance(context).selectedLanguageCode
     }
 
+    fun getSavedLocale(context: Context): Locale {
+        return getLocale(getSavedLanguageCode(context))
+    }
+
     fun setLocale(context: Context, languageCode: String): Context {
         PreferenceHelper.getInstance(context).selectedLanguageCode = languageCode
-        return updateResources(context, languageCode)
+        val updated = updateResources(context, languageCode)
+        try {
+            updateResources(context.applicationContext, languageCode)
+        } catch (_: Exception) {}
+        return updated
     }
 
     fun getLocale(languageCode: String): Locale {
@@ -158,6 +167,36 @@ object LocaleHelper {
             languageCode == "he" || languageCode == "iw" -> Locale("iw")
             languageCode == "yi" || languageCode == "ji" -> Locale("ji")
             else -> Locale(languageCode)
+        }
+    }
+
+    fun getLocalizedString(
+        context: Context,
+        languageCode: String,
+        @StringRes resId: Int,
+        vararg formatArgs: Any
+    ): String {
+        return try {
+            val locale = getLocale(languageCode)
+            val config = Configuration(context.resources.configuration)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                config.setLocale(locale)
+            } else {
+                @Suppress("DEPRECATION")
+                config.locale = locale
+            }
+            val localizedRes = context.createConfigurationContext(config).resources
+            if (formatArgs.isNotEmpty()) {
+                localizedRes.getString(resId, *formatArgs)
+            } else {
+                localizedRes.getString(resId)
+            }
+        } catch (_: Exception) {
+            if (formatArgs.isNotEmpty()) {
+                context.getString(resId, *formatArgs)
+            } else {
+                context.getString(resId)
+            }
         }
     }
 

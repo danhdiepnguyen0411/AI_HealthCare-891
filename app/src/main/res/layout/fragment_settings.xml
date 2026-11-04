@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settingsScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -116,9 +117,9 @@
                     android:fontFamily="@font/urbanist_medium"
                     app:fontFamily="@font/urbanist_medium"
                     android:includeFontPadding="false"
-                    android:text="English"
                     android:textColor="@color/color_subtext"
                     android:textSize="14sp"
+                    tools:text="English"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivLanguageArrow"
                     app:layout_constraintTop_toTopOf="parent" />

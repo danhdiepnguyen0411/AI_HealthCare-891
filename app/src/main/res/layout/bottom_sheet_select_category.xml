@@ -73,7 +73,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Temperature"
+                android:text="@string/cat_temperature"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -110,7 +110,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Heart rate"
+                android:text="@string/title_heart_rate"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -156,7 +156,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Medication"
+                android:text="@string/record_medications"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -193,7 +193,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Drink Water"
+                android:text="@string/cat_drink_water"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -239,7 +239,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Exercise"
+                android:text="@string/cat_exercise"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -276,7 +276,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Sleep"
+                android:text="@string/cat_sleep"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -322,7 +322,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Appointments"
+                android:text="@string/category_appointments_title"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -359,7 +359,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Vaccination"
+                android:text="@string/record_vaccinations"
                 android:textColor="@color/color_text"
                 android:textSize="15sp" />
         </LinearLayout>
