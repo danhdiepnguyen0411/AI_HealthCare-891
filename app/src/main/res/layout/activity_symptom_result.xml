@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist"
-            android:text="Result"
+            android:text="@string/title_result"
             android:textColor="#242E49"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -120,7 +120,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Consult a doctor"
+                android:text="@string/symptom_result_doctor_title"
                 android:textColor="#172044"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -135,7 +135,7 @@
                 android:fontFamily="@font/urbanist"
                 android:gravity="center"
                 android:lineSpacingExtra="3dp"
-                android:text="Your symptoms may require medical evaluation. Schedule an appointment with your doctor. If your symptoms get worse, see a doctor immediately."
+                android:text="@string/symptom_result_doctor_desc"
                 android:textColor="#56627A"
                 android:textSize="14sp" />
 
@@ -147,7 +147,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="12dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Possible Conditions"
+                android:text="@string/title_possible_conditions"
                 android:textColor="#172044"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -210,7 +210,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/urbanist"
-                android:text="Ask AI about this result"
+                android:text="@string/btn_ask_ai_about_result"
                 android:textColor="#0843C6"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -251,7 +251,7 @@
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/urbanist"
                     android:letterSpacing="0.04"
-                    android:text="MEDICAL DISCLAIMER"
+                    android:text="@string/medical_disclaimer_title"
                     android:textColor="#56627A"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -265,7 +265,7 @@
                 android:layout_marginHorizontal="12dp"
                 android:fontFamily="@font/urbanist"
                 android:gravity="center"
-                android:text="This tool provides informational insights only and is not a substitute for professional medical advice, diagnosis, or treatment."
+                android:text="@string/medical_disclaimer_desc"
                 android:textColor="#7A808C"
                 android:textSize="11sp" />
         </LinearLayout>

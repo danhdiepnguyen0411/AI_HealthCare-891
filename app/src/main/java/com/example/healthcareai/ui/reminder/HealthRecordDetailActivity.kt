@@ -111,25 +111,25 @@ open class HealthRecordDetailActivity : BaseActivity() {
         binding.tvStatusBadge.visibility = View.GONE
 
         // Row 1: Reason | Strength
-        binding.tvLabelRow1Left.text = "Reason"
-        binding.tvValueRow1Left.text = record.reason.ifBlank { "Not provided" }
+        binding.tvLabelRow1Left.text = getString(R.string.label_reason)
+        binding.tvValueRow1Left.text = record.reason.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow1Right.text = "Strength"
-        binding.tvValueRow1Right.text = record.strength.ifBlank { "Not provided" }
+        binding.tvLabelRow1Right.text = getString(R.string.label_strength)
+        binding.tvValueRow1Right.text = record.strength.ifBlank { getString(R.string.not_provided) }
         binding.layoutRow1Right.visibility = View.VISIBLE
 
         // Row 2: Form | (hidden)
-        binding.tvLabelRow2Left.text = "Form"
-        binding.tvValueRow2Left.text = record.form.ifBlank { "Not provided" }
+        binding.tvLabelRow2Left.text = getString(R.string.label_form)
+        binding.tvValueRow2Left.text = record.form.ifBlank { getString(R.string.not_provided) }
 
         binding.layoutRow2Right.visibility = View.INVISIBLE
 
         // Row 3: Notes
-        binding.tvLabelNotes.text = "Notes"
-        binding.tvValueNotes.text = record.notes.ifBlank { "Not provided" }
+        binding.tvLabelNotes.text = getString(R.string.label_notes)
+        binding.tvValueNotes.text = record.notes.ifBlank { getString(R.string.not_provided) }
 
         // Bottom button
-        binding.tvEditButtonText.text = "Edit medication"
+        binding.tvEditButtonText.text = getString(R.string.title_edit_medication)
         binding.btnEditRecord.setOnClickListener {
             AddMedicationActivity.start(this, record.id, record.profileId ?: profileId)
         }
@@ -144,31 +144,31 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
         binding.tvRecordName.text = record.name
         binding.tvRecordSubtitle.visibility = View.VISIBLE
-        binding.tvRecordSubtitle.text = record.type.ifBlank { "Medication" }
+        binding.tvRecordSubtitle.text = record.type.ifBlank { getString(R.string.record_medications) }
         binding.tvStatusBadge.visibility = View.GONE
 
         // Row 1: Reaction | Severity
-        binding.tvLabelRow1Left.text = "Reaction"
-        binding.tvValueRow1Left.text = record.reaction.ifBlank { "Not provided" }
+        binding.tvLabelRow1Left.text = getString(R.string.label_reaction)
+        binding.tvValueRow1Left.text = record.reaction.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow1Right.text = "Severity"
-        binding.tvValueRow1Right.text = record.severity.ifBlank { "Not provided" }
+        binding.tvLabelRow1Right.text = getString(R.string.label_severity)
+        binding.tvValueRow1Right.text = record.severity.ifBlank { getString(R.string.not_provided) }
         binding.layoutRow1Right.visibility = View.VISIBLE
 
         // Row 2: First noticed | Updated
-        binding.tvLabelRow2Left.text = "First noticed"
-        binding.tvValueRow2Left.text = record.firstNoticedDate.ifBlank { "Not provided" }
+        binding.tvLabelRow2Left.text = getString(R.string.label_first_noticed)
+        binding.tvValueRow2Left.text = record.firstNoticedDate.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow2Right.text = "Updated"
+        binding.tvLabelRow2Right.text = getString(R.string.label_updated)
         binding.tvValueRow2Right.text = dateFormat.format(Date(record.createdAt))
         binding.layoutRow2Right.visibility = View.VISIBLE
 
         // Row 3: Note
-        binding.tvLabelNotes.text = "Note"
-        binding.tvValueNotes.text = record.notes.ifBlank { "Not provided" }
+        binding.tvLabelNotes.text = getString(R.string.label_note)
+        binding.tvValueNotes.text = record.notes.ifBlank { getString(R.string.not_provided) }
 
         // Bottom button
-        binding.tvEditButtonText.text = "Edit allergy"
+        binding.tvEditButtonText.text = getString(R.string.title_edit_allergy)
         binding.btnEditRecord.setOnClickListener {
             AddAllergyActivity.start(this, record.id, record.profileId ?: profileId)
         }
@@ -184,28 +184,28 @@ open class HealthRecordDetailActivity : BaseActivity() {
         binding.tvRecordName.text = record.name
         binding.tvRecordSubtitle.visibility = View.GONE
         binding.tvStatusBadge.visibility = View.VISIBLE
-        binding.tvStatusBadge.text = record.status.ifBlank { "Ongoing" }
+        binding.tvStatusBadge.text = record.status.ifBlank { getString(R.string.status_ongoing) }
 
         // Row 1: Clinician | Clinic
-        binding.tvLabelRow1Left.text = "Clinician"
-        binding.tvValueRow1Left.text = record.clinician.ifBlank { "Not provided" }
+        binding.tvLabelRow1Left.text = getString(R.string.label_clinician)
+        binding.tvValueRow1Left.text = record.clinician.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow1Right.text = "Clinic"
-        binding.tvValueRow1Right.text = record.clinic.ifBlank { "Not provided" }
+        binding.tvLabelRow1Right.text = getString(R.string.label_clinic)
+        binding.tvValueRow1Right.text = record.clinic.ifBlank { getString(R.string.not_provided) }
         binding.layoutRow1Right.visibility = View.VISIBLE
 
         // Row 2: Diagnosis date | (hidden)
-        binding.tvLabelRow2Left.text = "Diagnosis date"
-        binding.tvValueRow2Left.text = record.diagnosisDate.ifBlank { "Not provided" }
+        binding.tvLabelRow2Left.text = getString(R.string.label_diagnosis_date)
+        binding.tvValueRow2Left.text = record.diagnosisDate.ifBlank { getString(R.string.not_provided) }
 
         binding.layoutRow2Right.visibility = View.INVISIBLE
 
         // Row 3: Note
-        binding.tvLabelNotes.text = "Note"
-        binding.tvValueNotes.text = record.notes.ifBlank { "Not provided" }
+        binding.tvLabelNotes.text = getString(R.string.label_note)
+        binding.tvValueNotes.text = record.notes.ifBlank { getString(R.string.not_provided) }
 
         // Bottom buttons
-        binding.tvEditButtonText.text = "Edit condition"
+        binding.tvEditButtonText.text = getString(R.string.title_edit_condition)
         binding.btnEditRecord.setOnClickListener {
             AddConditionActivity.start(this, record.id, record.profileId ?: profileId)
         }
@@ -229,33 +229,33 @@ open class HealthRecordDetailActivity : BaseActivity() {
             record.doseNumber.isNotBlank() -> record.doseNumber
             record.clinic.isNotBlank() -> record.clinic
             record.details.isNotBlank() -> record.details
-            else -> "Not provided"
+            else -> getString(R.string.not_provided)
         }
         binding.tvRecordSubtitle.text = subtitle
         binding.tvStatusBadge.visibility = View.GONE
 
         // Row 1: Dose number | Batch number
-        binding.tvLabelRow1Left.text = "Dose number"
-        binding.tvValueRow1Left.text = record.doseNumber.ifBlank { "Not provided" }
+        binding.tvLabelRow1Left.text = getString(R.string.label_dose_number)
+        binding.tvValueRow1Left.text = record.doseNumber.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow1Right.text = "Batch number"
-        binding.tvValueRow1Right.text = record.batchNumber.ifBlank { "Not provided" }
+        binding.tvLabelRow1Right.text = getString(R.string.label_batch_number)
+        binding.tvValueRow1Right.text = record.batchNumber.ifBlank { getString(R.string.not_provided) }
         binding.layoutRow1Right.visibility = View.VISIBLE
 
         // Row 2: Clinic | Date received
-        binding.tvLabelRow2Left.text = "Clinic"
-        binding.tvValueRow2Left.text = record.clinic.ifBlank { "Not provided" }
+        binding.tvLabelRow2Left.text = getString(R.string.label_clinic)
+        binding.tvValueRow2Left.text = record.clinic.ifBlank { getString(R.string.not_provided) }
 
-        binding.tvLabelRow2Right.text = "Date received"
-        binding.tvValueRow2Right.text = if (record.diagnosisDate.isNotBlank()) record.diagnosisDate else "Not provided"
+        binding.tvLabelRow2Right.text = getString(R.string.label_date_received)
+        binding.tvValueRow2Right.text = if (record.diagnosisDate.isNotBlank()) record.diagnosisDate else getString(R.string.not_provided)
         binding.layoutRow2Right.visibility = View.VISIBLE
 
         // Row 3: Note
-        binding.tvLabelNotes.text = "Note"
-        binding.tvValueNotes.text = record.notes.ifBlank { "Not provided" }
+        binding.tvLabelNotes.text = getString(R.string.label_note)
+        binding.tvValueNotes.text = record.notes.ifBlank { getString(R.string.not_provided) }
 
         // Bottom button
-        binding.tvEditButtonText.text = "Edit vaccination"
+        binding.tvEditButtonText.text = getString(R.string.title_edit_vaccination)
         binding.btnEditRecord.setOnClickListener {
             AddVaccinationActivity.start(this, record.id, record.profileId ?: profileId)
         }
@@ -272,7 +272,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
             HealthRecordRepository.getInstance(this).saveRecord(updatedRecord)
             currentRecord = updatedRecord
             bindRecord(updatedRecord)
-            Toast.makeText(this, "Status updated to $newStatus", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.status_updated_format, newStatus), Toast.LENGTH_SHORT).show()
         }
     }
 

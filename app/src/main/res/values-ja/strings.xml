@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">ホーム</string>
+    <string name="tab_scan">スキャン</string>
+    <string name="tab_my_health">マイ健康</string>
+    <string name="tab_family">家族ハブ</string>
+    <string name="tab_settings">設定</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">ホーム画面</string>
+    <string name="screen_scan">スキャン画面</string>
+    <string name="screen_my_health">マイ健康画面</string>
+    <string name="screen_family">家族画面</string>
+    <string name="screen_settings">設定画面</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">AIスキャン</string>
+    <string name="headline_ai_scan">どの部位をチェックしますか？</string>
+    <string name="category_skin">皮膚</string>
+    <string name="category_skin_desc">しみ、発疹、皮膚の変化</string>
+    <string name="category_mouth">口腔</string>
+    <string name="category_mouth_desc">唇、歯茎、舌、歯</string>
+    <string name="category_eye">目</string>
+    <string name="category_eyes">目</string>
+    <string name="category_eyes_desc">目の周囲の気になる変化</string>
+    <string name="category_nails">爪</string>
+    <string name="category_nail">爪</string>
+    <string name="category_nail_desc">手の爪または足の爪</string>
+    <string name="category_other_area">その他の部位</string>
+    <string name="category_other_area_desc">体のその他の部位</string>
+    <string name="btn_start_scan">スキャン開始</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">読み込み中...</string>
+    <string name="splash_ads_notice">この操作には広告が含まれる場合があります</string>
+    
+    <!-- Language -->
+    <string name="title_language">言語</string>
+    <string name="subtitle_select_language">続行するには言語を選択してください</string>
+    <string name="btn_done">完了</string>
+    <string name="hint_tap_device_language">タップして言語を選択</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">スキップ</string>
+    <string name="btn_next">次へ</string>
+    <string name="btn_get_started">はじめる</string>
+    <string name="intro_title_1">あなたの健康を\nより深く理解</string>
+    <string name="intro_desc_1">写真分析、症状チェック、AIアシスタントで気になる症状を確認。</string>
+    <string name="intro_title_2">健康データを\nひとつに集約</string>
+    <string name="intro_desc_2">記録の保存、変化の追跡、生活リズムに合わせたリマインダー管理。</string>
+    <string name="intro_title_3">パーソナライズされた\nケアアドバイス</string>
+    <string name="intro_desc_3">あなたに合わせたケア提案と毎日のアドバイスをAIがお届けします。</string>
+    <string name="intro_title_4">あなたと大切な家族の\n健康を守る</string>
+    <string name="intro_desc_4">家族のプロフィールを整理し、みんなの健康を一括管理できます。</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">プロフィール追加</string>
+    <string name="title_add_member">メンバー追加</string>
+    <string name="title_detail_profile">プロフィール詳細</string>
+    <string name="title_profile_detail">プロフィール詳細</string>
+    <string name="msg_member_added">家族ハブにメンバーを追加しました！</string>
+    <string name="add_avatar">アバター変更</string>
+    <string name="label_full_name">氏名</string>
+    <string name="hint_full_name">氏名を入力</string>
+    <string name="label_date_of_birth">生年月日</string>
+    <string name="hint_date_of_birth">生年月日を選択</string>
+    <string name="label_gender">性別</string>
+    <string name="hint_gender">性別を選択</string>
+    <string name="gender_other">その他</string>
+    <string name="label_height">身長</string>
+    <string name="hint_height">身長</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">体重</string>
+    <string name="hint_weight">体重</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">プロフィール作成</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">キャンセル</string>
+    <string name="btn_close">閉じる</string>
+    <string name="title_gender_sheet">性別</string>
+    <string name="select_gender_title">性別を選択</string>
+    <string name="error_name_empty">お名前を入力してください</string>
+    <string name="error_dob_empty">生年月日を選択してください</string>
+    <string name="error_gender_empty">性別を選択してください</string>
+    <string name="error_height_empty">身長を入力してください</string>
+    <string name="error_weight_empty">体重を入力してください</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">続柄</string>
+    <string name="hint_relationship">続柄を選択</string>
+    <string name="title_relationship_sheet">続柄</string>
+    <string name="select_relationship_title">続柄を選択</string>
+    <string name="rel_father">父</string>
+    <string name="rel_mother">母</string>
+    <string name="rel_spouse">配偶者</string>
+    <string name="rel_husband">夫</string>
+    <string name="rel_wife">妻</string>
+    <string name="rel_son">息子</string>
+    <string name="rel_daughter">娘</string>
+    <string name="rel_brother">兄弟</string>
+    <string name="rel_sister">姉妹</string>
+    <string name="rel_grandparent">祖父母</string>
+    <string name="rel_other">その他</string>
+    <string name="dialog_delete_member_title">メンバー削除</string>
+    <string name="dialog_delete_member_msg">%1$s を家族ハブから削除してもよろしいですか？</string>
+    <string name="btn_remove">削除</string>
+    <string name="msg_member_removed">メンバーを削除しました</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">マイ健康</string>
+    <string name="label_age">年齢</string>
+    <string name="label_reminder">リマインダー</string>
+    <string name="title_health_records">健康記録</string>
+    <string name="record_medications">服用薬</string>
+    <string name="record_allergies">アレルギー</string>
+    <string name="record_conditions">既往歴・持病</string>
+    <string name="record_vaccinations">ワクチン接種</string>
+    <string name="record_active_format">%1$d件 服用中</string>
+    <string name="record_reported_format">%1$d件 報告済み</string>
+    <string name="record_recorded_format">%1$d件 記録済み</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">言語設定</string>
+    <string name="settings_notifications">デイリーリマインダー</string>
+    <string name="settings_version">バージョン 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">どのような問題が発生しましたか？</string>
+    <string name="uninstall_card1_title">機能の利用や結果保存ができない</string>
+    <string name="uninstall_card1_desc">接続エラーまたは内部サーバーエラーが検出されました。</string>
+    <string name="uninstall_card2_title">現在利用できません</string>
+    <string name="uninstall_card2_desc">メンテナンス中か地域制限がかかっています。</string>
+    <string name="uninstall_btn_try_again">再試行</string>
+    <string name="uninstall_btn_explore">探索する</string>
+    <string name="uninstall_btn_dont_uninstall">アンインストールしない</string>
+    <string name="uninstall_btn_still_uninstall">アンインストールを続ける</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">HealthCare AI をアンインストールする理由</string>
+    <string name="uninstall_reason_subtitle">ご利用ありがとうございました。今後の改善のためご意見をお聞かせください。</string>
+    <string name="uninstall_reason_1">操作が難しい</string>
+    <string name="uninstall_reason_2">広告が多すぎる</string>
+    <string name="uninstall_reason_3">デザインがいまひとつ</string>
+    <string name="uninstall_reason_4">その他</string>
+    <string name="uninstall_reason_hint">詳しい理由をご入力ください..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">デイリー健康リマインダー</string>
+    <string name="noti_channel_desc">水分補給、健康チェック、習慣のための毎日の通知。</string>
+    <string name="noti_title_morning">朝の健康チェック ☀️</string>
+    <string name="noti_msg_morning">コップ1杯の水を飲んで、今日の健康目標を確認しましょう。</string>
+    <string name="noti_title_afternoon">午後のリフレッシュ 💧</string>
+    <string name="noti_msg_afternoon">少し休憩してストレッチを行い、体調を確認しましょう。</string>
+    <string name="noti_title_evening">夜のケア＆振り返り 🌙</string>
+    <string name="noti_msg_evening">1日の成果を振り返り、AIアシスタントに相談してみましょう。</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">通知</string>
+    <string name="dialog_notification_permission_desc">重要なお知らせや分析完了通知、新機能を見逃さないようにしましょう。</string>
+    <string name="dialog_notification_btn_settings">設定へ移動</string>
+    <string name="dialog_notification_btn_dont_allow">許可しない</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">お薬＆健康リマインダー</string>
+    <string name="noti_reminders_channel_desc">服薬、水分補給、健康タスクのための定時アラームと通知。</string>
+    <string name="noti_reminder_action_done">完了にする</string>
+    <string name="noti_reminder_default_desc">%s のお時間です。</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">権限が必要です</string>
+    <string name="permission_desc">リマインダーと写真スキャンを利用するには、設定から権限を許可してください。</string>
+    <string name="permission_btn_settings">設定へ移動</string>
+    <string name="permission_btn_cancel">あとで</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">カメラへのアクセスを許可</string>
+    <string name="dialog_camera_permission_desc">健康状態のスキャンと分析を行うため、カメラへのアクセスを許可してください</string>
+    <string name="dialog_camera_btn_settings">設定へ移動</string>
+    <string name="dialog_camera_btn_dont_allow">許可しない</string>
+    <string name="dialog_camera_btn_cancel">あとで</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">撮影ガイド</string>
+    <string name="camera_guide_tip_1">1. 撮影したい部分をフレームの中央に合わせてください。</string>
+    <string name="camera_guide_tip_2">2. 強い影を避け、明るい自然光の下で撮影してください。</string>
+    <string name="camera_guide_tip_3">3. カメラを約10〜15cm離してブレないように保持してください。</string>
+    <string name="camera_guide_btn_got_it">了解しました</string>
+    <string name="camera_capture_success">撮影完了！分析中...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">写真の確認</string>
+    <string name="label_aspect_ratio">アスペクト比</string>
+    <string name="btn_use_photo">この写真を使用</string>
+    <string name="btn_retake_photo">再撮影する</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">おはようございます</string>
+    <string name="home_greeting_afternoon">こんにちは</string>
+    <string name="home_greeting_evening">こんばんは</string>
+    <string name="home_subtitle">今日も健康状態は良好です。</string>
+    <string name="home_ai_assistant_badge">AI健康アシスタント</string>
+    <string name="home_ai_assistant_title">あなたの専属\nAI健康パートナー</string>
+    <string name="home_btn_chat_ai">AIとチャット</string>
+    <string name="home_feature_health_scan">ヘルス\nスキャン</string>
+    <string name="home_feature_measure_heart_rate">心拍数\n測定</string>
+    <string name="home_feature_symptom_checker">症状\nチェッカー</string>
+    <string name="home_section_today_reminder">今日のリマインダー</string>
+    <string name="home_section_ai_scan_history">AIスキャン履歴</string>
+    <string name="home_view_all">すべて見る</string>
+    <string name="home_no_reminder_title">リマインダーはありません</string>
+    <string name="home_no_reminder_desc">お薬や水分補給のリマインダーを追加しましょう。</string>
+    <string name="home_btn_add_reminder">リマインダー追加</string>
+    <string name="home_no_scans_title">スキャン履歴はありません</string>
+    <string name="home_no_scans_desc">初回スキャン後に結果がここに表示されます。</string>
+    <string name="home_btn_start_first_scan">初回スキャンを開始</string>
+    <string name="home_btn_get_pro">Pro版にアップグレード</string>
+    <string name="home_manage">管理</string>
+    <string name="btn_mark_as_done">完了にする</string>
+    <string name="msg_marked_as_done">完了にしました！</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">水分補給</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">腕の皮膚チェック</string>
+    <string name="scan_arm_skin_check_date">10月5日</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">心拍数</string>
+    <string name="heart_rate_how_to_measure">測定方法</string>
+    <string name="heart_rate_instruction">カメラとフラッシュに指先を当てて\n測定を開始してください。</string>
+    <string name="heart_rate_btn_start">測定開始</string>
+    <string name="heart_rate_statistics_coming_soon">統計と推移がここに表示されます。</string>
+    <string name="how_to_measure_title">測定方法</string>
+    <string name="how_to_measure_step1_title">カメラとフラッシュに指を当てる</string>
+    <string name="how_to_measure_step1_desc">背面のカメラとフラッシュを指の腹で完全に覆ってください。</string>
+    <string name="how_to_measure_step2_title">フラッシュの点灯を確認する</string>
+    <string name="how_to_measure_step2_desc">正確な測定のためにフラッシュが指先を照らします。</string>
+    <string name="how_to_measure_step3_title">指を動かさない</string>
+    <string name="how_to_measure_step3_desc">測定中は指を動かさないようにしてください。</string>
+    <string name="heart_rate_guide_title">測定ガイド</string>
+    <string name="heart_rate_guide_tip_1">1. 人差し指の腹をカメラレンズとフラッシュに優しく当てます。</string>
+    <string name="heart_rate_guide_tip_2">2. 強く押し付けすぎず、一定の軽い力で保持します。</string>
+    <string name="heart_rate_guide_tip_3">3. 静かに呼吸し、測定が終わるまで待ちます。</string>
+    <string name="heart_rate_guide_btn_got_it">了解しました</string>
+    <string name="heart_rate_measuring_title">心拍数を測定中</string>
+    <string name="heart_rate_measuring_banner_title">心拍数を測定しています…</string>
+    <string name="heart_rate_measuring_banner_sub">指を動かさないでお待ちください。</string>
+    <string name="heart_rate_waiting_finger">カメラとフラッシュを覆ってください</string>
+    <string name="heart_rate_waiting_finger_desc">人差し指をカメラレンズとフラッシュの上に優しく置きます</string>
+    <string name="heart_rate_measuring_desc">測定中... 動かずに自然に呼吸してください</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">測定結果</string>
+    <string name="heart_rate_result_summary">結果のまとめ</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">遅い</string>
+    <string name="heart_rate_normal_label">正常</string>
+    <string name="heart_rate_fast_label">速い</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">記録の削除</string>
+    <string name="heart_rate_delete_confirm_msg">この心拍数記録を削除してもよろしいですか？</string>
+    <string name="heart_rate_delete_btn">削除</string>
+    <string name="heart_rate_cancel_btn">キャンセル</string>
+    <string name="heart_rate_deleted">記録を削除しました</string>
+    <string name="heart_rate_normal">正常（安静時）</string>
+    <string name="heart_rate_slow">徐脈（遅い心拍）</string>
+    <string name="heart_rate_fast">頻脈（速い心拍）</string>
+    <string name="heart_rate_quality_label">シグナル品質</string>
+    <string name="heart_rate_hrv_title">心拍変動（HRV）</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">もう一度測定</string>
+    <string name="heart_rate_btn_done">Done</string>
+    <string name="heart_rate_error_finger_lost_title">指が離れました</string>
+    <string name="heart_rate_error_finger_lost">指がカメラから離れたため中断しました。もう一度レンズに当ててください。</string>
+    <string name="heart_rate_error_low_quality_title">測定できませんでした</string>
+    <string name="heart_rate_error_low_quality">信号が不安定でした。指を押し付けすぎずに静止してください。</string>
+    <string name="heart_rate_error_no_flash">この端末にはカメラフラッシュが見つかりません。</string>
+    <string name="heart_rate_btn_try_again">再試行</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">統計</string>
+    <string name="statistics_tab_overview">概要</string>
+    <string name="statistics_tab_history">履歴</string>
+    <string name="statistics_average">平均</string>
+    <string name="statistics_highest">最高</string>
+    <string name="statistics_lowest">最低</string>
+    <string name="statistics_no_history_title">履歴はありません</string>
+    <string name="statistics_no_history_desc">測定後にここにデータが表示されます。</string>
+    <string name="statistics_no_data_title">心拍データがありません</string>
+    <string name="statistics_no_data_desc">心拍数を測定して週ごとの統計を確認しましょう。</string>
+    <string name="statistics_btn_measure_now">今すぐ測定</string>
+    <string name="statistics_heart_rate_chart_title">心拍数 (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">家族ハブ</string>
+    <string name="family_no_members_title">メンバーがいません</string>
+    <string name="family_no_members_desc">家族を追加して、お薬や健康記録を一緒に管理しましょう。</string>
+    <string name="family_btn_add_first_member">最初のメンバーを追加</string>
+    <string name="family_add_member_hint">この機能は近日公開予定です。</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">設定</string>
+    <string name="settings_section_general">一般</string>
+    <string name="settings_section_support">サポート</string>
+    <string name="settings_item_language">言語</string>
+    <string name="settings_item_permission">権限</string>
+    <string name="settings_item_share">友達に共有</string>
+    <string name="settings_item_rate">アプリを評価</string>
+    <string name="settings_item_privacy">プライバシーポリシー</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">症状チェッカー</string>
+    <string name="symptom_checker_subtitle">最適なアドバイスを提供するため、\n今の症状を教えてください。</string>
+    <string name="symptom_checker_privacy_notice">データは暗号化され安全に保護されます。</string>
+    <string name="symptom_checker_est_time_label">所要時間目安</string>
+    <string name="symptom_checker_est_time_val">約3分</string>
+    <string name="symptom_checker_after_assessment_label">診断後</string>
+    <string name="symptom_checker_after_assessment_val">健康インサイト</string>
+    <string name="symptom_checker_length_label">診断後</string>
+    <string name="symptom_checker_length_val">健康インサイト</string>
+    <string name="symptom_checker_btn_start">診断を開始</string>
+    <string name="symptom_checker_start_toast">AI症状チェックを開始しています...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">あなたの年齢は？</string>
+    <string name="assessment_gender_title">生物学的性別は？</string>
+    <string name="assessment_gender_subtitle">より正確な分析のため性別を選択してください。</string>
+    <string name="gender_male">男性</string>
+    <string name="gender_female">女性</string>
+    <string name="assessment_symptoms_title">どんな症状がありますか？</string>
+    <string name="assessment_symptoms_subtitle">体の部位をタップして症状を選択してください</string>
+    <string name="tab_body_map">人体マップ</string>
+    <string name="tab_all_symptoms">すべての症状</string>
+    <string name="region_all">すべて</string>
+    <string name="region_head">頭部</string>
+    <string name="region_neck">首</string>
+    <string name="region_shoulders">肩</string>
+    <string name="region_chest">胸部</string>
+    <string name="region_abdomen">腹部</string>
+    <string name="region_arms">腕</string>
+    <string name="region_legs">脚</string>
+    <string name="search_symptoms_hint">主な症状を入力</string>
+    <string name="no_symptoms_found">「%s」に一致する症状は見つかりません</string>
+    <string name="assessment_related_symptoms_title">次の症状に当てはまるものはありますか？</string>
+    <string name="assessment_related_symptoms_subtitle">当てはまるものをすべて選択してください</string>
+    <string name="assessment_insect_bite_title">虫（蚊、マダニ、クモ、トコジラミなど）に刺されたり噛まれたりしましたか？</string>
+    <string name="option_yes">はい</string>
+    <string name="option_no">いいえ</string>
+    <string name="option_dont_know">わからない</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">終了</string>
+    <string name="dialog_exit_app_desc">本当に終了しますか？\n保存されていない内容は失われます。</string>
+    <string name="dialog_exit_app_btn_stay">とどまる</string>
+    <string name="dialog_exit_app_btn_exit">終了する</string>
+    <string name="dialog_exit_assessment_title">診断を終了</string>
+    <string name="dialog_exit_assessment_desc">本当に終了しますか？\n入力中の内容は失われます。</string>
+    <string name="dialog_exit_btn_continue">とどまる</string>
+    <string name="dialog_exit_btn_exit">終了する</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">次へ</string>
+    <string name="btn_back">戻る</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">AI健康アシスタント</string>
+    <string name="ai_chat_welcome_title">今日の健康について、\nどのようなご相談ですか？</string>
+    <string name="ai_chat_suggestion_1_title">健康的な生活のヒント</string>
+    <string name="ai_chat_suggestion_1_desc">全体的な健康を維持する毎日の習慣...</string>
+    <string name="ai_chat_suggestion_1_query">全体的な健康と活力を高める毎日の習慣を教えてください。</string>
+    <string name="ai_chat_suggestion_2_title">スキャン結果の解説</string>
+    <string name="ai_chat_suggestion_2_desc">皮膚や口腔のスキャン結果を詳しく説明。</string>
+    <string name="ai_chat_suggestion_2_query">スキャン結果とケアのアドバイスについて詳しく説明してください。</string>
+    <string name="ai_chat_suggestion_3_title">健康データの見直し</string>
+    <string name="ai_chat_suggestion_3_desc">心拍数、睡眠、活動量のデータを分析。</string>
+    <string name="ai_chat_suggestion_3_query">私の心拍数と睡眠データを分析してアドバイスをください。</string>
+    <string name="ai_chat_input_hint">なんでも質問してください...</string>
+    <string name="ai_chat_new_chat">新しいチャット</string>
+    <string name="ai_chat_clear_confirm_title">新しい会話を始めますか？</string>
+    <string name="ai_chat_clear_confirm_msg">現在の会話をクリアして、新しく会話を開始しますか？</string>
+    <string name="ai_chat_listening">聞き取り中...お話しください</string>
+    <string name="ai_chat_mic_permission_required">音声メッセージにはマイクの権限が必要です。</string>
+    <string name="ai_chat_error_fallback">申し訳ありません。現在処理できませんでした。接続を確認して再試行してください。</string>
+    <string name="ai_chat_today">今日</string>
+    <string name="ai_chat_yesterday">昨日</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">チャット履歴</string>
+    <string name="conversation_empty_title">会話履歴はありません</string>
+    <string name="conversation_empty_desc">AIとチャットして、パーソナライズされた\n健康アドバイスを受け取りましょう。</string>
+    <string name="time_just_now">たった今</string>
+    <string name="time_minute_ago">1分前</string>
+    <string name="time_minutes_ago">%d分前</string>
+    <string name="time_hour_ago">1時間前</string>
+    <string name="time_hours_ago">%d時間前</string>
+    <string name="time_day_ago">1日前</string>
+    <string name="time_days_ago">%d日前</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">新規リマインダー</string>
+    <string name="label_reminder_category">カテゴリー</string>
+    <string name="hint_select_category">カテゴリーを選択</string>
+    <string name="label_reminder_name">名称</string>
+    <string name="label_reminder_strength">用量・用量</string>
+    <string name="hint_reminder_strength">例: 10 mg</string>
+    <string name="label_reminder_form">剤形</string>
+    <string name="hint_reminder_form">剤形を選択</string>
+    <string name="label_reminder_repeat">繰り返し</string>
+    <string name="hint_repeat_schedule">頻度を選択</string>
+    <string name="label_reminder_time">時刻</string>
+    <string name="time_no_times_added">時刻が設定されていません</string>
+    <string name="label_reminder_start_date">開始日</string>
+    <string name="label_reminder_end_date">終了日</string>
+    <string name="hint_select_date">日付を選択</string>
+    <string name="label_reminder_notes">メモ（任意）</string>
+    <string name="hint_reminder_name">リマインダー名を入力</string>
+    <string name="hint_enter_medication_name">薬品名を入力</string>
+    <string name="hint_add_notes">メモを追加</string>
+    <string name="reminder_btn_add_time">時刻を追加</string>
+    <string name="btn_save_reminder">リマインダーを保存</string>
+    <string name="repeat_every_day">毎日</string>
+    <string name="repeat_weekdays">平日</string>
+    <string name="repeat_weekends">週末</string>
+    <string name="repeat_weekly">毎週</string>
+    <string name="repeat_monthly">毎月</string>
+    <string name="repeat_once">1回のみ</string>
+    <string name="form_tablet">錠剤</string>
+    <string name="form_capsule">カプセル</string>
+    <string name="form_liquid">液剤</string>
+    <string name="form_drops">点眼・点滴剤</string>
+    <string name="form_injection">注射剤</string>
+    <string name="form_inhaler">吸入薬</string>
+    <string name="form_other">その他</string>
+    <string name="msg_reminder_saved">リマインダーを保存しました</string>
+    <string name="msg_enter_reminder_name">リマインダー名を入力してください</string>
+    <string name="msg_time_already_added">この時刻は既に追加されています</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">カテゴリーを選択</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">繰り返し</string>
+    <string name="category_health_monitoring_title">健康モニタリング</string>
+    <string name="category_health_monitoring_desc">体温、心拍数など</string>
+    <string name="category_medication_title">お薬</string>
+    <string name="category_medication_desc">薬、ビタミン、サプリメントの服用</string>
+    <string name="category_healthy_habits_title">健康習慣</string>
+    <string name="category_healthy_habits_desc">水分補給、運動、睡眠など</string>
+    <string name="category_appointments_title">受診・健診予約</string>
+    <string name="category_appointments_desc">通院、定期健診</string>
+    <string name="category_vaccinations_title">予防接種</string>
+    <string name="category_vaccinations_desc">ワクチン接種スケジュール</string>
+    <string name="category_other_title">その他</string>
+    <string name="category_other_desc">個人の健康リマインダー</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">リマインダー</string>
+    <string name="title_edit_reminder">リマインダー編集</string>
+    <string name="reminder_action_edit">編集</string>
+    <string name="reminder_action_delete">削除</string>
+    <string name="reminder_status_taken">服用済み</string>
+    <string name="reminder_action_undo">元に戻す</string>
+    <string name="msg_reminder_deleted">リマインダーを削除しました</string>
+    <string name="msg_reminder_updated">リマインダーを更新しました</string>
+    <string name="msg_marked_as_undone">未完了に戻しました</string>
+    <string name="delete_reminder_confirm">このリマインダーを削除してもよろしいですか？</string>
+    <string name="delete_confirm_title">この記録を削除しますか？</string>
+    <string name="delete_confirm_message">この記録を削除してもよろしいですか？\nこの操作は元に戻せません。</string>
+    <string name="btn_delete">削除</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">アプリを評価</string>
+    <string name="rate_dialog_message">皆様のご意見が改善の励みになります。\n星をタップして評価してください。</string>
+    <string name="rate_dialog_submit">評価を送信</string>
+    <string name="rate_dialog_maybe_later">あとで</string>
+    <string name="rate_dialog_thank_you">ご意見ありがとうございます！</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">お薬の詳細</string>
+    <string name="title_allergy_details">アレルギーの詳細</string>
+    <string name="title_condition_details">既往歴の詳細</string>
+    <string name="title_vaccination_details">予防接種の詳細</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">剤形を選択</string>
+    <string name="title_select_severity">重症度を選択</string>
+    <string name="severity_mild">軽度</string>
+    <string name="severity_moderate">中等度</string>
+    <string name="severity_severe">重度</string>
+    <string name="severity_not_sure">不明</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">状態を更新</string>
+    <string name="btn_save_status">状態を保存</string>
+    <string name="status_ongoing_title">継続中</string>
+    <string name="status_ongoing_sub">現在も健康状態の一部として継続中</string>
+    <string name="status_resolved_title">治癒・解決済み</string>
+    <string name="status_resolved_sub">現在は完治または終了</string>
+    <string name="status_unsure_title">不明</string>
+    <string name="status_unsure_sub">現在の状態がはっきりしない</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">時刻を追加</string>
+    <string name="label_hour">時</string>
+    <string name="label_minute">分</string>
+    <string name="label_already_add">追加済み</string>
+    <string name="btn_add_time">時刻を追加</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">AI診断完了</string>
+    <string name="care_advice_title">ケアアドバイス</string>
+    <string name="care_advice_subtitle_format">報告された症状（%1$s）に基づき、安全に回復するための推奨ステップをご案内します。</string>
+    <string name="care_advice_self_care">セルフケア</string>
+    <string name="care_advice_monitor_symptoms">症状の経過観察</string>
+    <string name="care_advice_when_to_seek_care">医療機関を受診すべき目安</string>
+    <string name="care_advice_self_care_bullet_1">体の回復を促すため、少なくとも8時間の睡眠をとってください。</string>
+    <string name="care_advice_self_care_bullet_2">脱水を防ぐため、水やお茶などをこまめに補給してください。</string>
+    <string name="care_advice_monitor_bullet_1">体温を1日2回測定してください。</string>
+    <string name="care_advice_monitor_bullet_2">スマートウォッチ等で安静時の心拍数を確認してください。</string>
+    <string name="care_advice_seek_care_bullet_1">体温が39.4°Cを超える場合、痛みが48時間以上続く場合、呼吸困難がある場合は直ちに医師の診察を受けてください。</string>
+    <string name="btn_return_to_home">ホームに戻る</string>
+    <string name="btn_set_a_reminder">リマインダーを設定</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">結果</string>
+    <string name="symptom_result_doctor_title">医師への相談を推奨</string>
+    <string name="symptom_result_doctor_desc">症状について医師の診察が必要な場合があります。受診予約を行ってください。症状が悪化した場合は速やかに受診してください。</string>
+    <string name="title_possible_conditions">考えられる疾患・状態</string>
+    <string name="title_recommended_actions">推奨される対応</string>
+    <string name="btn_view_care_advice">ケアアドバイスを見る</string>
+    <string name="match_strong">可能性：高</string>
+    <string name="match_moderate">可能性：中</string>
+    <string name="match_possible">可能性：あり</string>
+    <string name="btn_ask_ai_about_result">この結果についてAIに質問する</string>
+    <string name="medical_disclaimer_title">免責事項</string>
+    <string name="medical_disclaimer_desc">本ツールは参考情報の提供のみを目的としており、専門的な医師の診断や治療に代わるものではありません。</string>
+    <string name="label_selected">選択済み:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">分析結果</string>
+    <string name="analysis_loading_title">AIが患部を分析中...</string>
+    <string name="analysis_loading_desc">形態テクスチャ、境界の色調、構造パターンをスキャンしています。</string>
+    <string name="analysis_unable_title">識別できませんでした</string>
+    <string name="analysis_unable_desc">この画像からは状態を識別できませんでした。\nより鮮明な写真を撮影してください。</string>
+    <string name="analysis_tips_title">きれいに撮影するためのコツ</string>
+    <string name="analysis_tip_1">明るい自然光の下で撮影する</string>
+    <string name="analysis_tip_2">患部にピントを合わせる</string>
+    <string name="analysis_tip_3">患部全体がしっかり写っていることを確認する</string>
+    <string name="btn_rescan">再スキャン</string>
+    <string name="btn_choose_from_gallery">ギャラリーから選択</string>
+    <string name="title_save_result_to">結果の保存先</string>
+    <string name="title_key_findings">主な所見</string>
+    <string name="title_care_suggestions">ケアの提案</string>
+    <string name="title_when_to_seek_care">受診の目安</string>
+    <string name="ai_processing_title">AI処理中...</string>
+    <string name="ai_processing_desc">まもなく結果が表示されます</string>
+    <string name="title_report_result">結果の報告</string>
+    <string name="btn_report">報告</string>
+    <string name="title_choose_reminders">リマインダーを選択</string>
+    <string name="btn_save_reminders_count">%1$d件のリマインダーを保存</string>
+    <string name="btn_save_reminder_single">1件のリマインダーを保存</string>
+    <string name="btn_edit">編集</string>
+    <string name="btn_understood">了解しました</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">アレルギー追加</string>
+    <string name="title_edit_allergy">アレルギー編集</string>
+    <string name="label_allergen_name">アレルゲン名</string>
+    <string name="label_type">種類</string>
+    <string name="type_food">食品</string>
+    <string name="label_reaction">症状・反応</string>
+    <string name="label_first_noticed">発症時期</string>
+    <string name="date_not_provided">日付未設定</string>
+    <string name="btn_save_allergy">アレルギーを保存</string>
+    <string name="title_add_condition">持病・疾患の追加</string>
+    <string name="title_edit_condition">持病・疾患の編集</string>
+    <string name="label_condition_name">疾患名</string>
+    <string name="label_status">状態</string>
+    <string name="label_clinician">担当医師</string>
+    <string name="label_clinic">受診医療機関</string>
+    <string name="not_provided">未入力</string>
+    <string name="label_diagnosis_date">診断日</string>
+    <string name="btn_save_condition">疾患を保存</string>
+    <string name="title_add_vaccination">予防接種の追加</string>
+    <string name="title_edit_vaccination">予防接種の編集</string>
+    <string name="label_vaccine_name">ワクチン名</string>
+    <string name="label_dose_number">接種回数</string>
+    <string name="label_batch_number">ロット番号</string>
+    <string name="btn_save_vaccination">予防接種を保存</string>
+    <string name="title_add_medication">お薬の追加</string>
+    <string name="title_edit_medication">お薬の編集</string>
+    <string name="label_reason">服用理由</string>
+    <string name="btn_save_medication">お薬を保存</string>
+    <string name="label_additional_details">詳細情報（任意）</string>
+    <string name="label_medication_name">薬品名</string>
+    <string name="no_records_yet_format">%1$sの登録はありません</string>
+    <string name="empty_records_desc">下のボタンから最初の記録を追加しましょう</string>
+    <string name="btn_add_record_format">%1$sを追加</string>
+    <string name="title_choose_item_format">%1$sを選択</string>
+    <string name="no_items_added_yet_format">%1$sが追加されていません</string>
+    <string name="add_records_quick_select_desc">記録を追加すると素早く選択できます</string>
+    <string name="btn_add_item_format">+ %1$sを追加</string>
+    <string name="time_am">午前</string>
+    <string name="time_pm">午後</string>
+    <string name="cat_temperature">体温</string>
+    <string name="cat_drink_water">水分補給</string>
+    <string name="cat_exercise">運動</string>
+    <string name="cat_sleep">睡眠</string>
+    <string name="label_date_received">接種日</string>
+    <string name="label_updated">更新日時</string>
+    <string name="record_diagnosed_format">%1$d件 診断済み</string>
+    <string name="label_notes">メモ</string>
+    <string name="label_note">メモ</string>
+    <string name="label_severity">重症度</string>
+    <string name="label_strength">用量</string>
+    <string name="label_form">剤形</string>
+    <string name="status_ongoing">継続中</string>
+    <string name="status_updated_format">状態を「%1$s」に更新しました</string>
+    <string name="toast_photo_load_failed">選択された写真を読み込めませんでした</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: スキャン無制限＆24時間サポート！</string>
+    <string name="toast_opening_privacy_policy">プライバシーポリシーを開いています…</string>
+    <string name="medical_disclaimer_dialog_title">免責事項</string>
+    <string name="ai_health_disclaimer_title">AIヘルス免責事項</string>
+    <string name="ai_health_disclaimer_desc">本画像分析はAIによる情報提供を目的としており、臨床評価や皮膚科の診断に代わるものではありません。\n\n出血、急激な変化、持続する痛みがある場合は、直ちに医師にご相談ください。</string>
+    <string name="medical_disclaimer_full_text">この症状チェックは教育および情報提供のみを目的としています。医師による診察、臨床診断、処方等の代わりとなるものではありません。\n\n健康上の懸念や疑問については、必ず医師や資格を持つ医療従事者にご相談ください。</string>
+    <string name="msg_please_choose_item_format">%1$sを選択してください</string>
+    <string name="symptom_sample_mild_fever_fatigue">微熱、疲労感</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">有害なコンテンツ</string>
+    <string name="report_illegal_content">違法なコンテンツ</string>
+    <string name="report_offensive_content">不快なコンテンツ</string>
+    <string name="report_biased_content">偏ったコンテンツ</string>
+    <string name="report_trademark_violation">商標権侵害</string>
+    <string name="report_copyright_violation">著作権侵害</string>
+    <string name="report_nudity_sexual_content">ヌード/性的コンテンツ</string>
+    <string name="report_violence_gore">暴力/残酷な表現</string>
+    <string name="report_others">その他</string>
+    <string name="toast_report_submitted">ご報告ありがとうございます。内容を確認いたします。</string>
+
+    <string name="label_relationship_you">あなた</string>
+    <string name="reminder_water_notes">水分補給により組織の修復と皮膚バリアの回復が促進されます。</string>
+    <string name="reminder_check_temperature_title">体温測定</string>
+    <string name="reminder_check_temperature_notes">発熱や感染の初期兆候を早期に検知するために体温を記録します。</string>
+    <string name="reminder_observe_area_title">スキンケアと経過観察</string>
+    <string name="reminder_observe_area_notes">赤み、大きさ、感覚の変化がないか確認してください。</string>
+</resources>

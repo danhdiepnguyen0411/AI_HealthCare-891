@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
-            android:text="Add vaccination"
+            android:text="@string/title_add_vaccination"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Vaccine name"
+                android:text="@string/label_vaccine_name"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -118,7 +118,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Dose number"
+                android:text="@string/label_dose_number"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -153,7 +153,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Batch number"
+                android:text="@string/label_batch_number"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -188,7 +188,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Clinic"
+                android:text="@string/label_clinic"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -223,7 +223,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Notes (optional)"
+                android:text="@string/label_reminder_notes"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -284,7 +284,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/urbanist"
                 android:includeFontPadding="false"
-                android:text="Save vaccination"
+                android:text="@string/btn_save_vaccination"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />

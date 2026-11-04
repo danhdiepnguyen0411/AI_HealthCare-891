@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/urbanist"
-            android:text="Care Advice"
+            android:text="@string/care_advice_title"
             android:textColor="#172044"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -55,10 +55,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/urbanist"
-        android:text="Contact dermatitis"
         android:textColor="#0843C6"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="Contact dermatitis" />
 
     <!-- Care Advice List Container -->
     <LinearLayout
@@ -78,7 +78,7 @@
         android:background="@drawable/bg_button_primary"
         android:fontFamily="@font/urbanist"
         android:stateListAnimator="@null"
-        android:text="Understood"
+        android:text="@string/btn_understood"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"

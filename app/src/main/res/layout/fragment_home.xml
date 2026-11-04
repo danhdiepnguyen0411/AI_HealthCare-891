@@ -1019,7 +1019,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="20sp"
-                            android:text="0 active"
+                            tools:text="0 active"
                             android:textColor="@color/color_text"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -1067,7 +1067,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="20sp"
-                            android:text="0 reported"
+                            tools:text="0 reported"
                             android:textColor="@color/color_text"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -1115,7 +1115,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="20sp"
-                            android:text="0 reported"
+                            tools:text="0 reported"
                             android:textColor="@color/color_text"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -1163,7 +1163,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="20sp"
-                            android:text="0 records"
+                            tools:text="0 records"
                             android:textColor="@color/color_text"
                             android:textSize="14sp" />
                     </LinearLayout>

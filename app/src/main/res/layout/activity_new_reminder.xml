@@ -138,9 +138,9 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/urbanist_semibold"
                     android:includeFontPadding="false"
-                    android:text="Choose medication"
                     android:textColor="@color/color_subtext"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:text="Choose medication" />
 
                 <FrameLayout
                     android:id="@+id/cardChooseItem"

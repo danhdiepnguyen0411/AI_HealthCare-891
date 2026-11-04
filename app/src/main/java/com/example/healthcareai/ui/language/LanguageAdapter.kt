@@ -12,10 +12,18 @@ import com.example.healthcareai.databinding.ItemLanguageBinding
 
 class LanguageAdapter(
     private val items: MutableList<LanguageModel>,
+    private var layoutDirection: Int = View.LAYOUT_DIRECTION_LOCALE,
     private val onItemSelected: (LanguageModel) -> Unit
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
 
     var onItemBound: ((position: Int, itemView: View) -> Unit)? = null
+
+    fun updateLayoutDirection(dir: Int) {
+        if (this.layoutDirection != dir) {
+            this.layoutDirection = dir
+            notifyDataSetChanged()
+        }
+    }
 
     fun getSelectedPosition(): Int = items.indexOfFirst { it.isSelected }
 
@@ -41,6 +49,9 @@ class LanguageAdapter(
 
         fun bind(item: LanguageModel) {
             val context = binding.root.context
+
+            binding.root.layoutDirection = layoutDirection
+            binding.rootContainer.layoutDirection = layoutDirection
 
             binding.ivFlag.setImageResource(item.flagRes)
             binding.tvLanguageName.text = item.name

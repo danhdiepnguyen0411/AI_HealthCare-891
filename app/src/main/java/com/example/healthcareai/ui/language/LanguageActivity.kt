@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -28,6 +29,7 @@ class LanguageActivity : BaseActivity() {
     private var isFromSettings = false
     private var initialSavedLangCode = "en"
     private var selectedLanguage: LanguageModel? = null
+    private var isConfirmed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,16 +56,28 @@ class LanguageActivity : BaseActivity() {
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
+
+            val targetPaddingTop = if (statusBarTop > 0) {
                 statusBarTop + (8 * density).toInt()
             } else {
-                (36 * density).toInt()
+                (12 * density).toInt()
             }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
+            binding.topBar.setPadding(
+                (16 * density).toInt(),
+                targetPaddingTop,
+                (16 * density).toInt(),
+                (12 * density).toInt()
+            )
+
+            if (navBarBottom > 0) {
+                binding.rvLanguages.setPadding(
+                    0,
+                    (10 * density).toInt(),
+                    0,
+                    navBarBottom + (24 * density).toInt()
+                )
             }
             insets
         }
@@ -202,8 +216,10 @@ class LanguageActivity : BaseActivity() {
             selectedLanguage = resultList.find { it.isSelected }
         }
 
-        adapter = LanguageAdapter(resultList) { selected ->
+        val initialDir = if (LocaleHelper.isRtl(this)) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
+        adapter = LanguageAdapter(resultList, initialDir) { selected ->
             selectedLanguage = selected
+            applyPreviewLanguage(selected.code)
             if (binding.btnDone.visibility == View.VISIBLE) {
                 updateDoneButtonState(hasSelection = true, animate = true)
             }
@@ -211,10 +227,56 @@ class LanguageActivity : BaseActivity() {
 
         binding.rvLanguages.layoutManager = LinearLayoutManager(this)
         binding.rvLanguages.adapter = adapter
+
+        selectedLanguage?.let {
+            applyPreviewLanguage(it.code)
+        }
+    }
+
+    private fun applyPreviewLanguage(languageCode: String) {
+        val locale = LocaleHelper.getLocale(languageCode)
+        val isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(locale) == ViewCompat.LAYOUT_DIRECTION_RTL
+        val dir = if (isRtl) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
+
+        // Temporarily update resources for localized string lookups
+        LocaleHelper.updateResources(this, languageCode)
+
+        // Dynamically apply layout direction across window and all container hierarchies
+        window.decorView.layoutDirection = dir
+        findViewById<View>(android.R.id.content)?.layoutDirection = dir
+        binding.rootLayout.layoutDirection = dir
+        binding.topBar.layoutDirection = dir
+        binding.rvLanguages.layoutDirection = dir
+        binding.btnBack.layoutDirection = dir
+        binding.ivBack.layoutDirection = dir
+
+        binding.ivBack.drawable?.mutate()?.let { drawable ->
+            androidx.core.graphics.drawable.DrawableCompat.setLayoutDirection(drawable, dir)
+            drawable.invalidateSelf()
+        }
+        binding.ivBack.invalidate()
+
+        if (::adapter.isInitialized) {
+            adapter.updateLayoutDirection(dir)
+        }
+
+        updateHeaderForLanguage(languageCode)
+
+        binding.topBar.requestLayout()
+        binding.rootLayout.requestLayout()
+    }
+
+    private fun updateHeaderForLanguage(languageCode: String) {
+        binding.tvTitle.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.title_language)
+        if (binding.tvSubtitle.visibility == View.VISIBLE) {
+            binding.tvSubtitle.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.subtitle_select_language)
+        }
+        binding.tvBtnDone.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.btn_done)
     }
 
     private fun onConfirmLanguage() {
         val lang = selectedLanguage ?: return
+        isConfirmed = true
 
         preferenceHelper.selectedLanguageCode = lang.code
         preferenceHelper.isFirstLanguageSet = true
@@ -224,8 +286,9 @@ class LanguageActivity : BaseActivity() {
 
         if (isFromSettings) {
             val intent = Intent(this, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 putExtra(MainActivity.EXTRA_TARGET_TAB, MainActivity.TAB_SETTINGS)
+                putExtra(MainActivity.EXTRA_SKIP_NOTI_POPUP, true)
             }
             startActivity(intent)
             finish()
@@ -251,6 +314,7 @@ class LanguageActivity : BaseActivity() {
             finish()
         } else {
             // First Launch exit: clear onboarding state and exit cleanly
+            LocaleHelper.setLocale(this, initialSavedLangCode)
             preferenceHelper.clearLanguageIfIntroNotCompleted(this)
             finishAffinity()
         }
@@ -269,6 +333,9 @@ class LanguageActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding.viewCountdown.cancelCountdown()
+        if (!isConfirmed && isFromSettings) {
+            LocaleHelper.setLocale(this, initialSavedLangCode)
+        }
     }
 
     companion object {

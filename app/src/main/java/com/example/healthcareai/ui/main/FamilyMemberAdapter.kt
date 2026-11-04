@@ -67,13 +67,14 @@ class FamilyMemberAdapter(
             binding.tvMemberName.text = member.name
 
             if (!member.relationship.isNullOrEmpty()) {
+                val locRel = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(context, member.relationship)
                 binding.tvMemberRelationship.visibility = View.VISIBLE
-                binding.tvMemberRelationship.text = "(${member.relationship})"
+                binding.tvMemberRelationship.text = "($locRel)"
             } else {
                 binding.tvMemberRelationship.visibility = View.GONE
             }
 
-            binding.tvMemberGender.text = member.gender
+            binding.tvMemberGender.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedGender(context, member.gender)
 
             // Stats: Age, Height, Weight, Reminder
             binding.tvMemberAge.text = calculateAge(member.dateOfBirth)

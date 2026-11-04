@@ -152,7 +152,7 @@ class SettingsFragment : Fragment() {
             } catch (e: Exception) {
                 Toast.makeText(
                     requireContext(),
-                    "Opening Privacy Policy...",
+                    getString(R.string.toast_opening_privacy_policy),
                     Toast.LENGTH_SHORT
                 ).show()
             }

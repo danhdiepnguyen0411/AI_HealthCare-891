@@ -472,7 +472,7 @@ class AnalysisResultsActivity : BaseActivity() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@AnalysisResultsActivity, "Failed to load selected photo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AnalysisResultsActivity, getString(R.string.toast_photo_load_failed), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -480,9 +480,9 @@ class AnalysisResultsActivity : BaseActivity() {
 
     private fun showInfoDisclaimerDialog() {
         val dialog = AlertDialog.Builder(this)
-            .setTitle("AI Health Disclaimer")
-            .setMessage("This visual analysis is powered by AI and designed for educational and preliminary wellness tracking. It does not replace professional clinical evaluation or dermatological diagnosis.\n\nIf you experience bleeding, rapid changes, or persistent pain, consult a medical doctor immediately.")
-            .setPositiveButton("Understood", null)
+            .setTitle(R.string.ai_health_disclaimer_title)
+            .setMessage(R.string.ai_health_disclaimer_desc)
+            .setPositiveButton(R.string.btn_understood, null)
             .create()
 
         DialogImmersiveHelper.showImmersive(dialog)

@@ -5,23 +5,33 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
     android:background="@color/screen_bg">
 
-    <!-- Top Header Bar -->
+    <!-- Language Items List (placed before topBar so topBar renders on top with zero shadow) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLanguages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="10dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
+        tools:listitem="@layout/item_language" />
+
+    <!-- Top Header Bar: Flat seamless background, no elevation shadow -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="0dp"
         android:minHeight="56dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingTop="12dp"
+        android:paddingTop="36dp"
         android:paddingBottom="12dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:background="@color/screen_bg"
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Circular White Back Button with Soft Shadow (Hidden on First Launch) -->
@@ -133,19 +143,5 @@
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Language Items List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLanguages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingTop="10dp"
-        android:paddingBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBar"
-        tools:listitem="@layout/item_language" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

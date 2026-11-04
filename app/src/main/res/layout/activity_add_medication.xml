@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
-            android:text="Add medication"
+            android:text="@string/title_add_medication"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Name"
+                android:text="@string/label_reminder_name"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -119,7 +119,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Reason"
+                android:text="@string/label_reason"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -169,7 +169,7 @@
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/urbanist_semibold"
                         android:includeFontPadding="false"
-                        android:text="Strength"
+                        android:text="@string/label_reminder_strength"
                         android:textColor="@color/color_subtext"
                         android:textSize="13sp" />
 
@@ -211,7 +211,7 @@
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/urbanist_semibold"
                         android:includeFontPadding="false"
-                        android:text="Form"
+                        android:text="@string/label_reminder_form"
                         android:textColor="@color/color_subtext"
                         android:textSize="13sp" />
 
@@ -234,7 +234,7 @@
                             android:fontFamily="@font/urbanist_medium"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="Tablet"
+                            android:text="@string/form_tablet"
                             android:textColor="@color/color_text"
                             android:textSize="15.5sp" />
 
@@ -256,7 +256,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Notes (optional)"
+                android:text="@string/label_reminder_notes"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -317,7 +317,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/urbanist"
                 android:includeFontPadding="false"
-                android:text="Save medication"
+                android:text="@string/btn_save_medication"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />

@@ -78,28 +78,31 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
     private fun setupUI() {
         when (currentCategory.lowercase()) {
             SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION.lowercase() -> {
-                binding.tvTitleChooseItem.text = "Choose medication"
-                binding.btnAddRecord.text = "+ Add medication"
+                val name = getString(R.string.record_medications).lowercase()
+                binding.tvTitleChooseItem.text = getString(R.string.title_choose_item_format, name)
+                binding.btnAddRecord.text = getString(R.string.btn_add_item_format, name)
                 binding.ivEmptyIcon.setImageResource(R.drawable.ic_medications)
-                binding.tvEmptyTitle.text = "No medication added yet"
+                binding.tvEmptyTitle.text = getString(R.string.no_items_added_yet_format, name)
             }
             SelectCategoryBottomSheetDialog.CATEGORY_VACCINATION.lowercase() -> {
-                binding.tvTitleChooseItem.text = "Choose vaccination"
-                binding.btnAddRecord.text = "+ Add vaccination"
+                val name = getString(R.string.record_vaccinations).lowercase()
+                binding.tvTitleChooseItem.text = getString(R.string.title_choose_item_format, name)
+                binding.btnAddRecord.text = getString(R.string.btn_add_item_format, name)
                 binding.ivEmptyIcon.setImageResource(R.drawable.ic_vaccination)
-                binding.tvEmptyTitle.text = "No vaccination added yet"
+                binding.tvEmptyTitle.text = getString(R.string.no_items_added_yet_format, name)
             }
             SelectCategoryBottomSheetDialog.CATEGORY_APPOINTMENTS.lowercase() -> {
-                binding.tvTitleChooseItem.text = "Choose appointment"
-                binding.btnAddRecord.text = "+ Add appointment"
+                val name = getString(R.string.category_appointments_title).lowercase()
+                binding.tvTitleChooseItem.text = getString(R.string.title_choose_item_format, name)
+                binding.btnAddRecord.text = getString(R.string.btn_add_item_format, name)
                 binding.ivEmptyIcon.setImageResource(R.drawable.ic_appointments)
-                binding.tvEmptyTitle.text = "No appointments added yet"
+                binding.tvEmptyTitle.text = getString(R.string.no_items_added_yet_format, name)
             }
             else -> {
-                binding.tvTitleChooseItem.text = "Choose $currentCategory"
-                binding.btnAddRecord.text = "+ Add $currentCategory"
+                binding.tvTitleChooseItem.text = getString(R.string.title_choose_item_format, currentCategory)
+                binding.btnAddRecord.text = getString(R.string.btn_add_item_format, currentCategory)
                 binding.ivEmptyIcon.setImageResource(R.drawable.ic_medications)
-                binding.tvEmptyTitle.text = "No $currentCategory added yet"
+                binding.tvEmptyTitle.text = getString(R.string.no_items_added_yet_format, currentCategory)
             }
         }
 

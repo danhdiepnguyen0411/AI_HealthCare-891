@@ -39,6 +39,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val langCode = PreferenceHelper.getInstance(this).selectedLanguageCode
+        LocaleHelper.applyLayoutDirection(this, langCode)
         hideNavigationBar()
     }
 

@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">Ana Sayfa</string>
+    <string name="tab_scan">Tara</string>
+    <string name="tab_my_health">Sağlığım</string>
+    <string name="tab_family">Ailem</string>
+    <string name="tab_settings">Ayarlar</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">Ana Sayfa Ekranı</string>
+    <string name="screen_scan">Tarama Ekranı</string>
+    <string name="screen_my_health">Sağlığım Ekranı</string>
+    <string name="screen_family">Aile Ekranı</string>
+    <string name="screen_settings">Ayarlar Ekranı</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">Yapay Zeka Taraması</string>
+    <string name="headline_ai_scan">Nereyi kontrol etmek istersiniz?</string>
+    <string name="category_skin">Cilt</string>
+    <string name="category_skin_desc">Lekeler, döküntüler veya cilt değişiklikleri</string>
+    <string name="category_mouth">Ağız</string>
+    <string name="category_mouth_desc">Dudaklar, diş etleri, dil veya dişler</string>
+    <string name="category_eye">Göz</string>
+    <string name="category_eyes">Gözler</string>
+    <string name="category_eyes_desc">Göz çevresindeki belirgin değişiklikler</string>
+    <string name="category_nails">Tırnaklar</string>
+    <string name="category_nail">Tırnak</string>
+    <string name="category_nail_desc">El veya ayak tırnakları</string>
+    <string name="category_other_area">Diğer bölge</string>
+    <string name="category_other_area_desc">Vücudun diğer görünür bölgeleri</string>
+    <string name="btn_start_scan">Taramayı Başlat</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">Yükleniyor...</string>
+    <string name="splash_ads_notice">Bu işlem reklam içerebilir</string>
+    
+    <!-- Language -->
+    <string name="title_language">Dil</string>
+    <string name="subtitle_select_language">Devam etmek için bir dil seçin</string>
+    <string name="btn_done">Tamam</string>
+    <string name="hint_tap_device_language">Dilinizi seçmek için dokunun</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">Atla</string>
+    <string name="btn_next">İleri</string>
+    <string name="btn_get_started">Başlayın</string>
+    <string name="intro_title_1">Sağlığınızı daha iyi\nanlayın</string>
+    <string name="intro_desc_1">Fotoğraf analizi, semptom soruları ve yapay zeka ile sağlık durumunuzu inceleyin.</string>
+    <string name="intro_title_2">Tüm sağlık verileriniz\ntek bir yerde</string>
+    <string name="intro_desc_2">Kayıtlarınızı tutun, değişiklikleri izleyin ve rutininize uygun hatırlatıcılar kurun.</string>
+    <string name="intro_title_3">Kişiye özel\nbakım rehberi</string>
+    <string name="intro_desc_3">Yapay zekadan özel bakım önerileri, günlük ipuçları ve takip desteği alın.</string>
+    <string name="intro_title_4">Kendiniz ve aileniz\niçin özenli bakım</string>
+    <string name="intro_desc_4">Aile profillerini düzenleyin ve sevdiklerinizin sağlığını kolayca takip edin.</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">Profil ekle</string>
+    <string name="title_add_member">Üye ekle</string>
+    <string name="title_detail_profile">Profil Detayı</string>
+    <string name="title_profile_detail">Profil Detayı</string>
+    <string name="msg_member_added">Üye Aileye eklendi!</string>
+    <string name="add_avatar">Fotoğrafı değiştir</string>
+    <string name="label_full_name">Ad Soyad</string>
+    <string name="hint_full_name">Adınızı ve soyadınızı girin</string>
+    <string name="label_date_of_birth">Doğum tarihi</string>
+    <string name="hint_date_of_birth">Doğum tarihinizi seçin</string>
+    <string name="label_gender">Cinsiyet</string>
+    <string name="hint_gender">Cinsiyet seçin</string>
+    <string name="gender_other">Diğer</string>
+    <string name="label_height">Boy</string>
+    <string name="hint_height">Boy</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">Kilo</string>
+    <string name="hint_weight">Kilo</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">Profil oluştur</string>
+    <string name="btn_save">Kaydet</string>
+    <string name="btn_cancel">İptal</string>
+    <string name="btn_close">Kapat</string>
+    <string name="title_gender_sheet">Cinsiyet</string>
+    <string name="select_gender_title">Cinsiyet Seçin</string>
+    <string name="error_name_empty">Lütfen adınızı girin</string>
+    <string name="error_dob_empty">Lütfen doğum tarihinizi seçin</string>
+    <string name="error_gender_empty">Lütfen cinsiyetinizi seçin</string>
+    <string name="error_height_empty">Lütfen boyunuzu girin</string>
+    <string name="error_weight_empty">Lütfen kilonuzu girin</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">Yakınlık derecesi</string>
+    <string name="hint_relationship">Yakınlık derecesini seçin</string>
+    <string name="title_relationship_sheet">Yakınlık derecesi</string>
+    <string name="select_relationship_title">Yakınlık Derecesi Seçin</string>
+    <string name="rel_father">Baba</string>
+    <string name="rel_mother">Anne</string>
+    <string name="rel_spouse">Eş</string>
+    <string name="rel_husband">Koca</string>
+    <string name="rel_wife">Karı</string>
+    <string name="rel_son">Erkek çocuk</string>
+    <string name="rel_daughter">Kız çocuk</string>
+    <string name="rel_brother">Erkek kardeş</string>
+    <string name="rel_sister">Kız kardeş</string>
+    <string name="rel_grandparent">Büyükanne / Büyükbaba</string>
+    <string name="rel_other">Diğer</string>
+    <string name="dialog_delete_member_title">Üyeyi sil</string>
+    <string name="dialog_delete_member_msg">%1$s adlı üyeyi Aileden silmek istediğinize emin misiniz?</string>
+    <string name="btn_remove">Sil</string>
+    <string name="msg_member_removed">Üye Aileden kaldırıldı</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">Sağlığım</string>
+    <string name="label_age">Yaş</string>
+    <string name="label_reminder">Hatırlatıcı</string>
+    <string name="title_health_records">Sağlık Kayıtları</string>
+    <string name="record_medications">İlaçlar</string>
+    <string name="record_allergies">Alerjiler</string>
+    <string name="record_conditions">Rahatsızlıklar</string>
+    <string name="record_vaccinations">Aşılar</string>
+    <string name="record_active_format">%1$d aktif</string>
+    <string name="record_reported_format">%1$d bildirildi</string>
+    <string name="record_recorded_format">%1$d kaydedildi</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">Dil Ayarı</string>
+    <string name="settings_notifications">Günlük Hatırlatıcılar</string>
+    <string name="settings_version">Sürüm 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">Kullanırken hangi sorunlarla karşılaştınız?</string>
+    <string name="uninstall_card1_title">Özellikleri kullanamıyor veya kaydedemiyorum</string>
+    <string name="uninstall_card1_desc">Bağlantı sorunları veya sunucu hataları algılandı.</string>
+    <string name="uninstall_card2_title">Şu anda kullanılamıyor</string>
+    <string name="uninstall_card2_desc">Bu araç bakımda veya bölgenizde kısıtlı.</string>
+    <string name="uninstall_btn_try_again">Tekrar dene</string>
+    <string name="uninstall_btn_explore">Keşfet</string>
+    <string name="uninstall_btn_dont_uninstall">Kaldırmak istemiyorum</string>
+    <string name="uninstall_btn_still_uninstall">Yine de kaldır</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">HealthCare AI uygulamasını neden siliyorsunuz?</string>
+    <string name="uninstall_reason_subtitle">Ayrıldığınız için üzgünüz. Nasıl daha iyi olabileceğimizi lütfen belirtin.</string>
+    <string name="uninstall_reason_1">Kullanımı zor</string>
+    <string name="uninstall_reason_2">Çok fazla reklam var</string>
+    <string name="uninstall_reason_3">Tasarım yetersiz</string>
+    <string name="uninstall_reason_4">Diğer</string>
+    <string name="uninstall_reason_hint">Lütfen detayları buraya yazın..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">Günlük Sağlık Hatırlatıcıları</string>
+    <string name="noti_channel_desc">Su içme, kontroller ve alışkanlıklar için günlük bildirimler.</string>
+    <string name="noti_title_morning">Sabah Sağlık Kontrolü ☀️</string>
+    <string name="noti_msg_morning">Güne bir bardak su ile başlayın ve günlük sağlık hedefinizi kontrol edin.</string>
+    <string name="noti_title_afternoon">Öğleden Sonra Zindeliği 💧</string>
+    <string name="noti_msg_afternoon">Kısa bir mola verin, esneyin ve enerjinizi kaydedin.</string>
+    <string name="noti_title_evening">Akşam Bakımı &amp; Değerlendirmesi 🌙</string>
+    <string name="noti_msg_evening">Gününüzü değerlendirin ve yapay zeka asistanınıza danışın.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">Bildirim</string>
+    <string name="dialog_notification_permission_desc">Önemli güncellemeleri, analiz sonuçlarını ve yeni özellikleri kaçırmayın.</string>
+    <string name="dialog_notification_btn_settings">Ayarlara git</string>
+    <string name="dialog_notification_btn_dont_allow">İzin verme</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">İlaç ve Sağlık Hatırlatıcıları</string>
+    <string name="noti_reminders_channel_desc">İlaçlar, su içme ve sağlık görevleri için zamanında alarmlar.</string>
+    <string name="noti_reminder_action_done">Tamamlandı olarak işaretle</string>
+    <string name="noti_reminder_default_desc">%s hatırlatmanızın zamanı geldi.</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">İzin Gerekli</string>
+    <string name="permission_desc">Hatırlatıcıları ve fotoğraf taramayı kullanmak için Ayarlar\'dan izin verin.</string>
+    <string name="permission_btn_settings">Ayarlara Git</string>
+    <string name="permission_btn_cancel">Şimdi Değil</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">Kamera Erişimine İzin Ver</string>
+    <string name="dialog_camera_permission_desc">Sağlık durumunuzu taramak ve analiz etmek için kameraya izin verin</string>
+    <string name="dialog_camera_btn_settings">Ayarlara git</string>
+    <string name="dialog_camera_btn_dont_allow">İzin verme</string>
+    <string name="dialog_camera_btn_cancel">Şimdi Değil</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">Fotoğraf Kılavuzu</string>
+    <string name="camera_guide_tip_1">1. Hedef bölgeyi çerçevenin tam ortasında tutun.</string>
+    <string name="camera_guide_tip_2">2. Net, doğal ışık sağlayın, gölgelerden kaçının.</string>
+    <string name="camera_guide_tip_3">3. Kamerayı yaklaşık 10–15 cm mesafede sabit tutun.</string>
+    <string name="camera_guide_btn_got_it">Anladım</string>
+    <string name="camera_capture_success">Fotoğraf çekildi! Analiz ediliyor...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">Fotoğrafı Onayla</string>
+    <string name="label_aspect_ratio">En Boy Oranı</string>
+    <string name="btn_use_photo">Bu fotoğrafı kullan</string>
+    <string name="btn_retake_photo">Yeniden çek</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">Günaydın</string>
+    <string name="home_greeting_afternoon">Tünaydın</string>
+    <string name="home_greeting_evening">İyi akşamlar</string>
+    <string name="home_subtitle">Bugün sağlığınız harika görünüyor.</string>
+    <string name="home_ai_assistant_badge">Yapay Zeka Sağlık Asistanı</string>
+    <string name="home_ai_assistant_title">Kişisel sağlık\nasistanınız</string>
+    <string name="home_btn_chat_ai">Yapay Zeka ile Sohbet</string>
+    <string name="home_feature_health_scan">Sağlık\nTaraması</string>
+    <string name="home_feature_measure_heart_rate">Nabız\nÖlç</string>
+    <string name="home_feature_symptom_checker">Semptom\nKontrolü</string>
+    <string name="home_section_today_reminder">Bugünün hatırlatıcıları</string>
+    <string name="home_section_ai_scan_history">Yapay Zeka tarama geçmişi</string>
+    <string name="home_view_all">Tümünü gör</string>
+    <string name="home_no_reminder_title">Henüz hatırlatıcı yok</string>
+    <string name="home_no_reminder_desc">Düzenli kalmak için ilaç veya su hatırlatıcısı ekleyin.</string>
+    <string name="home_btn_add_reminder">Hatırlatıcı ekle</string>
+    <string name="home_no_scans_title">Henüz tarama yok</string>
+    <string name="home_no_scans_desc">İlk kontrolünüzden sonra sonuçlar burada görünecektir.</string>
+    <string name="home_btn_start_first_scan">İlk taramayı başlat</string>
+    <string name="home_btn_get_pro">Pro\'ya Geç</string>
+    <string name="home_manage">Yönet</string>
+    <string name="btn_mark_as_done">Tamamlandı olarak işaretle</string>
+    <string name="msg_marked_as_done">Tamamlandı olarak işaretlendi!</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">Su iç</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">Kol cilt kontrolü</string>
+    <string name="scan_arm_skin_check_date">5 Eki</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">Kalp Atış Hızı</string>
+    <string name="heart_rate_how_to_measure">Nasıl ölçülür</string>
+    <string name="heart_rate_instruction">Ölçüme başlamak için parmak ucunuzu\nkamera ve flaşın üzerine yerleştirin.</string>
+    <string name="heart_rate_btn_start">Ölçümü Başlat</string>
+    <string name="heart_rate_statistics_coming_soon">İstatistikler ve eğilimler burada görünecektir.</string>
+    <string name="how_to_measure_title">Nasıl ölçülür</string>
+    <string name="how_to_measure_step1_title">Parmağınızı kamera ve flaşa koyun</string>
+    <string name="how_to_measure_step1_desc">Arka kamerayı parmak ucunuzla tamamen kapatın.</string>
+    <string name="how_to_measure_step2_title">Flaşın açık olduğundan emin olun</string>
+    <string name="how_to_measure_step2_desc">Flaş, hassas ölçüm için parmak ucunuzu aydınlatacaktır.</string>
+    <string name="how_to_measure_step3_title">Parmağınızı sabit tutun</string>
+    <string name="how_to_measure_step3_desc">Ölçüm sırasında parmağınızı hareket ettirmeyin.</string>
+    <string name="heart_rate_guide_title">Ölçüm rehberi</string>
+    <string name="heart_rate_guide_tip_1">1. İşaret parmağınızı arka kamera lensi ve flaşın üzerine hafifçe koyun.</string>
+    <string name="heart_rate_guide_tip_2">2. Çok fazla bastırmadan hafif ve sabit bir basınç uygulayın.</string>
+    <string name="heart_rate_guide_tip_3">3. Hareketsiz kalın, normal nefes alın ve bekleyin.</string>
+    <string name="heart_rate_guide_btn_got_it">Anladım</string>
+    <string name="heart_rate_measuring_title">Kalp Atış Hızı Ölçülüyor</string>
+    <string name="heart_rate_measuring_banner_title">Kalp atış hızınız ölçülüyor…</string>
+    <string name="heart_rate_measuring_banner_sub">Lütfen parmağınızı sabit tutun.</string>
+    <string name="heart_rate_waiting_finger">Kamerayı ve flaşı kapatın</string>
+    <string name="heart_rate_waiting_finger_desc">İşaret parmağınızı kamera ve flaşın üzerine nazikçe yerleştirin</string>
+    <string name="heart_rate_measuring_desc">Ölçülüyor... Sabit durun ve normal nefes alın</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">Sonuç</string>
+    <string name="heart_rate_result_summary">Sonuç Özeti</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">Yavaş</string>
+    <string name="heart_rate_normal_label">Normal</string>
+    <string name="heart_rate_fast_label">Hızlı</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">Kaydı Sil</string>
+    <string name="heart_rate_delete_confirm_msg">Bu kalp atış hızı ölçümünü silmek istediğinize emin misiniz?</string>
+    <string name="heart_rate_delete_btn">Sil</string>
+    <string name="heart_rate_cancel_btn">İptal</string>
+    <string name="heart_rate_deleted">Kayıt silindi</string>
+    <string name="heart_rate_normal">Normal (Dinlenme)</string>
+    <string name="heart_rate_slow">Yavaş Kalp Atışı (Bradikardi)</string>
+    <string name="heart_rate_fast">Yüksek Kalp Atışı (Taşikardi)</string>
+    <string name="heart_rate_quality_label">Sinyal Kalitesi</string>
+    <string name="heart_rate_hrv_title">Kalp Atış Hızı Değişkenliği (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">Tekrar Ölç</string>
+    <string name="heart_rate_btn_done">Done</string>
+    <string name="heart_rate_error_finger_lost_title">Parmak Oynadı</string>
+    <string name="heart_rate_error_finger_lost">Parmağınız çekildiği için ölçüm duraklatıldı.</string>
+    <string name="heart_rate_error_low_quality_title">Ölçüm Belirsiz</string>
+    <string name="heart_rate_error_low_quality">Sinyal çok kararsızdı. Lütfen çok sert bastırmadan hareketsiz durun.</string>
+    <string name="heart_rate_error_no_flash">Cihazınızda kamera flaşı bulunmuyor gibi görünüyor.</string>
+    <string name="heart_rate_btn_try_again">Tekrar Dene</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">İstatistikler</string>
+    <string name="statistics_tab_overview">Genel Bakış</string>
+    <string name="statistics_tab_history">Geçmiş</string>
+    <string name="statistics_average">Ortalama</string>
+    <string name="statistics_highest">En yüksek</string>
+    <string name="statistics_lowest">En düşük</string>
+    <string name="statistics_no_history_title">Henüz geçmiş yok</string>
+    <string name="statistics_no_history_desc">İlk taramadan sonra kalp atış hızı ölçümleriniz burada yer alacaktır.</string>
+    <string name="statistics_no_data_title">Henüz veri yok</string>
+    <string name="statistics_no_data_desc">Haftalık istatistiklerinizi görmek için kalp atış hızınızı ölçün.</string>
+    <string name="statistics_btn_measure_now">Şimdi ölç</string>
+    <string name="statistics_heart_rate_chart_title">Nabız (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">Ailem</string>
+    <string name="family_no_members_title">Henüz aile üyesi yok</string>
+    <string name="family_no_members_desc">Sağlık kayıtlarını ve ilaçları birlikte yönetmek için sevdiklerinizi ekleyin.</string>
+    <string name="family_btn_add_first_member">İlk üyeyi ekle</string>
+    <string name="family_add_member_hint">Bu özellik yakında aktif olacaktır.</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">Ayarlar</string>
+    <string name="settings_section_general">Genel</string>
+    <string name="settings_section_support">Destek</string>
+    <string name="settings_item_language">Dil</string>
+    <string name="settings_item_permission">İzinler</string>
+    <string name="settings_item_share">Arkadaşlarınla paylaş</string>
+    <string name="settings_item_rate">Bizi Değerlendir</string>
+    <string name="settings_item_privacy">Gizlilik Politikası</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">Semptom Kontrolü</string>
+    <string name="symptom_checker_subtitle">Size en iyi rehberliği sunabilmemiz için\nnasıl hissettiğinizi paylaşın.</string>
+    <string name="symptom_checker_privacy_notice">Verileriniz şifrelenir ve gizli tutulur.</string>
+    <string name="symptom_checker_est_time_label">Tahmini süre</string>
+    <string name="symptom_checker_est_time_val">3 dk</string>
+    <string name="symptom_checker_after_assessment_label">Değerlendirme sonrası</string>
+    <string name="symptom_checker_after_assessment_val">Sağlık içgörüleri</string>
+    <string name="symptom_checker_length_label">Değerlendirme sonrası</string>
+    <string name="symptom_checker_length_val">Sağlık içgörüleri</string>
+    <string name="symptom_checker_btn_start">Değerlendirmeyi Başlat</string>
+    <string name="symptom_checker_start_toast">Yapay zeka semptom kontrolü başlatılıyor...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">Yaşınız kaç?</string>
+    <string name="assessment_gender_title">Biyolojik cinsiyetiniz nedir?</string>
+    <string name="assessment_gender_subtitle">Kişiselleştirilmiş bir sağlık deneyimi için lütfen cinsiyetinizi seçin.</string>
+    <string name="gender_male">Erkek</string>
+    <string name="gender_female">Kadın</string>
+    <string name="assessment_symptoms_title">Hangi semptomları yaşıyorsunuz?</string>
+    <string name="assessment_symptoms_subtitle">Semptomları seçmek için vücut bölgesine dokunun</string>
+    <string name="tab_body_map">Vücut Haritası</string>
+    <string name="tab_all_symptoms">Tüm Semptomlar</string>
+    <string name="region_all">Tümü</string>
+    <string name="region_head">Baş</string>
+    <string name="region_neck">Boyun</string>
+    <string name="region_shoulders">Omuzlar</string>
+    <string name="region_chest">Göğüs</string>
+    <string name="region_abdomen">Karın</string>
+    <string name="region_arms">Kollar</string>
+    <string name="region_legs">Bacaklar</string>
+    <string name="search_symptoms_hint">Ana semptomunuzu buraya yazın</string>
+    <string name="no_symptoms_found">"%s" ile eşleşen semptom bulunamadı</string>
+    <string name="assessment_related_symptoms_title">Aşağıdaki belirtilerden herhangi biri var mı?</string>
+    <string name="assessment_related_symptoms_subtitle">Geçerli olan tüm yanıtları seçin</string>
+    <string name="assessment_insect_bite_title">Bir böcek (sivrisinek, kene, örümcek, tahtakurusu vb.) tarafından ısırıldınız mı?</string>
+    <string name="option_yes">Evet</string>
+    <string name="option_no">Hayır</string>
+    <string name="option_dont_know">Bilmiyorum</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">Çıkış</string>
+    <string name="dialog_exit_app_desc">Çıkmak istediğinize emin misiniz?\nKaydedilmemiş değişiklikler kaybolabilir.</string>
+    <string name="dialog_exit_app_btn_stay">Kal</string>
+    <string name="dialog_exit_app_btn_exit">Çık</string>
+    <string name="dialog_exit_assessment_title">Değerlendirmeden Çık</string>
+    <string name="dialog_exit_assessment_desc">Çıkmak istediğinize emin misiniz?\nCevaplarınız kaybolacaktır.</string>
+    <string name="dialog_exit_btn_continue">Kal</string>
+    <string name="dialog_exit_btn_exit">Çık</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">Devam Et</string>
+    <string name="btn_back">Geri</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">Yapay Zeka Sağlık Asistanı</string>
+    <string name="ai_chat_welcome_title">Bugün sağlığınız konusunda\nsize nasıl yardımcı olabilirim?</string>
+    <string name="ai_chat_suggestion_1_title">Sağlıklı yaşam tüyoları</string>
+    <string name="ai_chat_suggestion_1_desc">Genel sağlığı iyileştiren günlük alışkanlıklar...</string>
+    <string name="ai_chat_suggestion_1_query">Genel sağlığımı ve zindeliğimi artıracak günlük alışkanlıklar öner.</string>
+    <string name="ai_chat_suggestion_2_title">Tarama sonuçlarımı açıkla</string>
+    <string name="ai_chat_suggestion_2_desc">Cilt veya ağız taramamı anlamama yardımcı ol.</string>
+    <string name="ai_chat_suggestion_2_query">Tarama sonuçlarımı ve önerileri anlamama yardımcı ol.</string>
+    <string name="ai_chat_suggestion_3_title">Sağlık verilerimi incele</string>
+    <string name="ai_chat_suggestion_3_desc">Nabız, uyku ve aktivite verilerimi analiz et.</string>
+    <string name="ai_chat_suggestion_3_query">Kalp atış hızı ve uyku verilerimi analiz ederek önerilerde bulun.</string>
+    <string name="ai_chat_input_hint">Bana her şeyi sorabilirsiniz...</string>
+    <string name="ai_chat_new_chat">Yeni Sohbet</string>
+    <string name="ai_chat_clear_confirm_title">Yeni Sohbet Başlatılsın mı?</string>
+    <string name="ai_chat_clear_confirm_msg">Mevcut sohbeti temizleyip sıfırdan başlamak istiyor musunuz?</string>
+    <string name="ai_chat_listening">Dinleniyor... şimdi konuşun</string>
+    <string name="ai_chat_mic_permission_required">Sesli mesajlar için mikrofon izni gereklidir.</string>
+    <string name="ai_chat_error_fallback">Üzgünüm, şu anda yanıt veremedim. Lütfen bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="ai_chat_today">Bugün</string>
+    <string name="ai_chat_yesterday">Dün</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">Sohbetler</string>
+    <string name="conversation_empty_title">Henüz sohbet yok</string>
+    <string name="conversation_empty_desc">Kişiselleştirilmiş sağlık tavsiyesi almak\niçin bir sohbet başlatın.</string>
+    <string name="time_just_now">Az önce</string>
+    <string name="time_minute_ago">1 dakika önce</string>
+    <string name="time_minutes_ago">%d dakika önce</string>
+    <string name="time_hour_ago">1 saat önce</string>
+    <string name="time_hours_ago">%d saat önce</string>
+    <string name="time_day_ago">1 gün önce</string>
+    <string name="time_days_ago">%d gün önce</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">Yeni hatırlatıcı</string>
+    <string name="label_reminder_category">Kategori</string>
+    <string name="hint_select_category">Kategori seçin</string>
+    <string name="label_reminder_name">İsim</string>
+    <string name="label_reminder_strength">Doz</string>
+    <string name="hint_reminder_strength">örn. 10 mg</string>
+    <string name="label_reminder_form">Form</string>
+    <string name="hint_reminder_form">Form seçin</string>
+    <string name="label_reminder_repeat">Tekrar</string>
+    <string name="hint_repeat_schedule">Tekrar sıklığı seçin</string>
+    <string name="label_reminder_time">Saat</string>
+    <string name="time_no_times_added">Henüz saat eklenmedi</string>
+    <string name="label_reminder_start_date">Başlangıç tarihi</string>
+    <string name="label_reminder_end_date">Bitiş tarihi</string>
+    <string name="hint_select_date">Tarih seçin</string>
+    <string name="label_reminder_notes">Notlar (isteğe bağlı)</string>
+    <string name="hint_reminder_name">Hatırlatıcı adını girin</string>
+    <string name="hint_enter_medication_name">İlaç adını girin</string>
+    <string name="hint_add_notes">Not ekleyin</string>
+    <string name="reminder_btn_add_time">Saat ekle</string>
+    <string name="btn_save_reminder">Hatırlatıcıyı kaydet</string>
+    <string name="repeat_every_day">Her gün</string>
+    <string name="repeat_weekdays">Hafta içi</string>
+    <string name="repeat_weekends">Hafta sonu</string>
+    <string name="repeat_weekly">Haftalık</string>
+    <string name="repeat_monthly">Aylık</string>
+    <string name="repeat_once">Bir kez</string>
+    <string name="form_tablet">Tablet</string>
+    <string name="form_capsule">Kapsül</string>
+    <string name="form_liquid">Sıvı / Şurup</string>
+    <string name="form_drops">Damlalık</string>
+    <string name="form_injection">Enjeksiyon</string>
+    <string name="form_inhaler">İnhalatör</string>
+    <string name="form_other">Diğer</string>
+    <string name="msg_reminder_saved">Hatırlatıcı başarıyla kaydedildi</string>
+    <string name="msg_enter_reminder_name">Lütfen bir hatırlatıcı adı girin</string>
+    <string name="msg_time_already_added">Bu saat zaten eklendi</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">Kategori seçin</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">Tekrar</string>
+    <string name="category_health_monitoring_title">Sağlık takibi</string>
+    <string name="category_health_monitoring_desc">Ateş, nabız vb.</string>
+    <string name="category_medication_title">İlaç</string>
+    <string name="category_medication_desc">İlaç, vitamin, takviye alımı</string>
+    <string name="category_healthy_habits_title">Sağlıklı alışkanlıklar</string>
+    <string name="category_healthy_habits_desc">Su içme, spor, uyku vb.</string>
+    <string name="category_appointments_title">Randevular</string>
+    <string name="category_appointments_desc">Doktor ziyaretleri, rutin kontroller</string>
+    <string name="category_vaccinations_title">Aşılar</string>
+    <string name="category_vaccinations_desc">Aşı takvimi ve hatırlatma dozları</string>
+    <string name="category_other_title">Diğer</string>
+    <string name="category_other_desc">Kişisel sağlık hatırlatıcıları</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">Hatırlatıcı</string>
+    <string name="title_edit_reminder">Hatırlatıcıyı düzenle</string>
+    <string name="reminder_action_edit">Düzenle</string>
+    <string name="reminder_action_delete">Sil</string>
+    <string name="reminder_status_taken">Alındı</string>
+    <string name="reminder_action_undo">Geri al</string>
+    <string name="msg_reminder_deleted">Hatırlatıcı silindi</string>
+    <string name="msg_reminder_updated">Hatırlatıcı güncellendi</string>
+    <string name="msg_marked_as_undone">Alınmadı olarak işaretlendi</string>
+    <string name="delete_reminder_confirm">Bu hatırlatıcıyı silmek istediğinize emin misiniz?</string>
+    <string name="delete_confirm_title">Bu kayıt silinsin mi?</string>
+    <string name="delete_confirm_message">Bu kaydı silmek istediğinize emin misiniz?\nBu işlem geri alınamaz.</string>
+    <string name="btn_delete">Sil</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">Deneyiminizi Değerlendirin</string>
+    <string name="rate_dialog_message">Görüşleriniz gelişmemize yardımcı olur.\nDeğerlendirmek için bir yıldıza dokunun.</string>
+    <string name="rate_dialog_submit">Değerlendirmeyi gönder</string>
+    <string name="rate_dialog_maybe_later">Daha sonra</string>
+    <string name="rate_dialog_thank_you">Geri bildiriminiz için teşekkürler!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">İlaç detayları</string>
+    <string name="title_allergy_details">Alerji detayları</string>
+    <string name="title_condition_details">Durum detayları</string>
+    <string name="title_vaccination_details">Aşı detayları</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">Form seçin</string>
+    <string name="title_select_severity">Şiddet derecesi seçin</string>
+    <string name="severity_mild">Hafif</string>
+    <string name="severity_moderate">Orta</string>
+    <string name="severity_severe">Şiddetli</string>
+    <string name="severity_not_sure">Emin değilim</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">Durumu güncelle</string>
+    <string name="btn_save_status">Durumu kaydet</string>
+    <string name="status_ongoing_title">Devam ediyor</string>
+    <string name="status_ongoing_sub">Hâlâ mevcut sağlık geçmişinizin bir parçası</string>
+    <string name="status_resolved_title">İyileşti</string>
+    <string name="status_resolved_sub">Artık devam etmiyor olarak kaydedildi</string>
+    <string name="status_unsure_title">Belirsiz</string>
+    <string name="status_unsure_sub">Mevcut durumdan tam emin değilsiniz</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">Saat ekle</string>
+    <string name="label_hour">Saat</string>
+    <string name="label_minute">Dakika</string>
+    <string name="label_already_add">Zaten eklendi</string>
+    <string name="btn_add_time">Saat ekle</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">YAPAY ZEKA DEĞERLENDİRMESİ TAMAMLANDI</string>
+    <string name="care_advice_title">Bakım Önerileri</string>
+    <string name="care_advice_subtitle_format">Bildirdiğiniz semptomlara (%1$s) göre, güvenle iyileşmenize yardımcı olacak önerilen adımlar.</string>
+    <string name="care_advice_self_care">Öz Bakım</string>
+    <string name="care_advice_monitor_symptoms">Semptomları İzleyin</string>
+    <string name="care_advice_when_to_seek_care">Ne Zaman Doktora Başvurmalı</string>
+    <string name="care_advice_self_care_bullet_1">Vücudunuzun toparlanması için en az 8 saat uyumaya özen gösterin.</string>
+    <string name="care_advice_self_care_bullet_2">Vücudunuzu susuz bırakmamak için bol su ve sıvı tüketin.</string>
+    <string name="care_advice_monitor_bullet_1">Günde iki kez vücut ısınızı ölçün.</string>
+    <string name="care_advice_monitor_bullet_2">Akıllı saatinizle dinlenme kalp atış hızınızı takip edin.</string>
+    <string name="care_advice_seek_care_bullet_1">Ateşiniz 39.4°C\'yi aşarsa, ağrı 48 saatten uzun sürerse veya nefes darlığı çekerseniz derhal doktora başvurun.</string>
+    <string name="btn_return_to_home">Ana Sayfaya Dön</string>
+    <string name="btn_set_a_reminder">Hatırlatıcı kur</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">Sonuç</string>
+    <string name="symptom_result_doctor_title">Bir doktora danışın</string>
+    <string name="symptom_result_doctor_desc">Semptomlarınız tıbbi bir muayene gerektirebilir. Doktorunuzdan randevu alın. Durumunuz kötüleşirse hemen doktora gidin.</string>
+    <string name="title_possible_conditions">Olası Durumlar</string>
+    <string name="title_recommended_actions">Önerilen Eylemler</string>
+    <string name="btn_view_care_advice">Bakım Önerilerini Gör</string>
+    <string name="match_strong">Yüksek Eşleşme</string>
+    <string name="match_moderate">Orta Eşleşme</string>
+    <string name="match_possible">Olası Eşleşme</string>
+    <string name="btn_ask_ai_about_result">Bu sonuç hakkında yapay zekaya sor</string>
+    <string name="medical_disclaimer_title">TIBBİ SORUMLULUK REDDİ</string>
+    <string name="medical_disclaimer_desc">Bu araç yalnızca bilgilendirme amaçlıdır; profesyonel tıbbi tavsiye, teşhis veya tedavinin yerini alamaz.</string>
+    <string name="label_selected">Seçilen:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">Analiz Sonuçları</string>
+    <string name="analysis_loading_title">Lezyon yapay zeka ile analiz ediliyor...</string>
+    <string name="analysis_loading_desc">Morfolojik doku, renk sınırları ve yapısal özellikler taranıyor.</string>
+    <string name="analysis_unable_title">Tanımlanamadı</string>
+    <string name="analysis_unable_desc">Bu fotoğraftan durum tam olarak belirlenemedi.\nDaha net bir fotoğraf çekmeyi deneyin.</string>
+    <string name="analysis_tips_title">Daha iyi sonuçlar için ipuçları</string>
+    <string name="analysis_tip_1">Parlak ve doğal ışık kullanın</string>
+    <string name="analysis_tip_2">İlgili bölgeyi net odaklayın</string>
+    <string name="analysis_tip_3">Bölgenin açıkça görünür olduğundan emin olun</string>
+    <string name="btn_rescan">Yeniden tara</string>
+    <string name="btn_choose_from_gallery">Galeriden seç</string>
+    <string name="title_save_result_to">Sonucu kaydet</string>
+    <string name="title_key_findings">Temel Bulgular</string>
+    <string name="title_care_suggestions">Bakım Önerileri</string>
+    <string name="title_when_to_seek_care">Ne Zaman Doktora Başvurmalı</string>
+    <string name="ai_processing_title">Yapay zeka işliyor...</string>
+    <string name="ai_processing_desc">Sonucunuz birazdan hazır olacak</string>
+    <string name="title_report_result">Sonucu bildir</string>
+    <string name="btn_report">Bildir</string>
+    <string name="title_choose_reminders">Hatırlatıcılarınızı seçin</string>
+    <string name="btn_save_reminders_count">%1$d hatırlatıcı kaydet</string>
+    <string name="btn_save_reminder_single">1 hatırlatıcı kaydet</string>
+    <string name="btn_edit">Düzenle</string>
+    <string name="btn_understood">Anladım</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">Alerji ekle</string>
+    <string name="title_edit_allergy">Alerjiyi düzenle</string>
+    <string name="label_allergen_name">Alerjen adı</string>
+    <string name="label_type">Tür</string>
+    <string name="type_food">Gıda</string>
+    <string name="label_reaction">Reaksiyon</string>
+    <string name="label_first_noticed">İlk fark edildiği tarih</string>
+    <string name="date_not_provided">Tarih belirtilmedi</string>
+    <string name="btn_save_allergy">Alerjiyi kaydet</string>
+    <string name="title_add_condition">Rahatsızlık ekle</string>
+    <string name="title_edit_condition">Rahatsızlığı düzenle</string>
+    <string name="label_condition_name">Rahatsızlık adı</string>
+    <string name="label_status">Durum</string>
+    <string name="label_clinician">Doktor</string>
+    <string name="label_clinic">Klinik / Hastane</string>
+    <string name="not_provided">Belirtilmedi</string>
+    <string name="label_diagnosis_date">Teşhis tarihi</string>
+    <string name="btn_save_condition">Rahatsızlığı kaydet</string>
+    <string name="title_add_vaccination">Aşı ekle</string>
+    <string name="title_edit_vaccination">Aşıyı düzenle</string>
+    <string name="label_vaccine_name">Aşı adı</string>
+    <string name="label_dose_number">Doz numarası</string>
+    <string name="label_batch_number">Parti numarası</string>
+    <string name="btn_save_vaccination">Aşıyı kaydet</string>
+    <string name="title_add_medication">İlaç ekle</string>
+    <string name="title_edit_medication">İlacı düzenle</string>
+    <string name="label_reason">Kullanım nedeni</string>
+    <string name="btn_save_medication">İlacı kaydet</string>
+    <string name="label_additional_details">Ek Detaylar (İsteğe bağlı)</string>
+    <string name="label_medication_name">İlaç Adı</string>
+    <string name="no_records_yet_format">Henüz kayıtlı %1$s yok</string>
+    <string name="empty_records_desc">Aşağıdaki butona dokunarak ilk kaydınızı oluşturun</string>
+    <string name="btn_add_record_format">%1$s ekle</string>
+    <string name="title_choose_item_format">%1$s seçin</string>
+    <string name="no_items_added_yet_format">Henüz eklenmiş %1$s yok</string>
+    <string name="add_records_quick_select_desc">Hızlı seçim için kayıtlarınızı önceden ekleyin</string>
+    <string name="btn_add_item_format">+ %1$s ekle</string>
+    <string name="time_am">ÖÖ</string>
+    <string name="time_pm">ÖS</string>
+    <string name="cat_temperature">Ateş</string>
+    <string name="cat_drink_water">Su İçme</string>
+    <string name="cat_exercise">Egzersiz</string>
+    <string name="cat_sleep">Uyku</string>
+    <string name="label_date_received">Uygulama tarihi</string>
+    <string name="label_updated">Güncellendi</string>
+    <string name="record_diagnosed_format">%1$d teşhis edildi</string>
+    <string name="label_notes">Notlar</string>
+    <string name="label_note">Not</string>
+    <string name="label_severity">Şiddet</string>
+    <string name="label_strength">Doz</string>
+    <string name="label_form">Form</string>
+    <string name="status_ongoing">Devam ediyor</string>
+    <string name="status_updated_format">Durum %1$s olarak güncellendi</string>
+    <string name="toast_photo_load_failed">Seçilen fotoğraf yüklenemedi</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: Sınırsız tarama &amp; 7/24 destek!</string>
+    <string name="toast_opening_privacy_policy">Gizlilik Politikası açılıyor…</string>
+    <string name="medical_disclaimer_dialog_title">Tıbbi Sorumluluk Reddi</string>
+    <string name="ai_health_disclaimer_title">Yapay Zeka Sağlık Uyarısı</string>
+    <string name="ai_health_disclaimer_desc">Bu görsel analiz yapay zeka destekli olup genel takip amaçlıdır. Profesyonel klinik ya da dermatolojik teşhisin yerini tutmaz.\n\nKanamalı, hızlı büyüyen veya geçmeyen ağrılarda vakit kaybetmeden doktora danışın.</string>
+    <string name="medical_disclaimer_full_text">Bu semptom değerlendirmesi sadece bilgilendirme amaçlıdır. Profesyonel tıbbi tavsiye, klinik teşhis ya da tedavi yerine geçmez.\n\nSağlığınızla ilgili her türlü endişenizde mutlaka bir hekime danışın.</string>
+    <string name="msg_please_choose_item_format">Lütfen bir %1$s seçin</string>
+    <string name="symptom_sample_mild_fever_fatigue">hafif ateş, halsizlik</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">Zararlı içerik</string>
+    <string name="report_illegal_content">Yasa dışı içerik</string>
+    <string name="report_offensive_content">Saldırgan içerik</string>
+    <string name="report_biased_content">Taraflı içerik</string>
+    <string name="report_trademark_violation">Ticari marka ihlali</string>
+    <string name="report_copyright_violation">Telif hakkı ihlali</string>
+    <string name="report_nudity_sexual_content">Çıplaklık/cinsel içerik</string>
+    <string name="report_violence_gore">Şiddet/vahşet</string>
+    <string name="report_others">Diğer</string>
+    <string name="toast_report_submitted">Bildirdiğiniz için teşekkür ederiz. Bu sonucu inceleyeceğiz.</string>
+
+    <string name="label_relationship_you">Sen</string>
+    <string name="reminder_water_notes">Hidrasyon, doku onarımını ve cilt bariyerinin yenilenmesini hızlandırır.</string>
+    <string name="reminder_check_temperature_title">Ateşi ölç</string>
+    <string name="reminder_check_temperature_notes">Erken ateş veya enfeksiyon belirtilerini izlemek için ateşi kontrol edin.</string>
+    <string name="reminder_observe_area_title">Cilt Bakımı ve Gözlem</string>
+    <string name="reminder_observe_area_notes">Kızarıklık, boyut veya hisste herhangi bir değişiklik olup olmadığını kontrol edin.</string>
+</resources>

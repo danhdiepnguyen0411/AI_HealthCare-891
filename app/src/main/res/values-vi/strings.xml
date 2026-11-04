@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">Trang chủ</string>
+    <string name="tab_scan">Quét AI</string>
+    <string name="tab_my_health">Sức khỏe</string>
+    <string name="tab_family">Gia đình</string>
+    <string name="tab_settings">Cài đặt</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">Màn hình chính</string>
+    <string name="screen_scan">Màn hình quét</string>
+    <string name="screen_my_health">Màn hình sức khỏe</string>
+    <string name="screen_family">Màn hình gia đình</string>
+    <string name="screen_settings">Màn hình cài đặt</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">Quét AI</string>
+    <string name="headline_ai_scan">Bạn muốn kiểm tra vùng nào?</string>
+    <string name="category_skin">Da</string>
+    <string name="category_skin_desc">Đốm sắc tố, phát ban hoặc thay đổi trên da</string>
+    <string name="category_mouth">Răng miệng</string>
+    <string name="category_mouth_desc">Môi, nướu, lưỡi hoặc răng</string>
+    <string name="category_eye">Mắt</string>
+    <string name="category_eyes">Mắt</string>
+    <string name="category_eyes_desc">Các biểu hiện bất thường quanh mắt</string>
+    <string name="category_nails">Móng</string>
+    <string name="category_nail">Móng</string>
+    <string name="category_nail_desc">Móng tay hoặc móng chân</string>
+    <string name="category_other_area">Vùng khác</string>
+    <string name="category_other_area_desc">Khu vực cơ thể khác</string>
+    <string name="btn_start_scan">Bắt đầu quét</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">Đang tải...</string>
+    <string name="splash_ads_notice">Hành động này có thể chứa quảng cáo</string>
+    
+    <!-- Language -->
+    <string name="title_language">Ngôn ngữ</string>
+    <string name="subtitle_select_language">Vui lòng chọn ngôn ngữ để tiếp tục</string>
+    <string name="btn_done">Xong</string>
+    <string name="hint_tap_device_language">Nhấn để chọn ngôn ngữ của bạn</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">Bỏ qua</string>
+    <string name="btn_next">Tiếp tục</string>
+    <string name="btn_get_started">Bắt đầu ngay</string>
+    <string name="intro_title_1">Thấu hiểu sức khỏe\ncủa bạn tốt hơn</string>
+    <string name="intro_desc_1">Đánh giá các vấn đề sức khỏe qua phân tích ảnh, câu hỏi triệu chứng và trợ lý AI thông minh.</string>
+    <string name="intro_title_2">Hồ sơ sức khỏe\ntrọn vẹn một nơi</string>
+    <string name="intro_desc_2">Lưu trữ hồ sơ, theo dõi thay đổi và thiết lập nhắc nhở phù hợp với lịch sinh hoạt của bạn.</string>
+    <string name="intro_title_3">Hướng dẫn chăm sóc\ncho riêng bạn</string>
+    <string name="intro_desc_3">Nhận gợi ý chăm sóc chuyên sâu, lời khuyên mỗi ngày và theo dõi tiến trình cùng AI.</string>
+    <string name="intro_title_4">Chăm sóc bản thân\nvà người thân yêu</string>
+    <string name="intro_desc_4">Quản lý hồ sơ gia đình ngăn nắp và chăm sóc chu đáo cho những người bạn yêu thương.</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">Thêm hồ sơ</string>
+    <string name="title_add_member">Thêm thành viên</string>
+    <string name="title_detail_profile">Chi tiết hồ sơ</string>
+    <string name="title_profile_detail">Chi tiết hồ sơ</string>
+    <string name="msg_member_added">Đã thêm thành viên vào Gia đình!</string>
+    <string name="add_avatar">Đổi ảnh đại diện</string>
+    <string name="label_full_name">Họ và tên</string>
+    <string name="hint_full_name">Nhập họ và tên</string>
+    <string name="label_date_of_birth">Ngày sinh</string>
+    <string name="hint_date_of_birth">Chọn ngày sinh</string>
+    <string name="label_gender">Giới tính</string>
+    <string name="hint_gender">Chọn giới tính</string>
+    <string name="gender_other">Khác</string>
+    <string name="label_height">Chiều cao</string>
+    <string name="hint_height">Chiều cao</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">Cân nặng</string>
+    <string name="hint_weight">Cân nặng</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">Tạo hồ sơ</string>
+    <string name="btn_save">Lưu</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="btn_close">Đóng</string>
+    <string name="title_gender_sheet">Giới tính</string>
+    <string name="select_gender_title">Chọn giới tính</string>
+    <string name="error_name_empty">Vui lòng nhập họ và tên</string>
+    <string name="error_dob_empty">Vui lòng chọn ngày sinh</string>
+    <string name="error_gender_empty">Vui lòng chọn giới tính</string>
+    <string name="error_height_empty">Vui lòng nhập chiều cao</string>
+    <string name="error_weight_empty">Vui lòng nhập cân nặng</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">Mối quan hệ</string>
+    <string name="hint_relationship">Chọn mối quan hệ</string>
+    <string name="title_relationship_sheet">Mối quan hệ</string>
+    <string name="select_relationship_title">Chọn mối quan hệ</string>
+    <string name="rel_father">Bố</string>
+    <string name="rel_mother">Mẹ</string>
+    <string name="rel_spouse">Vợ/Chồng</string>
+    <string name="rel_husband">Chồng</string>
+    <string name="rel_wife">Vợ</string>
+    <string name="rel_son">Con trai</string>
+    <string name="rel_daughter">Con gái</string>
+    <string name="rel_brother">Anh/Em trai</string>
+    <string name="rel_sister">Chị/Em gái</string>
+    <string name="rel_grandparent">Ông/Bà</string>
+    <string name="rel_other">Khác</string>
+    <string name="dialog_delete_member_title">Xóa thành viên</string>
+    <string name="dialog_delete_member_msg">Bạn có chắc chắn muốn xóa %1$s khỏi Gia đình không?</string>
+    <string name="btn_remove">Xóa</string>
+    <string name="msg_member_removed">Đã xóa thành viên khỏi Gia đình</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">Sức khỏe</string>
+    <string name="label_age">Tuổi</string>
+    <string name="label_reminder">Nhắc nhở</string>
+    <string name="title_health_records">Hồ sơ sức khỏe</string>
+    <string name="record_medications">Thuốc</string>
+    <string name="record_allergies">Dị ứng</string>
+    <string name="record_conditions">Bệnh lý</string>
+    <string name="record_vaccinations">Tiêm chủng</string>
+    <string name="record_active_format">%1$d đang dùng</string>
+    <string name="record_reported_format">%1$d đã ghi nhận</string>
+    <string name="record_recorded_format">%1$d đã ghi nhận</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">Cài đặt ngôn ngữ</string>
+    <string name="settings_notifications">Nhắc nhở hàng ngày</string>
+    <string name="settings_version">Phiên bản 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">Bạn đã gặp khó khăn gì trong quá trình sử dụng?</string>
+    <string name="uninstall_card1_title">Không thể dùng tính năng và lưu kết quả</string>
+    <string name="uninstall_card1_desc">Phát hiện sự cố kết nối hoặc lỗi máy chủ nội bộ.</string>
+    <string name="uninstall_card2_title">Hiện không khả dụng</string>
+    <string name="uninstall_card2_desc">Công cụ này đang được bảo trì hoặc hạn chế theo khu vực.</string>
+    <string name="uninstall_btn_try_again">Thử lại</string>
+    <string name="uninstall_btn_explore">Khám phá</string>
+    <string name="uninstall_btn_dont_uninstall">Không muốn gỡ cài đặt</string>
+    <string name="uninstall_btn_still_uninstall">Vẫn muốn gỡ cài đặt</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">Vì sao bạn gỡ cài đặt HealthCare AI?</string>
+    <string name="uninstall_reason_subtitle">Rất tiếc khi bạn rời đi. Vui lòng cho chúng tôi biết cách cải thiện ứng dụng tốt hơn nhé.</string>
+    <string name="uninstall_reason_1">Khó sử dụng</string>
+    <string name="uninstall_reason_2">Quá nhiều quảng cáo</string>
+    <string name="uninstall_reason_3">Chất lượng thiết kế chưa đủ tốt</string>
+    <string name="uninstall_reason_4">Lý do khác</string>
+    <string name="uninstall_reason_hint">Vui lòng nhập thêm chi tiết tại đây..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">Nhắc nhở sức khỏe hàng ngày</string>
+    <string name="noti_channel_desc">Nhắc nhở hàng ngày về uống nước, kiểm tra sức khỏe và thói quen.</string>
+    <string name="noti_title_morning">Kiểm tra sức khỏe buổi sáng ☀️</string>
+    <string name="noti_msg_morning">Bắt đầu ngày mới với một ly nước lọc và kiểm tra mục tiêu sức khỏe của bạn.</string>
+    <string name="noti_title_afternoon">Thư giãn buổi chiều 💧</string>
+    <string name="noti_msg_afternoon">Tạm nghỉ ngơi, vươn vai và ghi nhận mức năng lượng buổi chiều của bạn.</string>
+    <string name="noti_title_evening">Chăm sóc &amp; Đánh giá buổi tối 🌙</string>
+    <string name="noti_msg_evening">Đánh giá tiến độ hàng ngày và tham khảo Trợ lý sức khỏe AI.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">Thông báo</string>
+    <string name="dialog_notification_permission_desc">Đừng bỏ lỡ các cập nhật quan trọng, trạng thái tạo phân tích ảnh và tính năng mới.</string>
+    <string name="dialog_notification_btn_settings">Đến cài đặt</string>
+    <string name="dialog_notification_btn_dont_allow">Không cho phép</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">Nhắc nhở uống thuốc &amp; Sức khỏe</string>
+    <string name="noti_reminders_channel_desc">Báo thức và thông báo đúng giờ cho lịch uống thuốc, uống nước và chăm sóc sức khỏe.</string>
+    <string name="noti_reminder_action_done">Đã uống / xong</string>
+    <string name="noti_reminder_default_desc">Đã đến giờ cho nhắc nhở %s của bạn.</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">Cần cấp quyền</string>
+    <string name="permission_desc">Để bật nhắc nhở và quét ảnh thông minh, vui lòng cấp quyền trong Cài đặt.</string>
+    <string name="permission_btn_settings">Đến Cài đặt</string>
+    <string name="permission_btn_cancel">Để sau</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">Bật quyền truy cập máy ảnh</string>
+    <string name="dialog_camera_permission_desc">Cho phép truy cập máy ảnh để quét và phân tích thông tin sức khỏe của bạn</string>
+    <string name="dialog_camera_btn_settings">Đến cài đặt</string>
+    <string name="dialog_camera_btn_dont_allow">Không cho phép</string>
+    <string name="dialog_camera_btn_cancel">Để sau</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">Hướng dẫn chụp ảnh</string>
+    <string name="camera_guide_tip_1">1. Giữ vùng cần kiểm tra ở chính giữa khung hình.</string>
+    <string name="camera_guide_tip_2">2. Đảm bảo ánh sáng tự nhiên rõ ràng, tránh bóng mờ gắt.</string>
+    <string name="camera_guide_tip_3">3. Giữ chắc máy ảnh ở khoảng cách khoảng 10–15 cm.</string>
+    <string name="camera_guide_btn_got_it">Đã hiểu</string>
+    <string name="camera_capture_success">Đã chụp ảnh! Đang phân tích...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">Xác nhận ảnh</string>
+    <string name="label_aspect_ratio">Tỷ lệ khung hình</string>
+    <string name="btn_use_photo">Sử dụng ảnh này</string>
+    <string name="btn_retake_photo">Chụp lại</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">Chào buổi sáng</string>
+    <string name="home_greeting_afternoon">Chào buổi chiều</string>
+    <string name="home_greeting_evening">Chào buổi tối</string>
+    <string name="home_subtitle">Sức khỏe của bạn hôm nay rất tuyệt vời.</string>
+    <string name="home_ai_assistant_badge">Trợ lý sức khỏe AI</string>
+    <string name="home_ai_assistant_title">Trợ lý sức khỏe\ncá nhân của bạn</string>
+    <string name="home_btn_chat_ai">Trò chuyện với AI</string>
+    <string name="home_feature_health_scan">Quét\nSức khỏe</string>
+    <string name="home_feature_measure_heart_rate">Đo\nNhịp tim</string>
+    <string name="home_feature_symptom_checker">Kiểm tra\nTriệu chứng</string>
+    <string name="home_section_today_reminder">Nhắc nhở hôm nay</string>
+    <string name="home_section_ai_scan_history">Lịch sử quét AI</string>
+    <string name="home_view_all">Xem tất cả</string>
+    <string name="home_no_reminder_title">Chưa có nhắc nhở nào</string>
+    <string name="home_no_reminder_desc">Thêm lịch uống thuốc, uống nước hoặc chăm sóc để duy trì thói quen.</string>
+    <string name="home_btn_add_reminder">Thêm nhắc nhở</string>
+    <string name="home_no_scans_title">Chưa có lần quét nào</string>
+    <string name="home_no_scans_desc">Kết quả quét sẽ xuất hiện tại đây sau lần kiểm tra đầu tiên của bạn.</string>
+    <string name="home_btn_start_first_scan">Bắt đầu quét lần đầu</string>
+    <string name="home_btn_get_pro">Nâng cấp Pro</string>
+    <string name="home_manage">Quản lý</string>
+    <string name="btn_mark_as_done">Đã hoàn thành</string>
+    <string name="msg_marked_as_done">Đã đánh dấu hoàn thành!</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 viên</string>
+    <string name="reminder_cetirizine_time">8:00 CH</string>
+    <string name="reminder_water_title">Uống nước</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 CH</string>
+    <string name="scan_arm_skin_check_title">Kiểm tra da cánh tay</string>
+    <string name="scan_arm_skin_check_date">5 Th10</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">Nhịp tim</string>
+    <string name="heart_rate_how_to_measure">Cách đo</string>
+    <string name="heart_rate_instruction">Đặt ngón tay che camera\nvà đèn flash để bắt đầu đo.</string>
+    <string name="heart_rate_btn_start">Bắt đầu đo</string>
+    <string name="heart_rate_statistics_coming_soon">Thống kê và xu hướng nhịp tim sẽ xuất hiện ở đây.</string>
+    <string name="how_to_measure_title">Cách đo</string>
+    <string name="how_to_measure_step1_title">Đặt ngón tay lên camera &amp; đèn flash</string>
+    <string name="how_to_measure_step1_desc">Che kín hoàn toàn camera sau bằng đầu ngón tay và đảm bảo đèn flash được bật.</string>
+    <string name="how_to_measure_step2_title">Đảm bảo đèn flash đang bật</string>
+    <string name="how_to_measure_step2_desc">Đèn flash sẽ chiếu sáng đầu ngón tay để đo lường chính xác.</string>
+    <string name="how_to_measure_step3_title">Giữ yên ngón tay</string>
+    <string name="how_to_measure_step3_desc">Tránh di chuyển ngón tay trong khi đang đo.</string>
+    <string name="heart_rate_guide_title">Cách đo</string>
+    <string name="heart_rate_guide_tip_1">1. Nhẹ nhàng đặt đầu ngón trỏ lên ống kính camera sau và đèn pin.</string>
+    <string name="heart_rate_guide_tip_2">2. Duy trì lực ấn nhẹ nhàng, ổn định, không ấn quá mạnh.</string>
+    <string name="heart_rate_guide_tip_3">3. Giữ yên người, thở đều và chờ quá trình đo kết thúc.</string>
+    <string name="heart_rate_guide_btn_got_it">Đã hiểu</string>
+    <string name="heart_rate_measuring_title">Đang đo nhịp tim</string>
+    <string name="heart_rate_measuring_banner_title">Đang đo nhịp tim của bạn…</string>
+    <string name="heart_rate_measuring_banner_sub">Vui lòng giữ yên ngón tay.</string>
+    <string name="heart_rate_waiting_finger">Che kín camera và đèn flash</string>
+    <string name="heart_rate_waiting_finger_desc">Nhẹ nhàng đặt đầu ngón trỏ lên ống kính camera sau và đèn pin</string>
+    <string name="heart_rate_measuring_desc">Đang đo... Hãy giữ yên và thở đều</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">Kết quả</string>
+    <string name="heart_rate_result_summary">Tóm tắt kết quả</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">Chậm</string>
+    <string name="heart_rate_normal_label">Bình thường</string>
+    <string name="heart_rate_fast_label">Nhanh</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">Xóa bản ghi</string>
+    <string name="heart_rate_delete_confirm_msg">Bạn có chắc chắn muốn xóa lần đo nhịp tim này không?</string>
+    <string name="heart_rate_delete_btn">Xóa</string>
+    <string name="heart_rate_cancel_btn">Hủy</string>
+    <string name="heart_rate_deleted">Đã xóa bản ghi</string>
+    <string name="heart_rate_normal">Bình thường (Nghỉ ngơi)</string>
+    <string name="heart_rate_slow">Nhịp tim chậm</string>
+    <string name="heart_rate_fast">Nhịp tim tăng cao</string>
+    <string name="heart_rate_quality_label">Chất lượng tín hiệu</string>
+    <string name="heart_rate_hrv_title">Độ biến thiên nhịp tim (HRV)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">Đo lại</string>
+    <string name="heart_rate_btn_done">Xong</string>
+    <string name="heart_rate_error_finger_lost_title">Ngón tay đã dịch chuyển</string>
+    <string name="heart_rate_error_finger_lost">Quá trình đo tạm dừng vì ngón tay đã rời khỏi camera. Vui lòng đặt lại nhẹ nhàng lên ống kính.</string>
+    <string name="heart_rate_error_low_quality_title">Kết quả đo chưa rõ ràng</string>
+    <string name="heart_rate_error_low_quality">Tín hiệu bị nhiễu hoặc không ổn định. Vui lòng giữ yên và tránh ấn quá mạnh.</string>
+    <string name="heart_rate_error_no_flash">Thiết bị của bạn dường như không có đèn flash camera.</string>
+    <string name="heart_rate_btn_try_again">Thử lại</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">Thống kê</string>
+    <string name="statistics_tab_overview">Tổng quan</string>
+    <string name="statistics_tab_history">Lịch sử</string>
+    <string name="statistics_average">Trung bình</string>
+    <string name="statistics_highest">Cao nhất</string>
+    <string name="statistics_lowest">Thấp nhất</string>
+    <string name="statistics_no_history_title">Chưa có lịch sử</string>
+    <string name="statistics_no_history_desc">Các lần đo nhịp tim của bạn sẽ xuất hiện tại đây sau lần quét đầu tiên.</string>
+    <string name="statistics_no_data_title">Chưa có dữ liệu nhịp tim</string>
+    <string name="statistics_no_data_desc">Đo nhịp tim của bạn để xem thống kê hàng tuần.</string>
+    <string name="statistics_btn_measure_now">Đo ngay</string>
+    <string name="statistics_heart_rate_chart_title">Nhịp tim (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">Gia đình</string>
+    <string name="family_no_members_title">Chưa có thành viên nào</string>
+    <string name="family_no_members_desc">Thêm người thân để cùng quản lý hồ sơ sức khỏe, thuốc, dị ứng và chăm sóc lẫn nhau.</string>
+    <string name="family_btn_add_first_member">Thêm thành viên đầu tiên</string>
+    <string name="family_add_member_hint">Tính năng thêm thành viên gia đình sắp ra mắt.</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">Cài đặt</string>
+    <string name="settings_section_general">Chung</string>
+    <string name="settings_section_support">Hỗ trợ</string>
+    <string name="settings_item_language">Ngôn ngữ</string>
+    <string name="settings_item_permission">Quyền ứng dụng</string>
+    <string name="settings_item_share">Chia sẻ với bạn bè</string>
+    <string name="settings_item_rate">Đánh giá chúng tôi</string>
+    <string name="settings_item_privacy">Chính sách bảo mật</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">Kiểm tra triệu chứng</string>
+    <string name="symptom_checker_subtitle">Hãy chia sẻ cảm giác của bạn lúc này\nđể nhận được hướng dẫn tốt nhất.</string>
+    <string name="symptom_checker_privacy_notice">Dữ liệu của bạn được mã hóa an toàn và bảo mật riêng tư.</string>
+    <string name="symptom_checker_est_time_label">Thời gian ước tính</string>
+    <string name="symptom_checker_est_time_val">3 phút</string>
+    <string name="symptom_checker_after_assessment_label">Sau khi đánh giá</string>
+    <string name="symptom_checker_after_assessment_val">Thông tin sức khỏe</string>
+    <string name="symptom_checker_length_label">Sau khi đánh giá</string>
+    <string name="symptom_checker_length_val">Thông tin sức khỏe</string>
+    <string name="symptom_checker_btn_start">Bắt đầu đánh giá</string>
+    <string name="symptom_checker_start_toast">Đang khởi động đánh giá triệu chứng AI...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">Bạn bao nhiêu tuổi?</string>
+    <string name="assessment_gender_title">Giới tính của bạn là gì?</string>
+    <string name="assessment_gender_subtitle">Vui lòng chọn giới tính để nhận trải nghiệm chăm sóc sức khỏe cá nhân hóa tốt hơn.</string>
+    <string name="gender_male">Nam</string>
+    <string name="gender_female">Nữ</string>
+    <string name="assessment_symptoms_title">Bạn đang có triệu chứng gì?</string>
+    <string name="assessment_symptoms_subtitle">Chạm vào bất kỳ bộ phận cơ thể nào để đánh dấu và chọn triệu chứng</string>
+    <string name="tab_body_map">Sơ đồ cơ thể</string>
+    <string name="tab_all_symptoms">Tất cả triệu chứng</string>
+    <string name="region_all">Tất cả</string>
+    <string name="region_head">Đầu</string>
+    <string name="region_neck">Cổ</string>
+    <string name="region_shoulders">Vai</string>
+    <string name="region_chest">Ngực</string>
+    <string name="region_abdomen">Bụng</string>
+    <string name="region_arms">Cánh tay</string>
+    <string name="region_legs">Chân</string>
+    <string name="search_symptoms_hint">Nhập triệu chứng chính tại đây</string>
+    <string name="no_symptoms_found">Không tìm thấy triệu chứng khớp với "%s"</string>
+    <string name="assessment_related_symptoms_title">Bạn có bất kỳ triệu chứng nào dưới đây không?</string>
+    <string name="assessment_related_symptoms_subtitle">Chọn tất cả câu trả lời phù hợp</string>
+    <string name="assessment_insect_bite_title">Bạn có bị côn trùng cắn hoặc đốt không? (chấy rận, muỗi, bọ ve, nhện hoặc rệp…)?</string>
+    <string name="option_yes">Có</string>
+    <string name="option_no">Không</string>
+    <string name="option_dont_know">Không rõ</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">Thoát</string>
+    <string name="dialog_exit_app_desc">Bạn có chắc chắn muốn thoát không?\nCác thay đổi chưa lưu có thể bị mất.</string>
+    <string name="dialog_exit_app_btn_stay">Ở lại</string>
+    <string name="dialog_exit_app_btn_exit">Thoát</string>
+    <string name="dialog_exit_assessment_title">Thoát đánh giá</string>
+    <string name="dialog_exit_assessment_desc">Bạn có chắc chắn muốn thoát không?\nCác thay đổi chưa lưu có thể bị mất.</string>
+    <string name="dialog_exit_btn_continue">Ở lại</string>
+    <string name="dialog_exit_btn_exit">Thoát</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="btn_back">Quay lại</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">Trợ lý sức khỏe AI</string>
+    <string name="ai_chat_welcome_title">Tôi có thể giúp gì cho sức khỏe\ncủa bạn hôm nay?</string>
+    <string name="ai_chat_suggestion_1_title">Mẹo sống lành mạnh</string>
+    <string name="ai_chat_suggestion_1_desc">Gợi ý các thói quen hàng ngày để nâng cao sức kh...</string>
+    <string name="ai_chat_suggestion_1_query">Gợi ý cho tôi các thói quen hàng ngày để nâng cao sức khỏe tổng thể.</string>
+    <string name="ai_chat_suggestion_2_title">Giải thích kết quả quét</string>
+    <string name="ai_chat_suggestion_2_desc">Giúp tôi hiểu kết quả quét da hoặc răng miệng.</string>
+    <string name="ai_chat_suggestion_2_query">Giúp tôi hiểu kết quả phân tích và các gợi ý sau khi quét.</string>
+    <string name="ai_chat_suggestion_3_title">Đánh giá dữ liệu sức khỏe</string>
+    <string name="ai_chat_suggestion_3_desc">Phân tích nhịp tim, giấc ngủ và hoạt động.</string>
+    <string name="ai_chat_suggestion_3_query">Phân tích dữ liệu nhịp tim, giấc ngủ và hoạt động để đưa ra lời khuyên cụ thể cho tôi.</string>
+    <string name="ai_chat_input_hint">Hỏi tôi bất cứ điều gì...</string>
+    <string name="ai_chat_new_chat">Cuộc trò chuyện mới</string>
+    <string name="ai_chat_clear_confirm_title">Bắt đầu đoạn chat mới?</string>
+    <string name="ai_chat_clear_confirm_msg">Bạn có muốn xóa đoạn hội thoại hiện tại và bắt đầu lại từ đầu không?</string>
+    <string name="ai_chat_listening">Đang lắng nghe... hãy nói ngay</string>
+    <string name="ai_chat_mic_permission_required">Cần quyền micro để gửi tin nhắn thoại.</string>
+    <string name="ai_chat_error_fallback">Xin lỗi, tôi không thể xử lý yêu cầu lúc này. Vui lòng kiểm tra kết nối và thử lại.</string>
+    <string name="ai_chat_today">Hôm nay</string>
+    <string name="ai_chat_yesterday">Hôm qua</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">Đoạn chat</string>
+    <string name="conversation_empty_title">Chưa có cuộc trò chuyện nào</string>
+    <string name="conversation_empty_desc">Bắt đầu cuộc trò chuyện để nhận lời khuyên\nvà hỗ trợ sức khỏe cá nhân hóa.</string>
+    <string name="time_just_now">Vừa xong</string>
+    <string name="time_minute_ago">1 phút trước</string>
+    <string name="time_minutes_ago">%d phút trước</string>
+    <string name="time_hour_ago">1 giờ trước</string>
+    <string name="time_hours_ago">%d giờ trước</string>
+    <string name="time_day_ago">1 ngày trước</string>
+    <string name="time_days_ago">%d ngày trước</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">Nhắc nhở mới</string>
+    <string name="label_reminder_category">Phân loại</string>
+    <string name="hint_select_category">Chọn phân loại</string>
+    <string name="label_reminder_name">Tên</string>
+    <string name="label_reminder_strength">Liều lượng</string>
+    <string name="hint_reminder_strength">vd: 10 mg</string>
+    <string name="label_reminder_form">Dạng thuốc</string>
+    <string name="hint_reminder_form">Chọn dạng thuốc</string>
+    <string name="label_reminder_repeat">Lặp lại</string>
+    <string name="hint_repeat_schedule">Chọn lịch lặp lại</string>
+    <string name="label_reminder_time">Giờ</string>
+    <string name="time_no_times_added">Chưa thêm giờ nào</string>
+    <string name="label_reminder_start_date">Ngày bắt đầu</string>
+    <string name="label_reminder_end_date">Ngày kết thúc</string>
+    <string name="hint_select_date">Chọn ngày</string>
+    <string name="label_reminder_notes">Ghi chú (tùy chọn)</string>
+    <string name="hint_reminder_name">Nhập tên nhắc nhở</string>
+    <string name="hint_enter_medication_name">Nhập tên thuốc</string>
+    <string name="hint_add_notes">Thêm ghi chú</string>
+    <string name="reminder_btn_add_time">Thêm giờ</string>
+    <string name="btn_save_reminder">Lưu nhắc nhở</string>
+    <string name="repeat_every_day">Hàng ngày</string>
+    <string name="repeat_weekdays">Ngày trong tuần</string>
+    <string name="repeat_weekends">Cuối tuần</string>
+    <string name="repeat_weekly">Hàng tuần</string>
+    <string name="repeat_monthly">Hàng tháng</string>
+    <string name="repeat_once">Một lần</string>
+    <string name="form_tablet">Viên nén</string>
+    <string name="form_capsule">Viên nang</string>
+    <string name="form_liquid">Dung dịch</string>
+    <string name="form_drops">Thuốc nhỏ</string>
+    <string name="form_injection">Thuốc tiêm</string>
+    <string name="form_inhaler">Ống hít</string>
+    <string name="form_other">Khác</string>
+    <string name="msg_reminder_saved">Đã lưu nhắc nhở thành công</string>
+    <string name="msg_enter_reminder_name">Vui lòng nhập tên nhắc nhở</string>
+    <string name="msg_time_already_added">Giờ này đã được thêm</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">Chọn phân loại</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">Lặp lại</string>
+    <string name="category_health_monitoring_title">Theo dõi sức khỏe</string>
+    <string name="category_health_monitoring_desc">Nhiệt độ, nhịp tim, v.v.</string>
+    <string name="category_medication_title">Uống thuốc</string>
+    <string name="category_medication_desc">Uống thuốc, vitamin, thực phẩm chức năng</string>
+    <string name="category_healthy_habits_title">Thói quen lành mạnh</string>
+    <string name="category_healthy_habits_desc">Uống nước, tập thể dục, giấc ngủ, v.v.</string>
+    <string name="category_appointments_title">Lịch hẹn</string>
+    <string name="category_appointments_desc">Khám bác sĩ, kiểm tra sức khỏe</string>
+    <string name="category_vaccinations_title">Tiêm chủng</string>
+    <string name="category_vaccinations_desc">Lịch tiêm phòng và mũi nhắc lại</string>
+    <string name="category_other_title">Khác</string>
+    <string name="category_other_desc">Nhắc nhở sức khỏe cá nhân</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">Nhắc nhở</string>
+    <string name="title_edit_reminder">Sửa nhắc nhở</string>
+    <string name="reminder_action_edit">Chỉnh sửa nhắc nhở</string>
+    <string name="reminder_action_delete">Xóa nhắc nhở</string>
+    <string name="reminder_status_taken">Đã uống</string>
+    <string name="reminder_action_undo">Hoàn tác</string>
+    <string name="msg_reminder_deleted">Đã xóa nhắc nhở</string>
+    <string name="msg_reminder_updated">Đã cập nhật nhắc nhở</string>
+    <string name="msg_marked_as_undone">Đã đánh dấu chưa hoàn thành</string>
+    <string name="delete_reminder_confirm">Bạn có chắc chắn muốn xóa nhắc nhở này không?</string>
+    <string name="delete_confirm_title">Xóa hồ sơ này?</string>
+    <string name="delete_confirm_message">Bạn có chắc chắn muốn xóa hồ sơ này không?\nHành động này không thể hoàn tác.</string>
+    <string name="btn_delete">Xóa</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">Đánh giá trải nghiệm</string>
+    <string name="rate_dialog_message">Ý kiến của bạn giúp chúng tôi cải thiện tốt hơn.\nChạm vào sao để đánh giá trải nghiệm của bạn.</string>
+    <string name="rate_dialog_submit">Gửi đánh giá</string>
+    <string name="rate_dialog_maybe_later">Để sau</string>
+    <string name="rate_dialog_thank_you">Cảm ơn ý kiến đóng góp của bạn!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">Chi tiết thuốc</string>
+    <string name="title_allergy_details">Chi tiết dị ứng</string>
+    <string name="title_condition_details">Chi tiết tình trạng</string>
+    <string name="title_vaccination_details">Chi tiết tiêm chủng</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">Chọn dạng thuốc</string>
+    <string name="title_select_severity">Chọn mức độ nghiêm trọng</string>
+    <string name="severity_mild">Nhẹ</string>
+    <string name="severity_moderate">Trung bình</string>
+    <string name="severity_severe">Nặng</string>
+    <string name="severity_not_sure">Không chắc</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">Cập nhật trạng thái</string>
+    <string name="btn_save_status">Lưu trạng thái</string>
+    <string name="status_ongoing_title">Đang diễn ra</string>
+    <string name="status_ongoing_sub">Vẫn thuộc tiền sử sức khỏe hiện tại của bạn</string>
+    <string name="status_resolved_title">Đã khỏi</string>
+    <string name="status_resolved_sub">Được ghi nhận là không còn tiếp diễn</string>
+    <string name="status_unsure_title">Chưa rõ</string>
+    <string name="status_unsure_sub">Bạn không chắc chắn về tình trạng hiện tại</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">Thêm giờ</string>
+    <string name="label_hour">Giờ</string>
+    <string name="label_minute">Phút</string>
+    <string name="label_already_add">Đã thêm</string>
+    <string name="btn_add_time">Thêm giờ</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">ĐÁNH GIÁ AI HOÀN TẤT</string>
+    <string name="care_advice_title">Lời khuyên chăm sóc</string>
+    <string name="care_advice_subtitle_format">Dựa trên triệu chứng bạn báo cáo (%1$s), dưới đây là các bước đề xuất giúp bạn cảm thấy khỏe hơn một cách an toàn.</string>
+    <string name="care_advice_self_care">Tự chăm sóc</string>
+    <string name="care_advice_monitor_symptoms">Theo dõi triệu chứng</string>
+    <string name="care_advice_when_to_seek_care">Khi nào cần khám bác sĩ</string>
+    <string name="care_advice_self_care_bullet_1">Đảm bảo ngủ đủ ít nhất 8 tiếng để giúp cơ thể hồi phục.</string>
+    <string name="care_advice_self_care_bullet_2">Uống nhiều nước hoặc nước lọc trong để cơ thể đủ nước.</string>
+    <string name="care_advice_monitor_bullet_1">Kiểm tra nhiệt độ cơ thể hai lần mỗi ngày.</string>
+    <string name="care_advice_monitor_bullet_2">Theo dõi nhịp tim khi nghỉ ngơi bằng thiết bị đeo của bạn.</string>
+    <string name="care_advice_seek_care_bullet_1">Nếu sốt vượt quá 39.4°C, đau kéo dài hơn 48 giờ hoặc bạn cảm thấy khó thở, hãy đi khám bác sĩ ngay lập tức.</string>
+    <string name="btn_return_to_home">Về trang chủ</string>
+    <string name="btn_set_a_reminder">Đặt nhắc nhở</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">Kết quả</string>
+    <string name="symptom_result_doctor_title">Tham khảo ý kiến bác sĩ</string>
+    <string name="symptom_result_doctor_desc">Các triệu chứng của bạn có thể cần được thăm khám y tế. Hãy đặt lịch hẹn với bác sĩ. Nếu triệu chứng trở nên nghiêm trọng hơn, hãy gặp bác sĩ ngay.</string>
+    <string name="title_possible_conditions">Tình trạng có thể gặp</string>
+    <string name="title_recommended_actions">Hành động đề xuất</string>
+    <string name="btn_view_care_advice">Xem lời khuyên chăm sóc</string>
+    <string name="match_strong">Phù hợp cao</string>
+    <string name="match_moderate">Phù hợp vừa</string>
+    <string name="match_possible">Có thể phù hợp</string>
+    <string name="btn_ask_ai_about_result">Hỏi AI về kết quả này</string>
+    <string name="medical_disclaimer_title">MIỄN TRỪ TRÁCH NHIỆM Y TẾ</string>
+    <string name="medical_disclaimer_desc">Công cụ này chỉ cung cấp thông tin tham khảo và không thay thế cho lời khuyên, chẩn đoán hoặc điều trị y tế chuyên nghiệp.</string>
+    <string name="label_selected">Đã chọn:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">Kết quả phân tích</string>
+    <string name="analysis_loading_title">Đang phân tích tổn thương với AI...</string>
+    <string name="analysis_loading_desc">Đang quét cấu trúc hình thái, đường viền màu sắc và các đặc điểm bề mặt.</string>
+    <string name="analysis_unable_title">Không thể xác định</string>
+    <string name="analysis_unable_desc">Chúng tôi không thể xác định tình trạng từ ảnh này.\nHãy thử chụp lại một bức ảnh rõ nét hơn.</string>
+    <string name="analysis_tips_title">Mẹo để có kết quả tốt hơn</string>
+    <string name="analysis_tip_1">Sử dụng ánh sáng tự nhiên, sáng rõ</string>
+    <string name="analysis_tip_2">Giữ vùng bị ảnh hưởng luôn được lấy nét rõ</string>
+    <string name="analysis_tip_3">Đảm bảo vùng cần kiểm tra được nhìn thấy rõ ràng</string>
+    <string name="btn_rescan">Quét lại</string>
+    <string name="btn_choose_from_gallery">Chọn từ thư viện</string>
+    <string name="title_save_result_to">Lưu kết quả vào</string>
+    <string name="title_key_findings">Dấu hiệu chính</string>
+    <string name="title_care_suggestions">Gợi ý chăm sóc</string>
+    <string name="title_when_to_seek_care">Khi nào cần khám bác sĩ</string>
+    <string name="ai_processing_title">AI đang xử lý...</string>
+    <string name="ai_processing_desc">Kết quả của bạn sẽ sẵn sàng trong giây lát</string>
+    <string name="title_report_result">Báo cáo kết quả</string>
+    <string name="btn_report">Báo cáo</string>
+    <string name="title_choose_reminders">Chọn nhắc nhở của bạn</string>
+    <string name="btn_save_reminders_count">Lưu %1$d nhắc nhở</string>
+    <string name="btn_save_reminder_single">Lưu 1 nhắc nhở</string>
+    <string name="btn_edit">Sửa</string>
+    <string name="btn_understood">Đã hiểu</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">Thêm dị ứng</string>
+    <string name="title_edit_allergy">Sửa dị ứng</string>
+    <string name="label_allergen_name">Tên dị ứng</string>
+    <string name="label_type">Loại</string>
+    <string name="type_food">Thức ăn</string>
+    <string name="label_reaction">Phản ứng</string>
+    <string name="label_first_noticed">Nhận thấy lần đầu</string>
+    <string name="date_not_provided">Chưa cung cấp ngày</string>
+    <string name="btn_save_allergy">Lưu dị ứng</string>
+    <string name="title_add_condition">Thêm tình trạng</string>
+    <string name="title_edit_condition">Sửa tình trạng</string>
+    <string name="label_condition_name">Tên tình trạng</string>
+    <string name="label_status">Trạng thái</string>
+    <string name="label_clinician">Bác sĩ</string>
+    <string name="label_clinic">Phòng khám</string>
+    <string name="not_provided">Chưa cung cấp</string>
+    <string name="label_diagnosis_date">Ngày chẩn đoán</string>
+    <string name="btn_save_condition">Lưu tình trạng</string>
+    <string name="title_add_vaccination">Thêm tiêm chủng</string>
+    <string name="title_edit_vaccination">Sửa tiêm chủng</string>
+    <string name="label_vaccine_name">Tên vắc-xin</string>
+    <string name="label_dose_number">Mũi số</string>
+    <string name="label_batch_number">Số lô</string>
+    <string name="btn_save_vaccination">Lưu tiêm chủng</string>
+    <string name="title_add_medication">Thêm thuốc</string>
+    <string name="title_edit_medication">Sửa thuốc</string>
+    <string name="label_reason">Lý do</string>
+    <string name="btn_save_medication">Lưu thuốc</string>
+    <string name="label_additional_details">Chi tiết bổ sung (Tùy chọn)</string>
+    <string name="label_medication_name">Tên thuốc</string>
+    <string name="no_records_yet_format">Chưa có %1$s nào</string>
+    <string name="empty_records_desc">Thêm hồ sơ đầu tiên của bạn bằng nút bên dưới</string>
+    <string name="btn_add_record_format">Thêm %1$s</string>
+    <string name="title_choose_item_format">Chọn %1$s</string>
+    <string name="no_items_added_yet_format">Chưa thêm %1$s nào</string>
+    <string name="add_records_quick_select_desc">Thêm hồ sơ để chọn nhanh hơn</string>
+    <string name="btn_add_item_format">+ Thêm %1$s</string>
+    <string name="time_am">SA</string>
+    <string name="time_pm">CH</string>
+    <string name="cat_temperature">Nhiệt độ</string>
+    <string name="cat_drink_water">Uống nước</string>
+    <string name="cat_exercise">Tập thể dục</string>
+    <string name="cat_sleep">Giấc ngủ</string>
+    <string name="label_date_received">Ngày tiêm</string>
+    <string name="label_updated">Đã cập nhật</string>
+    <string name="record_diagnosed_format">%1$d đã chẩn đoán</string>
+    <string name="label_notes">Ghi chú</string>
+    <string name="label_note">Ghi chú</string>
+    <string name="label_severity">Mức độ</string>
+    <string name="label_strength">Liều lượng</string>
+    <string name="label_form">Dạng</string>
+    <string name="status_ongoing">Đang diễn ra</string>
+    <string name="status_updated_format">Đã cập nhật trạng thái thành %1$s</string>
+    <string name="toast_photo_load_failed">Không thể tải ảnh đã chọn</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: Quét AI không giới hạn &amp; hỗ trợ 24/7!</string>
+    <string name="toast_opening_privacy_policy">Đang mở Chính sách bảo mật…</string>
+    <string name="medical_disclaimer_dialog_title">Tuyên bố miễn trừ trách nhiệm y tế</string>
+    <string name="ai_health_disclaimer_title">Tuyên bố miễn trừ sức khỏe AI</string>
+    <string name="ai_health_disclaimer_desc">Phân tích thị giác này được hỗ trợ bởi AI và thiết kế cho mục đích tham khảo thông tin và theo dõi sức khỏe ban đầu. Tính năng không thay thế cho đánh giá lâm sàng hoặc chẩn đoán da liễu chuyên nghiệp.\n\nNếu bạn gặp triệu chứng chảy máu, nốt biến đổi nhanh hoặc đau nhức dai dẳng, hãy tham khảo ý kiến bác sĩ ngay lập tức.</string>
+    <string name="medical_disclaimer_full_text">Đánh giá triệu chứng này chỉ cung cấp hiểu biết mang tính giáo dục và thông tin tham khảo. Đánh giá này không nhằm thay thế cho lời khuyên, chẩn đoán lâm sàng hoặc điều trị y tế chuyên nghiệp.\n\nLuôn tìm kiếm lời khuyên từ bác sĩ hoặc chuyên gia y tế có chuyên môn đối với bất kỳ câu hỏi nào bạn có về tình trạng bệnh lý.</string>
+    <string name="msg_please_choose_item_format">Vui lòng chọn một %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">sốt nhẹ, mệt mỏi</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">Nội dung có hại</string>
+    <string name="report_illegal_content">Nội dung bất hợp pháp</string>
+    <string name="report_offensive_content">Nội dung gây khó chịu</string>
+    <string name="report_biased_content">Nội dung sai lệch, thiên vị</string>
+    <string name="report_trademark_violation">Vi phạm nhãn hiệu</string>
+    <string name="report_copyright_violation">Vi phạm bản quyền</string>
+    <string name="report_nudity_sexual_content">Nội dung khỏa thân/tình dục</string>
+    <string name="report_violence_gore">Bạo lực/máu me</string>
+    <string name="report_others">Khác</string>
+    <string name="toast_report_submitted">Cảm ơn bạn đã báo cáo. Chúng tôi sẽ xem xét kết quả này.</string>
+
+    <string name="label_relationship_you">Bạn</string>
+    <string name="reminder_water_notes">Uống đủ nước giúp đẩy nhanh quá trình phục hồi mô và hàng rào bảo vệ da.</string>
+    <string name="reminder_check_temperature_title">Kiểm tra nhiệt độ</string>
+    <string name="reminder_check_temperature_notes">Theo dõi nhiệt độ để phát hiện sớm dấu hiệu sốt hoặc nhiễm trùng.</string>
+    <string name="reminder_observe_area_title">Chăm sóc &amp; Quan sát da</string>
+    <string name="reminder_observe_area_notes">Kiểm tra xem có bất kỳ thay đổi nào về độ đỏ, kích thước hoặc cảm giác không.</string>
+</resources>

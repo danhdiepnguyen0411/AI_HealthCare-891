@@ -80,7 +80,7 @@
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/urbanist"
                     android:letterSpacing="0.04"
-                    android:text="AI ASSESSMENT COMPLETE"
+                    android:text="@string/care_advice_badge"
                     android:textColor="#0843C6"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Care Advice"
+                android:text="@string/care_advice_title"
                 android:textColor="#172044"
                 android:textSize="26sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/urbanist"
                 android:lineSpacingExtra="3dp"
-                android:text="Based on your reported symptoms (mild, fever, fatigue), here are the recommended next steps to help you feel better safely."
+                tools:text="Based on your reported symptoms (mild, fever, fatigue), here are the recommended next steps to help you feel better safely."
                 android:textColor="#56627A"
                 android:textSize="14sp" />
 
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Self-Care"
+                            android:text="@string/care_advice_self_care"
                             android:textColor="#172044"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -211,7 +211,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/urbanist"
-                            android:text="Monitor Symptoms"
+                            android:text="@string/care_advice_monitor_symptoms"
                             android:textColor="#172044"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -264,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/urbanist"
-                        android:text="When to Seek Medical Care"
+                        android:text="@string/care_advice_when_to_seek_care"
                         android:textColor="#C5221F"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -319,7 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/urbanist"
-                android:text="Set a reminder"
+                android:text="@string/btn_set_a_reminder"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -342,7 +342,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/urbanist"
-                android:text="Return to Home"
+                android:text="@string/btn_return_to_home"
                 android:textColor="#0843C6"
                 android:textSize="16sp"
                 android:textStyle="bold" />

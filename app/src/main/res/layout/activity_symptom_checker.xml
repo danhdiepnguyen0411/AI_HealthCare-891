@@ -123,12 +123,14 @@
             <LinearLayout
                 android:id="@+id/badgePrivacy"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
+                android:minHeight="36dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_privacy_badge"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp">
 
                 <ImageView
                     android:layout_width="10dp"
@@ -142,6 +144,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/urbanist_medium"
                     app:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/symptom_checker_privacy_notice"
                     android:textColor="@color/color_text"
@@ -154,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:baselineAligned="false"
+                android:measureWithLargestChild="true"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -161,7 +165,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardEstTime"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white"
@@ -173,11 +177,12 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:minHeight="124dp"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="18dp">
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="14dp">
 
                         <ImageView
                             android:layout_width="28dp"
@@ -195,13 +200,13 @@
                             app:fontFamily="@font/urbanist_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:lineHeight="18sp"
+                            android:maxLines="2"
                             android:text="@string/symptom_checker_est_time_label"
                             android:textAllCaps="false"
                             android:textColor="@color/color_subtext"
                             android:textSize="13sp" />
 
-                        <!-- 3 min: Bold, Color #242E49, Size 18sp, Line height 24sp -->
+                        <!-- 3 min: Bold, Color #242E49, Size 16sp -->
                         <TextView
                             android:id="@+id/tvEstTimeValue"
                             android:layout_width="wrap_content"
@@ -209,11 +214,13 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/urbanist_bold"
                             app:fontFamily="@font/urbanist_bold"
+                            android:gravity="center"
                             android:includeFontPadding="false"
-                            android:lineHeight="24sp"
+                            android:lineHeight="22sp"
+                            android:maxLines="2"
                             android:text="@string/symptom_checker_est_time_val"
                             android:textColor="@color/color_text"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -221,7 +228,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardLength"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white"
@@ -233,11 +240,12 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:minHeight="124dp"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingHorizontal="10dp"
-                        android:paddingVertical="18dp">
+                        android:paddingVertical="14dp">
 
                         <ImageView
                             android:layout_width="28dp"
@@ -255,13 +263,13 @@
                             app:fontFamily="@font/urbanist_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:lineHeight="18sp"
+                            android:maxLines="2"
                             android:text="@string/symptom_checker_after_assessment_label"
                             android:textAllCaps="false"
                             android:textColor="@color/color_subtext"
                             android:textSize="13sp" />
 
-                        <!-- Health insights: Bold, Color #242E49, Size 18sp, Line height 24sp -->
+                        <!-- Health insights: Bold, Color #242E49, Size 15sp, MaxLines 2 -->
                         <TextView
                             android:id="@+id/tvLengthValue"
                             android:layout_width="wrap_content"
@@ -271,10 +279,11 @@
                             app:fontFamily="@font/urbanist_bold"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:lineHeight="24sp"
+                            android:lineHeight="20sp"
+                            android:maxLines="2"
                             android:text="@string/symptom_checker_after_assessment_val"
                             android:textColor="@color/color_text"
-                            android:textSize="18sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

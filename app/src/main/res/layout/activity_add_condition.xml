@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_bold"
             android:includeFontPadding="false"
-            android:text="Add condition"
+            android:text="@string/title_add_condition"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Condition name"
+                android:text="@string/label_condition_name"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -118,7 +118,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Status"
+                android:text="@string/label_status"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -140,7 +140,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingHorizontal="20dp"
-                    android:text="Ongoing"
+                    android:text="@string/status_ongoing_title"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -157,7 +157,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingHorizontal="20dp"
-                    android:text="Resolved"
+                    android:text="@string/status_resolved_title"
                     android:textColor="#3772FF"
                     android:textSize="14sp" />
 
@@ -174,7 +174,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingHorizontal="20dp"
-                    android:text="Unsure"
+                    android:text="@string/status_unsure_title"
                     android:textColor="#3772FF"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -186,7 +186,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Clinician"
+                android:text="@string/label_clinician"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -221,7 +221,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Clinic"
+                android:text="@string/label_clinic"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -256,7 +256,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Diagnosis date"
+                android:text="@string/label_diagnosis_date"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -302,7 +302,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/urbanist_semibold"
                 android:includeFontPadding="false"
-                android:text="Notes (optional)"
+                android:text="@string/label_reminder_notes"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp" />
 
@@ -363,7 +363,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/urbanist"
                 android:includeFontPadding="false"
-                android:text="Save condition"
+                android:text="@string/btn_save_condition"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />

@@ -1,0 +1,658 @@
+<resources>
+    <string name="app_name">HealthCare AI</string>
+    
+    <!-- Bottom Nav Tabs -->
+    <string name="tab_home">Início</string>
+    <string name="tab_scan">Escanear</string>
+    <string name="tab_my_health">Minha Saúde</string>
+    <string name="tab_family">Família</string>
+    <string name="tab_settings">Configurações</string>
+    
+    <!-- Screen Placeholders -->
+    <string name="screen_home">Tela inicial</string>
+    <string name="screen_scan">Tela de escaneamento</string>
+    <string name="screen_my_health">Tela Minha Saúde</string>
+    <string name="screen_family">Tela Família</string>
+    <string name="screen_settings">Tela de configurações</string>
+    
+    <!-- AI Scan Screen -->
+    <string name="title_ai_scan">Escaneamento IA</string>
+    <string name="headline_ai_scan">O que você gostaria de verificar?</string>
+    <string name="category_skin">Pele</string>
+    <string name="category_skin_desc">Manchas, erupções ou alterações na pele</string>
+    <string name="category_mouth">Boca</string>
+    <string name="category_mouth_desc">Lábios, gengivas, língua ou dentes</string>
+    <string name="category_eye">Olho</string>
+    <string name="category_eyes">Olhos</string>
+    <string name="category_eyes_desc">Alterações visíveis ao redor dos olhos</string>
+    <string name="category_nails">Unhas</string>
+    <string name="category_nail">Unha</string>
+    <string name="category_nail_desc">Unhas das mãos ou dos pés</string>
+    <string name="category_other_area">Outra área</string>
+    <string name="category_other_area_desc">Outra parte visível do corpo</string>
+    <string name="btn_start_scan">Iniciar escaneamento</string>
+    
+    <!-- Splash &amp; Loading -->
+    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_loading">Carregando...</string>
+    <string name="splash_ads_notice">Esta ação pode conter anúncios</string>
+    
+    <!-- Language -->
+    <string name="title_language">Idioma</string>
+    <string name="subtitle_select_language">Selecione o idioma para continuar</string>
+    <string name="btn_done">Concluído</string>
+    <string name="hint_tap_device_language">Toque para selecionar seu idioma</string>
+    
+    <!-- Intro -->
+    <string name="btn_skip">Pular</string>
+    <string name="btn_next">Próximo</string>
+    <string name="btn_get_started">Começar</string>
+    <string name="intro_title_1">Entenda melhor\na sua saúde</string>
+    <string name="intro_desc_1">Explore dúvidas com análise de fotos, triagem de sintomas e seu assistente de IA.</string>
+    <string name="intro_title_2">Sua saúde,\ntudo em um só lugar</string>
+    <string name="intro_desc_2">Guarde registros, acompanhe mudanças e crie lembretes sob medida.</string>
+    <string name="intro_title_3">Orientações de cuidado\npersonalizadas</string>
+    <string name="intro_desc_3">Receba sugestões sob medida, dicas diárias e suporte contínuo de IA.</string>
+    <string name="intro_title_4">Cuide de você\ne de sua família</string>
+    <string name="intro_desc_4">Organize perfis familiares e acompanhe a saúde de quem você ama.</string>
+    
+    <!-- Add Profile -->
+    <string name="title_add_profile">Adicionar perfil</string>
+    <string name="title_add_member">Adicionar membro</string>
+    <string name="title_detail_profile">Detalhes do perfil</string>
+    <string name="title_profile_detail">Detalhes do perfil</string>
+    <string name="msg_member_added">Membro adicionado à Família!</string>
+    <string name="add_avatar">Alterar avatar</string>
+    <string name="label_full_name">Nome completo</string>
+    <string name="hint_full_name">Digite o nome completo</string>
+    <string name="label_date_of_birth">Data de nascimento</string>
+    <string name="hint_date_of_birth">Selecione a data de nascimento</string>
+    <string name="label_gender">Gênero</string>
+    <string name="hint_gender">Selecione o gênero</string>
+    <string name="gender_other">Outro</string>
+    <string name="label_height">Altura</string>
+    <string name="hint_height">Altura</string>
+    <string name="unit_cm">cm</string>
+    <string name="label_weight">Peso</string>
+    <string name="hint_weight">Peso</string>
+    <string name="unit_kg">kg</string>
+    <string name="btn_create_profile">Criar perfil</string>
+    <string name="btn_save">Salvar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_close">Fechar</string>
+    <string name="title_gender_sheet">Gênero</string>
+    <string name="select_gender_title">Selecionar gênero</string>
+    <string name="error_name_empty">Por favor, digite seu nome</string>
+    <string name="error_dob_empty">Por favor, selecione sua data de nascimento</string>
+    <string name="error_gender_empty">Por favor, selecione seu gênero</string>
+    <string name="error_height_empty">Por favor, informe sua altura</string>
+    <string name="error_weight_empty">Por favor, informe seu peso</string>
+    
+    <!-- Relationship -->
+    <string name="label_relationship">Parentesco</string>
+    <string name="hint_relationship">Selecione o parentesco</string>
+    <string name="title_relationship_sheet">Parentesco</string>
+    <string name="select_relationship_title">Selecionar parentesco</string>
+    <string name="rel_father">Pai</string>
+    <string name="rel_mother">Mãe</string>
+    <string name="rel_spouse">Cônjuge</string>
+    <string name="rel_husband">Marido</string>
+    <string name="rel_wife">Esposa</string>
+    <string name="rel_son">Filho</string>
+    <string name="rel_daughter">Filha</string>
+    <string name="rel_brother">Irmão</string>
+    <string name="rel_sister">Irmã</string>
+    <string name="rel_grandparent">Avô/Avó</string>
+    <string name="rel_other">Outro</string>
+    <string name="dialog_delete_member_title">Remover membro</string>
+    <string name="dialog_delete_member_msg">Tem certeza de que deseja remover %1$s da Família?</string>
+    <string name="btn_remove">Remover</string>
+    <string name="msg_member_removed">Membro removido da Família</string>
+    
+    <!-- My Health Screen -->
+    <string name="title_my_health">Minha Saúde</string>
+    <string name="label_age">Idade</string>
+    <string name="label_reminder">Lembrete</string>
+    <string name="title_health_records">Registros de saúde</string>
+    <string name="record_medications">Medicamentos</string>
+    <string name="record_allergies">Alergias</string>
+    <string name="record_conditions">Condições</string>
+    <string name="record_vaccinations">Vacinas</string>
+    <string name="record_active_format">%1$d ativos</string>
+    <string name="record_reported_format">%1$d relatados</string>
+    <string name="record_recorded_format">%1$d registrados</string>
+    
+    <!-- Settings -->
+    <string name="settings_language">Configuração de idioma</string>
+    <string name="settings_notifications">Lembretes diários</string>
+    <string name="settings_version">Versão 1.0</string>
+    
+    <!-- Uninstall Retention Screen 1 -->
+    <string name="uninstall_title">Quais dificuldades você encontrou?</string>
+    <string name="uninstall_card1_title">Não consigo usar funções nem salvar</string>
+    <string name="uninstall_card1_desc">Problemas de conexão ou falhas de servidor detectados.</string>
+    <string name="uninstall_card2_title">Indisponível no momento</string>
+    <string name="uninstall_card2_desc">Ferramenta em manutenção ou restrita por região.</string>
+    <string name="uninstall_btn_try_again">Tentar novamente</string>
+    <string name="uninstall_btn_explore">Explorar</string>
+    <string name="uninstall_btn_dont_uninstall">Não desinstalar</string>
+    <string name="uninstall_btn_still_uninstall">Desinstalar mesmo assim</string>
+
+    <!-- Uninstall Reason Screen 2 -->
+    <string name="uninstall_reason_title">Por que desinstalar o HealthCare AI?</string>
+    <string name="uninstall_reason_subtitle">Sentimos muito por sua partida. Conte-nos como podemos melhorar.</string>
+    <string name="uninstall_reason_1">Difícil de usar</string>
+    <string name="uninstall_reason_2">Muitos anúncios</string>
+    <string name="uninstall_reason_3">Design precisa melhorar</string>
+    <string name="uninstall_reason_4">Outro motivo</string>
+    <string name="uninstall_reason_hint">Escreva mais detalhes aqui..</string>
+    
+    <!-- Notifications -->
+    <string name="noti_channel_name">Lembretes diários de saúde</string>
+    <string name="noti_channel_desc">Lembretes de hidratação, exames e hábitos saudáveis.</string>
+    <string name="noti_title_morning">Checagem matinal de saúde ☀️</string>
+    <string name="noti_msg_morning">Comece o dia com um copo d\'água e veja sua meta de saúde.</string>
+    <string name="noti_title_afternoon">Bem-estar da tarde 💧</string>
+    <string name="noti_msg_afternoon">Faça uma pausa, alongue-se e registre sua energia.</string>
+    <string name="noti_title_evening">Cuidados da noite 🌙</string>
+    <string name="noti_msg_evening">Revise seu dia e tire dúvidas com seu Assistente de IA.</string>
+
+    <!-- Custom Notification Permission Dialog (Screenshot specification) -->
+    <string name="dialog_notification_permission_title">Notificações</string>
+    <string name="dialog_notification_permission_desc">Fique por dentro de atualizações importantes e resultados de análises.</string>
+    <string name="dialog_notification_btn_settings">Ir para configurações</string>
+    <string name="dialog_notification_btn_dont_allow">Não permitir</string>
+
+    <!-- Medication &amp; Health Reminders Channel -->
+    <string name="noti_reminders_channel_name">Lembretes de saúde e remédios</string>
+    <string name="noti_reminders_channel_desc">Alarmes pontuais para medicamentos, hidratação e cuidados.</string>
+    <string name="noti_reminder_action_done">Marcar como feito</string>
+    <string name="noti_reminder_default_desc">Hora do seu lembrete: %s.</string>
+    
+    <!-- Permission Dialog -->
+    <string name="permission_title">Permissão necessária</string>
+    <string name="permission_desc">Para ativar lembretes e análises por foto, conceda permissão nas Configurações.</string>
+    <string name="permission_btn_settings">Ir para Configurações</string>
+    <string name="permission_btn_cancel">Agora não</string>
+    
+    <!-- Camera Permission Custom Dialog (Enable Camera Access specification) -->
+    <string name="dialog_camera_permission_title">Permitir acesso à câmera</string>
+    <string name="dialog_camera_permission_desc">Permita o acesso à câmera para escanear e analisar sua saúde</string>
+    <string name="dialog_camera_btn_settings">Configurações</string>
+    <string name="dialog_camera_btn_dont_allow">Não permitir</string>
+    <string name="dialog_camera_btn_cancel">Agora não</string>
+
+    <!-- Camera Screen &amp; Guide -->
+    <string name="camera_guide_title">Guia de foto</string>
+    <string name="camera_guide_tip_1">1. Mantenha a área alvo centralizada no enquadramento.</string>
+    <string name="camera_guide_tip_2">2. Garanta boa luz natural, sem sombras fortes.</string>
+    <string name="camera_guide_tip_3">3. Segure a câmera firme a cerca de 10–15 cm de distância.</string>
+    <string name="camera_guide_btn_got_it">Entendi</string>
+    <string name="camera_capture_success">Foto capturada! Analisando...</string>
+
+    <!-- Confirm Photo Screen -->
+    <string name="title_confirm_photo">Confirmar foto</string>
+    <string name="label_aspect_ratio">Proporção</string>
+    <string name="btn_use_photo">Usar esta foto</string>
+    <string name="btn_retake_photo">Tirar outra foto</string>
+    <string name="ratio_9_16">9:16</string>
+    <string name="ratio_1_1">1:1</string>
+    <string name="ratio_2_3">2:3</string>
+    <string name="ratio_3_4">3:4</string>
+    <string name="ratio_16_9">16:9</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_morning">Bom dia</string>
+    <string name="home_greeting_afternoon">Boa tarde</string>
+    <string name="home_greeting_evening">Boa noite</string>
+    <string name="home_subtitle">Sua saúde está ótima hoje.</string>
+    <string name="home_ai_assistant_badge">Assistente de Saúde IA</string>
+    <string name="home_ai_assistant_title">Seu assistente\npessoal de saúde</string>
+    <string name="home_btn_chat_ai">Conversar com IA</string>
+    <string name="home_feature_health_scan">Escanear\nSaúde</string>
+    <string name="home_feature_measure_heart_rate">Medir\nFrequência</string>
+    <string name="home_feature_symptom_checker">Avaliador de\nSintomas</string>
+    <string name="home_section_today_reminder">Lembretes de hoje</string>
+    <string name="home_section_ai_scan_history">Histórico de escaneamentos</string>
+    <string name="home_view_all">Ver tudo</string>
+    <string name="home_no_reminder_title">Nenhum lembrete ainda</string>
+    <string name="home_no_reminder_desc">Adicione remédios ou água para manter sua rotina em dia.</string>
+    <string name="home_btn_add_reminder">Adicionar lembrete</string>
+    <string name="home_no_scans_title">Nenhum escaneamento ainda</string>
+    <string name="home_no_scans_desc">Os resultados aparecerão aqui após o seu primeiro exame.</string>
+    <string name="home_btn_start_first_scan">Iniciar 1º escaneamento</string>
+    <string name="home_btn_get_pro">Obter Pro</string>
+    <string name="home_manage">Gerenciar</string>
+    <string name="btn_mark_as_done">Marcar como feito</string>
+    <string name="msg_marked_as_done">Marcado como feito!</string>
+    <string name="reminder_cetirizine_title">Cetirizine</string>
+    <string name="reminder_cetirizine_desc">10 mg · 1 tablet</string>
+    <string name="reminder_cetirizine_time">8:00 PM</string>
+    <string name="reminder_water_title">Beber água</string>
+    <string name="reminder_water_desc">200ml</string>
+    <string name="reminder_water_time">10:00 PM</string>
+    <string name="scan_arm_skin_check_title">Verificação de pele do braço</string>
+    <string name="scan_arm_skin_check_date">5 de out.</string>
+
+    <!-- Heart Rate Screen -->
+    <string name="title_heart_rate">Frequência Cardíaca</string>
+    <string name="heart_rate_how_to_measure">Como medir</string>
+    <string name="heart_rate_instruction">Coloque a ponta do dedo sobre a câmera\ne o flash para começar.</string>
+    <string name="heart_rate_btn_start">Iniciar medição</string>
+    <string name="heart_rate_statistics_coming_soon">Estatísticas e tendências aparecerão aqui.</string>
+    <string name="how_to_measure_title">Como medir</string>
+    <string name="how_to_measure_step1_title">Coloque o dedo na câmera e no flash</string>
+    <string name="how_to_measure_step1_desc">Cubra totalmente a câmera traseira com a polpa do dedo.</string>
+    <string name="how_to_measure_step2_title">Certifique-se de que o flash está aceso</string>
+    <string name="how_to_measure_step2_desc">O flash iluminará a ponta do dedo para uma leitura precisa.</string>
+    <string name="how_to_measure_step3_title">Mantenha o dedo firme</string>
+    <string name="how_to_measure_step3_desc">Evite mover o dedo durante a medição.</string>
+    <string name="heart_rate_guide_title">Como medir</string>
+    <string name="heart_rate_guide_tip_1">1. Pouse suavemente o dedo indicador sobre a lente e o flash.</string>
+    <string name="heart_rate_guide_tip_2">2. Mantenha pressão leve e constante, sem apertar forte.</string>
+    <string name="heart_rate_guide_tip_3">3. Fique imóvel, respire normalmente e aguarde.</string>
+    <string name="heart_rate_guide_btn_got_it">Entendi</string>
+    <string name="heart_rate_measuring_title">Medindo frequência cardíaca</string>
+    <string name="heart_rate_measuring_banner_title">Medindo seus batimentos…</string>
+    <string name="heart_rate_measuring_banner_sub">Por favor, mantenha o dedo imóvel.</string>
+    <string name="heart_rate_waiting_finger">Cubra a câmera e o flash</string>
+    <string name="heart_rate_waiting_finger_desc">Posicione delicadamente o indicador sobre a câmera e o flash</string>
+    <string name="heart_rate_measuring_desc">Medindo... Fique imóvel e respire normalmente</string>
+    <string name="heart_rate_bpm_unit">BPM</string>
+    <string name="heart_rate_result_title">Resultado</string>
+    <string name="heart_rate_result_summary">Resumo do resultado</string>
+    <string name="heart_rate_bpm_lowercase">bpm</string>
+    <string name="heart_rate_slow_label">Baixo</string>
+    <string name="heart_rate_normal_label">Normal</string>
+    <string name="heart_rate_fast_label">Alto</string>
+    <string name="heart_rate_range_slow">&lt; 60 BPM</string>
+    <string name="heart_rate_range_normal">60-100 BPM</string>
+    <string name="heart_rate_range_fast">&gt; 100 BPM</string>
+    <string name="heart_rate_delete_confirm_title">Excluir registro</string>
+    <string name="heart_rate_delete_confirm_msg">Tem certeza de que deseja excluir esta medição?</string>
+    <string name="heart_rate_delete_btn">Excluir</string>
+    <string name="heart_rate_cancel_btn">Cancelar</string>
+    <string name="heart_rate_deleted">Registro excluído</string>
+    <string name="heart_rate_normal">Normal (Em repouso)</string>
+    <string name="heart_rate_slow">Batimento lento (Bradicardia)</string>
+    <string name="heart_rate_fast">Batimento acelerado (Taquicardia)</string>
+    <string name="heart_rate_quality_label">Qualidade do sinal</string>
+    <string name="heart_rate_hrv_title">Variabilidade da Frequência Cardíaca (VFC)</string>
+    <string name="heart_rate_rmssd_label">RMSSD</string>
+    <string name="heart_rate_sdnn_label">SDNN</string>
+    <string name="heart_rate_ms_unit">ms</string>
+    <string name="heart_rate_btn_measure_again">Medir novamente</string>
+    <string name="heart_rate_btn_done">Done</string>
+    <string name="heart_rate_error_finger_lost_title">Dedo movido</string>
+    <string name="heart_rate_error_finger_lost">Medição pausada porque o dedo foi retirado da lente.</string>
+    <string name="heart_rate_error_low_quality_title">Medição inconclusiva</string>
+    <string name="heart_rate_error_low_quality">Sinal com muito ruído. Mantenha o dedo quieto sem pressionar em excesso.</string>
+    <string name="heart_rate_error_no_flash">Seu aparelho parece não possuir flash na câmera.</string>
+    <string name="heart_rate_btn_try_again">Tentar novamente</string>
+
+    <!-- Heart Rate Statistics Screen -->
+    <string name="statistics_title">Estatísticas</string>
+    <string name="statistics_tab_overview">Visão geral</string>
+    <string name="statistics_tab_history">Histórico</string>
+    <string name="statistics_average">Média</string>
+    <string name="statistics_highest">Máxima</string>
+    <string name="statistics_lowest">Mínima</string>
+    <string name="statistics_no_history_title">Nenhum histórico</string>
+    <string name="statistics_no_history_desc">Suas medições aparecerão aqui após o primeiro escaneamento.</string>
+    <string name="statistics_no_data_title">Sem dados de batimentos</string>
+    <string name="statistics_no_data_desc">Meça seus batimentos para acompanhar estatísticas semanais.</string>
+    <string name="statistics_btn_measure_now">Medir agora</string>
+    <string name="statistics_heart_rate_chart_title">Frequência (bpm)</string>
+    <string name="statistics_empty_val">--</string>
+
+    <!-- Family Hub Screen -->
+    <string name="title_family_hub">Família</string>
+    <string name="family_no_members_title">Nenhum membro cadastrado</string>
+    <string name="family_no_members_desc">Adicione familiares para compartilhar históricos, remédios e cuidados.</string>
+    <string name="family_btn_add_first_member">Adicionar primeiro membro</string>
+    <string name="family_add_member_hint">Funcionalidade em breve.</string>
+
+    <!-- Settings Screen -->
+    <string name="title_setting">Configurações</string>
+    <string name="settings_section_general">Geral</string>
+    <string name="settings_section_support">Suporte</string>
+    <string name="settings_item_language">Idioma</string>
+    <string name="settings_item_permission">Permissões</string>
+    <string name="settings_item_share">Compartilhar com amigos</string>
+    <string name="settings_item_rate">Avaliar app</string>
+    <string name="settings_item_privacy">Política de Privacidade</string>
+
+    <!-- Symptom Checker Screen -->
+    <string name="title_symptom_checker">Avaliador de Sintomas</string>
+    <string name="symptom_checker_subtitle">Conte-nos como está se sentindo\npara receber a melhor orientação.</string>
+    <string name="symptom_checker_privacy_notice">Seus dados são criptografados e protegidos.</string>
+    <string name="symptom_checker_est_time_label">Tempo estimado</string>
+    <string name="symptom_checker_est_time_val">3 min</string>
+    <string name="symptom_checker_after_assessment_label">Após a avaliação</string>
+    <string name="symptom_checker_after_assessment_val">Orientações de saúde</string>
+    <string name="symptom_checker_length_label">Após a avaliação</string>
+    <string name="symptom_checker_length_val">Orientações de saúde</string>
+    <string name="symptom_checker_btn_start">Iniciar avaliação</string>
+    <string name="symptom_checker_start_toast">Iniciando avaliação de sintomas com IA...</string>
+
+    <!-- Symptom Assessment Onboard -->
+    <string name="assessment_age_title">Qual é a sua idade?</string>
+    <string name="assessment_gender_title">Qual é o seu gênero biológico?</string>
+    <string name="assessment_gender_subtitle">Selecione seu gênero para uma experiência mais precisa.</string>
+    <string name="gender_male">Masculino</string>
+    <string name="gender_female">Feminino</string>
+    <string name="assessment_symptoms_title">Quais sintomas você sente?</string>
+    <string name="assessment_symptoms_subtitle">Toque nas partes do corpo para destacar e selecionar sintomas</string>
+    <string name="tab_body_map">Mapa corporal</string>
+    <string name="tab_all_symptoms">Todos os sintomas</string>
+    <string name="region_all">Todos</string>
+    <string name="region_head">Cabeça</string>
+    <string name="region_neck">Pescoço</string>
+    <string name="region_shoulders">Ombros</string>
+    <string name="region_chest">Peito</string>
+    <string name="region_abdomen">Abdômen</string>
+    <string name="region_arms">Braços</string>
+    <string name="region_legs">Pernas</string>
+    <string name="search_symptoms_hint">Digite seu sintoma principal aqui</string>
+    <string name="no_symptoms_found">Nenhum sintoma correspondente a "%s"</string>
+    <string name="assessment_related_symptoms_title">Você apresenta algum dos sintomas a seguir?</string>
+    <string name="assessment_related_symptoms_subtitle">Selecione todas as opções aplicáveis</string>
+    <string name="assessment_insect_bite_title">Você foi picado por inseto (mosquitos, carrapatos, aranhas, percevejos…)?</string>
+    <string name="option_yes">Sim</string>
+    <string name="option_no">Não</string>
+    <string name="option_dont_know">Não sei</string>
+    <!-- Exit Confirmation Dialog -->
+    <string name="dialog_exit_app_title">Sair</string>
+    <string name="dialog_exit_app_desc">Tem certeza de que deseja sair?\nAlterações não salvas serão perdidas.</string>
+    <string name="dialog_exit_app_btn_stay">Ficar</string>
+    <string name="dialog_exit_app_btn_exit">Sair</string>
+    <string name="dialog_exit_assessment_title">Sair da avaliação</string>
+    <string name="dialog_exit_assessment_desc">Tem certeza de que deseja sair?\nSuas respostas serão perdidas.</string>
+    <string name="dialog_exit_btn_continue">Ficar</string>
+    <string name="dialog_exit_btn_exit">Sair</string>
+    <string name="assessment_progress_format">%1$d/%2$d</string>
+    <string name="btn_continue">Continuar</string>
+    <string name="btn_back">Voltar</string>
+
+    <!-- AI Health Assistant Chat Screen -->
+    <string name="ai_chat_title">Assistente de Saúde IA</string>
+    <string name="ai_chat_welcome_title">Como posso ajudar com\nsua saúde hoje?</string>
+    <string name="ai_chat_suggestion_1_title">Dicas de vida saudável</string>
+    <string name="ai_chat_suggestion_1_desc">Hábitos diários para melhorar o bem-estar...</string>
+    <string name="ai_chat_suggestion_1_query">Dê-me hábitos diários para melhorar minha saúde geral.</string>
+    <string name="ai_chat_suggestion_2_title">Explicar resultados de exame</string>
+    <string name="ai_chat_suggestion_2_desc">Ajude-me a entender meu escaneamento de pele ou bucal.</string>
+    <string name="ai_chat_suggestion_2_query">Ajude-me a compreender meus resultados de escaneamento e sugestões.</string>
+    <string name="ai_chat_suggestion_3_title">Revisar dados de saúde</string>
+    <string name="ai_chat_suggestion_3_desc">Analise batimentos, sono e atividade.</string>
+    <string name="ai_chat_suggestion_3_query">Analise meus dados de batimentos cardíacos e sono para me dar orientações.</string>
+    <string name="ai_chat_input_hint">Pergunte qualquer coisa...</string>
+    <string name="ai_chat_new_chat">Nova conversa</string>
+    <string name="ai_chat_clear_confirm_title">Iniciar novo chat?</string>
+    <string name="ai_chat_clear_confirm_msg">Deseja apagar a conversa atual e começar do zero?</string>
+    <string name="ai_chat_listening">Ouvindo... fale agora</string>
+    <string name="ai_chat_mic_permission_required">Permissão de microfone necessária para mensagens de voz.</string>
+    <string name="ai_chat_error_fallback">Desculpe, não foi possível processar agora. Verifique sua conexão e tente novamente.</string>
+    <string name="ai_chat_today">Hoje</string>
+    <string name="ai_chat_yesterday">Ontem</string>
+
+    <!-- Conversation History Screen -->
+    <string name="title_conversation">Conversas</string>
+    <string name="conversation_empty_title">Nenhuma conversa ainda</string>
+    <string name="conversation_empty_desc">Inicie uma conversa para receber conselhos\ne orientações de saúde personalizadas.</string>
+    <string name="time_just_now">Agora</string>
+    <string name="time_minute_ago">Há 1 minuto</string>
+    <string name="time_minutes_ago">Há %d minutos</string>
+    <string name="time_hour_ago">Há 1 hora</string>
+    <string name="time_hours_ago">Há %d horas</string>
+    <string name="time_day_ago">Há 1 dia</string>
+    <string name="time_days_ago">Há %d dias</string>
+
+    <!-- New Reminder Screen -->
+    <string name="title_new_reminder">Novo lembrete</string>
+    <string name="label_reminder_category">Categoria</string>
+    <string name="hint_select_category">Selecionar categoria</string>
+    <string name="label_reminder_name">Nome</string>
+    <string name="label_reminder_strength">Dosagem</string>
+    <string name="hint_reminder_strength">ex. 10 mg</string>
+    <string name="label_reminder_form">Forma farmacêutica</string>
+    <string name="hint_reminder_form">Selecionar forma</string>
+    <string name="label_reminder_repeat">Repetição</string>
+    <string name="hint_repeat_schedule">Escolher frequência</string>
+    <string name="label_reminder_time">Horário</string>
+    <string name="time_no_times_added">Nenhum horário definido</string>
+    <string name="label_reminder_start_date">Data de início</string>
+    <string name="label_reminder_end_date">Data de término</string>
+    <string name="hint_select_date">Selecionar data</string>
+    <string name="label_reminder_notes">Observações (opcional)</string>
+    <string name="hint_reminder_name">Nome do lembrete</string>
+    <string name="hint_enter_medication_name">Nome do medicamento</string>
+    <string name="hint_add_notes">Adicionar observação</string>
+    <string name="reminder_btn_add_time">Adicionar horário</string>
+    <string name="btn_save_reminder">Salvar lembrete</string>
+    <string name="repeat_every_day">Todos os dias</string>
+    <string name="repeat_weekdays">Dias de semana</string>
+    <string name="repeat_weekends">Fins de semana</string>
+    <string name="repeat_weekly">Semanalmente</string>
+    <string name="repeat_monthly">Mensalmente</string>
+    <string name="repeat_once">Uma única vez</string>
+    <string name="form_tablet">Comprimido</string>
+    <string name="form_capsule">Cápsula</string>
+    <string name="form_liquid">Líquido</string>
+    <string name="form_drops">Gotas</string>
+    <string name="form_injection">Injeção</string>
+    <string name="form_inhaler">Inalador</string>
+    <string name="form_other">Outro</string>
+    <string name="msg_reminder_saved">Lembrete salvo com sucesso</string>
+    <string name="msg_enter_reminder_name">Por favor, digite o nome do lembrete</string>
+    <string name="msg_time_already_added">Este horário já foi adicionado</string>
+
+    <!-- Select Category Bottom Sheet -->
+    <string name="title_select_category">Selecionar categoria</string>
+
+    <!-- Select Repeat Bottom Sheet -->
+    <string name="title_select_repeat">Repetição</string>
+    <string name="category_health_monitoring_title">Monitoramento de saúde</string>
+    <string name="category_health_monitoring_desc">Temperatura, batimentos, etc.</string>
+    <string name="category_medication_title">Medicamentos</string>
+    <string name="category_medication_desc">Remédios, vitaminas, suplementos</string>
+    <string name="category_healthy_habits_title">Hábitos saudáveis</string>
+    <string name="category_healthy_habits_desc">Beber água, exercícios, sono, etc.</string>
+    <string name="category_appointments_title">Consultas</string>
+    <string name="category_appointments_desc">Visitas médicas, exames de rotina</string>
+    <string name="category_vaccinations_title">Vacinação</string>
+    <string name="category_vaccinations_desc">Calendário de vacinas e doses de reforço</string>
+    <string name="category_other_title">Outro</string>
+    <string name="category_other_desc">Lembretes pessoais de saúde</string>
+
+    <!-- Reminder History &amp; Detail Management -->
+    <string name="title_reminder">Lembretes</string>
+    <string name="title_edit_reminder">Editar lembrete</string>
+    <string name="reminder_action_edit">Editar</string>
+    <string name="reminder_action_delete">Excluir</string>
+    <string name="reminder_status_taken">Tomado</string>
+    <string name="reminder_action_undo">Desfazer</string>
+    <string name="msg_reminder_deleted">Lembrete excluído</string>
+    <string name="msg_reminder_updated">Lembrete atualizado</string>
+    <string name="msg_marked_as_undone">Marcado como não tomado</string>
+    <string name="delete_reminder_confirm">Tem certeza de que deseja excluir este lembrete?</string>
+    <string name="delete_confirm_title">Excluir este registro?</string>
+    <string name="delete_confirm_message">Tem certeza de que deseja excluir este registro?\nEsta ação não poderá ser desfeita.</string>
+    <string name="btn_delete">Excluir</string>
+    
+    <!-- Rate App Dialog -->
+    <string name="rate_dialog_title">Avalie sua experiência</string>
+    <string name="rate_dialog_message">Sua opinião nos ajuda a evoluir.\nToque em uma estrela para avaliar.</string>
+    <string name="rate_dialog_submit">Enviar avaliação</string>
+    <string name="rate_dialog_maybe_later">Mais tarde</string>
+    <string name="rate_dialog_thank_you">Muito obrigado pela sua avaliação!</string>
+
+    <!-- Health Record Details -->
+    <string name="title_medication_details">Detalhes do medicamento</string>
+    <string name="title_allergy_details">Detalhes da alergia</string>
+    <string name="title_condition_details">Detalhes da condição</string>
+    <string name="title_vaccination_details">Detalhes da vacina</string>
+
+    <!-- Select Form &amp; Severity Bottom Sheets -->
+    <string name="title_select_form">Selecionar forma</string>
+    <string name="title_select_severity">Selecionar gravidade</string>
+    <string name="severity_mild">Leve</string>
+    <string name="severity_moderate">Moderada</string>
+    <string name="severity_severe">Grave</string>
+    <string name="severity_not_sure">Não tenho certeza</string>
+
+    <!-- Update Status Bottom Sheet -->
+    <string name="title_update_status">Atualizar status</string>
+    <string name="btn_save_status">Salvar status</string>
+    <string name="status_ongoing_title">Em andamento</string>
+    <string name="status_ongoing_sub">Ainda faz parte do seu histórico atual</string>
+    <string name="status_resolved_title">Resolvido</string>
+    <string name="status_resolved_sub">Registrado como não mais em curso</string>
+    <string name="status_unsure_title">Incerto</string>
+    <string name="status_unsure_sub">Você não tem certeza do estado atual</string>
+
+    <!-- Add Time Custom Dialog -->
+    <string name="dialog_title_add_time">Adicionar horário</string>
+    <string name="label_hour">Hora</string>
+    <string name="label_minute">Minuto</string>
+    <string name="label_already_add">Já adicionado</string>
+    <string name="btn_add_time">Adicionar horário</string>
+
+    <!-- Care Advice Screen -->
+    <string name="care_advice_badge">AVALIAÇÃO IA CONCLUÍDA</string>
+    <string name="care_advice_title">Orientações de Cuidado</string>
+    <string name="care_advice_subtitle_format">Com base nos sintomas relatados (%1$s), estas são as orientações recomendadas para ajudá-lo a se recuperar com segurança.</string>
+    <string name="care_advice_self_care">Autocuidado</string>
+    <string name="care_advice_monitor_symptoms">Monitorar Sintomas</string>
+    <string name="care_advice_when_to_seek_care">Quando Procurar Ajuda Médica</string>
+    <string name="care_advice_self_care_bullet_1">Durma pelo menos 8 horas para ajudar o corpo a se recuperar.</string>
+    <string name="care_advice_self_care_bullet_2">Beba bastante água ou líquidos claros para se manter hidratado.</string>
+    <string name="care_advice_monitor_bullet_1">Meça sua temperatura duas vezes ao dia.</string>
+    <string name="care_advice_monitor_bullet_2">Acompanhe seus batimentos em repouso pelo relógio inteligente.</string>
+    <string name="care_advice_seek_care_bullet_1">Se a febre ultrapassar 39,4°C, a dor durar mais de 48 horas ou sentir falta de ar, procure atendimento médico imediatamente.</string>
+    <string name="btn_return_to_home">Voltar ao Início</string>
+    <string name="btn_set_a_reminder">Definir lembrete</string>
+
+    <!-- Symptom Result Screen -->
+    <string name="title_result">Resultado</string>
+    <string name="symptom_result_doctor_title">Consultar um médico</string>
+    <string name="symptom_result_doctor_desc">Seus sintomas podem exigir avaliação médica. Agende uma consulta com seu médico. Em caso de piora, procure atendimento imediato.</string>
+    <string name="title_possible_conditions">Possíveis Condições</string>
+    <string name="title_recommended_actions">Ações Recomendadas</string>
+    <string name="btn_view_care_advice">Ver Orientações de Cuidado</string>
+    <string name="match_strong">Alta Correspondência</string>
+    <string name="match_moderate">Correspondência Moderada</string>
+    <string name="match_possible">Possível Correspondência</string>
+    <string name="btn_ask_ai_about_result">Perguntar à IA sobre este resultado</string>
+    <string name="medical_disclaimer_title">AVISO MÉDICO LEGAL</string>
+    <string name="medical_disclaimer_desc">Esta ferramenta oferece apenas informações referenciais e não substitui avaliação, diagnóstico ou tratamento médico profissional.</string>
+    <string name="label_selected">Selecionado:</string>
+
+    <!-- AI Scan / Analysis Results -->
+    <string name="title_analysis_results">Resultados da Análise</string>
+    <string name="analysis_loading_title">Analisando lesão com IA...</string>
+    <string name="analysis_loading_desc">Escaneando textura morfológica, bordas e padrões estruturais.</string>
+    <string name="analysis_unable_title">Não foi possível identificar</string>
+    <string name="analysis_unable_desc">Não conseguimos identificar a condição nesta imagem.\nTente tirar uma foto mais nítida.</string>
+    <string name="analysis_tips_title">Dicas para melhores resultados</string>
+    <string name="analysis_tip_1">Use iluminação natural e clara</string>
+    <string name="analysis_tip_2">Mantenha a área afetada em foco</string>
+    <string name="analysis_tip_3">Certifique-se de que a área esteja bem visível</string>
+    <string name="btn_rescan">Escanear novamente</string>
+    <string name="btn_choose_from_gallery">Escolher da galeria</string>
+    <string name="title_save_result_to">Salvar resultado em</string>
+    <string name="title_key_findings">Principais Descobertas</string>
+    <string name="title_care_suggestions">Sugestões de Cuidado</string>
+    <string name="title_when_to_seek_care">Quando Procurar Ajuda Médica</string>
+    <string name="ai_processing_title">IA processando...</string>
+    <string name="ai_processing_desc">Seu resultado estará pronto em instantes</string>
+    <string name="title_report_result">Denunciar resultado</string>
+    <string name="btn_report">Denunciar</string>
+    <string name="title_choose_reminders">Escolha seus lembretes</string>
+    <string name="btn_save_reminders_count">Salvar %1$d lembretes</string>
+    <string name="btn_save_reminder_single">Salvar 1 lembrete</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_understood">Entendido</string>
+
+    <!-- Health Record Management -->
+    <string name="title_add_allergy">Adicionar alergia</string>
+    <string name="title_edit_allergy">Editar alergia</string>
+    <string name="label_allergen_name">Nome do alérgeno</string>
+    <string name="label_type">Tipo</string>
+    <string name="type_food">Alimento</string>
+    <string name="label_reaction">Reação</string>
+    <string name="label_first_noticed">Primeira manifestação</string>
+    <string name="date_not_provided">Data não informada</string>
+    <string name="btn_save_allergy">Salvar alergia</string>
+    <string name="title_add_condition">Adicionar condição</string>
+    <string name="title_edit_condition">Editar condição</string>
+    <string name="label_condition_name">Nome da condição</string>
+    <string name="label_status">Status</string>
+    <string name="label_clinician">Médico</string>
+    <string name="label_clinic">Clínica / Hospital</string>
+    <string name="not_provided">Não informado</string>
+    <string name="label_diagnosis_date">Data do diagnóstico</string>
+    <string name="btn_save_condition">Salvar condição</string>
+    <string name="title_add_vaccination">Adicionar vacina</string>
+    <string name="title_edit_vaccination">Editar vacina</string>
+    <string name="label_vaccine_name">Nome da vacina</string>
+    <string name="label_dose_number">Número da dose</string>
+    <string name="label_batch_number">Número do lote</string>
+    <string name="btn_save_vaccination">Salvar vacina</string>
+    <string name="title_add_medication">Adicionar medicamento</string>
+    <string name="title_edit_medication">Editar medicamento</string>
+    <string name="label_reason">Motivo</string>
+    <string name="btn_save_medication">Salvar medicamento</string>
+    <string name="label_additional_details">Detalhes adicionais (opcional)</string>
+    <string name="label_medication_name">Nome do medicamento</string>
+    <string name="no_records_yet_format">Nenhum(a) %1$s registrado(a)</string>
+    <string name="empty_records_desc">Adicione seu primeiro registro usando o botão abaixo</string>
+    <string name="btn_add_record_format">Adicionar %1$s</string>
+    <string name="title_choose_item_format">Escolher %1$s</string>
+    <string name="no_items_added_yet_format">Nenhum(a) %1$s adicionado(a)</string>
+    <string name="add_records_quick_select_desc">Cadastre seus registros para selecioná-los rapidamente</string>
+    <string name="btn_add_item_format">+ Adicionar %1$s</string>
+    <string name="time_am">AM</string>
+    <string name="time_pm">PM</string>
+    <string name="cat_temperature">Temperatura</string>
+    <string name="cat_drink_water">Beber água</string>
+    <string name="cat_exercise">Exercício</string>
+    <string name="cat_sleep">Sono</string>
+    <string name="label_date_received">Data da aplicação</string>
+    <string name="label_updated">Atualizado</string>
+    <string name="record_diagnosed_format">%1$d diagnosticado(s)</string>
+    <string name="label_notes">Observações</string>
+    <string name="label_note">Observação</string>
+    <string name="label_severity">Gravidade</string>
+    <string name="label_strength">Dosagem</string>
+    <string name="label_form">Forma</string>
+    <string name="status_ongoing">Ativo</string>
+    <string name="status_updated_format">Status atualizado para %1$s</string>
+    <string name="toast_photo_load_failed">Falha ao carregar a foto selecionada</string>
+    <string name="toast_healthlink_pro">HealthLink Pro: Escaneamentos ilimitados e suporte 24/7!</string>
+    <string name="toast_opening_privacy_policy">Abrindo Política de Privacidade…</string>
+    <string name="medical_disclaimer_dialog_title">Aviso Médico Legal</string>
+    <string name="ai_health_disclaimer_title">Aviso de Saúde por IA</string>
+    <string name="ai_health_disclaimer_desc">Esta análise visual é apoiada por IA com propósitos educacionais e de acompanhamento. Não substitui consulta clínica nem diagnóstico dermatológico.\n\nEm caso de sangramento, alterações rápidas ou dor persistente, consulte um médico imediatamente.</string>
+    <string name="medical_disclaimer_full_text">Esta avaliação de sintomas fornece apenas informações educativas e referenciais. Não substitui consulta, diagnóstico ou tratamento médico profissional.\n\nSempre consulte um médico para esclarecer quaisquer dúvidas sobre sua saúde.</string>
+    <string name="msg_please_choose_item_format">Por favor, selecione um(a) %1$s</string>
+    <string name="symptom_sample_mild_fever_fatigue">febre leve, fadiga</string>
+    <!-- Report Result Reasons -->
+    <string name="report_harmful_content">Conteúdo prejudicial</string>
+    <string name="report_illegal_content">Conteúdo ilegal</string>
+    <string name="report_offensive_content">Conteúdo ofensivo</string>
+    <string name="report_biased_content">Conteúdo tendencioso</string>
+    <string name="report_trademark_violation">Violação de marca registrada</string>
+    <string name="report_copyright_violation">Violação de direitos autorais</string>
+    <string name="report_nudity_sexual_content">Nudez/conteúdo sexual</string>
+    <string name="report_violence_gore">Violência/conteúdo explícito</string>
+    <string name="report_others">Outros</string>
+    <string name="toast_report_submitted">Obrigado por relatar. Analisaremos este resultado.</string>
+
+    <string name="label_relationship_you">Você</string>
+    <string name="reminder_water_notes">A hidratação acelera a reparação tecidual e a restauração da barreira cutânea.</string>
+    <string name="reminder_check_temperature_title">Verificar temperatura</string>
+    <string name="reminder_check_temperature_notes">Monitore a temperatura para detetar precocemente febre ou infeção.</string>
+    <string name="reminder_observe_area_title">Cuidados e observação da pele</string>
+    <string name="reminder_observe_area_notes">Verifique quaisquer alterações na vermelhidão, tamanho ou sensação.</string>
+</resources>

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/urbanist"
-            android:text="Report result"
+            android:text="@string/title_report_result"
             android:textColor="#172044"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -74,7 +74,7 @@
         android:background="@drawable/bg_button_primary"
         android:fontFamily="@font/urbanist"
         android:stateListAnimator="@null"
-        android:text="Report"
+        android:text="@string/btn_report"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"

@@ -79,15 +79,18 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
     private fun buildRecommendations() {
         remindersList.clear()
 
+        val dailyStr = getString(R.string.repeat_every_day)
+        val chooseTimesStr = getString(R.string.hint_repeat_schedule)
+
         // 1. Vital sign / Infection monitor: "Check temperature"
         remindersList.add(
             RecommendedReminder(
-                name = "Check temperature",
+                name = getString(R.string.reminder_check_temperature_title),
                 category = "Temperature",
                 repeat = "Daily",
-                scheduleDisplay = "Daily · 8:00 AM, 8:00 PM",
+                scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
                 timeList = listOf("08:00 AM", "08:00 PM"),
-                notes = "Monitor temperature for early fever or infection warning.",
+                notes = getString(R.string.reminder_check_temperature_notes),
                 iconResId = R.drawable.ic_temperature,
                 isChecked = false
             )
@@ -97,7 +100,8 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         val suggestions = analysisResult?.careSuggestions.orEmpty()
         if (suggestions.isNotEmpty()) {
             val firstSuggestion = suggestions.first()
-            val title = firstSuggestion.title?.takeIf { it.isNotBlank() } ?: "Skin Care & Observation"
+            val defaultCareTitle = getString(R.string.reminder_observe_area_title)
+            val title = firstSuggestion.title?.takeIf { it.isNotBlank() } ?: defaultCareTitle
             val desc = firstSuggestion.description.orEmpty()
             val lower = title.lowercase()
             val icon = when {
@@ -111,7 +115,7 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
                     name = title,
                     category = "Medication",
                     repeat = "Daily",
-                    scheduleDisplay = "Daily · 8:00 AM, 8:00 PM",
+                    scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
                     timeList = listOf("08:00 AM", "08:00 PM"),
                     notes = desc,
                     iconResId = icon,
@@ -120,15 +124,15 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             )
         } else {
             // Default tailored treatment observation reminder
-            val catLabel = category?.lowercase() ?: "skin"
+            val defaultCareTitle = getString(R.string.reminder_observe_area_title)
             remindersList.add(
                 RecommendedReminder(
-                    name = "Observe $catLabel area",
+                    name = defaultCareTitle,
                     category = "Observation",
                     repeat = "Daily",
-                    scheduleDisplay = "Daily · 8:00 AM, 8:00 PM",
+                    scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
                     timeList = listOf("08:00 AM", "08:00 PM"),
-                    notes = "Check for any changes in redness, size, or sensation.",
+                    notes = getString(R.string.reminder_observe_area_notes),
                     iconResId = R.drawable.ic_medications,
                     isChecked = false
                 )
@@ -138,12 +142,12 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         // 3. Hydration & Cellular Recovery: "Drink water"
         remindersList.add(
             RecommendedReminder(
-                name = "Drink water",
+                name = getString(R.string.reminder_water_title),
                 category = "Water",
                 repeat = "Daily",
-                scheduleDisplay = "Choose times",
+                scheduleDisplay = chooseTimesStr,
                 timeList = listOf("08:00 AM", "12:00 PM", "04:00 PM", "08:00 PM"),
-                notes = "Hydration accelerates tissue repair and skin barrier restoration.",
+                notes = getString(R.string.reminder_water_notes),
                 iconResId = R.drawable.ic_drink_water,
                 isChecked = false
             )
@@ -206,15 +210,15 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
     private fun updateSaveButtonState() {
         val checkedCount = remindersList.count { it.isChecked }
         if (checkedCount == 0) {
-            binding.btnSaveReminders.text = "Save"
+            binding.btnSaveReminders.text = getString(R.string.btn_save)
             binding.btnSaveReminders.isEnabled = false
             binding.btnSaveReminders.alpha = 0.5f
         } else if (checkedCount == 1) {
-            binding.btnSaveReminders.text = "Save 1 reminder"
+            binding.btnSaveReminders.text = getString(R.string.btn_save_reminder_single)
             binding.btnSaveReminders.isEnabled = true
             binding.btnSaveReminders.alpha = 1.0f
         } else {
-            binding.btnSaveReminders.text = "Save $checkedCount reminders"
+            binding.btnSaveReminders.text = getString(R.string.btn_save_reminders_count, checkedCount)
             binding.btnSaveReminders.isEnabled = true
             binding.btnSaveReminders.alpha = 1.0f
         }
@@ -298,8 +302,9 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             val item = items[position]
 
             // Content
-            holder.itemBinding.tvReminderName.text = item.name
-            holder.itemBinding.tvReminderSchedule.text = item.scheduleDisplay
+            val context = holder.itemView.context
+            holder.itemBinding.tvReminderName.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, item.name)
+            holder.itemBinding.tvReminderSchedule.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedSchedule(context, item.scheduleDisplay)
             holder.itemBinding.ivReminderIcon.setImageResource(item.iconResId)
 
             // Checkbox Visuals

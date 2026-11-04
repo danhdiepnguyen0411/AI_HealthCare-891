@@ -28,7 +28,7 @@ class CareAdviceBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        conditionTitle = arguments?.getString(ARG_TITLE) ?: "Care Advice"
+        conditionTitle = arguments?.getString(ARG_TITLE) ?: getString(R.string.care_advice_title)
         adviceList = arguments?.getStringArrayList(ARG_ADVICE) ?: arrayListOf()
     }
 

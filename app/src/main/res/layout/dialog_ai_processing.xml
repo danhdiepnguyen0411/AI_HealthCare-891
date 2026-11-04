@@ -105,7 +105,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/urbanist"
         android:gravity="center"
-        android:text="AI processing..."
+        android:text="@string/ai_processing_title"
         android:textColor="#172044"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -118,7 +118,7 @@
         android:layout_marginTop="6dp"
         android:fontFamily="@font/urbanist"
         android:gravity="center"
-        android:text="Your result will be ready in a few moments"
+        android:text="@string/ai_processing_desc"
         android:textColor="#7A808C"
         android:textSize="14sp" />
 

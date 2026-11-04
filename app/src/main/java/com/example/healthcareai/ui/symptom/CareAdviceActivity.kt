@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.SymptomAssessmentResult
 import com.example.healthcareai.data.model.SymptomCareAdvice
 import com.example.healthcareai.data.model.SymptomCondition
@@ -96,9 +97,9 @@ class CareAdviceActivity : BaseActivity() {
         // 1. Resolve symptoms summary for subtitle
         val summaryText = customSymptomsSummary
             ?: assessmentResult?.reportedSymptomsSummary?.takeIf { it.isNotBlank() }
-            ?: "mild fever, fatigue"
+            ?: getString(R.string.symptom_sample_mild_fever_fatigue)
 
-        binding.tvCareAdviceSubtitle.text = "Based on your reported symptoms ($summaryText), here are the recommended next steps to help you feel better safely."
+        binding.tvCareAdviceSubtitle.text = getString(R.string.care_advice_subtitle_format, summaryText)
 
         // 2. Resolve Care Advice data (either from specific condition or root assessment result)
         val defaultAdvice = SymptomAssessmentRepository.getInstance(this).createFallbackResult(

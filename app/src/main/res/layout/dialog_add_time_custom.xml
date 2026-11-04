@@ -162,7 +162,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/urbanist_bold"
                     android:includeFontPadding="false"
-                    android:text="AM"
+                    android:text="@string/time_am"
                     android:textColor="@color/color_text"
                     android:textSize="15.5sp" />
             </FrameLayout>
@@ -184,7 +184,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/urbanist_bold"
                     android:includeFontPadding="false"
-                    android:text="PM"
+                    android:text="@string/time_pm"
                     android:textColor="@color/white"
                     android:textSize="15.5sp" />
             </FrameLayout>
