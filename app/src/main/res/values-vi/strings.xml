@@ -561,6 +561,11 @@
     <string name="btn_rescan">Quét lại</string>
     <string name="btn_choose_from_gallery">Chọn từ thư viện</string>
     <string name="title_save_result_to">Lưu kết quả vào</string>
+    <string name="btn_save_result">Lưu kết quả</string>
+    <string name="btn_saved_result">Đã lưu</string>
+    <string name="btn_ask_ai">Hỏi AI</string>
+    <string name="msg_result_saved_to_profile">Đã lưu kết quả vào hồ sơ</string>
+    <string name="msg_result_already_saved">Kết quả đã được lưu</string>
     <string name="title_key_findings">Dấu hiệu chính</string>
     <string name="title_care_suggestions">Gợi ý chăm sóc</string>
     <string name="title_when_to_seek_care">Khi nào cần khám bác sĩ</string>
@@ -655,4 +660,12 @@
     <string name="reminder_check_temperature_notes">Theo dõi nhiệt độ để phát hiện sớm dấu hiệu sốt hoặc nhiễm trùng.</string>
     <string name="reminder_observe_area_title">Chăm sóc &amp; Quan sát da</string>
     <string name="reminder_observe_area_notes">Kiểm tra xem có bất kỳ thay đổi nào về độ đỏ, kích thước hoặc cảm giác không.</string>
+    <string name="title_select_profile">Chọn hồ sơ</string>
+    <string name="btn_confirm">Xác nhận</string>
+
+    <!-- Leave Without Saving Dialog -->
+    <string name="dialog_leave_without_saving_title">Rời đi mà không lưu?</string>
+    <string name="dialog_leave_without_saving_message">Kết quả phân tích chưa được lưu. Nếu bạn rời đi bây giờ, bạn sẽ không thể xem lại kết quả này.</string>
+    <string name="btn_stay_on_page">Ở lại trang này</string>
+    <string name="btn_exit_without_saving">Thoát mà không lưu</string>
 </resources>

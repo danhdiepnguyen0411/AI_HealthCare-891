@@ -35,6 +35,7 @@
     <!-- Splash &amp; Loading -->
     <string name="splash_app_title">HealthLink</string>
     <string name="splash_loading">Loading...</string>
+    <string name="splash_loading_progress">%1$s (%2$d%%)</string>
     <string name="splash_ads_notice">This action can contain ads</string>
     
     <!-- Language -->
@@ -561,6 +562,11 @@
     <string name="btn_rescan">Rescan</string>
     <string name="btn_choose_from_gallery">Choose from gallery</string>
     <string name="title_save_result_to">Save result to</string>
+    <string name="btn_save_result">Save result</string>
+    <string name="btn_saved_result">Saved</string>
+    <string name="btn_ask_ai">Ask AI</string>
+    <string name="msg_result_saved_to_profile">Result saved to profile</string>
+    <string name="msg_result_already_saved">Result already saved</string>
     <string name="title_key_findings">Key Findings</string>
     <string name="title_care_suggestions">Care Suggestions</string>
     <string name="title_when_to_seek_care">When to Seek Medical Care</string>
@@ -655,4 +661,12 @@
     <string name="reminder_check_temperature_notes">Monitor temperature for early fever or infection warning.</string>
     <string name="reminder_observe_area_title">Skin Care &amp; Observation</string>
     <string name="reminder_observe_area_notes">Check for any changes in redness, size, or sensation.</string>
+    <string name="title_select_profile">Select profile</string>
+    <string name="btn_confirm">Confirm</string>
+
+    <!-- Leave Without Saving Dialog -->
+    <string name="dialog_leave_without_saving_title">Leave Without Saving?</string>
+    <string name="dialog_leave_without_saving_message">Your analysis is not saved. If you leave now,\nyou won\'t be able to view these results again.</string>
+    <string name="btn_stay_on_page">Stay on this page</string>
+    <string name="btn_exit_without_saving">Exit without saving</string>
 </resources>

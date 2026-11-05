@@ -124,8 +124,10 @@ class ScanFragment : Fragment() {
     private fun setupListeners() {
         // Start Scan Button -> Open Camera Screen
         binding.btnStartScan.setOnClickListener {
+            val primaryId = com.example.healthcareai.data.repository.ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
             val intent = android.content.Intent(requireContext(), com.example.healthcareai.ui.camera.CameraActivity::class.java).apply {
                 putExtra(com.example.healthcareai.ui.camera.CameraActivity.EXTRA_CATEGORY, selectedCategory.name)
+                putExtra(com.example.healthcareai.ui.camera.CameraActivity.EXTRA_PROFILE_ID, primaryId)
             }
             startActivity(intent)
         }

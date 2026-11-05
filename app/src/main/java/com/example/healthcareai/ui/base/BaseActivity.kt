@@ -59,8 +59,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 v.getGlobalVisibleRect(outRect)
                 if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                     v.clearFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(v.windowToken, 0)
+                    hideKeyboard()
                 }
             }
         }
@@ -71,7 +70,11 @@ abstract class BaseActivity : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         val view = currentFocus ?: window.decorView
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
-        hideNavigationBar()
+        window.decorView.postDelayed({
+            if (!isDestroyed && !isFinishing) {
+                hideNavigationBar()
+            }
+        }, 350L)
     }
 
     fun hideNavigationBar() {

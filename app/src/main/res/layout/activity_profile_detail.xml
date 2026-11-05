@@ -801,6 +801,15 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- AI scan history: Data State (List of Cards) -->
+            <LinearLayout
+                android:id="@+id/layoutScanList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

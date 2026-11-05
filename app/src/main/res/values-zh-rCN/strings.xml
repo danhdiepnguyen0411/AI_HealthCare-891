@@ -561,6 +561,11 @@
     <string name="btn_rescan">重新扫描</string>
     <string name="btn_choose_from_gallery">从相册选择</string>
     <string name="title_save_result_to">保存结果到</string>
+    <string name="btn_save_result">保存结果</string>
+    <string name="btn_saved_result">已保存</string>
+    <string name="btn_ask_ai">咨询 AI</string>
+    <string name="msg_result_saved_to_profile">结果已保存至个人档案</string>
+    <string name="msg_result_already_saved">结果已保存</string>
     <string name="title_key_findings">关键体征发现</string>
     <string name="title_care_suggestions">护理建议</string>
     <string name="title_when_to_seek_care">何时就医</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">监测体温以及早发现发烧或感染迹象。</string>
     <string name="reminder_observe_area_title">皮肤护理与观察</string>
     <string name="reminder_observe_area_notes">观察红肿、大小或感觉是否有任何变化。</string>
+    <string name="title_select_profile">选择个人资料</string>
+    <string name="btn_confirm">确认</string>
 </resources>

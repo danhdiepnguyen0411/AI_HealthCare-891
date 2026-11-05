@@ -561,6 +561,11 @@
     <string name="btn_rescan">Pindai ulang</string>
     <string name="btn_choose_from_gallery">Pilih dari galeri</string>
     <string name="title_save_result_to">Simpan hasil ke</string>
+    <string name="btn_save_result">Simpan hasil</string>
+    <string name="btn_saved_result">Tersimpan</string>
+    <string name="btn_ask_ai">Tanya AI</string>
+    <string name="msg_result_saved_to_profile">Hasil disimpan ke profil</string>
+    <string name="msg_result_already_saved">Hasil sudah disimpan</string>
     <string name="title_key_findings">Temuan Utama</string>
     <string name="title_care_suggestions">Saran Perawatan</string>
     <string name="title_when_to_seek_care">Kapan Harus ke Dokter</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">Pantau suhu tubuh untuk deteksi dini demam atau tanda infeksi.</string>
     <string name="reminder_observe_area_title">Perawatan &amp; Pengamatan Kulit</string>
     <string name="reminder_observe_area_notes">Periksa apakah ada perubahan pada kemerahan, ukuran, atau sensasi.</string>
+    <string name="title_select_profile">Pilih profil</string>
+    <string name="btn_confirm">Konfirmasi</string>
 </resources>

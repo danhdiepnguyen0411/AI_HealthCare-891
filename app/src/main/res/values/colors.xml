@@ -88,7 +88,7 @@
     
     <color name="splash_bg">#0F67FE</color>
     <color name="splash_progress_track">#52FFFFFF</color>
-    <color name="splash_ads_notice">#B3FFFFFF</color>
+    <color name="splash_ads_notice">#FFFFFF</color>
     
     <color name="lang_card_selected">#4E75F7</color>
     <color name="lang_card_selected_ring">#400F67FE</color>

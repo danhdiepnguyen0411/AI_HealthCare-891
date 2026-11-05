@@ -208,12 +208,11 @@ class LanguageActivity : BaseActivity() {
             }
             selectedLanguage = resultList.find { it.isSelected }
         } else {
-            // First time entry: preselect device language at position 4 (index 3)
-            val targetIndex = if (resultList.size >= 4) 3 else 0
-            resultList.forEachIndexed { index, item ->
-                item.isSelected = (index == targetIndex)
+            // First time entry: do not preselect any language initially
+            resultList.forEach {
+                it.isSelected = false
             }
-            selectedLanguage = resultList.find { it.isSelected }
+            selectedLanguage = null
         }
 
         val initialDir = if (LocaleHelper.isRtl(this)) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
@@ -230,6 +229,8 @@ class LanguageActivity : BaseActivity() {
 
         selectedLanguage?.let {
             applyPreviewLanguage(it.code)
+        } ?: run {
+            updateHeaderForLanguage(initialSavedLangCode)
         }
     }
 

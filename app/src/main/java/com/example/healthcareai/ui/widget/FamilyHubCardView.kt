@@ -39,6 +39,31 @@ class FamilyHubCardView @JvmOverloads constructor(
 
     private var animator: ValueAnimator? = null
 
+    private var cachedAvatarsRow: ViewGroup? = null
+    private var cachedScrollContainer: HorizontalScrollView? = null
+    private var cachedAddBtn: android.view.View? = null
+
+    private fun getAvatarsRow(): ViewGroup? {
+        if (cachedAvatarsRow == null) {
+            cachedAvatarsRow = findViewById(R.id.layoutFamilyAvatarsRow)
+        }
+        return cachedAvatarsRow
+    }
+
+    private fun getScrollContainer(): HorizontalScrollView? {
+        if (cachedScrollContainer == null) {
+            cachedScrollContainer = findViewById(R.id.scrollFamilyAvatars)
+        }
+        return cachedScrollContainer
+    }
+
+    private fun getAddBtn(): android.view.View? {
+        if (cachedAddBtn == null) {
+            cachedAddBtn = findViewById(R.id.layoutMemberAdd)
+        }
+        return cachedAddBtn
+    }
+
     init {
         setWillNotDraw(false)
     }
@@ -57,8 +82,8 @@ class FamilyHubCardView @JvmOverloads constructor(
 
     private fun calculateTabBounds(index: Int, animate: Boolean) {
         val density = resources.displayMetrics.density
-        val avatarsRow = findViewById<ViewGroup>(R.id.layoutFamilyAvatarsRow)
-        val scrollContainer = findViewById<HorizontalScrollView>(R.id.scrollFamilyAvatars)
+        val avatarsRow = getAvatarsRow()
+        val scrollContainer = getScrollContainer()
 
         if (index < 0) {
             targetTabLeft = 0f
@@ -149,8 +174,8 @@ class FamilyHubCardView @JvmOverloads constructor(
         val density = resources.displayMetrics.density
         // Large soft bottom corner radius (matching Figma and user's bottom pink circle)
         val bottomRadius = 36f * density
-        val avatarsRow = findViewById<ViewGroup>(R.id.layoutFamilyAvatarsRow)
-        val addBtn = findViewById<android.view.View>(R.id.layoutMemberAdd)
+        val avatarsRow = getAvatarsRow()
+        val addBtn = getAddBtn()
         val addBtnIndex = avatarsRow?.indexOfChild(addBtn) ?: -1
         val memberCount = if (addBtnIndex >= 0) addBtnIndex else ((avatarsRow?.childCount ?: 1) - 1).coerceAtLeast(0)
 

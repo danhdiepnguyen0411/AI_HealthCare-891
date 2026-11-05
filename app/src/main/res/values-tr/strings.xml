@@ -561,6 +561,11 @@
     <string name="btn_rescan">Yeniden tara</string>
     <string name="btn_choose_from_gallery">Galeriden seç</string>
     <string name="title_save_result_to">Sonucu kaydet</string>
+    <string name="btn_save_result">Sonucu kaydet</string>
+    <string name="btn_saved_result">Kaydedildi</string>
+    <string name="btn_ask_ai">Yapay zekaya sor</string>
+    <string name="msg_result_saved_to_profile">Sonuç profile kaydedildi</string>
+    <string name="msg_result_already_saved">Sonuç zaten kaydedildi</string>
     <string name="title_key_findings">Temel Bulgular</string>
     <string name="title_care_suggestions">Bakım Önerileri</string>
     <string name="title_when_to_seek_care">Ne Zaman Doktora Başvurmalı</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">Erken ateş veya enfeksiyon belirtilerini izlemek için ateşi kontrol edin.</string>
     <string name="reminder_observe_area_title">Cilt Bakımı ve Gözlem</string>
     <string name="reminder_observe_area_notes">Kızarıklık, boyut veya hisste herhangi bir değişiklik olup olmadığını kontrol edin.</string>
+    <string name="title_select_profile">Profil seç</string>
+    <string name="btn_confirm">Onayla</string>
 </resources>

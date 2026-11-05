@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -51,6 +52,8 @@ class AddProfileActivity : BaseActivity() {
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
+    private var isImeReportedByInsets = false
+    private var isImeAnimationRunning = false
     private var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
     private var wasKeyboardOpen = false
 
@@ -94,11 +97,7 @@ class AddProfileActivity : BaseActivity() {
                 if (isAddMemberMode) {
                     finish()
                 } else {
-                    val intent = Intent(this@AddProfileActivity, com.example.healthcareai.ui.intro.IntroActivity::class.java).apply {
-                        putExtra(com.example.healthcareai.ui.intro.IntroActivity.EXTRA_START_PAGE, 3)
-                    }
-                    startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }
             }
         })
@@ -111,6 +110,13 @@ class AddProfileActivity : BaseActivity() {
         ViewCompat.setWindowInsetsAnimationCallback(
             binding.rootAddProfile,
             object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = true
+                    }
+                }
+
                 override fun onProgress(
                     insets: WindowInsetsCompat,
                     runningAnimations: MutableList<WindowInsetsAnimationCompat>
@@ -118,9 +124,25 @@ class AddProfileActivity : BaseActivity() {
                     val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                     val navInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
                     val statusInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+                    isImeReportedByInsets = true
                     lastImeInsetsBottom = imeInsets
-                    updateInsets(statusInsets, navInsets, getEffectiveImeBottom())
+                    lastGlobalImeBottom = 0
+                    updateInsets(statusInsets, navInsets, imeInsets)
                     return insets
+                }
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    super.onEnd(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = false
+                        val currentInsets = ViewCompat.getRootWindowInsets(binding.rootAddProfile)
+                        val imeBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+                        val navBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
+                        val statusTop = currentInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
+                        lastImeInsetsBottom = imeBottom
+                        lastGlobalImeBottom = 0
+                        updateInsets(statusTop, navBottom, imeBottom)
+                    }
                 }
             }
         )
@@ -130,8 +152,14 @@ class AddProfileActivity : BaseActivity() {
             val navBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            if (imeBottom > 0) {
+                isImeReportedByInsets = true
+            }
+            if (!isImeAnimationRunning) {
+                lastImeInsetsBottom = imeBottom
+                if (imeBottom == 0) lastGlobalImeBottom = 0
+                updateInsets(statusTop, navBottom, imeBottom)
+            }
             insets
         }
 
@@ -141,34 +169,31 @@ class AddProfileActivity : BaseActivity() {
             val imeBottom = currentInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = currentInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
 
-        // 3. GlobalLayoutListener as fallback
+        // 3. Fallback ViewTreeObserver listener ONLY if insets are not supported
         val decorView = window.decorView
         val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            if (isImeReportedByInsets) return@OnGlobalLayoutListener
             val r = Rect()
             decorView.getWindowVisibleDisplayFrame(r)
             val screenHeight = decorView.rootView.height
             val heightDiff = screenHeight - r.bottom
             val isKeyboardVisible = heightDiff > (100 * density)
-            lastGlobalImeBottom = if (isKeyboardVisible) heightDiff else 0
+            val imeBottom = if (isKeyboardVisible) heightDiff else 0
             val rootInsets = ViewCompat.getRootWindowInsets(binding.rootAddProfile)
             val navBottom = rootInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
             val statusTop = rootInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
         globalLayoutListener = layoutListener
         decorView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
     }
 
-    private fun getEffectiveImeBottom(): Int {
-        return if (lastImeInsetsBottom > 0) lastImeInsetsBottom else lastGlobalImeBottom
-    }
-
     private fun updateInsets(statusTop: Int, navBottom: Int, imeBottom: Int) {
         val density = resources.displayMetrics.density
-        val isKeyboardOpen = imeBottom > 0
+        val isKeyboardOpen = imeBottom > (50 * density)
         val keyboardStateChanged = isKeyboardOpen != wasKeyboardOpen
         wasKeyboardOpen = isKeyboardOpen
 
@@ -183,36 +208,37 @@ class AddProfileActivity : BaseActivity() {
             }
         }
 
-        // Update layoutBottomAction (Create profile button) position
-        val finalBottomMargin = if (isKeyboardOpen) imeBottom + (8 * density).toInt() else navBottom + (16 * density).toInt()
-        val targetPaddingBottom = if (isKeyboardOpen) (4 * density).toInt() else (24 * density).toInt()
-
+        // Keep layoutBottomAction (Create profile button) fixed at the bottom of the screen (keyboard covers it)
         (binding.layoutBottomAction.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
-            if (lp.bottomMargin != finalBottomMargin) {
-                lp.bottomMargin = finalBottomMargin
+            if (lp.bottomMargin != navBottom) {
+                lp.bottomMargin = navBottom
                 binding.layoutBottomAction.layoutParams = lp
             }
         }
 
-        if (binding.layoutBottomAction.paddingBottom != targetPaddingBottom) {
-            binding.layoutBottomAction.setPadding(
-                (20 * density).toInt(),
-                binding.layoutBottomAction.paddingTop,
-                (20 * density).toInt(),
-                targetPaddingBottom
-            )
+        // Adjust scrollView bottom margin so its content floats above the keyboard when open
+        val actionHeight = if (binding.layoutBottomAction.height > 0) {
+            binding.layoutBottomAction.height
+        } else {
+            (78 * density).toInt()
+        }
+        val bottomBarHeight = actionHeight + navBottom
+        val excessKeyboard = (imeBottom - bottomBarHeight).coerceAtLeast(0)
+
+        (binding.scrollView.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+            if (lp.bottomMargin != excessKeyboard) {
+                lp.bottomMargin = excessKeyboard
+                binding.scrollView.layoutParams = lp
+            }
         }
 
-        // When keyboard is open and focus is on height or weight, smoothly scroll down so textfields are completely visible
-        if (isKeyboardOpen) {
+        // Only scroll when keyboard is OPENING, never when closing
+        if (isKeyboardOpen && keyboardStateChanged) {
             val focused = currentFocus
             val shouldScroll = focused == null || focused.id == R.id.etHeight || focused.id == R.id.etWeight
             if (shouldScroll) {
                 binding.scrollView.post { scrollToBottom() }
-                if (keyboardStateChanged) {
-                    binding.scrollView.postDelayed({ scrollToBottom() }, 100)
-                    binding.scrollView.postDelayed({ scrollToBottom() }, 250)
-                }
+                binding.scrollView.postDelayed({ scrollToBottom() }, 100)
             }
         }
     }
@@ -232,6 +258,11 @@ class AddProfileActivity : BaseActivity() {
     }
 
     private fun setupListeners() {
+        // Enforce input length limits (50 chars for name, 3 digits for height and weight)
+        binding.etFullName.filters = arrayOf(InputFilter.LengthFilter(50))
+        binding.etHeight.filters = arrayOf(InputFilter.LengthFilter(3))
+        binding.etWeight.filters = arrayOf(InputFilter.LengthFilter(3))
+
         // Dismiss keyboard when touching background
         binding.rootAddProfile.setOnClickListener {
             currentFocus?.clearFocus()
@@ -481,7 +512,7 @@ class AddProfileActivity : BaseActivity() {
 
         val heightStr = binding.etHeight.text?.toString()?.trim().orEmpty()
         val height = heightStr.toIntOrNull()
-        if (height == null || height <= 0) {
+        if (height == null) {
             Toast.makeText(this, R.string.error_height_empty, Toast.LENGTH_SHORT).show()
             binding.etHeight.requestFocus()
             return
@@ -489,7 +520,7 @@ class AddProfileActivity : BaseActivity() {
 
         val weightStr = binding.etWeight.text?.toString()?.trim().orEmpty()
         val weight = weightStr.toIntOrNull()
-        if (weight == null || weight <= 0) {
+        if (weight == null) {
             Toast.makeText(this, R.string.error_weight_empty, Toast.LENGTH_SHORT).show()
             binding.etWeight.requestFocus()
             return

@@ -561,6 +561,11 @@
     <string name="btn_rescan">फिर से स्कैन करें</string>
     <string name="btn_choose_from_gallery">गैलरी से चुनें</string>
     <string name="title_save_result_to">परिणाम सहेजें</string>
+    <string name="btn_save_result">परिणाम सहेजें</string>
+    <string name="btn_saved_result">सहेजा गया</string>
+    <string name="btn_ask_ai">एआई से पूछें</string>
+    <string name="msg_result_saved_to_profile">परिणाम प्रोफ़ाइल में सहेज लिया गया</string>
+    <string name="msg_result_already_saved">परिणाम पहले से सहेजा हुआ है</string>
     <string name="title_key_findings">मुख्य निष्कर्ष</string>
     <string name="title_care_suggestions">देखभाल सुझाव</string>
     <string name="title_when_to_seek_care">चिकित्सा सहायता कब लें</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">बुखार या संक्रमण की शुरुआती चेतावनी के लिए तापमान की निगरानी करें।</string>
     <string name="reminder_observe_area_title">त्वचा की देखभाल और अवलोकन</string>
     <string name="reminder_observe_area_notes">लालिमा, आकार या संवेदना में किसी भी बदलाव की जांच करें।</string>
+    <string name="title_select_profile">प्रोफ़ाइल चुनें</string>
+    <string name="btn_confirm">पुष्टि करें</string>
 </resources>

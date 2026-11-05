@@ -561,6 +561,11 @@
     <string name="btn_rescan">Escanear novamente</string>
     <string name="btn_choose_from_gallery">Escolher da galeria</string>
     <string name="title_save_result_to">Salvar resultado em</string>
+    <string name="btn_save_result">Guardar resultado</string>
+    <string name="btn_saved_result">Guardado</string>
+    <string name="btn_ask_ai">Perguntar à IA</string>
+    <string name="msg_result_saved_to_profile">Resultado guardado no perfil</string>
+    <string name="msg_result_already_saved">Resultado já guardado</string>
     <string name="title_key_findings">Principais Descobertas</string>
     <string name="title_care_suggestions">Sugestões de Cuidado</string>
     <string name="title_when_to_seek_care">Quando Procurar Ajuda Médica</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">Monitore a temperatura para detetar precocemente febre ou infeção.</string>
     <string name="reminder_observe_area_title">Cuidados e observação da pele</string>
     <string name="reminder_observe_area_notes">Verifique quaisquer alterações na vermelhidão, tamanho ou sensação.</string>
+    <string name="title_select_profile">Selecionar perfil</string>
+    <string name="btn_confirm">Confirmar</string>
 </resources>

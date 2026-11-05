@@ -13,6 +13,7 @@ import android.Manifest
 import android.app.Dialog
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.healthcareai.R
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.ActivitySplashBinding
 import com.example.healthcareai.ui.base.BaseActivity
@@ -110,12 +111,17 @@ class SplashActivity : BaseActivity() {
         progressAnimator?.removeAllListeners()
         progressAnimator?.cancel()
 
+        val baseLoading = getString(R.string.splash_loading).removeSuffix("...")
+        binding.tvLoading.text = getString(R.string.splash_loading_progress, baseLoading, 0)
+        binding.progressBar.progress = 0
+
         progressAnimator = ValueAnimator.ofInt(0, 100).apply {
             duration = 2500L
             interpolator = DecelerateInterpolator()
             addUpdateListener { animator ->
                 val progress = animator.animatedValue as Int
                 binding.progressBar.progress = progress
+                binding.tvLoading.text = getString(R.string.splash_loading_progress, baseLoading, progress)
             }
             doOnEnd {
                 if (!isNavigatingOrFinished && !isFinishing && !isDestroyed) {

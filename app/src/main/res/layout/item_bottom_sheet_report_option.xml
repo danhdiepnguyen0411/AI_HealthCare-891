@@ -6,10 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="56dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/bg_bottom_sheet_item_unselected"
-    android:clickable="true"
-    android:clipToOutline="true"
-    android:focusable="true">
+    android:background="@drawable/bg_bottom_sheet_item_unselected">
 
     <LinearLayout
         android:layout_width="match_parent"

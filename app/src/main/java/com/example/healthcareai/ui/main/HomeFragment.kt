@@ -23,15 +23,19 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.data.repository.HealthRecordRepository
+import com.example.healthcareai.data.repository.ScanHistoryRepository
 import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ItemReminderCardBinding
+import com.example.healthcareai.databinding.ItemScanHistoryCardBinding
+import com.example.healthcareai.ui.camera.AnalysisResultsActivity
 import com.example.healthcareai.ui.chat.AiChatActivity
 import com.example.healthcareai.ui.profile.AddProfileActivity
 import com.example.healthcareai.ui.profile.ProfileDetailActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
+import java.io.File
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
@@ -56,6 +60,7 @@ class HomeFragment : Fragment() {
         setupListeners()
         syncFamilyProfiles()
         syncReminders()
+        syncScanHistory()
     }
 
     override fun onResume() {
@@ -63,6 +68,7 @@ class HomeFragment : Fragment() {
         updateGreeting()
         syncFamilyProfiles()
         syncReminders()
+        syncScanHistory()
     }
 
     private fun setupWindowInsets() {
@@ -74,12 +80,15 @@ class HomeFragment : Fragment() {
             } else {
                 (50 * density).toInt()
             }
-            binding.topBar.setPadding(
-                (16 * density).toInt(),
-                topPadding,
-                (16 * density).toInt(),
-                (16 * density).toInt()
-            )
+            if (binding.topBar.paddingTop != topPadding) {
+                val sidePadding = (16 * density).toInt()
+                binding.topBar.setPadding(
+                    sidePadding,
+                    topPadding,
+                    sidePadding,
+                    sidePadding
+                )
+            }
             insets
         }
     }
@@ -147,16 +156,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnStartFirstScan.setOnClickListener {
-            val intent = Intent(requireContext(), CameraActivity::class.java)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            val intent = Intent(requireContext(), CameraActivity::class.java).apply {
+                putExtra(CameraActivity.EXTRA_PROFILE_ID, primaryId)
+            }
             startActivity(intent)
-        }
-
-        binding.cardScan1.setOnClickListener {
-            (activity as? MainActivity)?.navigateToTab(1)
-        }
-
-        binding.cardScan2.setOnClickListener {
-            (activity as? MainActivity)?.navigateToTab(1)
         }
 
         // Family Hub: Manage & Card click
@@ -410,6 +414,58 @@ class HomeFragment : Fragment() {
                 }
 
                 binding.layoutReminderList.addView(cardBinding.root)
+            }
+        }
+    }
+
+    private fun syncScanHistory() {
+        val ctx = context ?: return
+        val primaryId = ProfileRepository.getInstance(ctx).getPrimaryProfile().id
+        val scans = ScanHistoryRepository.getInstance(ctx).getScansForProfile(primaryId)
+
+        if (scans.isEmpty()) {
+            binding.layoutEmptyScans.visibility = View.VISIBLE
+            binding.layoutScanList.visibility = View.GONE
+            binding.tvViewAllScans.visibility = View.GONE
+        } else {
+            binding.layoutEmptyScans.visibility = View.GONE
+            binding.layoutScanList.visibility = View.VISIBLE
+            binding.tvViewAllScans.visibility = View.VISIBLE
+            binding.layoutScanList.removeAllViews()
+
+            for (scan in scans.take(2)) {
+                val itemBinding = ItemScanHistoryCardBinding.inflate(
+                    layoutInflater,
+                    binding.layoutScanList,
+                    false
+                )
+                itemBinding.tvScanTitle.text = scan.title
+                itemBinding.tvScanDate.text = scan.dateFormatted
+
+                val imagePath = scan.imagePath
+                if (!imagePath.isNullOrEmpty() && File(imagePath).exists()) {
+                    itemBinding.ivScanThumbnail.load(File(imagePath)) {
+                        crossfade(true)
+                        error(R.drawable.no_scans_yet)
+                    }
+                } else {
+                    itemBinding.ivScanThumbnail.setImageResource(R.drawable.no_scans_yet)
+                }
+
+                itemBinding.root.setOnClickListener {
+                    val intent = Intent(requireContext(), AnalysisResultsActivity::class.java).apply {
+                        putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
+                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
+                        putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
+                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
+                        putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
+                        putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
+                        scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                    }
+                    startActivity(intent)
+                }
+
+                binding.layoutScanList.addView(itemBinding.root)
             }
         }
     }

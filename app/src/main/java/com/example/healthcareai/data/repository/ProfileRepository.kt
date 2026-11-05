@@ -135,6 +135,13 @@ class ProfileRepository private constructor(context: Context) {
     }
 
     /**
+     * Finds a profile by its ID.
+     */
+    fun getProfileById(id: String): UserProfile? {
+        return getAllProfiles().find { it.id == id }
+    }
+
+    /**
      * Deletes a family member profile by id.
      */
     fun deleteProfile(id: String) {
@@ -144,6 +151,7 @@ class ProfileRepository private constructor(context: Context) {
         try {
             HealthRecordRepository.getInstance(appContext).deleteRecordsForProfile(id)
             ReminderRepository.getInstance(appContext).deleteRemindersForProfile(id)
+            ScanHistoryRepository.getInstance(appContext).deleteScansForProfile(id)
         } catch (_: Exception) {
         }
     }

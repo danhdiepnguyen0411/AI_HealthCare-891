@@ -561,6 +561,11 @@
     <string name="btn_rescan">再スキャン</string>
     <string name="btn_choose_from_gallery">ギャラリーから選択</string>
     <string name="title_save_result_to">結果の保存先</string>
+    <string name="btn_save_result">結果を保存</string>
+    <string name="btn_saved_result">保存済み</string>
+    <string name="btn_ask_ai">AIに質問</string>
+    <string name="msg_result_saved_to_profile">結果をプロフィールに保存しました</string>
+    <string name="msg_result_already_saved">結果は既に保存されています</string>
     <string name="title_key_findings">主な所見</string>
     <string name="title_care_suggestions">ケアの提案</string>
     <string name="title_when_to_seek_care">受診の目安</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">発熱や感染の初期兆候を早期に検知するために体温を記録します。</string>
     <string name="reminder_observe_area_title">スキンケアと経過観察</string>
     <string name="reminder_observe_area_notes">赤み、大きさ、感覚の変化がないか確認してください。</string>
+    <string name="title_select_profile">プロフィールを選択</string>
+    <string name="btn_confirm">確認</string>
 </resources>

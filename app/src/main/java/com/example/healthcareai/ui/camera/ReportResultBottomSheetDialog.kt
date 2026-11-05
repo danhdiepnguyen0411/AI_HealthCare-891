@@ -60,6 +60,9 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
+    private var isImeReportedByInsets = false
+    private var isImeAnimationRunning = false
+    private var wasKeyboardOpen = false
     private var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
     override fun getTheme(): Int = R.style.TransparentBottomSheetDialogTheme
@@ -78,11 +81,13 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
         setupRecyclerView()
         setupListeners()
+        updateReportButtonState(animate = false)
     }
 
     private fun setupRecyclerView() {
         val adapter = ReportOptionsAdapter(reportOptions)
         binding.rvReportOptions.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvReportOptions.itemAnimator = null
         binding.rvReportOptions.adapter = adapter
     }
 
@@ -94,6 +99,8 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
         // Report Button
         binding.btnReport.setOnClickListener {
+            if (!isReportValid()) return@setOnClickListener
+
             val selectedOption = reportOptions.getOrElse(selectedOptionIndex) { reportOptions.last() }
             val selectedReason = getString(selectedOption.titleRes)
             val finalReason = if (selectedOption.key.equals("Others", ignoreCase = true) && customFeedbackText.isNotBlank()) {
@@ -109,6 +116,31 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
                 Toast.LENGTH_SHORT
             ).show()
             dismiss()
+        }
+    }
+
+    private fun isReportValid(): Boolean {
+        if (selectedOptionIndex < 0 || selectedOptionIndex >= reportOptions.size) {
+            return false
+        }
+        val selectedOption = reportOptions[selectedOptionIndex]
+        return if (selectedOption.key.equals("Others", ignoreCase = true)) {
+            customFeedbackText.trim().isNotEmpty()
+        } else {
+            true
+        }
+    }
+
+    private fun updateReportButtonState(animate: Boolean = true) {
+        val binding = _binding ?: return
+        val isValid = isReportValid()
+        binding.btnReport.isEnabled = isValid
+        binding.btnReport.isClickable = isValid
+        val targetAlpha = if (isValid) 1.0f else 0.4f
+        if (animate && binding.btnReport.isAttachedToWindow) {
+            binding.btnReport.animate().alpha(targetAlpha).setDuration(150L).start()
+        } else {
+            binding.btnReport.alpha = targetAlpha
         }
     }
 
@@ -160,14 +192,35 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
         ViewCompat.setWindowInsetsAnimationCallback(
             binding.rootReportResult,
             object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = true
+                    }
+                }
+
                 override fun onProgress(
                     insets: WindowInsetsCompat,
                     runningAnimations: MutableList<WindowInsetsAnimationCompat>
                 ): WindowInsetsCompat {
                     val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                    isImeReportedByInsets = true
                     lastImeInsetsBottom = imeInsets
-                    updateBottomPadding(getEffectiveImeBottom())
+                    lastGlobalImeBottom = 0
+                    updateBottomPadding(imeInsets)
                     return insets
+                }
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    super.onEnd(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = false
+                        val currentInsets = ViewCompat.getRootWindowInsets(binding.rootReportResult)
+                        val imeBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+                        lastImeInsetsBottom = imeBottom
+                        lastGlobalImeBottom = 0
+                        updateBottomPadding(imeBottom)
+                    }
                 }
             }
         )
@@ -175,29 +228,31 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
         // 2. OnApplyWindowInsetsListener
         ViewCompat.setOnApplyWindowInsetsListener(decorView) { _, insets ->
             val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-            lastImeInsetsBottom = imeBottom
-            updateBottomPadding(getEffectiveImeBottom())
+            if (imeBottom > 0) {
+                isImeReportedByInsets = true
+            }
+            if (!isImeAnimationRunning) {
+                lastImeInsetsBottom = imeBottom
+                if (imeBottom == 0) lastGlobalImeBottom = 0
+                updateBottomPadding(imeBottom)
+            }
             insets
         }
 
         // 3. Fallback ViewTreeObserver layout listener
         val density = resources.displayMetrics.density
         val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-            if (_binding == null) return@OnGlobalLayoutListener
+            if (_binding == null || isImeReportedByInsets) return@OnGlobalLayoutListener
             val r = Rect()
             decorView.getWindowVisibleDisplayFrame(r)
             val screenHeight = decorView.rootView.height
             val heightDiff = screenHeight - r.bottom
             val isKeyboardVisible = heightDiff > (100 * density)
-            lastGlobalImeBottom = if (isKeyboardVisible) heightDiff else 0
-            updateBottomPadding(getEffectiveImeBottom())
+            val imeBottom = if (isKeyboardVisible) heightDiff else 0
+            updateBottomPadding(imeBottom)
         }
         globalLayoutListener = layoutListener
         decorView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-    }
-
-    private fun getEffectiveImeBottom(): Int {
-        return if (lastImeInsetsBottom > 0) lastImeInsetsBottom else lastGlobalImeBottom
     }
 
     private fun updateBottomPadding(imeBottom: Int) {
@@ -217,18 +272,18 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
             )
         }
 
-        // Only apply padding to rvReportOptions so textfield / items are pushed up above keyboard
-        val targetRvPaddingBottom = if (imeBottom > 0) {
-            imeBottom + (16 * density).toInt()
-        } else {
-            0
-        }
-
+        // Only apply padding to rvReportOptions so textfield / items are pushed up smoothly above keyboard
+        val targetRvPaddingBottom = imeBottom
         if (binding.rvReportOptions.paddingBottom != targetRvPaddingBottom) {
             binding.rvReportOptions.setPadding(0, 0, 0, targetRvPaddingBottom)
         }
 
-        if (imeBottom > 0 && selectedOptionIndex == reportOptions.size - 1) {
+        val isKeyboardOpen = imeBottom > (50 * density)
+        val keyboardStateChanged = isKeyboardOpen != wasKeyboardOpen
+        wasKeyboardOpen = isKeyboardOpen
+
+        // Only auto-scroll when keyboard transitions to open
+        if (isKeyboardOpen && keyboardStateChanged && selectedOptionIndex == reportOptions.size - 1) {
             scrollToOthers()
         }
     }
@@ -238,15 +293,10 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
         val density = resources.displayMetrics.density
         val topOffset = (8 * density).toInt()
 
-        val scrollAction = Runnable {
+        rv.post {
             val lm = rv.layoutManager as? LinearLayoutManager
             lm?.scrollToPositionWithOffset(reportOptions.size - 1, topOffset)
         }
-
-        rv.post(scrollAction)
-        rv.postDelayed(scrollAction, 100)
-        rv.postDelayed(scrollAction, 250)
-        rv.postDelayed(scrollAction, 400)
     }
 
     override fun onDestroyView() {
@@ -261,6 +311,13 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
         }
         globalLayoutListener = null
         _binding = null
+    }
+
+    private fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val focusedView = dialog?.currentFocus ?: binding.root
+        imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
+        focusedView.clearFocus()
     }
 
     private inner class ReportOptionsAdapter(
@@ -281,16 +338,54 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
             return OptionViewHolder(itemBinding)
         }
 
+        override fun onBindViewHolder(
+            holder: OptionViewHolder,
+            position: Int,
+            payloads: MutableList<Any>
+        ) {
+            if (payloads.contains(PAYLOAD_SELECTION_CHANGED)) {
+                bindSelectionState(holder, position)
+            } else {
+                super.onBindViewHolder(holder, position, payloads)
+            }
+        }
+
         override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
+            val option = options[position]
+            val context = holder.itemView.context
+
+            holder.itemBinding.tvOptionTitle.text = context.getString(option.titleRes)
+
+            bindSelectionState(holder, position)
+            setupFeedbackListener(holder)
+
+            // Click listener on card
+            holder.itemView.setOnClickListener {
+                val currentPos = holder.bindingAdapterPosition
+                if (currentPos == RecyclerView.NO_POSITION) return@setOnClickListener
+
+                if (selectedOptionIndex != currentPos) {
+                    val prev = selectedOptionIndex
+                    selectedOptionIndex = currentPos
+                    notifyItemChanged(prev, PAYLOAD_SELECTION_CHANGED)
+                    notifyItemChanged(selectedOptionIndex, PAYLOAD_SELECTION_CHANGED)
+                    updateReportButtonState()
+
+                    val isNowOthers = options[currentPos].key.equals("Others", ignoreCase = true)
+                    if (isNowOthers) {
+                        scrollToOthers()
+                    } else {
+                        hideKeyboard()
+                    }
+                }
+            }
+        }
+
+        private fun bindSelectionState(holder: OptionViewHolder, position: Int) {
             val option = options[position]
             val isSelected = position == selectedOptionIndex
             val isOthers = option.key.equals("Others", ignoreCase = true)
             val context = holder.itemView.context
-
-            // Detach previous text watcher to prevent duplicate callbacks
-            holder.textWatcher?.let { holder.itemBinding.etCustomFeedback.removeTextChangedListener(it) }
-
-            holder.itemBinding.tvOptionTitle.text = context.getString(option.titleRes)
 
             // Selection Visuals
             if (isSelected) {
@@ -310,78 +405,58 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
                     holder.itemBinding.etCustomFeedback.setText(customFeedbackText)
                     holder.itemBinding.etCustomFeedback.setSelection(customFeedbackText.length)
                 }
-
-                // Internal scrolling for multi-line text input
-                holder.itemBinding.etCustomFeedback.setOnTouchListener { v, event ->
-                    if (v.hasFocus()) {
-                        v.parent.requestDisallowInterceptTouchEvent(true)
-                        if (event.action and MotionEvent.ACTION_MASK == MotionEvent.ACTION_UP) {
-                            v.parent.requestDisallowInterceptTouchEvent(false)
-                        }
-                    }
-                    false
-                }
-
-                // On click or focus, scroll into plain sight
-                holder.itemBinding.etCustomFeedback.setOnClickListener {
-                    scrollToOthers()
-                }
-                holder.itemBinding.etCustomFeedback.setOnFocusChangeListener { _, hasFocus ->
-                    if (hasFocus) {
-                        scrollToOthers()
-                    }
-                }
-
-                // Done action on keyboard
-                holder.itemBinding.etCustomFeedback.setOnEditorActionListener { v, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        v.clearFocus()
-                        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                        imm?.hideSoftInputFromWindow(v.windowToken, 0)
-                        true
-                    } else {
-                        false
-                    }
-                }
-
-                // Save feedback text
-                val watcher = object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                    override fun afterTextChanged(s: Editable?) {
-                        customFeedbackText = s?.toString() ?: ""
-                    }
-                }
-                holder.textWatcher = watcher
-                holder.itemBinding.etCustomFeedback.addTextChangedListener(watcher)
             } else {
                 holder.itemBinding.etCustomFeedback.visibility = View.GONE
             }
+        }
 
-            // Click listener on card
-            holder.itemView.setOnClickListener {
-                if (selectedOptionIndex != position) {
-                    val prev = selectedOptionIndex
-                    selectedOptionIndex = position
-                    notifyItemChanged(prev)
-                    notifyItemChanged(selectedOptionIndex)
+        private fun setupFeedbackListener(holder: OptionViewHolder) {
+            // Detach previous text watcher to prevent duplicate callbacks
+            holder.textWatcher?.let { holder.itemBinding.etCustomFeedback.removeTextChangedListener(it) }
 
-                    if (isOthers) {
-                        scrollToOthers()
-                        // Request focus and show keyboard
-                        holder.itemBinding.etCustomFeedback.postDelayed({
-                            holder.itemBinding.etCustomFeedback.requestFocus()
-                            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                            imm?.showSoftInput(holder.itemBinding.etCustomFeedback, InputMethodManager.SHOW_IMPLICIT)
-                            scrollToOthers()
-                        }, 100)
-                    } else {
-                        // Hide keyboard when switching away from Others
-                        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                        imm?.hideSoftInputFromWindow(holder.itemView.windowToken, 0)
+            // Internal scrolling for multi-line text input
+            holder.itemBinding.etCustomFeedback.setOnTouchListener { v, event ->
+                if (v.hasFocus()) {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    if (event.action and MotionEvent.ACTION_MASK == MotionEvent.ACTION_UP) {
+                        v.parent.requestDisallowInterceptTouchEvent(false)
                     }
                 }
+                false
             }
+
+            // On click or focus, scroll into plain sight
+            holder.itemBinding.etCustomFeedback.setOnClickListener {
+                scrollToOthers()
+            }
+            holder.itemBinding.etCustomFeedback.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    scrollToOthers()
+                }
+            }
+
+            // Done action on keyboard
+            holder.itemBinding.etCustomFeedback.setOnEditorActionListener { v, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    v.clearFocus()
+                    hideKeyboard()
+                    true
+                } else {
+                    false
+                }
+            }
+
+            // Save feedback text
+            val watcher = object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable?) {
+                    customFeedbackText = s?.toString().orEmpty()
+                    updateReportButtonState()
+                }
+            }
+            holder.textWatcher = watcher
+            holder.itemBinding.etCustomFeedback.addTextChangedListener(watcher)
         }
 
         override fun getItemCount(): Int = options.size
@@ -389,6 +464,7 @@ class ReportResultBottomSheetDialog : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "ReportResultBottomSheetDialog"
+        private const val PAYLOAD_SELECTION_CHANGED = "PAYLOAD_SELECTION_CHANGED"
 
         fun show(
             fragmentManager: FragmentManager,

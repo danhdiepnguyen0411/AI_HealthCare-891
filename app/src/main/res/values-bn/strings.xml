@@ -561,6 +561,11 @@
     <string name="btn_rescan">আবার স্ক্যান করুন</string>
     <string name="btn_choose_from_gallery">গ্যালারি থেকে বেছে নিন</string>
     <string name="title_save_result_to">ফলাফল সংরক্ষণ করুন</string>
+    <string name="btn_save_result">ফলাফল সংরক্ষণ করুন</string>
+    <string name="btn_saved_result">সংরক্ষিত হয়েছে</string>
+    <string name="btn_ask_ai">এআই-কে জিজ্ঞাসা করুন</string>
+    <string name="msg_result_saved_to_profile">প্রোফাইলে ফলাফল সংরক্ষণ করা হয়েছে</string>
+    <string name="msg_result_already_saved">ফলাফল ইতিমধ্যে সংরক্ষিত হয়েছে</string>
     <string name="title_key_findings">প্রধান প্রাপ্তি</string>
     <string name="title_care_suggestions">যত্ন পরামর্শ</string>
     <string name="title_when_to_seek_care">কখন চিকিৎসা সেবা নিতে হবে</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">জ্বর বা সংক্রমণের প্রাথমিক সতর্কতার জন্য তাপমাত্রা পর্যবেক্ষণ করুন।</string>
     <string name="reminder_observe_area_title">ত্বকের যত্ন ও পর্যবেক্ষণ</string>
     <string name="reminder_observe_area_notes">লালভাব, আকার বা অনুভূতিতে কোনো পরিবর্তন আছে কিনা তা পরীক্ষা করুন।</string>
+    <string name="title_select_profile">প্রোফাইল নির্বাচন করুন</string>
+    <string name="btn_confirm">নিশ্চিত করুন</string>
 </resources>

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/urbanist"
-            android:text="@string/title_save_result_to"
+            android:text="@string/title_select_profile"
             android:textColor="#172044"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -63,7 +63,7 @@
         tools:itemCount="4"
         tools:listitem="@layout/item_bottom_sheet_profile" />
 
-    <!-- Save Button -->
+    <!-- Confirm Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         android:background="@drawable/bg_button_primary"
         android:fontFamily="@font/urbanist"
         android:stateListAnimator="@null"
-        android:text="@string/btn_save"
+        android:text="@string/btn_confirm"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"

@@ -220,6 +220,7 @@ class ConfirmPhotoActivity : BaseActivity() {
             lifecycleScope.launch {
                 var tempFile: File? = null
                 val category = intent.getStringExtra(CameraActivity.EXTRA_CATEGORY) ?: "SKIN"
+                val profileId = intent.getStringExtra(CameraActivity.EXTRA_PROFILE_ID)
 
                 try {
                     val croppedBitmap: Bitmap? = withContext(Dispatchers.IO) {
@@ -235,7 +236,11 @@ class ConfirmPhotoActivity : BaseActivity() {
                         file
                     }
 
-                    val profile = profileRepo.getPrimaryProfile()
+                    val profile = if (!profileId.isNullOrBlank()) {
+                        profileRepo.getProfileById(profileId) ?: profileRepo.getPrimaryProfile()
+                    } else {
+                        profileRepo.getPrimaryProfile()
+                    }
                     val age = calculateAge(profile.dateOfBirth)
                     val gender = if (profile.gender.equals("FEMALE", ignoreCase = true)) "FEMALE" else "MALE"
 
@@ -255,6 +260,7 @@ class ConfirmPhotoActivity : BaseActivity() {
                     val intent = Intent(this@ConfirmPhotoActivity, AnalysisResultsActivity::class.java).apply {
                         putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, tempFile.absolutePath)
                         putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, category)
+                        profileId?.let { putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, it) }
                         putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, isIdentified)
                         if (isIdentified) {
                             putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, data)
@@ -271,6 +277,7 @@ class ConfirmPhotoActivity : BaseActivity() {
                             putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, tempFile.absolutePath)
                         }
                         putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, category)
+                        profileId?.let { putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, it) }
                         putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, false)
                     }
                     startActivity(intent)

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_leave_without_saving"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Danger Triangle Icon (60x60dp) -->
+    <ImageView
+        android:id="@+id/ivDangerTriangle"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_danger_triangle" />
+
+    <!-- Discard Prompt Title -->
+    <TextView
+        android:id="@+id/tvLeaveTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineHeight="28sp"
+        android:text="@string/dialog_leave_without_saving_title"
+        android:textColor="@color/color_text"
+        android:textSize="22sp"
+        app:fontFamily="@font/urbanist_bold"
+        tools:text="Leave Without Saving?" />
+
+    <!-- Discard Prompt Message -->
+    <TextView
+        android:id="@+id/tvLeaveMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/urbanist_medium"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineHeight="18sp"
+        android:text="@string/dialog_leave_without_saving_message"
+        android:textColor="@color/color_subtext"
+        android:textSize="12sp"
+        app:fontFamily="@font/urbanist_medium"
+        tools:text="Your analysis is not saved. If you leave now,\nyou won't be able to view these results again." />
+
+    <!-- Primary Button: Stay on this page -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStayOnPage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_btn_stay_on_page"
+        android:fontFamily="@font/urbanist_semibold"
+        android:includeFontPadding="false"
+        android:stateListAnimator="@null"
+        android:text="@string/btn_stay_on_page"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:fontFamily="@font/urbanist_semibold"
+        tools:text="Stay on this page" />
+
+    <!-- Secondary Button: Exit without saving -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnExitWithoutSaving"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_btn_exit_without_saving"
+        android:fontFamily="@font/urbanist_semibold"
+        android:includeFontPadding="false"
+        android:stateListAnimator="@null"
+        android:text="@string/btn_exit_without_saving"
+        android:textAllCaps="false"
+        android:textColor="#FF4347"
+        android:textSize="14sp"
+        app:fontFamily="@font/urbanist_semibold"
+        tools:text="Exit without saving" />
+
+</LinearLayout>
+

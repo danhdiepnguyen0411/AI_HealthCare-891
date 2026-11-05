@@ -561,6 +561,11 @@
     <string name="btn_rescan">Переснять</string>
     <string name="btn_choose_from_gallery">Выбрать из галереи</string>
     <string name="title_save_result_to">Сохранить результат в</string>
+    <string name="btn_save_result">Сохранить результат</string>
+    <string name="btn_saved_result">Сохранено</string>
+    <string name="btn_ask_ai">Спросить ИИ</string>
+    <string name="msg_result_saved_to_profile">Результат сохранен в профиль</string>
+    <string name="msg_result_already_saved">Результат уже сохранен</string>
     <string name="title_key_findings">Главные признаки</string>
     <string name="title_care_suggestions">Советы по уходу</string>
     <string name="title_when_to_seek_care">Когда к врачу</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">Следите за температурой для раннего выявления признаков лихорадки или инфекции.</string>
     <string name="reminder_observe_area_title">Уход за кожей и наблюдение</string>
     <string name="reminder_observe_area_notes">Проверьте, нет ли изменений в покраснении, размере или ощущениях.</string>
+    <string name="title_select_profile">Выбрать профиль</string>
+    <string name="btn_confirm">Подтвердить</string>
 </resources>

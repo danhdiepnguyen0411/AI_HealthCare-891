@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="#120F67FE">
-    <!-- Mask to clip ripple strictly to 16dp rounded corners (inset by 3dp) -->
-    <item
-        android:id="@android:id/mask"
-        android:bottom="3dp"
-        android:left="3dp"
-        android:right="3dp"
-        android:top="3dp">
+    <!-- Mask to clip ripple strictly to 18dp rounded corners -->
+    <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
+            <corners android:radius="18dp" />
             <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+    <!-- Transparent outer spacer matching 18dp radius of selected card halo ring -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <solid android:color="@android:color/transparent" />
         </shape>
     </item>
     <!-- Crisp White Card Surface inset by 3dp to align with selected card -->

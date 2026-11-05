@@ -76,9 +76,11 @@ class CameraActivity : BaseActivity() {
                 CapturedImageHolder.imageUri = uri
                 withContext(Dispatchers.Main) {
                     val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                    val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
                     val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
                         putExtra(ConfirmPhotoActivity.EXTRA_IMAGE_URI, uri.toString())
                         putExtra(EXTRA_CATEGORY, scanCategory)
+                        profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
                     }
                     startActivity(intent)
                 }
@@ -368,9 +370,11 @@ class CameraActivity : BaseActivity() {
                             runOnUiThread {
                                 binding.btnCapture.isEnabled = true
                                 val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                                val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
                                 val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
                                     putExtra(ConfirmPhotoActivity.EXTRA_IMAGE_PATH, photoFile.absolutePath)
                                     putExtra(EXTRA_CATEGORY, scanCategory)
+                                    profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
                                 }
                                 startActivity(intent)
                             }
@@ -383,8 +387,10 @@ class CameraActivity : BaseActivity() {
                             runOnUiThread {
                                 binding.btnCapture.isEnabled = true
                                 val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                                val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
                                 val intent = Intent(this@CameraActivity, ConfirmPhotoActivity::class.java).apply {
                                     putExtra(EXTRA_CATEGORY, scanCategory)
+                                    profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
                                 }
                                 startActivity(intent)
                             }
@@ -396,8 +402,10 @@ class CameraActivity : BaseActivity() {
                 CapturedImageHolder.bitmap = fallbackBmp
                 binding.btnCapture.isEnabled = true
                 val scanCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
+                val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
                 val intent = Intent(this, ConfirmPhotoActivity::class.java).apply {
                     putExtra(EXTRA_CATEGORY, scanCategory)
+                    profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
                 }
                 startActivity(intent)
             }
@@ -407,5 +415,6 @@ class CameraActivity : BaseActivity() {
     companion object {
         private const val TAG = "CameraActivity"
         const val EXTRA_CATEGORY = "extra_scan_category"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
     }
 }

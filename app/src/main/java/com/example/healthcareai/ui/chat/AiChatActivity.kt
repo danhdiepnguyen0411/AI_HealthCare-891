@@ -11,10 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -55,6 +57,9 @@ class AiChatActivity : BaseActivity() {
 
     private var currentSession: ConversationSession = ConversationSession()
 
+    private var isImeAnimationRunning = false
+    private var wasKeyboardOpen = false
+
     private var speechRecognizer: SpeechRecognizer? = null
     private var isRecordingVoice = false
     private var recognizedVoiceText = ""
@@ -92,7 +97,17 @@ class AiChatActivity : BaseActivity() {
         setupWindowInsets()
         setupRecyclerView()
         setupClickListeners()
+        setupBackPress()
         initConversationSession(intent)
+    }
+
+    private fun setupBackPress() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                saveCurrentSessionIfActive()
+                finish()
+            }
+        })
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -108,38 +123,90 @@ class AiChatActivity : BaseActivity() {
     }
 
     private fun setupWindowInsets() {
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.rootAiChat,
+            object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = true
+                    }
+                }
+
+                override fun onProgress(
+                    insets: WindowInsetsCompat,
+                    runningAnimations: MutableList<WindowInsetsAnimationCompat>
+                ): WindowInsetsCompat {
+                    val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+                    val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                    val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+                    updateWindowInsets(statusBars.top, navBars.bottom, ime.bottom)
+                    return insets
+                }
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    super.onEnd(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = false
+                        val currentInsets = ViewCompat.getRootWindowInsets(binding.rootAiChat)
+                        val statusBars = currentInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
+                        val navBars = currentInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
+                        val ime = currentInsets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+                        updateWindowInsets(statusBars, navBars, ime)
+                    }
+                }
+            }
+        )
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootAiChat) { _, insets ->
-            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            val density = resources.displayMetrics.density
+            if (!isImeAnimationRunning) {
+                val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+                val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+                updateWindowInsets(statusBars.top, navBars.bottom, ime.bottom)
+            }
+            insets
+        }
+    }
 
-            // 1. Position topBar comfortably below the status bar with full height intact
-            val targetTopMargin = if (statusBars.top > 0) {
-                statusBars.top + (6 * density).toInt()
-            } else {
-                (20 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = targetTopMargin
-            }
+    private fun updateWindowInsets(statusTop: Int, navBottom: Int, imeBottom: Int) {
+        val density = resources.displayMetrics.density
 
-            // 2. Adjust bottom bar so it never hugs the bottom edge ("không để sát đáy")
-            val targetBottomPadding = if (ime.bottom > 0) {
-                ime.bottom + (8 * density).toInt()
-            } else {
-                val navBottom = navBars.bottom
-                if (navBottom > 0) navBottom + (12 * density).toInt() else (28 * density).toInt()
+        // 1. Position topBar comfortably below the status bar with full height intact
+        val targetTopMargin = if (statusTop > 0) {
+            statusTop + (6 * density).toInt()
+        } else {
+            (20 * density).toInt()
+        }
+        (binding.topBar.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+            if (lp.topMargin != targetTopMargin) {
+                lp.topMargin = targetTopMargin
+                binding.topBar.layoutParams = lp
             }
+        }
+
+        // 2. Adjust bottom bar so it never hugs the bottom edge and animates smoothly with keyboard
+        val baseBottomPadding = if (navBottom > 0) {
+            navBottom + (12 * density).toInt()
+        } else {
+            (24 * density).toInt()
+        }
+        val targetBottomPadding = maxOf(baseBottomPadding, imeBottom + (8 * density).toInt())
+
+        if (binding.bottomBarContainer.paddingBottom != targetBottomPadding) {
             binding.bottomBarContainer.updatePadding(
                 bottom = targetBottomPadding,
                 top = (8 * density).toInt(),
                 left = (16 * density).toInt(),
                 right = (16 * density).toInt()
             )
-
-            insets
         }
+
+        val isKeyboardOpen = imeBottom > (50 * density)
+        if (isKeyboardOpen && !wasKeyboardOpen) {
+            binding.rvChatMessages.post { scrollToBottom() }
+        }
+        wasKeyboardOpen = isKeyboardOpen
     }
 
     private fun setupRecyclerView() {
@@ -263,10 +330,13 @@ class AiChatActivity : BaseActivity() {
                 }
                 return
             }
+            // If a conversation ID was provided for a new session linked to a result, initialize with this ID
+            currentSession = ConversationSession(id = conversationId)
+        } else {
+            // When launching without a specific conversation, always start a brand new conversation
+            currentSession = ConversationSession()
         }
 
-        // When launching without a specific conversation, always start a brand new conversation
-        currentSession = ConversationSession()
         chatAdapter.setMessages(emptyList())
         showWelcomeState()
 

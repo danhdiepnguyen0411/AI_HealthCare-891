@@ -18,15 +18,19 @@ import com.example.healthcareai.data.model.UserProfile
 import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.data.repository.ReminderRepository
+import com.example.healthcareai.data.repository.ScanHistoryRepository
 import com.example.healthcareai.databinding.ActivityProfileDetailBinding
 import com.example.healthcareai.databinding.ItemReminderCardBinding
+import com.example.healthcareai.databinding.ItemScanHistoryCardBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.camera.AnalysisResultsActivity
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import com.example.healthcareai.ui.reminder.HealthRecordListActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -51,6 +55,7 @@ class ProfileDetailActivity : BaseActivity() {
         loadProfileData()
         syncHealthRecordCounts()
         syncReminders()
+        syncScanHistory()
     }
 
     override fun onResume() {
@@ -58,6 +63,7 @@ class ProfileDetailActivity : BaseActivity() {
         loadProfileData()
         syncHealthRecordCounts()
         syncReminders()
+        syncScanHistory()
     }
 
     private fun setupWindowInsets() {
@@ -170,7 +176,61 @@ class ProfileDetailActivity : BaseActivity() {
 
         // AI Scan
         binding.btnStartFirstScan.setOnClickListener {
-            startActivity(Intent(this, CameraActivity::class.java))
+            val intent = Intent(this, CameraActivity::class.java).apply {
+                currentProfile?.id?.let { putExtra(CameraActivity.EXTRA_PROFILE_ID, it) }
+            }
+            startActivity(intent)
+        }
+    }
+
+    private fun syncScanHistory() {
+        val targetId = currentProfile?.id
+        val scanRepo = ScanHistoryRepository.getInstance(this)
+        val scans = scanRepo.getScansForProfile(targetId)
+
+        if (scans.isEmpty()) {
+            binding.cardScan.visibility = View.VISIBLE
+            binding.layoutScanList.visibility = View.GONE
+        } else {
+            binding.cardScan.visibility = View.GONE
+            binding.layoutScanList.visibility = View.VISIBLE
+            binding.layoutScanList.removeAllViews()
+
+            for (scan in scans) {
+                val itemBinding = ItemScanHistoryCardBinding.inflate(
+                    layoutInflater,
+                    binding.layoutScanList,
+                    false
+                )
+
+                itemBinding.tvScanTitle.text = scan.title
+                itemBinding.tvScanDate.text = scan.dateFormatted
+
+                val imagePath = scan.imagePath
+                if (!imagePath.isNullOrEmpty() && File(imagePath).exists()) {
+                    itemBinding.ivScanThumbnail.load(File(imagePath)) {
+                        crossfade(true)
+                        error(R.drawable.no_scans_yet)
+                    }
+                } else {
+                    itemBinding.ivScanThumbnail.setImageResource(R.drawable.no_scans_yet)
+                }
+
+                itemBinding.root.setOnClickListener {
+                    val intent = Intent(this, AnalysisResultsActivity::class.java).apply {
+                        putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
+                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
+                        putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
+                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
+                        putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
+                        putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
+                        scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                    }
+                    startActivity(intent)
+                }
+
+                binding.layoutScanList.addView(itemBinding.root)
+            }
         }
     }
 

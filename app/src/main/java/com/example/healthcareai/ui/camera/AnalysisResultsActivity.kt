@@ -1,6 +1,7 @@
 package com.example.healthcareai.ui.camera
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,14 +21,21 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.CareSuggestion
+import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.model.KeyFinding
 import com.example.healthcareai.data.model.LesionAnalysisResult
+import com.example.healthcareai.data.model.ScanHistoryItem
 import com.example.healthcareai.data.model.UserProfile
+import com.example.healthcareai.data.repository.AiChatRepository
+import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.data.repository.LesionAnalysisRepository
 import com.example.healthcareai.data.repository.ProfileRepository
+import com.example.healthcareai.data.repository.ScanHistoryRepository
 import com.example.healthcareai.databinding.ActivityAnalysisResultsBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.chat.AiChatActivity
+import com.example.healthcareai.ui.dialog.LeaveWithoutSavingDialog
+import com.example.healthcareai.ui.main.MainActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.util.DialogImmersiveHelper
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +46,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 class AnalysisResultsActivity : BaseActivity() {
 
@@ -48,6 +58,9 @@ class AnalysisResultsActivity : BaseActivity() {
     private var currentCategory: String = "SKIN"
     private var currentProfile: UserProfile? = null
     private var lastAnalysisResult: LesionAnalysisResult? = null
+    private val savedProfileIds = mutableSetOf<String>()
+    private var currentScanId: String? = null
+    private var currentConversationId: String? = null
 
     private var isPhotoPickerActive = false
     private var lastPickerLaunchTime = 0L
@@ -66,6 +79,12 @@ class AnalysisResultsActivity : BaseActivity() {
         isPhotoPickerActive = false
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("saved_scan_id", currentScanId)
+        outState.putString("saved_conversation_id", currentConversationId)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisResultsBinding.inflate(layoutInflater)
@@ -77,11 +96,36 @@ class AnalysisResultsActivity : BaseActivity() {
         val imagePath = intent.getStringExtra(EXTRA_IMAGE_PATH)
         currentCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: "SKIN"
         val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
+        currentScanId = savedInstanceState?.getString("saved_scan_id") ?: intent.getStringExtra(EXTRA_SCAN_ID)
+        currentConversationId = savedInstanceState?.getString("saved_conversation_id") ?: intent.getStringExtra(EXTRA_CONVERSATION_ID)
+
+        val scanRepo = ScanHistoryRepository.getInstance(this)
+        if (!currentScanId.isNullOrEmpty() && currentConversationId.isNullOrEmpty()) {
+            currentConversationId = scanRepo.getScanById(currentScanId!!)?.conversationId
+        }
+        if (currentConversationId.isNullOrEmpty() && !imagePath.isNullOrEmpty()) {
+            val matchingScan = scanRepo.findScanByImagePath(imagePath)
+            if (matchingScan != null) {
+                if (currentScanId.isNullOrEmpty()) currentScanId = matchingScan.id
+                currentConversationId = matchingScan.conversationId
+            }
+        }
+        if (currentConversationId.isNullOrEmpty() && !imagePath.isNullOrEmpty()) {
+            val cachedConvId = getSharedPreferences(PREFS_RESULT_CONV, Context.MODE_PRIVATE)
+                .getString("conv_for_$imagePath", null)
+            if (!cachedConvId.isNullOrEmpty()) {
+                currentConversationId = cachedConvId
+            }
+        }
 
         currentProfile = if (!profileId.isNullOrEmpty()) {
             profileRepo.getAllProfiles().find { it.id == profileId } ?: profileRepo.getPrimaryProfile()
         } else {
             profileRepo.getPrimaryProfile()
+        }
+
+        if (!currentScanId.isNullOrEmpty()) {
+            currentProfile?.id?.let { savedProfileIds.add(it) }
         }
 
         setupWindowInsets()
@@ -156,8 +200,14 @@ class AnalysisResultsActivity : BaseActivity() {
     private fun setupListeners() {
         // Back
         binding.btnBack.setOnClickListener {
-            finish()
+            handleBackPressed()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackPressed()
+            }
+        })
 
         // Report Result Button
         binding.btnInfo.setOnClickListener {
@@ -195,6 +245,11 @@ class AnalysisResultsActivity : BaseActivity() {
             }
         }
 
+        // Save result
+        binding.btnSaveResult.setOnClickListener {
+            handleSaveResult()
+        }
+
         // Set a reminder
         binding.btnSetReminder.setOnClickListener {
             ChooseRemindersBottomSheetDialog.show(
@@ -207,10 +262,17 @@ class AnalysisResultsActivity : BaseActivity() {
 
         // Ask AI about this result
         binding.btnAskAi.setOnClickListener {
-            val prompt = buildAskAiPrompt()
+            val convId = getOrCreateConversationId()
+            val existing = AiChatRepository.getInstance(this).getConversationById(convId)
+            val hasExistingMessages = existing != null && existing.messages.any { it.isUser }
+
             val intent = Intent(this, AiChatActivity::class.java).apply {
-                putExtra(AiChatActivity.EXTRA_INITIAL_PROMPT, prompt)
-                putExtra(AiChatActivity.EXTRA_AUTO_SEND, true)
+                putExtra(AiChatActivity.EXTRA_CONVERSATION_ID, convId)
+                if (!hasExistingMessages) {
+                    val prompt = buildAskAiPrompt()
+                    putExtra(AiChatActivity.EXTRA_INITIAL_PROMPT, prompt)
+                    putExtra(AiChatActivity.EXTRA_AUTO_SEND, true)
+                }
             }
             startActivity(intent)
         }
@@ -286,9 +348,14 @@ class AnalysisResultsActivity : BaseActivity() {
         } else {
             binding.ivProfileAvatar.setImageResource(R.drawable.profile_person)
         }
+        updateSaveResultButtonState()
     }
 
     private fun executeLesionAnalysis(file: File) {
+        savedProfileIds.clear()
+        currentScanId = null
+        currentConversationId = null
+        updateSaveResultButtonState()
         val processingDialog = AiProcessingDialog.show(supportFragmentManager)
 
         val profile = currentProfile ?: profileRepo.getPrimaryProfile()
@@ -353,6 +420,7 @@ class AnalysisResultsActivity : BaseActivity() {
 
         // Setup Detection Box Overlay (only draws if server provided a valid box)
         binding.detectionOverlayView.setDetectionBox(result.detectionBox, imgWidth, imgHeight)
+        updateSaveResultButtonState()
 
         // Summary (only show if server provided summary)
         val summary = result.summary.orEmpty().trim()
@@ -502,6 +570,105 @@ class AnalysisResultsActivity : BaseActivity() {
         }
     }
 
+    private fun handleBackPressed() {
+        val hasUnsavedResult = binding.bottomBarSuccess.visibility == View.VISIBLE &&
+                savedProfileIds.isEmpty() &&
+                currentScanId.isNullOrEmpty()
+
+        if (hasUnsavedResult) {
+            LeaveWithoutSavingDialog.show(
+                context = this,
+                onStay = {
+                    // Stay on this page
+                },
+                onExitWithoutSaving = {
+                    exitToMainScreen()
+                }
+            )
+        } else {
+            exitToMainScreen()
+        }
+    }
+
+    private fun exitToMainScreen() {
+        if (intent.hasExtra(EXTRA_SCAN_ID) || isTaskRoot) {
+            finish()
+        } else {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun handleSaveResult() {
+        val targetProfile = currentProfile ?: profileRepo.getPrimaryProfile()
+        if (savedProfileIds.contains(targetProfile.id)) {
+            Toast.makeText(this, R.string.msg_result_already_saved, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val findingTitle = lastAnalysisResult?.keyFindings?.firstOrNull { !it.title.isNullOrBlank() }?.title?.trim()
+        val categoryLabel = when (currentCategory.uppercase(Locale.ROOT)) {
+            "SKIN" -> "Skin"
+            "EYE" -> "Eye"
+            "NAIL" -> "Nail"
+            "HAIR" -> "Hair"
+            "ORAL" -> "Oral"
+            else -> currentCategory.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        }
+        val conditionName = findingTitle ?: "$categoryLabel Assessment"
+        val diagnosisDate = SimpleDateFormat("MMM d, yyyy", Locale.US).format(Date())
+        val summary = lastAnalysisResult?.summary?.trim().orEmpty()
+        val details = if (summary.isNotBlank()) summary else "Ongoing · $diagnosisDate"
+
+        // 1. Save to Health Records (Conditions)
+        val record = HealthRecordItem(
+            id = UUID.randomUUID().toString(),
+            profileId = targetProfile.id,
+            category = "Conditions",
+            name = conditionName,
+            details = details,
+            status = "Ongoing",
+            diagnosisDate = diagnosisDate,
+            clinician = "AI Health Scan",
+            notes = summary
+        )
+        HealthRecordRepository.getInstance(this).saveRecord(record)
+
+        val scanId = currentScanId ?: UUID.randomUUID().toString()
+        currentScanId = scanId
+
+        // 2. Save to Scan History for this profile
+        val scanItem = ScanHistoryItem(
+            id = scanId,
+            profileId = targetProfile.id,
+            category = currentCategory,
+            title = conditionName,
+            summary = summary,
+            imagePath = currentImageFile?.absolutePath,
+            dateFormatted = diagnosisDate,
+            timestamp = System.currentTimeMillis(),
+            analysisResult = lastAnalysisResult,
+            conversationId = currentConversationId
+        )
+        ScanHistoryRepository.getInstance(this).saveScan(scanItem)
+
+        savedProfileIds.add(targetProfile.id)
+        updateSaveResultButtonState()
+        Toast.makeText(this, R.string.msg_result_saved_to_profile, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateSaveResultButtonState() {
+        val targetProfile = currentProfile ?: profileRepo.getPrimaryProfile()
+        if (savedProfileIds.contains(targetProfile.id)) {
+            binding.tvSaveResultText.setText(R.string.btn_saved_result)
+        } else {
+            binding.tvSaveResultText.setText(R.string.btn_save_result)
+        }
+    }
+
     private fun calculateAge(dobString: String): Int {
         if (dobString.isBlank()) return 20
         val formats = listOf(
@@ -528,12 +695,64 @@ class AnalysisResultsActivity : BaseActivity() {
         return 20
     }
 
+    private fun getOrCreateConversationId(): String {
+        currentConversationId?.let { return it }
+
+        val scanRepo = ScanHistoryRepository.getInstance(this)
+        val scanId = currentScanId
+        if (!scanId.isNullOrEmpty()) {
+            val scan = scanRepo.getScanById(scanId)
+            if (!scan?.conversationId.isNullOrEmpty()) {
+                currentConversationId = scan!!.conversationId
+                return currentConversationId!!
+            }
+        }
+
+        val imgPath = currentImageFile?.absolutePath
+        if (!imgPath.isNullOrEmpty()) {
+            val matchingScan = scanRepo.findScanByImagePath(imgPath)
+            if (matchingScan != null) {
+                if (currentScanId.isNullOrEmpty()) currentScanId = matchingScan.id
+                if (!matchingScan.conversationId.isNullOrEmpty()) {
+                    currentConversationId = matchingScan.conversationId
+                    return currentConversationId!!
+                }
+            }
+
+            val cachedConvId = getSharedPreferences(PREFS_RESULT_CONV, Context.MODE_PRIVATE)
+                .getString("conv_for_$imgPath", null)
+            if (!cachedConvId.isNullOrEmpty()) {
+                currentConversationId = cachedConvId
+                return currentConversationId!!
+            }
+        }
+
+        val newConvId = UUID.randomUUID().toString()
+        currentConversationId = newConvId
+
+        if (!imgPath.isNullOrEmpty()) {
+            getSharedPreferences(PREFS_RESULT_CONV, Context.MODE_PRIVATE)
+                .edit()
+                .putString("conv_for_$imgPath", newConvId)
+                .apply()
+        }
+
+        if (!scanId.isNullOrEmpty()) {
+            scanRepo.updateConversationId(scanId, newConvId)
+        }
+
+        return newConvId
+    }
+
     companion object {
         private const val TAG = "AnalysisResultsAct"
+        private const val PREFS_RESULT_CONV = "prefs_result_conversation_map"
         const val EXTRA_IMAGE_PATH = "extra_image_path"
         const val EXTRA_CATEGORY = "extra_scan_category"
         const val EXTRA_PROFILE_ID = "extra_profile_id"
         const val EXTRA_ANALYSIS_RESULT = "extra_analysis_result"
         const val EXTRA_IS_SUCCESS = "extra_is_success"
+        const val EXTRA_SCAN_ID = "extra_scan_id"
+        const val EXTRA_CONVERSATION_ID = "extra_conversation_id"
     }
 }

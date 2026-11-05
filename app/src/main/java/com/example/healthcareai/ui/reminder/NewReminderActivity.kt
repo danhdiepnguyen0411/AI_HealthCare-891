@@ -64,6 +64,8 @@ class NewReminderActivity : BaseActivity() {
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
+    private var isImeReportedByInsets = false
+    private var isImeAnimationRunning = false
     private var wasKeyboardOpen = false
     private var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
@@ -417,6 +419,13 @@ class NewReminderActivity : BaseActivity() {
         ViewCompat.setWindowInsetsAnimationCallback(
             binding.rootNewReminder,
             object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = true
+                    }
+                }
+
                 override fun onProgress(
                     insets: WindowInsetsCompat,
                     runningAnimations: MutableList<WindowInsetsAnimationCompat>
@@ -424,9 +433,25 @@ class NewReminderActivity : BaseActivity() {
                     val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                     val navInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
                     val statusInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+                    isImeReportedByInsets = true
                     lastImeInsetsBottom = imeInsets
-                    updateInsets(statusInsets, navInsets, getEffectiveImeBottom())
+                    lastGlobalImeBottom = 0
+                    updateInsets(statusInsets, navInsets, imeInsets)
                     return insets
+                }
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    super.onEnd(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = false
+                        val currentInsets = ViewCompat.getRootWindowInsets(binding.rootNewReminder)
+                        val imeBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+                        val navBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
+                        val statusTop = currentInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
+                        lastImeInsetsBottom = imeBottom
+                        lastGlobalImeBottom = 0
+                        updateInsets(statusTop, navBottom, imeBottom)
+                    }
                 }
             }
         )
@@ -436,8 +461,14 @@ class NewReminderActivity : BaseActivity() {
             val navBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            if (imeBottom > 0) {
+                isImeReportedByInsets = true
+            }
+            if (!isImeAnimationRunning) {
+                lastImeInsetsBottom = imeBottom
+                if (imeBottom == 0) lastGlobalImeBottom = 0
+                updateInsets(statusTop, navBottom, imeBottom)
+            }
             insets
         }
 
@@ -448,29 +479,26 @@ class NewReminderActivity : BaseActivity() {
             val imeBottom = currentInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = currentInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
 
-        // 3. Fallback ViewTreeObserver listener for OEM devices where IME insets are not dispatched
+        // 3. Fallback ViewTreeObserver listener ONLY if insets are not supported
         val decorView = window.decorView
         val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            if (isImeReportedByInsets) return@OnGlobalLayoutListener
             val r = Rect()
             decorView.getWindowVisibleDisplayFrame(r)
             val screenHeight = decorView.rootView.height
             val heightDiff = screenHeight - r.bottom
             val isKeyboardVisible = heightDiff > (100 * density)
-            lastGlobalImeBottom = if (isKeyboardVisible) heightDiff else 0
+            val imeBottom = if (isKeyboardVisible) heightDiff else 0
             val rootInsets = ViewCompat.getRootWindowInsets(binding.rootNewReminder)
             val navBottom = rootInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
             val statusTop = rootInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
         globalLayoutListener = layoutListener
         decorView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-    }
-
-    private fun getEffectiveImeBottom(): Int {
-        return if (lastImeInsetsBottom > 0) lastImeInsetsBottom else lastGlobalImeBottom
     }
 
     private fun updateInsets(statusTop: Int, navBottom: Int, imeBottom: Int) {
@@ -514,14 +542,11 @@ class NewReminderActivity : BaseActivity() {
             }
         }
 
-        // When keyboard opens or state changes and note field is focused, scroll to note field nicely
-        if (isKeyboardOpen) {
+        // Only scroll when keyboard is OPENING, not when closing
+        if (isKeyboardOpen && keyboardStateChanged) {
             if (binding.etReminderNotes.hasFocus()) {
                 scrollToNotes()
-                if (keyboardStateChanged) {
-                    binding.scrollForm.postDelayed({ scrollToNotes() }, 100)
-                    binding.scrollForm.postDelayed({ scrollToNotes() }, 250)
-                }
+                binding.scrollForm.postDelayed({ scrollToNotes() }, 100)
             } else {
                 currentFocus?.let { focused ->
                     if (focused is EditText) {

@@ -35,6 +35,8 @@ class UninstallReasonActivity : BaseActivity() {
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
+    private var isImeReportedByInsets = false
+    private var isImeAnimationRunning = false
     private var wasKeyboardOpen = false
     private var globalLayoutListener: android.view.ViewTreeObserver.OnGlobalLayoutListener? = null
 
@@ -198,6 +200,13 @@ class UninstallReasonActivity : BaseActivity() {
         ViewCompat.setWindowInsetsAnimationCallback(
             binding.root,
             object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = true
+                    }
+                }
+
                 override fun onProgress(
                     insets: WindowInsetsCompat,
                     runningAnimations: MutableList<WindowInsetsAnimationCompat>
@@ -205,9 +214,25 @@ class UninstallReasonActivity : BaseActivity() {
                     val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                     val navInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
                     val statusInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+                    isImeReportedByInsets = true
                     lastImeInsetsBottom = imeInsets
-                    updateInsets(statusInsets, navInsets, getEffectiveImeBottom())
+                    lastGlobalImeBottom = 0
+                    updateInsets(statusInsets, navInsets, imeInsets)
                     return insets
+                }
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    super.onEnd(animation)
+                    if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
+                        isImeAnimationRunning = false
+                        val currentInsets = ViewCompat.getRootWindowInsets(binding.root)
+                        val imeBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+                        val navBottom = currentInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
+                        val statusTop = currentInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
+                        lastImeInsetsBottom = imeBottom
+                        lastGlobalImeBottom = 0
+                        updateInsets(statusTop, navBottom, imeBottom)
+                    }
                 }
             }
         )
@@ -217,8 +242,14 @@ class UninstallReasonActivity : BaseActivity() {
             val navBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            if (imeBottom > 0) {
+                isImeReportedByInsets = true
+            }
+            if (!isImeAnimationRunning) {
+                lastImeInsetsBottom = imeBottom
+                if (imeBottom == 0) lastGlobalImeBottom = 0
+                updateInsets(statusTop, navBottom, imeBottom)
+            }
             insets
         }
 
@@ -228,29 +259,26 @@ class UninstallReasonActivity : BaseActivity() {
             val imeBottom = currentInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val statusTop = currentInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             lastImeInsetsBottom = imeBottom
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
 
-        // 3. GlobalLayoutListener as fallback
+        // 3. Fallback ViewTreeObserver listener ONLY if insets are not supported
         val decorView = window.decorView
         val layoutListener = android.view.ViewTreeObserver.OnGlobalLayoutListener {
+            if (isImeReportedByInsets) return@OnGlobalLayoutListener
             val r = Rect()
             decorView.getWindowVisibleDisplayFrame(r)
             val screenHeight = decorView.rootView.height
             val heightDiff = screenHeight - r.bottom
             val isKeyboardVisible = heightDiff > (100 * density)
-            lastGlobalImeBottom = if (isKeyboardVisible) heightDiff else 0
+            val imeBottom = if (isKeyboardVisible) heightDiff else 0
             val rootInsets = ViewCompat.getRootWindowInsets(binding.root)
             val navBottom = rootInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())?.bottom ?: 0
             val statusTop = rootInsets?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
-            updateInsets(statusTop, navBottom, getEffectiveImeBottom())
+            updateInsets(statusTop, navBottom, imeBottom)
         }
         globalLayoutListener = layoutListener
         decorView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-    }
-
-    private fun getEffectiveImeBottom(): Int {
-        return if (lastImeInsetsBottom > 0) lastImeInsetsBottom else lastGlobalImeBottom
     }
 
     private fun updateInsets(statusTop: Int, navBottom: Int, imeBottom: Int) {
@@ -299,14 +327,10 @@ class UninstallReasonActivity : BaseActivity() {
             )
         }
 
-        // Scroll to option 4 when keyboard opens
-        if (isKeyboardOpen && selectedOptionIndex == 4) {
+        // Scroll to option 4 when keyboard opens (only once on transition)
+        if (isKeyboardOpen && keyboardStateChanged && selectedOptionIndex == 4) {
             binding.nestedScrollView.post { scrollToOthersCard() }
-            if (keyboardStateChanged) {
-                binding.nestedScrollView.postDelayed({ scrollToOthersCard() }, 100)
-                binding.nestedScrollView.postDelayed({ scrollToOthersCard() }, 250)
-                binding.nestedScrollView.postDelayed({ scrollToOthersCard() }, 400)
-            }
+            binding.nestedScrollView.postDelayed({ scrollToOthersCard() }, 150)
         }
     }
 

@@ -561,6 +561,11 @@
     <string name="btn_rescan">Erneut scannen</string>
     <string name="btn_choose_from_gallery">Aus Galerie wählen</string>
     <string name="title_save_result_to">Ergebnis speichern unter</string>
+    <string name="btn_save_result">Ergebnis speichern</string>
+    <string name="btn_saved_result">Gespeichert</string>
+    <string name="btn_ask_ai">KI fragen</string>
+    <string name="msg_result_saved_to_profile">Ergebnis im Profil gespeichert</string>
+    <string name="msg_result_already_saved">Ergebnis bereits gespeichert</string>
     <string name="title_key_findings">Wichtigste Befunde</string>
     <string name="title_care_suggestions">Pflegetipps</string>
     <string name="title_when_to_seek_care">Wann zum Arzt?</string>
@@ -655,4 +660,6 @@
     <string name="reminder_check_temperature_notes">Überwachen Sie die Temperatur zur Früherkennung von Fieber oder Infektionen.</string>
     <string name="reminder_observe_area_title">Hautpflege &amp; Beobachtung</string>
     <string name="reminder_observe_area_notes">Achten Sie auf Veränderungen von Rötung, Größe oder Missempfindungen.</string>
+    <string name="title_select_profile">Profil auswählen</string>
+    <string name="btn_confirm">Bestätigen</string>
 </resources>
