@@ -10,6 +10,8 @@ import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.HeartRateRecord
 import com.example.healthcareai.databinding.ItemHeartRateHistoryBinding
 import com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout
+import com.example.healthcareai.util.LocaleHelper
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -18,7 +20,6 @@ class HeartRateHistoryAdapter(
     private val onItemDelete: (HeartRateRecord) -> Unit
 ) : ListAdapter<HeartRateRecord, HeartRateHistoryAdapter.HistoryViewHolder>(DiffCallback) {
 
-    private val dateFormat = SimpleDateFormat("MMMM d, yyyy · hh:mm a", Locale.ENGLISH)
     private var currentlyOpenLayout: SwipeRevealLayout? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -44,13 +45,17 @@ class HeartRateHistoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(record: HeartRateRecord) {
+            val context = itemView.context
+            val locale = LocaleHelper.getSavedLocale(context)
+
             // Close by default on rebind
             binding.swipeRevealLayout.close(false)
 
             binding.tvHistoryBpm.text = record.bpm.toString()
-            binding.tvHistoryDateTime.text = dateFormat.format(Date(record.timestamp))
+            val dateStr = DateFormat.getDateInstance(DateFormat.LONG, locale).format(Date(record.timestamp))
+            val timeStr = LocaleHelper.formatTime(context, record.timestamp, "hh:mm a")
+            binding.tvHistoryDateTime.text = "$dateStr · $timeStr"
 
-            val context = itemView.context
             when {
                 record.bpm < 60 -> {
                     binding.tvHistoryStatusBadge.text = context.getString(R.string.heart_rate_slow_label)

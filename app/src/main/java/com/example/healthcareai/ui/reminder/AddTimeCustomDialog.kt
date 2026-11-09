@@ -121,7 +121,7 @@ class AddTimeCustomDialog(
             val amPmStr = if (isPm) "PM" else "AM"
             val formattedTime = String.format(Locale.US, "%d:%02d %s", hour, minute, amPmStr)
 
-            if (alreadyAddedTimes.contains(formattedTime)) {
+            if (isDuplicateTime(formattedTime)) {
                 Toast.makeText(context, R.string.msg_time_already_added, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -131,7 +131,27 @@ class AddTimeCustomDialog(
         }
     }
 
+    private fun parseMinutes(timeStr: String): Int? {
+        val minutes = com.example.healthcareai.util.ReminderScheduler.parseTimeToMinutes(timeStr)
+        return if (minutes == Int.MAX_VALUE) null else minutes
+    }
+
+    private fun isDuplicateTime(targetTime: String): Boolean {
+        val targetMin = parseMinutes(targetTime) ?: return alreadyAddedTimes.contains(targetTime)
+        return alreadyAddedTimes.any { existing ->
+            val existingMin = parseMinutes(existing)
+            existingMin == targetMin || existing.equals(targetTime, ignoreCase = true)
+        }
+    }
+
+    private fun sortAlreadyAddedTimes() {
+        val sorted = com.example.healthcareai.util.ReminderScheduler.sortTimeList(alreadyAddedTimes)
+        alreadyAddedTimes.clear()
+        alreadyAddedTimes.addAll(sorted)
+    }
+
     private fun renderAlreadyAddedChips() {
+        sortAlreadyAddedTimes()
         if (alreadyAddedTimes.isEmpty()) {
             binding.layoutAlreadyAddSection.visibility = View.GONE
         } else {
@@ -140,7 +160,7 @@ class AddTimeCustomDialog(
 
             for (timeStr in alreadyAddedTimes) {
                 val chipBinding = ItemReminderTimeChipBinding.inflate(layoutInflater, binding.flowAlreadyAddedTimes, false)
-                chipBinding.tvChipTime.text = timeStr
+                chipBinding.tvChipTime.text = com.example.healthcareai.util.LocaleHelper.formatTimeAmPm(context, timeStr)
                 chipBinding.btnRemoveTime.setOnClickListener {
                     alreadyAddedTimes.remove(timeStr)
                     onTimeRemoved?.invoke(timeStr)
@@ -158,7 +178,7 @@ class AddTimeCustomDialog(
             onTimeAdded: (String) -> Unit,
             onTimeRemoved: ((String) -> Unit)? = null
         ): AddTimeCustomDialog {
-            val mutableList = alreadyAddedTimes.toMutableList()
+            val mutableList = com.example.healthcareai.util.ReminderScheduler.sortTimeList(alreadyAddedTimes).toMutableList()
             val dialog = AddTimeCustomDialog(context, mutableList, onTimeAdded, onTimeRemoved)
             DialogImmersiveHelper.showImmersive(dialog)
             return dialog

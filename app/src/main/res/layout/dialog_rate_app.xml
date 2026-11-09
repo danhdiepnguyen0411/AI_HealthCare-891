@@ -24,10 +24,12 @@
     <!-- Title -->
     <TextView
         android:id="@+id/tvRateTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        android:textAlignment="center"
         android:includeFontPadding="false"
         android:text="@string/rate_dialog_title"
         android:textColor="@color/color_text"
@@ -120,33 +122,43 @@
     </LinearLayout>
 
     <!-- Submit Button (Solid Blue) -->
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/btnSubmitRating"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_btn_submit_rating"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        android:includeFontPadding="false"
         android:text="@string/rate_dialog_submit"
-        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutStars" />
 
     <!-- Maybe Later Button (Soft Light Blue) -->
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/btnMaybeLater"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_btn_maybe_later"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        android:includeFontPadding="false"
         android:text="@string/rate_dialog_maybe_later"
-        android:textAllCaps="false"
         android:textColor="@color/primary_color"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSubmitRating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

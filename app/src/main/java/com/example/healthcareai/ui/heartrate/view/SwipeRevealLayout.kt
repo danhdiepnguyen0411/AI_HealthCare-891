@@ -220,7 +220,10 @@ class SwipeRevealLayout @JvmOverloads constructor(
     }
 
     override fun performClick(): Boolean {
-        super.performClick()
+        val handled = super.performClick()
+        if (!handled) {
+            mainView?.performClick()
+        }
         return true
     }
 

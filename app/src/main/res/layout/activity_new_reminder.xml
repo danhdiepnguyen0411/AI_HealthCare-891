@@ -41,12 +41,15 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:text="@string/title_new_reminder"
             android:textColor="@color/color_text"
             android:textSize="22sp"
@@ -221,6 +224,7 @@
                             android:importantForAutofill="no"
                             android:includeFontPadding="false"
                             android:inputType="text"
+                            android:maxLength="20"
                             android:maxLines="1"
                             android:paddingHorizontal="16dp"
                             android:text=""
@@ -342,110 +346,42 @@
                 android:textSize="13sp" />
 
             <LinearLayout
+                android:id="@+id/cardReminderTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_profile_input_card"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp">
 
-                <!-- Empty State (Matching Image 2) -->
                 <LinearLayout
-                    android:id="@+id/layoutTimeEmpty"
+                    android:id="@+id/layoutWheelTimePicker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingVertical="10dp"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_oclock" />
+                    <!-- Hours Wheel (00 - 23) -->
+                    <com.example.healthcareai.ui.widget.WheelPickerView
+                        android:id="@+id/wheelHours"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/urbanist_medium"
-                        android:includeFontPadding="false"
-                        android:text="@string/time_no_times_added"
-                        android:textColor="@color/color_subtext"
-                        android:textSize="14sp" />
+                    <!-- Center vertical separator line -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="140dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="#E5E7EB" />
 
-                    <LinearLayout
-                        android:id="@+id/btnAddTimeEmpty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_add_time_btn"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="16dp">
-
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_plus_small_blue" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/urbanist_medium"
-                            android:includeFontPadding="false"
-                            android:text="@string/reminder_btn_add_time"
-                            android:textColor="@color/primary_color"
-                            android:textSize="13.5sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Filled State (Chips + Add time) -->
-                <LinearLayout
-                    android:id="@+id/layoutTimeFilled"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <com.example.healthcareai.ui.widget.FlowLayout
-                        android:id="@+id/flowTimeChips"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:id="@+id/btnAddTimeFilled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_add_time_btn"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="14dp">
-
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_plus_small_blue" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/urbanist_medium"
-                            android:includeFontPadding="false"
-                            android:text="@string/reminder_btn_add_time"
-                            android:textColor="@color/primary_color"
-                            android:textSize="13sp" />
-                    </LinearLayout>
+                    <!-- Minutes Wheel (00 - 59) -->
+                    <com.example.healthcareai.ui.widget.WheelPickerView
+                        android:id="@+id/wheelMinutes"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -479,6 +415,7 @@
                     android:importantForAutofill="no"
                     android:includeFontPadding="false"
                     android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="100"
                     android:minHeight="54dp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="14dp"

@@ -66,7 +66,7 @@ class ReminderAdapter(
             } else {
                 binding.tvReminderDesc.visibility = View.GONE
             }
-            val time = item.getDisplayTime()
+            val time = item.getDisplayTime(context)
             if (time.isNotBlank()) {
                 binding.tvReminderTime.visibility = View.VISIBLE
                 binding.tvReminderTime.text = time

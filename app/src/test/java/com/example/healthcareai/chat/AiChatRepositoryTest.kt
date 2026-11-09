@@ -54,4 +54,52 @@ class AiChatRepositoryTest {
         val symptom = if ("i have a headache and fever".contains("headache")) "Check my symptoms" else "Other"
         assertEquals("Check my symptoms", symptom)
     }
+
+    @Test
+    fun testUnansweredUserMessageDetection() {
+        val messages = mutableListOf(
+            com.example.healthcareai.data.model.ChatMessage(
+                content = "Today, 10:00 AM",
+                isUser = false,
+                isDateHeader = true
+            ),
+            com.example.healthcareai.data.model.ChatMessage(
+                content = "What should I do for a fever?",
+                isUser = true
+            )
+        )
+        val lastNonDate = messages.lastOrNull { !it.isDateHeader }
+        val needsAnswer = lastNonDate != null && lastNonDate.isUser
+        assertEquals(true, needsAnswer)
+
+        // Once bot replies
+        messages.add(
+            com.example.healthcareai.data.model.ChatMessage(
+                content = "Rest and drink fluids.",
+                isUser = false
+            )
+        )
+        val updatedLastNonDate = messages.lastOrNull { !it.isDateHeader }
+        val updatedNeedsAnswer = updatedLastNonDate != null && updatedLastNonDate.isUser
+        assertEquals(false, updatedNeedsAnswer)
+    }
+
+    @Test
+    fun testConversationSessionCreationTimeSorting() {
+        val session1 = com.example.healthcareai.data.model.ConversationSession(
+            id = "conv1",
+            createdAt = 1000L,
+            updatedAt = 5000L
+        )
+        val session2 = com.example.healthcareai.data.model.ConversationSession(
+            id = "conv2",
+            createdAt = 2000L,
+            updatedAt = 3000L
+        )
+        val list = mutableListOf(session1, session2)
+        list.sortByDescending { if (it.createdAt > 0L) it.createdAt else it.updatedAt }
+
+        assertEquals("conv2", list[0].id)
+        assertEquals("conv1", list[1].id)
+    }
 }

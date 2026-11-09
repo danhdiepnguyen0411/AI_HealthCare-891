@@ -245,4 +245,221 @@ object LocaleHelper {
             return context
         }
     }
+
+    /**
+     * Returns the pair of (AM, PM) localized abbreviations for the given language code.
+     */
+    fun getAmPmStrings(langCode: String): Pair<String, String> {
+        val lower = langCode.lowercase()
+        return when {
+            lower.startsWith("vi") -> Pair("SA", "CH")
+            lower.startsWith("hi") -> Pair("पूर्वाह्न", "अपराह्न")
+            lower.startsWith("bn") -> Pair("পূর্বাহ্ন", "অপরাহ্ন")
+            lower.startsWith("ar") -> Pair("ص", "م")
+            lower.startsWith("zh") -> Pair("上午", "下午")
+            lower.startsWith("ja") -> Pair("午前", "午後")
+            lower.startsWith("ko") -> Pair("오전", "오후")
+            lower.startsWith("ru") -> Pair("ДП", "ПП")
+            lower.startsWith("tr") -> Pair("ÖÖ", "ÖS")
+            else -> Pair("AM", "PM")
+        }
+    }
+
+    /**
+     * Formats AM / PM text according to the active language.
+     * In Vietnamese ("vi"): AM -> SA, PM -> CH.
+     * In Hindi ("hi"): AM -> पूर्वाह्न, PM -> अपराह्न.
+     * In Bengali ("bn"): AM -> পূর্বাহ্ন, PM -> অপরাহ্ন.
+     * In Arabic ("ar"): AM -> ص, PM -> م.
+     * In Chinese ("zh"): AM -> 上午, PM -> 下午.
+     * In Japanese ("ja"): AM -> 午前, PM -> 午後.
+     * In Korean ("ko"): AM -> 오전, PM -> 오후.
+     * In Russian ("ru"): AM -> ДП, PM -> ПП.
+     * In Turkish ("tr"): AM -> ÖÖ, PM -> ÖS.
+     */
+    fun formatTimeAmPm(rawTime: String, langCode: String): String {
+        if (rawTime.isBlank()) return rawTime
+        val (amStr, pmStr) = getAmPmStrings(langCode)
+        if (amStr == "AM" && pmStr == "PM") {
+            return rawTime
+        }
+        return rawTime
+            .replace("(?i)\\bAM\\b".toRegex(), amStr)
+            .replace("(?i)\\bPM\\b".toRegex(), pmStr)
+            .replace("(?i)\\bsáng\\b".toRegex(), amStr)
+            .replace("(?i)\\bchiều\\b".toRegex(), pmStr)
+            .replace("(?i)\\btối\\b".toRegex(), pmStr)
+    }
+
+    fun formatTimeAmPm(context: Context, rawTime: String): String {
+        return formatTimeAmPm(rawTime, getSavedLanguageCode(context))
+    }
+
+    /**
+     * Formats a timestamp into a time string using the saved locale,
+     * applying AM/PM -> SA/CH abbreviation if in Vietnamese.
+     */
+    fun formatTime(context: Context, timestamp: Long, pattern: String = "hh:mm a"): String {
+        val locale = getSavedLocale(context)
+        val sdf = java.text.SimpleDateFormat(pattern, locale)
+        val formatted = sdf.format(java.util.Date(timestamp))
+        return formatTimeAmPm(context, formatted)
+    }
+
+    /**
+     * Parses a canonical or localized date string into a [java.util.Date].
+     */
+    fun parseStoredDate(rawDateStr: String?): java.util.Date? {
+        val trimmed = rawDateStr?.trim() ?: return null
+        if (trimmed.isEmpty()) return null
+        val formats = listOf(
+            java.text.SimpleDateFormat("MMM dd, yyyy", Locale.US),
+            java.text.SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.US),
+            java.text.SimpleDateFormat("MMM d, yyyy", Locale.US),
+            java.text.SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()),
+            java.text.SimpleDateFormat("MMM d, yyyy", Locale.getDefault()),
+            java.text.SimpleDateFormat("dd/MM/yyyy", Locale.US),
+            java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US),
+            java.text.SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        )
+        for (sdf in formats) {
+            try {
+                sdf.isLenient = false
+                val parsed = sdf.parse(trimmed)
+                if (parsed != null) return parsed
+            } catch (_: Exception) {
+            }
+        }
+        return null
+    }
+
+    /**
+     * Formats a [java.util.Date] using the active app locale.
+     */
+    fun formatDate(context: Context, date: java.util.Date, skeleton: String = "yMMMd"): String {
+        val locale = getSavedLocale(context)
+        val pattern = android.text.format.DateFormat.getBestDateTimePattern(locale, skeleton)
+        return java.text.SimpleDateFormat(pattern, locale).format(date)
+    }
+
+    /**
+     * Formats a timestamp (millis) using the active app locale.
+     */
+    fun formatDate(context: Context, timestamp: Long, skeleton: String = "yMMMd"): String {
+        return formatDate(context, java.util.Date(timestamp), skeleton)
+    }
+
+    /**
+     * Formats a [java.util.Date] with both date and time using the active app locale.
+     */
+    fun formatDateTime(context: Context, date: java.util.Date, dateSkeleton: String = "yMMMd"): String {
+        val datePart = formatDate(context, date, dateSkeleton)
+        val timePart = formatTime(context, date.time, "h:mm a")
+        return "$datePart · $timePart"
+    }
+
+    /**
+     * Formats a stored date/datetime string (e.g. "Jan 01, 2000" or "Nov 6, 2026 · 9:00 AM")
+     * into the currently selected app language.
+     */
+    fun formatStoredDate(context: Context, rawDateStr: String?, skeleton: String = "yMMMd"): String {
+        val trimmed = rawDateStr?.trim().orEmpty()
+        if (trimmed.isEmpty()) return ""
+        if (trimmed.contains("·")) {
+            try {
+                val sdfDateTime = java.text.SimpleDateFormat("MMM d, yyyy · h:mm a", Locale.US)
+                val parsed = sdfDateTime.parse(trimmed)
+                if (parsed != null) {
+                    return formatDateTime(context, parsed, skeleton)
+                }
+            } catch (_: Exception) {
+            }
+        }
+        val parsed = parseStoredDate(trimmed)
+        if (parsed != null) {
+            return formatDate(context, parsed, skeleton)
+        }
+        return formatTimeAmPm(context, trimmed)
+    }
+
+    /**
+     * Localizes a scan history item title according to the active app language.
+     */
+    fun formatScanTitle(context: Context, rawTitle: String?, category: String?): String {
+        val lang = getSavedLanguageCode(context).lowercase(Locale.ROOT)
+        val trimmed = rawTitle?.trim().orEmpty()
+        if (lang.startsWith("en") && trimmed.isNotEmpty()) return trimmed
+
+        val lower = trimmed.lowercase(Locale.ROOT)
+        if (lower == "nail discoloration") {
+            return when {
+                lang.startsWith("vi") -> "Đổi màu móng"
+                lang.startsWith("ru") -> "Изменение цвета ногтей"
+                lang.startsWith("hi") -> "नाखून का रंग बदलना"
+                lang.startsWith("id") || lang.startsWith("in") -> "Perubahan Warna Kuku"
+                lang.startsWith("de") -> "Nagelverfärbung"
+                lang.startsWith("es") -> "Decoloración de las uñas"
+                lang.startsWith("fr") -> "Décoloration des ongles"
+                lang.startsWith("pt") -> "Descoloração das unhas"
+                lang.startsWith("ja") -> "爪の変色"
+                lang.startsWith("ko") -> "손톱 변색"
+                lang.startsWith("zh_tw") -> "指甲變色"
+                lang.startsWith("zh") -> "指甲变色"
+                lang.startsWith("ar") -> "تغير لون الأظافر"
+                lang.startsWith("tr") -> "Tırnak Renk Değişikliği"
+                lang.startsWith("bn") -> "নখের রঙ পরিবর্তন"
+                else -> trimmed
+            }
+        }
+        if (lower == "nail thickening") {
+            return when {
+                lang.startsWith("vi") -> "Dày móng"
+                lang.startsWith("ru") -> "Утолщение ногтей"
+                lang.startsWith("hi") -> "नाखून का मोटा होना"
+                lang.startsWith("id") || lang.startsWith("in") -> "Penebalan Kuku"
+                lang.startsWith("de") -> "Nagelverdickung"
+                lang.startsWith("es") -> "Engrosamiento de las uñas"
+                lang.startsWith("fr") -> "Épaississement des ongles"
+                lang.startsWith("pt") -> "Espessamento das unhas"
+                lang.startsWith("ja") -> "爪の肥厚"
+                lang.startsWith("ko") -> "손톱 비후"
+                lang.startsWith("zh_tw") -> "指甲增厚"
+                lang.startsWith("zh") -> "指甲增厚"
+                lang.startsWith("ar") -> "سماكة الأظافر"
+                lang.startsWith("tr") -> "Tırnak Kalınlaşması"
+                lang.startsWith("bn") -> "নখ মোটা হয়ে যাওয়া"
+                else -> trimmed
+            }
+        }
+        if (lower == "periungual skin") {
+            return when {
+                lang.startsWith("vi") -> "Da quanh móng"
+                lang.startsWith("ru") -> "Околоногтевая кожа"
+                lang.startsWith("hi") -> "नाखून के आसपास की त्वचा"
+                lang.startsWith("id") || lang.startsWith("in") -> "Kulit Sekitar Kuku"
+                lang.startsWith("de") -> "Periunguale Haut"
+                lang.startsWith("es") -> "Piel periungueal"
+                lang.startsWith("fr") -> "Peau péri-unguéale"
+                lang.startsWith("pt") -> "Pele periungueal"
+                lang.startsWith("ja") -> "爪周囲の皮膚"
+                lang.startsWith("ko") -> "손발톱 주위 피부"
+                lang.startsWith("zh_tw") -> "甲周皮膚"
+                lang.startsWith("zh") -> "甲周皮肤"
+                lang.startsWith("ar") -> "الجلد المحيط بالأظافر"
+                lang.startsWith("tr") -> "Tırnak Çevresi Derisi"
+                lang.startsWith("bn") -> "নখের চারপাশের ত্বক"
+                else -> trimmed
+            }
+        }
+        if (lower.endsWith(" assessment") || trimmed.isEmpty()) {
+            return when (category?.uppercase(Locale.ROOT)) {
+                "SKIN" -> getLocalizedString(context, lang, R.string.category_skin)
+                "EYE" -> getLocalizedString(context, lang, R.string.category_eye)
+                "NAIL" -> getLocalizedString(context, lang, R.string.category_nail)
+                "ORAL" -> getLocalizedString(context, lang, R.string.category_mouth)
+                else -> trimmed.ifEmpty { getLocalizedString(context, lang, R.string.title_ai_scan_history) }
+            }
+        }
+        return trimmed
+    }
 }

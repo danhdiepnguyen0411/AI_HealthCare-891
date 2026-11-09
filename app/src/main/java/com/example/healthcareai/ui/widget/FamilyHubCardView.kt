@@ -35,6 +35,8 @@ class FamilyHubCardView @JvmOverloads constructor(
     private var currentTabRight = 0f
     private var targetTabLeft = 0f
     private var targetTabRight = 0f
+    private var animStartLeft = 0f
+    private var animStartRight = 0f
     private var hasCalculatedInitialBounds = false
 
     private var animator: ValueAnimator? = null
@@ -100,29 +102,19 @@ class FamilyHubCardView @JvmOverloads constructor(
 
         val targetLeft: Float
         val targetRight: Float
+        val halfWidth = 44f * density
 
         if (child != null && child.width > 0) {
-            val childLeftInCard = child.left - scrollX
-            val childRightInCard = child.right - scrollX
-
-            if (index == 0 && scrollX <= (4 * density).toInt()) {
-                targetLeft = 0f
-                targetRight = childRightInCard.toFloat() + 10f * density
-            } else {
-                targetLeft = childLeftInCard.toFloat() - 10f * density
-                targetRight = childRightInCard.toFloat() + 10f * density
-            }
+            val childCenter = (child.left + child.right) / 2f - scrollX
+            targetLeft = childCenter - halfWidth
+            targetRight = childCenter + halfWidth
         } else {
             // Fallback before initial child layout measurement
-            val step = 84f * density // 64dp avatar + 20dp margin
+            val step = 88f * density // 64dp avatar + 24dp margin
             val start = 12f * density + index * step
-            if (index == 0) {
-                targetLeft = 0f
-                targetRight = 12f * density + 64f * density + 10f * density // 86dp
-            } else {
-                targetLeft = start - 10f * density
-                targetRight = start + 64f * density + 10f * density
-            }
+            val childCenter = start + 32f * density
+            targetLeft = childCenter - halfWidth
+            targetRight = childCenter + halfWidth
         }
 
         targetTabLeft = targetLeft
@@ -130,6 +122,7 @@ class FamilyHubCardView @JvmOverloads constructor(
 
         if (!hasCalculatedInitialBounds || !animate) {
             hasCalculatedInitialBounds = true
+            animator?.cancel()
             currentTabLeft = targetLeft
             currentTabRight = targetRight
             invalidate()
@@ -137,16 +130,16 @@ class FamilyHubCardView @JvmOverloads constructor(
         }
 
         animator?.cancel()
-        val startLeft = currentTabLeft
-        val startRight = currentTabRight
+        animStartLeft = currentTabLeft
+        animStartRight = currentTabRight
 
         animator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = 320
+            duration = 280
             interpolator = DecelerateInterpolator(1.8f)
             addUpdateListener { va ->
                 val fraction = va.animatedFraction
-                currentTabLeft = startLeft + (targetTabLeft - startLeft) * fraction
-                currentTabRight = startRight + (targetTabRight - startRight) * fraction
+                currentTabLeft = animStartLeft + (targetTabLeft - animStartLeft) * fraction
+                currentTabRight = animStartRight + (targetTabRight - animStartRight) * fraction
                 invalidate()
             }
             start()
@@ -160,7 +153,34 @@ class FamilyHubCardView @JvmOverloads constructor(
     }
 
     fun updateTabBoundsForScroll() {
-        calculateTabBounds(selectedIndex, animate = false)
+        val density = resources.displayMetrics.density
+        val avatarsRow = getAvatarsRow() ?: return
+        val scrollContainer = getScrollContainer() ?: return
+        if (selectedIndex < 0) return
+        val child = avatarsRow.getChildAt(selectedIndex) ?: return
+        if (child.width <= 0) return
+
+        val scrollX = scrollContainer.scrollX
+        val childCenter = (child.left + child.right) / 2f - scrollX
+        val halfWidth = 44f * density
+        val newTargetLeft = childCenter - halfWidth
+        val newTargetRight = childCenter + halfWidth
+
+        if (animator?.isRunning == true) {
+            val delta = newTargetLeft - targetTabLeft
+            targetTabLeft = newTargetLeft
+            targetTabRight = newTargetRight
+            animStartLeft += delta
+            animStartRight += delta
+            currentTabLeft += delta
+            currentTabRight += delta
+        } else {
+            currentTabLeft = newTargetLeft
+            currentTabRight = newTargetRight
+            targetTabLeft = newTargetLeft
+            targetTabRight = newTargetRight
+        }
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -172,17 +192,17 @@ class FamilyHubCardView @JvmOverloads constructor(
         }
 
         val density = resources.displayMetrics.density
-        // Large soft bottom corner radius (matching Figma and user's bottom pink circle)
         val bottomRadius = 36f * density
         val avatarsRow = getAvatarsRow()
         val addBtn = getAddBtn()
         val addBtnIndex = avatarsRow?.indexOfChild(addBtn) ?: -1
         val memberCount = if (addBtnIndex >= 0) addBtnIndex else ((avatarsRow?.childCount ?: 1) - 1).coerceAtLeast(0)
 
+        path.reset()
+
         if (memberCount == 0 || selectedIndex < 0) {
-            // No family members yet: draw standard rounded rectangle card
+            // No family members yet: standard rounded rectangle card
             val topRadius = 26f * density
-            path.reset()
             rectF.set(0f, h - 2 * bottomRadius, 2 * bottomRadius, h)
             path.arcTo(rectF, 90f, 90f, false)
 
@@ -200,106 +220,115 @@ class FamilyHubCardView @JvmOverloads constructor(
 
             path.lineTo(bottomRadius, h)
             path.close()
+
+            val saveCount = canvas.save()
+            canvas.clipRect(0f, 0f, w, h)
             canvas.drawPath(path, bgPaint)
+            canvas.restoreToCount(saveCount)
             super.onDraw(canvas)
             return
         }
 
-        // Wide, gentle sweeping concave curve
-        val hasMultipleMembers = memberCount >= 2
-        val concaveRadius = if (hasMultipleMembers) 24f * density else 20f * density
+        val concaveRadius = 24f * density
         val shelfTopRadius = 26f * density
         val shelfY = 108f * density
 
         val tabLeft = currentTabLeft
         val tabRight = currentTabRight
-        val tabWidth = (tabRight - tabLeft).coerceAtLeast(40f * density)
+        val effectiveTabLeft = if (tabLeft in -2f * density..2f * density) 0f else tabLeft
+        val tabWidth = (tabRight - effectiveTabLeft).coerceAtLeast(40f * density)
         val domeRadius = tabWidth / 2f
 
-        path.reset()
-
-        // 1. Bottom-left corner with large 36dp radius
+        // 1. Bottom-left corner: (bottomRadius, h) -> (0, h - bottomRadius)
         rectF.set(0f, h - 2 * bottomRadius, 2 * bottomRadius, h)
         path.arcTo(rectF, 90f, 90f, false)
 
-        // 2. Tab selection shape
-        val isFlushLeft = selectedIndex == 0 && tabLeft <= 4f * density
-
-        if (isFlushLeft) {
-            // Member 1 (Primary): flush with left edge
-            path.lineTo(0f, domeRadius)
-
-            // Soft continuous top dome over Member 1 (180° to 360°)
-            rectF.set(0f, 0f, 2 * domeRadius, 2 * domeRadius)
-            path.arcTo(rectF, 180f, 180f, false)
-
-            // Right vertical side down to shelf
-            path.lineTo(tabRight, shelfY - concaveRadius)
-
-            // Large concave inverted curve into shelf
-            rectF.set(tabRight, shelfY - 2 * concaveRadius, tabRight + 2 * concaveRadius, shelfY)
-            path.arcTo(rectF, 180f, -90f, false)
-
-            // Horizontal shelf to the right
-            val rightShelfEnd = (w - shelfTopRadius).coerceAtLeast(tabRight + concaveRadius).coerceAtMost(w)
-            path.lineTo(rightShelfEnd, shelfY)
-        } else {
-            // Member 2+ or during animation
+        if (tabRight <= 0f || effectiveTabLeft >= w) {
+            // Selected tab completely scrolled off-screen: clean horizontal shelf across card
             path.lineTo(0f, shelfY + shelfTopRadius)
+            rectF.set(0f, shelfY, 2 * shelfTopRadius, shelfY + 2 * shelfTopRadius)
+            path.arcTo(rectF, 180f, 90f, false)
 
-            // Shelf top-left rounded corner
-            val leftCornerRadius = shelfTopRadius.coerceAtMost((tabLeft - concaveRadius) / 2f).coerceAtLeast(0f)
-            if (leftCornerRadius > 0f) {
-                rectF.set(0f, shelfY, 2 * leftCornerRadius, shelfY + 2 * leftCornerRadius)
-                path.arcTo(rectF, 180f, 90f, false)
+            path.lineTo(w - shelfTopRadius, shelfY)
+            rectF.set(w - 2 * shelfTopRadius, shelfY, w, shelfY + 2 * shelfTopRadius)
+            path.arcTo(rectF, 270f, 90f, false)
+
+            path.lineTo(w, h - bottomRadius)
+        } else {
+            // 2. Left side & shelf up to effectiveTabLeft
+            if (effectiveTabLeft <= 0f) {
+                path.lineTo(0f, domeRadius)
             } else {
-                path.lineTo(0f, shelfY)
+                val availLeft = effectiveTabLeft
+                val cornerR = shelfTopRadius.coerceAtMost(availLeft / 2f).coerceAtLeast(0f)
+                val concaveR = concaveRadius.coerceAtMost(availLeft - cornerR).coerceAtLeast(0f)
+
+                path.lineTo(0f, shelfY + cornerR)
+                if (cornerR > 0f) {
+                    rectF.set(0f, shelfY, 2 * cornerR, shelfY + 2 * cornerR)
+                    path.arcTo(rectF, 180f, 90f, false)
+                } else {
+                    path.lineTo(0f, shelfY)
+                }
+
+                path.lineTo(effectiveTabLeft - concaveR, shelfY)
+                if (concaveR > 0f) {
+                    rectF.set(effectiveTabLeft - 2 * concaveR, shelfY - 2 * concaveR, effectiveTabLeft, shelfY)
+                    path.arcTo(rectF, 90f, -90f, false)
+                } else {
+                    path.lineTo(effectiveTabLeft, shelfY)
+                }
+
+                path.lineTo(effectiveTabLeft, domeRadius)
             }
 
-            // Shelf horizontal edge up to concave curve start
-            val leftConcaveStart = (tabLeft - concaveRadius).coerceAtLeast(leftCornerRadius)
-            path.lineTo(leftConcaveStart, shelfY)
-
-            // Concave curve up into tabLeft
-            rectF.set(tabLeft - 2 * concaveRadius, shelfY - 2 * concaveRadius, tabLeft, shelfY)
-            path.arcTo(rectF, 90f, -90f, false)
-
-            // Left vertical side up to dome start
-            path.lineTo(tabLeft, domeRadius)
-
-            // Soft continuous top dome over active member
-            rectF.set(tabLeft, 0f, tabRight, 2 * domeRadius)
+            // 3. Top dome over active member: (effectiveTabLeft, domeRadius) -> (tabRight, domeRadius)
+            rectF.set(effectiveTabLeft, 0f, tabRight, 2 * domeRadius)
             path.arcTo(rectF, 180f, 180f, false)
 
-            // Right vertical side down to shelf
-            path.lineTo(tabRight, shelfY - concaveRadius)
+            // 4. Right side down from tabRight to shelf & right edge
+            if (tabRight >= w) {
+                path.lineTo(w, domeRadius)
+                path.lineTo(w, h - bottomRadius)
+            } else {
+                val availRight = w - tabRight
+                val cornerR = shelfTopRadius.coerceAtMost(availRight / 2f).coerceAtLeast(0f)
+                val concaveR = concaveRadius.coerceAtMost(availRight - cornerR).coerceAtLeast(0f)
 
-            // Concave curve down into shelf
-            rectF.set(tabRight, shelfY - 2 * concaveRadius, tabRight + 2 * concaveRadius, shelfY)
-            path.arcTo(rectF, 180f, -90f, false)
+                path.lineTo(tabRight, shelfY - concaveR)
+                if (concaveR > 0f) {
+                    rectF.set(tabRight, shelfY - 2 * concaveR, tabRight + 2 * concaveR, shelfY)
+                    path.arcTo(rectF, 180f, -90f, false)
+                } else {
+                    path.lineTo(tabRight, shelfY)
+                }
 
-            // Horizontal shelf to the right
-            val rightShelfEnd = (w - shelfTopRadius).coerceAtLeast(tabRight + concaveRadius).coerceAtMost(w)
-            path.lineTo(rightShelfEnd, shelfY)
+                path.lineTo(w - cornerR, shelfY)
+                if (cornerR > 0f) {
+                    rectF.set(w - 2 * cornerR, shelfY, w, shelfY + 2 * cornerR)
+                    path.arcTo(rectF, 270f, 90f, false)
+                } else {
+                    path.lineTo(w, shelfY)
+                }
+
+                path.lineTo(w, h - bottomRadius)
+            }
         }
 
-        // 3. Top-right corner of shelf
-        rectF.set(w - 2 * shelfTopRadius, shelfY, w, shelfY + 2 * shelfTopRadius)
-        path.arcTo(rectF, 270f, 90f, false)
-
-        // 4. Right edge down
-        path.lineTo(w, h - bottomRadius)
-
-        // 5. Bottom-right corner with 36dp radius
+        // 5. Bottom-right corner: (w, h - bottomRadius) -> (w - bottomRadius, h)
         rectF.set(w - 2 * bottomRadius, h - 2 * bottomRadius, w, h)
         path.arcTo(rectF, 0f, 90f, false)
 
-        // 6. Bottom edge back to bottom-left
+        // 6. Bottom edge back to bottom-left: (w - bottomRadius, h) -> (bottomRadius, h)
         path.lineTo(bottomRadius, h)
 
         path.close()
 
+        val saveCount = canvas.save()
+        canvas.clipRect(0f, 0f, w, h)
         canvas.drawPath(path, bgPaint)
+        canvas.restoreToCount(saveCount)
+
         super.onDraw(canvas)
     }
 }

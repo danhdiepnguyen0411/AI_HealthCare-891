@@ -26,10 +26,10 @@ class LeaveWithoutSavingDialog(
 
         window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val density = context.resources.displayMetrics.density
-            val targetWidth = (300 * density).toInt()
-            val maxWidth = (context.resources.displayMetrics.widthPixels * 0.90f).toInt()
-            setLayout(targetWidth.coerceAtMost(maxWidth), ViewGroup.LayoutParams.WRAP_CONTENT)
+            val width = (context.resources.displayMetrics.widthPixels * 0.85f).toInt().coerceAtMost(
+                (340 * context.resources.displayMetrics.density).toInt()
+            )
+            setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
             setDimAmount(0.55f)
         }
 

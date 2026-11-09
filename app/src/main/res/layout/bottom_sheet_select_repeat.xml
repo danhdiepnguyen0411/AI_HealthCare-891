@@ -30,7 +30,39 @@
         android:textColor="#172044"
         android:textSize="22sp" />
 
-    <!-- 1. Every day -->
+    <!-- 1. Once (Một lần) -->
+    <FrameLayout
+        android:id="@+id/cardRepeatOnce"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_category_card_unselected"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="16dp">
+
+        <TextView
+            android:id="@+id/tvTitleRepeatOnce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/repeat_once"
+            android:textColor="@color/color_text"
+            android:textSize="15.5sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivCheckRepeatOnce"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_checkbox_unchecked" />
+    </FrameLayout>
+
+    <!-- 2. Every day (Hàng ngày) -->
     <FrameLayout
         android:id="@+id/cardRepeatEveryDay"
         android:layout_width="match_parent"
@@ -62,7 +94,7 @@
             android:src="@drawable/bg_checkbox_selected_white" />
     </FrameLayout>
 
-    <!-- 2. Weekdays -->
+    <!-- 3. Weekdays (Thứ 2 đến thứ 6) -->
     <FrameLayout
         android:id="@+id/cardRepeatWeekdays"
         android:layout_width="match_parent"
@@ -94,9 +126,9 @@
             android:src="@drawable/bg_checkbox_unchecked" />
     </FrameLayout>
 
-    <!-- 3. Weekends -->
+    <!-- 4. Custom (Tùy chỉnh) -->
     <FrameLayout
-        android:id="@+id/cardRepeatWeekends"
+        android:id="@+id/cardRepeatCustom"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginBottom="10dp"
@@ -105,116 +137,37 @@
         android:focusable="true"
         android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/tvTitleRepeatWeekends"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:fontFamily="@font/urbanist"
-            android:includeFontPadding="false"
-            android:text="@string/repeat_weekends"
-            android:textColor="@color/color_text"
-            android:textSize="15.5sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitleRepeatCustom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist"
+                android:includeFontPadding="false"
+                android:text="@string/repeat_custom"
+                android:textColor="@color/color_text"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSubtitleRepeatCustom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_subtext"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/ivCheckRepeatWeekends"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 4. Weekly -->
-    <FrameLayout
-        android:id="@+id/cardRepeatWeekly"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp">
-
-        <TextView
-            android:id="@+id/tvTitleRepeatWeekly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:fontFamily="@font/urbanist"
-            android:includeFontPadding="false"
-            android:text="@string/repeat_weekly"
-            android:textColor="@color/color_text"
-            android:textSize="15.5sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ivCheckRepeatWeekly"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 5. Monthly -->
-    <FrameLayout
-        android:id="@+id/cardRepeatMonthly"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp">
-
-        <TextView
-            android:id="@+id/tvTitleRepeatMonthly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:fontFamily="@font/urbanist"
-            android:includeFontPadding="false"
-            android:text="@string/repeat_monthly"
-            android:textColor="@color/color_text"
-            android:textSize="15.5sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ivCheckRepeatMonthly"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical|end"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_checkbox_unchecked" />
-    </FrameLayout>
-
-    <!-- 6. Once -->
-    <FrameLayout
-        android:id="@+id/cardRepeatOnce"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_category_card_unselected"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingHorizontal="16dp">
-
-        <TextView
-            android:id="@+id/tvTitleRepeatOnce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:fontFamily="@font/urbanist"
-            android:includeFontPadding="false"
-            android:text="@string/repeat_once"
-            android:textColor="@color/color_text"
-            android:textSize="15.5sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ivCheckRepeatOnce"
+            android:id="@+id/ivCheckRepeatCustom"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_gravity="center_vertical|end"

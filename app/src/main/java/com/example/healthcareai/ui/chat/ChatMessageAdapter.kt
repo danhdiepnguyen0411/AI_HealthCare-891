@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.ChatMessage
 
@@ -104,15 +105,43 @@ class ChatMessageAdapter(
         private val tvDate: TextView = itemView.findViewById(R.id.tvDateHeader)
 
         fun bind(message: ChatMessage) {
-            tvDate.text = message.formattedDate ?: message.content
+            val ctx = itemView.context
+            if (message.timestamp > 0L) {
+                val todayStr = ctx.getString(R.string.ai_chat_today)
+                val timeStr = com.example.healthcareai.util.LocaleHelper.formatTime(ctx, message.timestamp, "hh:mm a")
+                tvDate.text = "$todayStr, $timeStr"
+            } else {
+                val raw = message.formattedDate ?: message.content
+                val todayStr = ctx.getString(R.string.ai_chat_today)
+                tvDate.text = com.example.healthcareai.util.LocaleHelper.formatTimeAmPm(
+                    ctx,
+                    raw.replaceFirst("^Today\\b".toRegex(RegexOption.IGNORE_CASE), todayStr)
+                )
+            }
         }
     }
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvUserMessage: TextView = itemView.findViewById(R.id.tvUserMessage)
+        private val cardAttachment: View = itemView.findViewById(R.id.cardUserAttachment)
+        private val ivAttachment: ImageView = itemView.findViewById(R.id.ivUserAttachment)
 
         fun bind(message: ChatMessage) {
-            tvUserMessage.text = message.content
+            if (!message.imageUri.isNullOrEmpty()) {
+                cardAttachment.visibility = View.VISIBLE
+                ivAttachment.load(message.imageUri) {
+                    crossfade(true)
+                }
+            } else {
+                cardAttachment.visibility = View.GONE
+            }
+
+            if (message.content.isNotBlank()) {
+                tvUserMessage.visibility = View.VISIBLE
+                tvUserMessage.text = message.content
+            } else {
+                tvUserMessage.visibility = View.GONE
+            }
         }
     }
 

@@ -42,7 +42,13 @@ class ReminderRepository private constructor(context: Context) {
         val json = prefs.getString(KEY_REMINDERS_LIST, null) ?: return emptyList()
         return try {
             val type = object : TypeToken<List<ReminderItem>>() {}.type
-            gson.fromJson<List<ReminderItem>>(json, type) ?: emptyList()
+            val list = gson.fromJson<List<ReminderItem>>(json, type) ?: emptyList()
+            for (item in list) {
+                if (item.timeList.isNotEmpty()) {
+                    item.timeList = com.example.healthcareai.util.ReminderScheduler.sortTimeList(item.timeList)
+                }
+            }
+            list
         } catch (_: Exception) {
             emptyList()
         }
@@ -69,6 +75,9 @@ class ReminderRepository private constructor(context: Context) {
 
     @Synchronized
     fun saveReminder(reminder: ReminderItem) {
+        if (reminder.timeList.isNotEmpty()) {
+            reminder.timeList = com.example.healthcareai.util.ReminderScheduler.sortTimeList(reminder.timeList)
+        }
         val currentList = getAllReminders().toMutableList()
         val index = currentList.indexOfFirst { it.id == reminder.id }
         if (index >= 0) {

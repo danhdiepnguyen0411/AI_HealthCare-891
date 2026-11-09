@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.healthcareai.R
@@ -93,11 +94,27 @@ object NotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        // Custom notification layout matching Figma node 1:4045
+        val collapsedViews = createCustomNotificationRemoteViews(
+            context = attachedContext,
+            title = title,
+            message = message,
+            isExpanded = false
+        )
+        val expandedViews = createCustomNotificationRemoteViews(
+            context = attachedContext,
+            title = title,
+            message = message,
+            isExpanded = true
+        )
+
         val notification = NotificationCompat.Builder(attachedContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(message)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setCustomContentView(collapsedViews)
+            .setCustomBigContentView(expandedViews)
+            .setCustomHeadsUpContentView(collapsedViews)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
@@ -119,7 +136,8 @@ object NotificationHelper {
         name: String,
         description: String,
         category: String,
-        timeIndex: Int
+        timeIndex: Int,
+        profileId: String? = null
     ) {
         val attachedContext = LocaleHelper.onAttach(context)
         if (!NotificationManagerCompat.from(attachedContext).areNotificationsEnabled()) {
@@ -130,11 +148,17 @@ object NotificationHelper {
 
         val notiId = ((reminderId.hashCode() * 31 + timeIndex) and 0x7FFFFFFF)
 
-        // Main click intent -> open app directly to Home
+        val effectiveProfileId = profileId
+            ?: com.example.healthcareai.data.repository.ReminderRepository.getInstance(attachedContext).getReminder(reminderId)?.profileId
+            ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(attachedContext).getPrimaryProfile().id
+
+        // Main click intent -> navigate directly to member's reminder screen
         val openIntent = Intent(attachedContext, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("from_notification", true)
-            putExtra("extra_reminder_id", reminderId)
+            putExtra(MainActivity.EXTRA_TARGET_SCREEN, MainActivity.TARGET_REMINDER)
+            putExtra(MainActivity.EXTRA_REMINDER_ID, reminderId)
+            putExtra(MainActivity.EXTRA_PROFILE_ID, effectiveProfileId)
             putExtra(MainActivity.EXTRA_TARGET_TAB, MainActivity.TAB_HOME)
         }
         val openPendingIntent = PendingIntent.getActivity(
@@ -163,11 +187,27 @@ object NotificationHelper {
             attachedContext.getString(R.string.noti_reminder_default_desc, name)
         }
 
+        // Custom notification layout matching Figma node 1:4045
+        val collapsedViews = createCustomNotificationRemoteViews(
+            context = attachedContext,
+            title = name,
+            message = bodyText,
+            isExpanded = false
+        )
+        val expandedViews = createCustomNotificationRemoteViews(
+            context = attachedContext,
+            title = name,
+            message = bodyText,
+            isExpanded = true
+        )
+
         val notification = NotificationCompat.Builder(attachedContext, CHANNEL_REMINDERS_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(name)
             .setContentText(bodyText)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(bodyText))
+            .setCustomContentView(collapsedViews)
+            .setCustomBigContentView(expandedViews)
+            .setCustomHeadsUpContentView(collapsedViews)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setAutoCancel(true)
@@ -183,5 +223,42 @@ object NotificationHelper {
             NotificationManagerCompat.from(attachedContext).notify(notiId, notification)
         } catch (_: SecurityException) {
         }
+    }
+
+    /**
+     * Builds custom notification RemoteViews matching Figma node 1:4045
+     */
+    private fun createCustomNotificationRemoteViews(
+        context: Context,
+        title: String,
+        message: String,
+        isExpanded: Boolean
+    ): RemoteViews {
+        val layoutRes = if (isExpanded) {
+            R.layout.layout_custom_notification_expanded
+        } else {
+            R.layout.layout_custom_notification
+        }
+        return RemoteViews(context.packageName, layoutRes).apply {
+            setImageViewResource(R.id.ivNotiIcon, R.drawable.ic_notification_logo)
+            setTextViewText(R.id.tvNotiAppName, context.getString(R.string.noti_app_name_display))
+            setTextViewText(R.id.tvNotiTime, context.getString(R.string.noti_time_now))
+            setTextViewText(R.id.tvNotiTitle, title)
+            setTextViewText(R.id.tvNotiMessage, message)
+        }
+    }
+
+    /**
+     * Test notification directly matching Figma node 1:4045
+     */
+    fun showTestNotification(context: Context) {
+        showReminderNotification(
+            context = context,
+            reminderId = "test_reminder_exercise",
+            name = "Time to exercise",
+            description = "Let's keep your body active!",
+            category = "Exercise",
+            timeIndex = 0
+        )
     }
 }

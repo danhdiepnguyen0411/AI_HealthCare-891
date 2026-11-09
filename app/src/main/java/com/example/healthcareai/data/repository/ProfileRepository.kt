@@ -76,6 +76,24 @@ class ProfileRepository private constructor(context: Context) {
     }
 
     /**
+     * Updates an existing profile (either primary or family member).
+     */
+    fun updateProfile(profile: UserProfile) {
+        if (profile.isPrimary || profile.id == PRIMARY_PROFILE_ID) {
+            savePrimaryProfile(profile)
+            return
+        }
+        val profiles = getAllProfiles().toMutableList()
+        val existingIndex = profiles.indexOfFirst { it.id == profile.id }
+        if (existingIndex >= 0) {
+            profiles[existingIndex] = profile.copy(isPrimary = false)
+        } else {
+            profiles.add(profile.copy(isPrimary = false))
+        }
+        persistProfiles(profiles)
+    }
+
+    /**
      * Returns the primary user profile.
      */
     fun getPrimaryProfile(): UserProfile {

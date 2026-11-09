@@ -18,6 +18,7 @@ import com.example.healthcareai.data.repository.HeartRateRepository
 import com.example.healthcareai.databinding.ActivityHeartRateResultBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
+import com.example.healthcareai.util.LocaleHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -51,19 +52,16 @@ class HeartRateResultActivity : BaseActivity() {
     }
 
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = statusBars.top.coerceAtLeast(16)
-            }
-            insets
-        }
+        setupHeaderTopMargin(binding.topBar, binding.root)
     }
 
     private fun bindData() {
-        // Date & Time formatting: e.g. "July 2 • 09:20 AM"
-        val sdf = SimpleDateFormat("MMMM d • hh:mm a", Locale.ENGLISH)
-        binding.tvDateTime.text = sdf.format(Date(timestamp))
+        // Date & Time formatting: e.g. "July 2 • 09:20 AM" / "2 tháng 7 • 09:20 SA"
+        val locale = LocaleHelper.getSavedLocale(this)
+        val datePattern = android.text.format.DateFormat.getBestDateTimePattern(locale, "MMMMd")
+        val dateStr = SimpleDateFormat(datePattern, locale).format(Date(timestamp))
+        val timeStr = LocaleHelper.formatTime(this, timestamp, "hh:mm a")
+        binding.tvDateTime.text = "$dateStr • $timeStr"
 
         // BPM value
         binding.tvBpmValue.text = bpm.toString()

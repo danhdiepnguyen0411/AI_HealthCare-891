@@ -38,12 +38,15 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTopBarTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +54,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Medication details" />
+
+        <FrameLayout
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_back_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/btn_delete"
+                android:src="@drawable/ic_delete" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Scrollable Content -->
@@ -208,8 +230,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:ellipsize="end"
                             android:fontFamily="@font/urbanist_bold"
                             android:includeFontPadding="false"
+                            android:maxLines="2"
                             android:textColor="@color/color_text"
                             android:textSize="14.5sp"
                             tools:text="Allergy symptoms" />
@@ -239,8 +263,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:ellipsize="end"
                             android:fontFamily="@font/urbanist_bold"
                             android:includeFontPadding="false"
+                            android:maxLines="2"
                             android:textColor="@color/color_text"
                             android:textSize="14.5sp"
                             tools:text="10 mg" />
@@ -278,8 +304,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:ellipsize="end"
                             android:fontFamily="@font/urbanist_bold"
                             android:includeFontPadding="false"
+                            android:maxLines="2"
                             android:textColor="@color/color_text"
                             android:textSize="14.5sp"
                             tools:text="Tablet" />
@@ -309,8 +337,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:ellipsize="end"
                             android:fontFamily="@font/urbanist_bold"
                             android:includeFontPadding="false"
+                            android:maxLines="2"
                             android:textColor="@color/color_text"
                             android:textSize="14.5sp"
                             tools:text="Oct 8, 2026" />

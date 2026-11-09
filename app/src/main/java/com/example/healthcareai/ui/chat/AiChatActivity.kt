@@ -1,9 +1,12 @@
 package com.example.healthcareai.ui.chat
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import coil.load
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -24,12 +27,15 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthcareai.R
+import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.data.model.ChatMessage
 import com.example.healthcareai.data.model.ConversationSession
 import com.example.healthcareai.data.repository.AiChatRepository
 import com.example.healthcareai.databinding.ActivityAiChatBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.CustomRecordAudioPermissionDialog
 import com.example.healthcareai.util.LocaleHelper
+import com.example.healthcareai.util.PermissionReturnHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -48,7 +54,9 @@ class AiChatActivity : BaseActivity() {
     companion object {
         const val EXTRA_CONVERSATION_ID = "extra_conversation_id"
         const val EXTRA_INITIAL_PROMPT = "extra_initial_prompt"
+        const val EXTRA_API_CONTEXT = "extra_api_context"
         const val EXTRA_AUTO_SEND = "extra_auto_send"
+        const val EXTRA_START_NEW_CHAT = "extra_start_new_chat"
     }
 
     private lateinit var binding: ActivityAiChatBinding
@@ -64,12 +72,19 @@ class AiChatActivity : BaseActivity() {
     private var isRecordingVoice = false
     private var recognizedVoiceText = ""
     private var waveformAnimationJob: Job? = null
+    private var selectedImageUri: Uri? = null
+
+    private var micPermissionDialog: Dialog? = null
+    private var isWaitingForMicPermissionFromSettings = false
 
     private val recordAudioPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            val pref = PreferenceHelper.getInstance(this)
             if (isGranted) {
+                pref.micDenialCount = 0
                 startVoiceRecording()
             } else {
+                pref.micDenialCount++
                 Toast.makeText(
                     this,
                     R.string.ai_chat_mic_permission_required,
@@ -81,9 +96,12 @@ class AiChatActivity : BaseActivity() {
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
-                val prompt = "I've uploaded an image for health analysis. Please guide me on what steps to take or what questions to consider."
-                binding.etMessageInput.setText(prompt)
-                binding.etMessageInput.setSelection(prompt.length)
+                selectedImageUri = uri
+                binding.layoutImagePreview.visibility = View.VISIBLE
+                binding.ivPreviewImage.load(uri) {
+                    crossfade(true)
+                }
+                updateSendButtonState()
             }
         }
 
@@ -113,13 +131,39 @@ class AiChatActivity : BaseActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        chatRepository.unregisterListener(currentSession.id)
         saveCurrentSessionIfActive()
         initConversationSession(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkAndResumePendingResponse()
+        // Synchronous check if microphone permission was granted via Settings while paused
+        if (PermissionReturnHelper.isPermissionGranted(this, Manifest.permission.RECORD_AUDIO)) {
+            val pref = PreferenceHelper.getInstance(this)
+            pref.micDenialCount = 0
+            dismissMicPermissionDialog()
+            if (isWaitingForMicPermissionFromSettings) {
+                isWaitingForMicPermissionFromSettings = false
+                startVoiceRecording()
+            }
+        }
+    }
+
     override fun onPause() {
         super.onPause()
+        if (isRecordingVoice) {
+            stopVoiceRecording(applyToInput = true)
+        }
         saveCurrentSessionIfActive()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isRecordingVoice) {
+            stopVoiceRecording(applyToInput = false)
+        }
     }
 
     private fun setupWindowInsets() {
@@ -172,11 +216,11 @@ class AiChatActivity : BaseActivity() {
     private fun updateWindowInsets(statusTop: Int, navBottom: Int, imeBottom: Int) {
         val density = resources.displayMetrics.density
 
-        // 1. Position topBar comfortably below the status bar with full height intact
+        // 1. Position topBar comfortably below the status bar with full height intact (standardized 16dp spacing)
         val targetTopMargin = if (statusTop > 0) {
-            statusTop + (6 * density).toInt()
+            statusTop + (16 * density).toInt()
         } else {
-            (20 * density).toInt()
+            (24 * density).toInt()
         }
         (binding.topBar.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
             if (lp.topMargin != targetTopMargin) {
@@ -196,7 +240,7 @@ class AiChatActivity : BaseActivity() {
         if (binding.bottomBarContainer.paddingBottom != targetBottomPadding) {
             binding.bottomBarContainer.updatePadding(
                 bottom = targetBottomPadding,
-                top = (8 * density).toInt(),
+                top = (12 * density).toInt(),
                 left = (16 * density).toInt(),
                 right = (16 * density).toInt()
             )
@@ -227,6 +271,9 @@ class AiChatActivity : BaseActivity() {
 
         // Conversation History Button (ic_conversation)
         binding.btnConversationHistory.setOnClickListener {
+            if (isRecordingVoice) {
+                stopVoiceRecording(applyToInput = true)
+            }
             saveCurrentSessionIfActive()
             val intent = Intent(this, ConversationActivity::class.java)
             startActivity(intent)
@@ -255,13 +302,11 @@ class AiChatActivity : BaseActivity() {
             pickImageLauncher.launch("image/*")
         }
 
-        // Dim / Enable Send Button based on input text
-        val updateSendButtonState = {
-            val hasText = binding.etMessageInput.text?.toString()?.trim().isNullOrEmpty().not()
-            binding.btnSend.isEnabled = hasText
-            binding.btnSend.isClickable = hasText
-            binding.btnSend.isFocusable = hasText
-            binding.btnSend.alpha = if (hasText) 1.0f else 0.45f
+        // Remove Preview Image Button
+        binding.btnRemovePreviewImage.setOnClickListener {
+            selectedImageUri = null
+            binding.layoutImagePreview.visibility = View.GONE
+            updateSendButtonState()
         }
 
         binding.etMessageInput.doAfterTextChanged {
@@ -269,12 +314,16 @@ class AiChatActivity : BaseActivity() {
         }
         updateSendButtonState()
 
-        // Send Text Button
+        // Send Text / Image Button
         binding.btnSend.setOnClickListener {
             val text = binding.etMessageInput.text?.toString()?.trim().orEmpty()
-            if (text.isNotEmpty()) {
-                sendMessage(text)
+            val uri = selectedImageUri
+            if (text.isNotEmpty() || uri != null) {
+                sendMessage(text, uri?.toString())
                 binding.etMessageInput.text?.clear()
+                selectedImageUri = null
+                binding.layoutImagePreview.visibility = View.GONE
+                updateSendButtonState()
             }
         }
 
@@ -315,38 +364,61 @@ class AiChatActivity : BaseActivity() {
         }
     }
 
+    private fun updateSendButtonState() {
+        val hasText = binding.etMessageInput.text?.toString()?.trim().isNullOrEmpty().not()
+        val canSend = hasText || selectedImageUri != null
+        binding.btnSend.isEnabled = canSend
+        binding.btnSend.isClickable = canSend
+        binding.btnSend.isFocusable = false
+        binding.btnSend.isFocusableInTouchMode = false
+        binding.btnSend.alpha = if (canSend) 1.0f else 0.45f
+    }
+
     private fun initConversationSession(intent: Intent?) {
         val conversationId = intent?.getStringExtra(EXTRA_CONVERSATION_ID)
+        val initialPrompt = intent?.getStringExtra(EXTRA_INITIAL_PROMPT) ?: intent?.getStringExtra("extra_initial_prompt")
+        val apiContext = intent?.getStringExtra(EXTRA_API_CONTEXT)
+        val autoSend = intent?.getBooleanExtra(EXTRA_AUTO_SEND, false) ?: false
+
         if (!conversationId.isNullOrEmpty()) {
             val existing = chatRepository.getConversationById(conversationId)
-            if (existing != null) {
+            val firstExistingUserMsg = existing?.messages?.firstOrNull { it.isUser }?.content
+            val shouldReuseExisting = existing != null && (
+                initialPrompt.isNullOrBlank() ||
+                    !autoSend ||
+                    firstExistingUserMsg == initialPrompt
+                )
+
+            if (shouldReuseExisting && existing != null) {
                 currentSession = existing
                 chatAdapter.setMessages(existing.messages)
                 if (existing.messages.isNotEmpty()) {
                     showActiveChatState()
                     scrollToBottom()
+                    checkAndResumePendingResponse()
                 } else {
                     showWelcomeState()
                 }
+                attachSessionListener()
                 return
             }
             // If a conversation ID was provided for a new session linked to a result, initialize with this ID
-            currentSession = ConversationSession(id = conversationId)
+            currentSession = ConversationSession(
+                id = if (existing == null) conversationId else java.util.UUID.randomUUID().toString()
+            )
         } else {
-            // When launching without a specific conversation, always start a brand new conversation
+            // When accessing without an explicit conversationId (e.g. from Home or "New Chat"), ALWAYS start a fresh conversation
             currentSession = ConversationSession()
         }
 
+        attachSessionListener()
         chatAdapter.setMessages(emptyList())
         showWelcomeState()
-
-        val initialPrompt = intent?.getStringExtra(EXTRA_INITIAL_PROMPT) ?: intent?.getStringExtra("extra_initial_prompt")
-        val autoSend = intent?.getBooleanExtra(EXTRA_AUTO_SEND, false) ?: false
 
         if (!initialPrompt.isNullOrBlank()) {
             if (autoSend) {
                 binding.root.post {
-                    sendMessage(initialPrompt)
+                    sendMessage(initialPrompt, apiContext = apiContext)
                 }
             } else {
                 binding.etMessageInput.setText(initialPrompt)
@@ -356,18 +428,95 @@ class AiChatActivity : BaseActivity() {
         }
     }
 
+    private fun attachSessionListener() {
+        chatRepository.registerListener(currentSession.id, object : AiChatRepository.MessageResponseListener {
+            override fun onResponse(sessionId: String, botMessage: ChatMessage) {
+                if (sessionId == currentSession.id) {
+                    chatAdapter.removeLoadingMessage()
+                    val alreadyInAdapter = chatAdapter.getItems().any {
+                        !it.isUser && !it.isLoading && it.content == botMessage.content &&
+                                Math.abs(it.timestamp - botMessage.timestamp) < 5000
+                    }
+                    if (!alreadyInAdapter) {
+                        chatAdapter.addMessage(botMessage)
+                        saveCurrentSessionIfActive()
+                        scrollToBottom()
+                    }
+                }
+            }
+
+            override fun onError(sessionId: String, error: Throwable) {
+                if (sessionId == currentSession.id) {
+                    chatAdapter.removeLoadingMessage()
+                    val fallback = getString(R.string.ai_chat_error_fallback)
+                    val botMsg = ChatMessage(
+                        content = fallback,
+                        isUser = false,
+                        timestamp = System.currentTimeMillis()
+                    )
+                    chatAdapter.addMessage(botMsg)
+                    saveCurrentSessionIfActive()
+                    scrollToBottom()
+                }
+            }
+        })
+    }
+
+    private fun checkAndResumePendingResponse() {
+        val sessionId = currentSession.id
+        val isPending = chatRepository.isSessionPendingResponse(sessionId)
+        val items = chatAdapter.getItems()
+        val lastNonDate = items.lastOrNull { !it.isDateHeader }
+        val lastIsUser = lastNonDate?.isUser == true
+
+        if (isPending) {
+            if (items.none { it.isLoading }) {
+                val loadingMsg = ChatMessage(
+                    content = "",
+                    isUser = false,
+                    isLoading = true
+                )
+                chatAdapter.addMessage(loadingMsg)
+                scrollToBottom()
+            }
+        } else if (lastNonDate != null && lastNonDate.isUser) {
+            if (items.none { it.isLoading }) {
+                val loadingMsg = ChatMessage(
+                    content = "",
+                    isUser = false,
+                    isLoading = true
+                )
+                chatAdapter.addMessage(loadingMsg)
+                scrollToBottom()
+            }
+            val langCode = LocaleHelper.getSavedLanguageCode(this)
+            val apiPrompt = when {
+                lastNonDate.content.isNotEmpty() && !lastNonDate.imageUri.isNullOrEmpty() ->
+                    "${lastNonDate.content} [Attached Image]"
+                !lastNonDate.imageUri.isNullOrEmpty() ->
+                    "I have uploaded an image for health analysis. Please guide me."
+                else -> lastNonDate.content
+            }
+            attachSessionListener()
+            chatRepository.sendMessageForSession(sessionId, apiPrompt, langCode)
+        }
+    }
+
     private fun saveCurrentSessionIfActive() {
         val messages = chatAdapter.getItems().filter { !it.isLoading }
         if (messages.any { it.isUser }) {
             currentSession.messages.clear()
             currentSession.messages.addAll(messages)
+            val firstUserMsg = messages.firstOrNull { it.isUser }
             if (currentSession.title.isBlank()) {
-                val firstUserMsg = messages.firstOrNull { it.isUser }?.content.orEmpty()
-                currentSession.title = chatRepository.generateTitleFromMessage(firstUserMsg)
+                currentSession.title = chatRepository.generateTitleFromMessage(firstUserMsg?.content.orEmpty())
             }
-            val lastNonDateMsg = messages.lastOrNull { !it.isDateHeader }?.content.orEmpty()
-            currentSession.lastSnippet = lastNonDateMsg.take(80)
-            currentSession.updatedAt = System.currentTimeMillis()
+            if (currentSession.createdAt <= 0L || (firstUserMsg != null && currentSession.createdAt > firstUserMsg.timestamp)) {
+                currentSession.createdAt = firstUserMsg?.timestamp ?: currentSession.createdAt
+            }
+            val lastNonDateMsg = messages.lastOrNull { !it.isDateHeader }
+            currentSession.lastSnippet = lastNonDateMsg?.content.orEmpty().take(80)
+            currentSession.updatedAt = lastNonDateMsg?.timestamp ?: currentSession.createdAt
             chatRepository.saveOrUpdateConversation(currentSession)
         }
     }
@@ -382,9 +531,9 @@ class AiChatActivity : BaseActivity() {
         binding.rvChatMessages.visibility = View.VISIBLE
     }
 
-    private fun sendMessage(content: String) {
+    private fun sendMessage(content: String, imageUri: String? = null, apiContext: String? = null) {
         val trimmed = content.trim()
-        if (trimmed.isEmpty()) return
+        if (trimmed.isEmpty() && imageUri.isNullOrEmpty()) return
 
         // Switch to active chat state if not already
         showActiveChatState()
@@ -406,8 +555,12 @@ class AiChatActivity : BaseActivity() {
         val userMsg = ChatMessage(
             content = trimmed,
             isUser = true,
-            timestamp = System.currentTimeMillis()
+            timestamp = System.currentTimeMillis(),
+            imageUri = imageUri
         )
+        if (currentSession.createdAt <= 0L || currentSession.messages.none { it.isUser }) {
+            currentSession.createdAt = userMsg.timestamp
+        }
         chatAdapter.addMessage(userMsg)
         saveCurrentSessionIfActive()
         scrollToBottom()
@@ -421,38 +574,34 @@ class AiChatActivity : BaseActivity() {
         chatAdapter.addMessage(loadingMsg)
         scrollToBottom()
 
-        // 3. Call AI API with agentId = "402"
+        // 3. Dispatch to repository background scope so it completes even if user navigates away
         val langCode = LocaleHelper.getSavedLanguageCode(this)
-        lifecycleScope.launch {
-            val result = chatRepository.sendMessage(content = trimmed, langCode = langCode)
-            chatAdapter.removeLoadingMessage()
-
-            val botContent = result.getOrElse {
-                getString(R.string.ai_chat_error_fallback)
-            }.ifBlank {
-                getString(R.string.ai_chat_error_fallback)
-            }
-
-            val botMsg = ChatMessage(
-                content = botContent,
-                isUser = false,
-                timestamp = System.currentTimeMillis()
-            )
-            chatAdapter.addMessage(botMsg)
-            saveCurrentSessionIfActive()
-            scrollToBottom()
+        val langName = LocaleHelper.getNativeNameByCode(langCode)
+        val basePrompt = when {
+            trimmed.isNotEmpty() && !imageUri.isNullOrEmpty() -> "$trimmed [Attached Image]"
+            !imageUri.isNullOrEmpty() -> "I have uploaded an image for health analysis. Please guide me in $langName."
+            !apiContext.isNullOrBlank() -> "$trimmed\n\n$apiContext"
+            else -> trimmed
         }
+        val apiPrompt = if (!langCode.lowercase(Locale.ROOT).startsWith("en")) {
+            "$basePrompt\n(Please respond entirely in $langName.)"
+        } else {
+            basePrompt
+        }
+
+        attachSessionListener()
+        chatRepository.sendMessageForSession(currentSession.id, apiPrompt, langCode)
     }
 
     private fun hasDateHeaderToday(messages: List<ChatMessage>): Boolean {
-        val todayHeader = formatCurrentDateHeader()
-        return messages.any { it.isDateHeader && it.formattedDate?.startsWith("Today") == true }
+        val todayStr = getString(R.string.ai_chat_today)
+        return messages.any { it.isDateHeader && (it.formattedDate?.startsWith("Today") == true || it.formattedDate?.startsWith(todayStr) == true) }
     }
 
     private fun formatCurrentDateHeader(): String {
-        val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        val timeStr = timeFormat.format(Calendar.getInstance().time)
-        return "Today, $timeStr"
+        val todayStr = getString(R.string.ai_chat_today)
+        val timeStr = com.example.healthcareai.util.LocaleHelper.formatTime(this, System.currentTimeMillis(), "hh:mm a")
+        return "$todayStr, $timeStr"
     }
 
     private fun scrollToBottom() {
@@ -471,10 +620,39 @@ class AiChatActivity : BaseActivity() {
     private fun checkAndStartVoiceRecording() {
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
         if (permission == PackageManager.PERMISSION_GRANTED) {
+            val pref = PreferenceHelper.getInstance(this)
+            pref.micDenialCount = 0
             startVoiceRecording()
         } else {
-            recordAudioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            val pref = PreferenceHelper.getInstance(this)
+            if (pref.micDenialCount >= 2) {
+                showCustomMicPermissionDialog()
+            } else {
+                recordAudioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            }
         }
+    }
+
+    private fun showCustomMicPermissionDialog() {
+        if (micPermissionDialog?.isShowing == true) return
+        val pref = PreferenceHelper.getInstance(this)
+        isWaitingForMicPermissionFromSettings = true
+        micPermissionDialog = CustomRecordAudioPermissionDialog.show(
+            activity = this,
+            onGranted = {
+                pref.micDenialCount = 0
+                isWaitingForMicPermissionFromSettings = false
+                startVoiceRecording()
+            },
+            onDenied = {
+                isWaitingForMicPermissionFromSettings = false
+            }
+        )
+    }
+
+    private fun dismissMicPermissionDialog() {
+        micPermissionDialog?.dismiss()
+        micPermissionDialog = null
     }
 
     private fun startVoiceRecording() {
@@ -597,6 +775,9 @@ class AiChatActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        dismissMicPermissionDialog()
+        PermissionReturnHelper.stopPolling()
+        chatRepository.unregisterListener(currentSession.id)
         saveCurrentSessionIfActive()
         stopVoiceRecording(applyToInput = false)
     }

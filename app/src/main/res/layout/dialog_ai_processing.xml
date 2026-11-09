@@ -7,7 +7,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/bg_ai_processing_dialog"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:gravity="center_horizontal"
+    android:minWidth="240dp"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -16,7 +19,10 @@
         android:id="@+id/layoutVisualContainer"
         android:layout_width="match_parent"
         android:layout_height="132dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:minWidth="220dp">
 
         <!-- Rotating Circle Progress Ring (116dp x 116dp) -->
         <com.example.healthcareai.ui.camera.AiRotatingRingView
@@ -100,11 +106,12 @@
     <!-- Title -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/urbanist"
         android:gravity="center"
+        android:textAlignment="center"
         android:text="@string/ai_processing_title"
         android:textColor="#172044"
         android:textSize="20sp"
@@ -113,12 +120,13 @@
     <!-- Subtitle -->
     <TextView
         android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/urbanist"
         android:gravity="center"
         android:text="@string/ai_processing_desc"
+        android:textAlignment="center"
         android:textColor="#7A808C"
         android:textSize="14sp" />
 

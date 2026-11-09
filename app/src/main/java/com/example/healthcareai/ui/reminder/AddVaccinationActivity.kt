@@ -3,9 +3,12 @@ package com.example.healthcareai.ui.reminder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.widget.Toast
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.repository.HealthRecordRepository
+import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.ActivityAddVaccinationBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import java.util.UUID
@@ -21,6 +24,18 @@ class AddVaccinationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVaccinationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupHeaderTopMargin(binding.topBar, binding.root)
+
+        // Strict digits-only and max 2 digits filter (1-99)
+        val digitFilter = InputFilter { source, start, end, _, _, _ ->
+            val filtered = source.subSequence(start, end).filter { it.isDigit() }
+            if (filtered.length == end - start) null else filtered
+        }
+        binding.etDoseNumber.filters = arrayOf(digitFilter, InputFilter.LengthFilter(2))
+        binding.etVaccineName.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etBatchNumber.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etClinic.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etNotes.filters = arrayOf(InputFilter.LengthFilter(100))
 
         editingRecordId = intent.getStringExtra(EXTRA_RECORD_ID)
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
@@ -30,9 +45,15 @@ class AddVaccinationActivity : BaseActivity() {
                 profileId = existingRecord?.profileId
             }
             existingRecord?.let { record ->
-                binding.tvTitle.text = "Edit vaccination"
+                binding.tvTitle.text = getString(R.string.title_edit_vaccination)
                 binding.etVaccineName.setText(record.name)
-                binding.etDoseNumber.setText(record.doseNumber)
+                val cleanDose = record.doseNumber.filter { it.isDigit() }.take(2)
+                val cleanDoseInt = cleanDose.toIntOrNull()
+                if (cleanDoseInt != null && cleanDoseInt > 0) {
+                    binding.etDoseNumber.setText(cleanDoseInt.toString())
+                } else {
+                    binding.etDoseNumber.setText("")
+                }
                 binding.etBatchNumber.setText(record.batchNumber)
                 binding.etClinic.setText(record.clinic)
                 binding.etNotes.setText(record.notes)
@@ -51,13 +72,27 @@ class AddVaccinationActivity : BaseActivity() {
             val vaccineName = binding.etVaccineName.text?.toString()?.trim().orEmpty()
             if (vaccineName.isEmpty()) {
                 binding.etVaccineName.requestFocus()
-                Toast.makeText(this, "Please enter vaccine name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.error_vaccine_name_empty, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val doseNumberRaw = binding.etDoseNumber.text?.toString()?.trim().orEmpty()
+            if (doseNumberRaw.isEmpty()) {
+                binding.etDoseNumber.requestFocus()
+                Toast.makeText(this, R.string.error_dose_number_empty, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val doseInt = doseNumberRaw.toIntOrNull()
+            if (doseInt == null || doseInt <= 0 || doseInt > 99) {
+                binding.etDoseNumber.requestFocus()
+                Toast.makeText(this, R.string.error_dose_number_invalid, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             hideKeyboard()
 
-            val doseNumber = binding.etDoseNumber.text?.toString()?.trim().orEmpty()
+            val doseNumber = doseInt.toString()
             val batchNumber = binding.etBatchNumber.text?.toString()?.trim().orEmpty()
             val clinic = binding.etClinic.text?.toString()?.trim().orEmpty()
             val notes = binding.etNotes.text?.toString()?.trim().orEmpty()
@@ -71,7 +106,7 @@ class AddVaccinationActivity : BaseActivity() {
 
             val effectiveProfileId = existingRecord?.profileId 
                 ?: profileId 
-                ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
+                ?: ProfileRepository.getInstance(this).getPrimaryProfile().id
 
             val record = existingRecord?.copy(
                 name = vaccineName,
@@ -101,7 +136,7 @@ class AddVaccinationActivity : BaseActivity() {
                 putExtra(AddHealthRecordActivity.EXTRA_RECORD_NAME, record.name)
             }
             setResult(RESULT_OK, resultIntent)
-            Toast.makeText(this, "Vaccination saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.msg_vaccination_saved, Toast.LENGTH_SHORT).show()
             finish()
         }
     }

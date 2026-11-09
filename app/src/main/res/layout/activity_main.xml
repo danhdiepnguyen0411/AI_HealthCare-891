@@ -68,11 +68,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="22sp"
+                        app:lineHeight="22sp"
                         android:singleLine="true"
                         android:text="@string/tab_home"
                         android:textColor="@color/white"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
@@ -110,11 +116,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="22sp"
+                        app:lineHeight="22sp"
                         android:singleLine="true"
                         android:text="@string/tab_scan"
                         android:textColor="@color/white"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
@@ -152,11 +164,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="22sp"
+                        app:lineHeight="22sp"
                         android:singleLine="true"
                         android:text="@string/tab_my_health"
                         android:textColor="@color/white"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
@@ -194,11 +212,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="22sp"
+                        app:lineHeight="22sp"
                         android:singleLine="true"
                         android:text="@string/tab_family"
                         android:textColor="@color/white"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
@@ -236,11 +260,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:fontFamily="@font/urbanist_semibold"
+                        app:fontFamily="@font/urbanist_semibold"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="22sp"
+                        app:lineHeight="22sp"
                         android:singleLine="true"
                         android:text="@string/tab_settings"
                         android:textColor="@color/white"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
+                        android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>

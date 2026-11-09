@@ -6,8 +6,8 @@
     android:layout_gravity="center"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="24dp"
-    app:cardElevation="8dp"
-    app:cardMaxElevation="10dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false">
 
@@ -31,10 +31,12 @@
         <!-- Dialog Title -->
         <TextView
             android:id="@+id/tvExitDialogTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:textAlignment="center"
             android:text="@string/dialog_exit_assessment_title"
             android:textColor="@color/color_text"
             android:textSize="22sp"

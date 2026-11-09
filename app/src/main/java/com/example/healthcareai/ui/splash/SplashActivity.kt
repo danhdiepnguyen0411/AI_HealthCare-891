@@ -55,7 +55,7 @@ class SplashActivity : BaseActivity() {
         }
 
         // 1. Enforce reset if previous onboarding was incomplete
-        if (!preferenceHelper.isIntroCompleted) {
+        if (!preferenceHelper.isProfileCreated) {
             preferenceHelper.clearLanguageIfIntroNotCompleted(this)
         }
 
@@ -69,7 +69,7 @@ class SplashActivity : BaseActivity() {
 
         // Prevent duplicate task creation when launched from launcher (unless it is for uninstall)
         if (!isForUninstall(intent)) {
-            if (!isTaskRoot && preferenceHelper.isIntroCompleted &&
+            if (!isTaskRoot && preferenceHelper.isProfileCreated &&
                 (intent?.action == Intent.ACTION_MAIN || intent?.hasCategory(Intent.CATEGORY_LAUNCHER) == true)) {
                 finish()
                 return
@@ -88,17 +88,26 @@ class SplashActivity : BaseActivity() {
         // Setup Dynamic Shortcuts (e.g. Uninstall retention shortcut)
         ShortcutHelper.setupUninstallShortcut(this)
 
+        if (intent?.getBooleanExtra("from_notification", false) == true && preferenceHelper.isProfileCreated) {
+            onNotificationHandledAndNavigate()
+            return
+        }
+
         startLoadingProgress()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        if (intent.getBooleanExtra("from_notification", false) && preferenceHelper.isProfileCreated) {
+            onNotificationHandledAndNavigate()
+            return
+        }
         if (isForUninstall(intent)) {
             if (progressAnimator == null || !progressAnimator!!.isRunning) {
                 startLoadingProgress()
             }
-        } else if (!isTaskRoot && preferenceHelper.isIntroCompleted &&
+        } else if (!isTaskRoot && preferenceHelper.isProfileCreated &&
             (intent.action == Intent.ACTION_MAIN || intent.hasCategory(Intent.CATEGORY_LAUNCHER))) {
             finish()
         }
@@ -210,10 +219,7 @@ class SplashActivity : BaseActivity() {
             !preferenceHelper.isProfileCreated -> Intent(this, com.example.healthcareai.ui.profile.AddProfileActivity::class.java)
             else -> {
                 Intent(this, MainActivity::class.java).apply {
-                    if (intent?.getBooleanExtra("from_notification", false) == true) {
-                        putExtra("from_notification", true)
-                        putExtra(MainActivity.EXTRA_TARGET_TAB, intent?.getStringExtra(MainActivity.EXTRA_TARGET_TAB))
-                    }
+                    intent?.extras?.let { putExtras(it) }
                     if (didRequestNativeInThisSession) {
                         putExtra(MainActivity.EXTRA_SKIP_NOTI_POPUP, true)
                     }

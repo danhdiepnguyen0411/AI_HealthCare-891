@@ -59,9 +59,12 @@
     <!-- Add Profile -->
     <string name="title_add_profile">Thêm hồ sơ</string>
     <string name="title_add_member">Thêm thành viên</string>
+    <string name="title_edit_profile">Chỉnh sửa hồ sơ</string>
     <string name="title_detail_profile">Chi tiết hồ sơ</string>
     <string name="title_profile_detail">Chi tiết hồ sơ</string>
     <string name="msg_member_added">Đã thêm thành viên vào Gia đình!</string>
+    <string name="msg_profile_updated">Cập nhật hồ sơ thành công</string>
+    <string name="error_relationship_empty">Vui lòng chọn mối quan hệ</string>
     <string name="add_avatar">Đổi ảnh đại diện</string>
     <string name="label_full_name">Họ và tên</string>
     <string name="hint_full_name">Nhập họ và tên</string>
@@ -119,8 +122,8 @@
     <string name="record_conditions">Bệnh lý</string>
     <string name="record_vaccinations">Tiêm chủng</string>
     <string name="record_active_format">%1$d đang dùng</string>
-    <string name="record_reported_format">%1$d đã ghi nhận</string>
-    <string name="record_recorded_format">%1$d đã ghi nhận</string>
+    <string name="record_reported_format">%1$d ghi nhận</string>
+    <string name="record_recorded_format">%1$d ghi nhận</string>
     
     <!-- Settings -->
     <string name="settings_language">Cài đặt ngôn ngữ</string>
@@ -182,6 +185,10 @@
     <string name="dialog_camera_btn_dont_allow">Không cho phép</string>
     <string name="dialog_camera_btn_cancel">Để sau</string>
 
+    <!-- Microphone Permission Custom Dialog (Figma 19:1715) -->
+    <string name="dialog_mic_permission_title">Truy cập micrô</string>
+    <string name="dialog_mic_permission_desc">Cho phép truy cập micrô để sử dụng tính năng trò chuyện và phân tích giọng nói.</string>
+
     <!-- Camera Screen &amp; Guide -->
     <string name="camera_guide_title">Hướng dẫn chụp ảnh</string>
     <string name="camera_guide_tip_1">1. Giữ vùng cần kiểm tra ở chính giữa khung hình.</string>
@@ -205,7 +212,7 @@
     <string name="home_greeting_morning">Chào buổi sáng</string>
     <string name="home_greeting_afternoon">Chào buổi chiều</string>
     <string name="home_greeting_evening">Chào buổi tối</string>
-    <string name="home_subtitle">Sức khỏe của bạn hôm nay rất tuyệt vời.</string>
+    <string name="home_subtitle">Sẵn sàng kiểm tra sức khỏe hàng ngày?</string>
     <string name="home_ai_assistant_badge">Trợ lý sức khỏe AI</string>
     <string name="home_ai_assistant_title">Trợ lý sức khỏe\ncá nhân của bạn</string>
     <string name="home_btn_chat_ai">Trò chuyện với AI</string>
@@ -223,7 +230,7 @@
     <string name="home_btn_start_first_scan">Bắt đầu quét lần đầu</string>
     <string name="home_btn_get_pro">Nâng cấp Pro</string>
     <string name="home_manage">Quản lý</string>
-    <string name="btn_mark_as_done">Đã hoàn thành</string>
+    <string name="btn_mark_as_done">Đánh dấu hoàn thành</string>
     <string name="msg_marked_as_done">Đã đánh dấu hoàn thành!</string>
     <string name="reminder_cetirizine_title">Cetirizine</string>
     <string name="reminder_cetirizine_desc">10 mg · 1 viên</string>
@@ -324,7 +331,7 @@
 
     <!-- Symptom Checker Screen -->
     <string name="title_symptom_checker">Kiểm tra triệu chứng</string>
-    <string name="symptom_checker_subtitle">Hãy chia sẻ cảm giác của bạn lúc này\nđể nhận được hướng dẫn tốt nhất.</string>
+    <string name="symptom_checker_subtitle">Hãy chia sẻ cảm giác của bạn\nđể nhận được hướng dẫn tốt nhất.</string>
     <string name="symptom_checker_privacy_notice">Dữ liệu của bạn được mã hóa an toàn và bảo mật riêng tư.</string>
     <string name="symptom_checker_est_time_label">Thời gian ước tính</string>
     <string name="symptom_checker_est_time_val">3 phút</string>
@@ -470,7 +477,7 @@
     <string name="title_edit_reminder">Sửa nhắc nhở</string>
     <string name="reminder_action_edit">Chỉnh sửa nhắc nhở</string>
     <string name="reminder_action_delete">Xóa nhắc nhở</string>
-    <string name="reminder_status_taken">Đã uống</string>
+    <string name="reminder_status_taken">Đã hoàn thành</string>
     <string name="reminder_action_undo">Hoàn tác</string>
     <string name="msg_reminder_deleted">Đã xóa nhắc nhở</string>
     <string name="msg_reminder_updated">Đã cập nhật nhắc nhở</string>
@@ -574,6 +581,9 @@
     <string name="title_report_result">Báo cáo kết quả</string>
     <string name="btn_report">Báo cáo</string>
     <string name="title_choose_reminders">Chọn nhắc nhở của bạn</string>
+    <string name="no_reminders_yet">Chưa có lời nhắc nào</string>
+    <string name="msg_no_reminders_prompt_add">Bạn chưa thiết lập lời nhắc nào. Vui lòng thêm lời nhắc để bắt đầu theo dõi.</string>
+    <string name="btn_add_reminder">+ Thêm lời nhắc</string>
     <string name="btn_save_reminders_count">Lưu %1$d nhắc nhở</string>
     <string name="btn_save_reminder_single">Lưu 1 nhắc nhở</string>
     <string name="btn_edit">Sửa</string>
@@ -602,8 +612,24 @@
     <string name="title_edit_vaccination">Sửa tiêm chủng</string>
     <string name="label_vaccine_name">Tên vắc-xin</string>
     <string name="label_dose_number">Mũi số</string>
+    <string name="hint_dose_number">VD: 1</string>
     <string name="label_batch_number">Số lô</string>
     <string name="btn_save_vaccination">Lưu tiêm chủng</string>
+    <string name="msg_vaccination_saved">Đã lưu tiêm chủng</string>
+    <string name="error_vaccine_name_empty">Vui lòng nhập tên vắc-xin</string>
+    <string name="error_dose_number_empty">Vui lòng nhập số mũi tiêm</string>
+    <string name="error_dose_number_invalid">Số mũi tiêm phải từ 1 đến 99</string>
+    <string name="title_add_appointment">Thêm lịch hẹn</string>
+    <string name="title_edit_appointment">Sửa lịch hẹn</string>
+    <string name="title_appointment_details">Chi tiết lịch hẹn</string>
+    <string name="label_appointment_title">Tên lịch hẹn</string>
+    <string name="label_appointment_date">Ngày hẹn</string>
+    <string name="btn_save_appointment">Lưu lịch hẹn</string>
+    <string name="msg_appointment_saved">Đã lưu lịch hẹn</string>
+    <string name="error_appointment_name_empty">Vui lòng nhập tên lịch hẹn</string>
+    <string name="status_upcoming_title">Sắp tới</string>
+    <string name="status_completed_title">Đã khám</string>
+    <string name="status_cancelled_title">Đã hủy</string>
     <string name="title_add_medication">Thêm thuốc</string>
     <string name="title_edit_medication">Sửa thuốc</string>
     <string name="label_reason">Lý do</string>
@@ -612,6 +638,7 @@
     <string name="label_medication_name">Tên thuốc</string>
     <string name="no_records_yet_format">Chưa có %1$s nào</string>
     <string name="empty_records_desc">Thêm hồ sơ đầu tiên của bạn bằng nút bên dưới</string>
+    <string name="msg_record_deleted">Đã xóa bản ghi</string>
     <string name="btn_add_record_format">Thêm %1$s</string>
     <string name="title_choose_item_format">Chọn %1$s</string>
     <string name="no_items_added_yet_format">Chưa thêm %1$s nào</string>
@@ -668,4 +695,15 @@
     <string name="dialog_leave_without_saving_message">Kết quả phân tích chưa được lưu. Nếu bạn rời đi bây giờ, bạn sẽ không thể xem lại kết quả này.</string>
     <string name="btn_stay_on_page">Ở lại trang này</string>
     <string name="btn_exit_without_saving">Thoát mà không lưu</string>
+
+    <!-- AI Scan History & Detailed Results (Figma 14:1555 & 14:1585) -->
+    <string name="title_detailed_results">Kết quả chi tiết</string>
+    <string name="results_for">Kết quả cho</string>
+    <string name="title_ai_scan_history">Lịch sử quét AI</string>
+    <string name="scan_history_empty_title">Chưa có lịch sử quét</string>
+    <string name="scan_history_empty_desc">Các kết quả quét sức khỏe bằng AI của bạn sẽ xuất hiện tại đây.</string>
+    <!-- Custom System Notification (Figma 1:4045) -->
+    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_time_now">vừa xong</string>
+    <string name="splash_loading_progress">%1$s (%2$d%%)</string>
 </resources>

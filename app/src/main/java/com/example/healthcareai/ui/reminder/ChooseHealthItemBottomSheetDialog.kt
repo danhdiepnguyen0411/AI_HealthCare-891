@@ -127,7 +127,21 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
 
     private fun loadRecords(selectedId: String? = null) {
         val repo = HealthRecordRepository.getInstance(requireContext())
-        val records = repo.getRecordsByCategory(currentCategory, profileId)
+        val records = repo.getRecordsByCategory(currentCategory, profileId).toMutableList()
+
+        val activeSelected = (selectedId ?: selectedItemId)?.trim().orEmpty()
+        if (activeSelected.isNotBlank() && records.none { it.id == activeSelected || it.name.equals(activeSelected, ignoreCase = true) }) {
+            // Synthesize existing selected record so it appears in the list (e.g. AI-recommended medication or existing reminder item)
+            records.add(
+                0,
+                HealthRecordItem(
+                    id = activeSelected,
+                    name = activeSelected,
+                    category = currentCategory,
+                    profileId = profileId.orEmpty()
+                )
+            )
+        }
 
         if (records.isEmpty()) {
             binding.rvHealthItems.visibility = View.GONE
@@ -135,7 +149,8 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
         } else {
             binding.rvHealthItems.visibility = View.VISIBLE
             binding.layoutEmptyState.visibility = View.GONE
-            adapter.updateData(records, selectedId ?: selectedItemId)
+            val matchedId = records.find { it.id == activeSelected || it.name.equals(activeSelected, ignoreCase = true) }?.id ?: activeSelected
+            adapter.updateData(records, matchedId)
         }
     }
 

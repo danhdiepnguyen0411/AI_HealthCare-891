@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardScanRoot"
+    android:id="@+id/swipeRevealLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="10dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="0dp"
-    app:cardMaxElevation="0dp">
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_history_delete_card">
 
+    <!-- Secondary View: Background Red Delete Action -->
+    <FrameLayout
+        android:id="@+id/btnDeleteAction"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/btn_delete"
+            android:src="@drawable/ic_delete_white" />
+
+    </FrameLayout>
+
+    <!-- Main View: Foreground White Card -->
     <LinearLayout
+        android:id="@+id/cardScanRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_white_18"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp">
@@ -73,7 +91,7 @@
             android:layout_height="20dp"
             android:contentDescription="@null"
             android:src="@drawable/ic_chevron_right"
-            app:tint="@color/color_text" />
+            app:tint="@color/color_subtext" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
 
+</com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout>

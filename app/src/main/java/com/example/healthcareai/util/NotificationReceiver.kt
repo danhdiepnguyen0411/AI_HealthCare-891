@@ -37,6 +37,8 @@ class NotificationReceiver : BroadcastReceiver() {
                 val desc = ReminderLocalizationHelper.getLocalizedDescription(context, rawDesc)
                 val category = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_CATEGORY) ?: "Health"
                 val repeat = intent.getStringExtra(ReminderScheduler.EXTRA_REMINDER_REPEAT) ?: "Every day"
+                val profileId = intent.getStringExtra(ReminderScheduler.EXTRA_PROFILE_ID)
+                    ?: com.example.healthcareai.data.repository.ReminderRepository.getInstance(context).getReminder(reminderId)?.profileId
 
                 // Show heads-up reminder notification to user
                 NotificationHelper.showReminderNotification(
@@ -45,7 +47,8 @@ class NotificationReceiver : BroadcastReceiver() {
                     name = name,
                     description = desc,
                     category = category,
-                    timeIndex = timeIndex
+                    timeIndex = timeIndex,
+                    profileId = profileId
                 )
 
                 // Reschedule for next recurrence (e.g. tomorrow, next weekday, next week)

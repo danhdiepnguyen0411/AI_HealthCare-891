@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.healthcareai.R
 import com.example.healthcareai.data.repository.LesionAnalysisRepository
@@ -47,6 +49,7 @@ class ConfirmPhotoActivity : BaseActivity() {
     }
 
     private var activeRatio = Ratio.RATIO_9_16
+    private var pendingResultIntent: Intent? = null
 
     private data class RatioItemViews(
         val container: View,
@@ -62,6 +65,15 @@ class ConfirmPhotoActivity : BaseActivity() {
         binding = ActivityConfirmPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState != null) {
+            pendingResultIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                savedInstanceState.getParcelable(KEY_PENDING_RESULT_INTENT, Intent::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                savedInstanceState.getParcelable(KEY_PENDING_RESULT_INTENT)
+            }
+        }
+
         analysisRepo = LesionAnalysisRepository.getInstance(this)
         profileRepo = ProfileRepository.getInstance(this)
 
@@ -76,16 +88,26 @@ class ConfirmPhotoActivity : BaseActivity() {
         }
     }
 
-    private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootConfirmPhotoLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
-                }
-            }
-            insets
+    override fun onResume() {
+        super.onResume()
+        val pending = pendingResultIntent
+        if (pending != null) {
+            pendingResultIntent = null
+            (supportFragmentManager.findFragmentByTag(AiProcessingDialog.TAG) as? AiProcessingDialog)?.dismissSafely()
+            binding.btnUsePhoto.isEnabled = true
+            startActivity(pending)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        pendingResultIntent?.let {
+            outState.putParcelable(KEY_PENDING_RESULT_INTENT, it)
+        }
+    }
+
+    private fun setupWindowInsets() {
+        setupHeaderTopMargin(binding.topBar, binding.rootConfirmPhotoLayout)
     }
 
     private fun initRatioViews() {
@@ -251,9 +273,6 @@ class ConfirmPhotoActivity : BaseActivity() {
                         gender = gender
                     )
 
-                    processingDialog.dismissSafely()
-                    binding.btnUsePhoto.isEnabled = true
-
                     val data = scanResult.getOrNull()
                     val isIdentified = scanResult.isSuccess && data != null && LesionAnalysisRepository.isIdentified(data)
 
@@ -266,12 +285,9 @@ class ConfirmPhotoActivity : BaseActivity() {
                             putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, data)
                         }
                     }
-                    startActivity(intent)
+                    dispatchResultIntent(intent)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error during AI scan", e)
-                    processingDialog.dismissSafely()
-                    binding.btnUsePhoto.isEnabled = true
-
                     val intent = Intent(this@ConfirmPhotoActivity, AnalysisResultsActivity::class.java).apply {
                         if (tempFile != null && tempFile.exists()) {
                             putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, tempFile.absolutePath)
@@ -280,9 +296,26 @@ class ConfirmPhotoActivity : BaseActivity() {
                         profileId?.let { putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, it) }
                         putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, false)
                     }
-                    startActivity(intent)
+                    dispatchResultIntent(intent)
                 }
             }
+        }
+    }
+
+    private fun dispatchResultIntent(intent: Intent) {
+        if (isFinishing || isDestroyed) return
+
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            (supportFragmentManager.findFragmentByTag(AiProcessingDialog.TAG) as? AiProcessingDialog)?.dismissSafely()
+            binding.btnUsePhoto.isEnabled = true
+            startActivity(intent)
+        } else {
+            // App is not in foreground (e.g. user pressed Recent apps or Home to put app in background).
+            // Do NOT call startActivity here, which would force the app to reopen/pop to foreground.
+            // Queue the intent and dismiss the loading dialog so it smoothly transitions when user returns.
+            pendingResultIntent = intent
+            (supportFragmentManager.findFragmentByTag(AiProcessingDialog.TAG) as? AiProcessingDialog)?.dismissSafely()
+            binding.btnUsePhoto.isEnabled = true
         }
     }
 
@@ -319,6 +352,7 @@ class ConfirmPhotoActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "ConfirmPhotoActivity"
+        private const val KEY_PENDING_RESULT_INTENT = "key_pending_result_intent"
         const val EXTRA_IMAGE_URI = "extra_image_uri"
         const val EXTRA_IMAGE_PATH = "extra_image_path"
     }

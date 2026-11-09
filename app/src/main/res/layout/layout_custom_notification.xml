@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutNotificationRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_custom_notification"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- App Logo Icon (Figma 1:4048, 50x50dp with 12dp rounded corners) -->
+    <ImageView
+        android:id="@+id/ivNotiIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_notification_logo" />
+
+    <!-- Text content container -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <!-- Top Header row: "Health Link · now" -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNotiAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                android:includeFontPadding="false"
+                android:text="@string/noti_app_name_display"
+                android:textColor="#242E49"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvNotiDot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="4dp"
+                android:text="·"
+                android:textColor="#979797"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvNotiTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_medium"
+                android:includeFontPadding="false"
+                android:text="@string/noti_time_now"
+                android:textColor="#979797"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Notification Title: "Time to exercise" -->
+        <TextView
+            android:id="@+id/tvNotiTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_bold"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="Time to exercise"
+            android:textColor="#242E49"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Notification Message / Body: "Let's keep your body active!" -->
+        <TextView
+            android:id="@+id/tvNotiMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:text="Let's keep your body active!"
+            android:textColor="#56627A"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

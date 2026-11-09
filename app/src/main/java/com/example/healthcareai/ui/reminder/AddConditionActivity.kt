@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputFilter
 import android.widget.Toast
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.HealthRecordItem
@@ -31,6 +32,12 @@ class AddConditionActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddConditionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupHeaderTopMargin(binding.topBar, binding.root)
+
+        binding.etConditionName.filters = arrayOf(InputFilter.LengthFilter(50))
+        binding.etClinician.filters = arrayOf(InputFilter.LengthFilter(50))
+        binding.etClinic.filters = arrayOf(InputFilter.LengthFilter(50))
+        binding.etNotes.filters = arrayOf(InputFilter.LengthFilter(200))
 
         editingRecordId = intent.getStringExtra(EXTRA_RECORD_ID)
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
@@ -76,23 +83,33 @@ class AddConditionActivity : BaseActivity() {
             }
         }
 
-        // Date picker for Diagnosis date
+        // Date picker for Diagnosis date (past/today only)
         binding.cardDiagnosisDate.setOnClickListener {
             hideKeyboard()
             val cal = Calendar.getInstance()
-            DatePickerDialog(
+            if (selectedDiagnosisDateFormatted.isNotBlank()) {
+                try {
+                    dateFormat.parse(selectedDiagnosisDateFormatted)?.let { cal.time = it }
+                } catch (_: Exception) {}
+            }
+            val datePickerDialog = DatePickerDialog(
                 this,
                 { _, year, month, dayOfMonth ->
                     val chosenCal = Calendar.getInstance().apply {
                         set(year, month, dayOfMonth)
                     }
+                    if (chosenCal.timeInMillis > System.currentTimeMillis()) {
+                        return@DatePickerDialog
+                    }
                     selectedDiagnosisDateFormatted = dateFormat.format(chosenCal.time)
-                    binding.tvDiagnosisDate.text = selectedDiagnosisDateFormatted
+                    binding.tvDiagnosisDate.text = com.example.healthcareai.util.LocaleHelper.formatDate(this, chosenCal.time)
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            datePickerDialog.show()
         }
 
         binding.btnSaveCondition.setOnClickListener {
@@ -156,13 +173,13 @@ class AddConditionActivity : BaseActivity() {
 
     private fun populateExistingData() {
         val record = existingRecord ?: return
-        binding.tvTitle.text = "Edit condition"
+        binding.tvTitle.text = getString(R.string.title_edit_condition)
         binding.etConditionName.setText(record.name)
         binding.etClinician.setText(record.clinician)
         binding.etClinic.setText(record.clinic)
         if (record.diagnosisDate.isNotBlank()) {
             selectedDiagnosisDateFormatted = record.diagnosisDate
-            binding.tvDiagnosisDate.text = record.diagnosisDate
+            binding.tvDiagnosisDate.text = com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.diagnosisDate)
         }
         binding.etNotes.setText(record.notes)
 

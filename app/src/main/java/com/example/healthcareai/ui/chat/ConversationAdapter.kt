@@ -62,13 +62,20 @@ class ConversationAdapter(
         private val tvTime: TextView = itemView.findViewById(R.id.tvConversationTime)
 
         fun bind(session: ConversationSession) {
-            tvTitle.text = session.title.ifBlank {
-                itemView.context.getString(R.string.title_conversation)
+            val ctx = itemView.context
+            tvTitle.text = when (session.title.trim()) {
+                "Healthy lifestyle tips" -> ctx.getString(R.string.ai_chat_suggestion_1_title)
+                "Explain my scan results" -> ctx.getString(R.string.ai_chat_suggestion_2_title)
+                "Review my health data" -> ctx.getString(R.string.ai_chat_suggestion_3_title)
+                "Check my symptoms" -> ctx.getString(R.string.title_symptom_checker)
+                "" -> ctx.getString(R.string.title_conversation)
+                else -> session.title
             }
             tvSnippet.text = session.lastSnippet.ifBlank {
                 "..."
             }
-            tvTime.text = formatRelativeTime(itemView.context, session.updatedAt)
+            val displayTime = if (session.createdAt > 0L) session.createdAt else session.updatedAt
+            tvTime.text = formatRelativeTime(itemView.context, displayTime)
 
             // Reset layout position when recycled
             swipeRevealLayout.close(false)

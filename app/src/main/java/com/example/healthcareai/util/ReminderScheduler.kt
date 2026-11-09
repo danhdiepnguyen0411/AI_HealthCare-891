@@ -20,6 +20,7 @@ object ReminderScheduler {
     const val ACTION_MARK_REMINDER_DONE = "com.example.healthcareai.ACTION_MARK_REMINDER_DONE"
 
     const val EXTRA_REMINDER_ID = "extra_reminder_id"
+    const val EXTRA_PROFILE_ID = "extra_profile_id"
     const val EXTRA_TIME_INDEX = "extra_time_index"
     const val EXTRA_TIME_STR = "extra_time_str"
     const val EXTRA_REMINDER_NAME = "extra_reminder_name"
@@ -32,7 +33,25 @@ object ReminderScheduler {
      * Supports formats like "8:00 AM", "08:30 PM", "14:00", etc.
      */
     fun parseTimeString(timeStr: String): Pair<Int, Int>? {
-        val trimmed = timeStr.trim()
+        val trimmed = timeStr.trim().uppercase(Locale.US)
+            .replace("SA", "AM")
+            .replace("CH", "PM")
+            .replace("पूर्वाह्न", "AM")
+            .replace("अपराह्न", "PM")
+            .replace("पूर्वাহ্ন", "AM")
+            .replace("অপরাহ্ন", "PM")
+            .replace("ص", "AM")
+            .replace("م", "PM")
+            .replace("上午", "AM")
+            .replace("下午", "PM")
+            .replace("午前", "AM")
+            .replace("午後", "PM")
+            .replace("오전", "AM")
+            .replace("오후", "PM")
+            .replace("ДП", "AM")
+            .replace("ПП", "PM")
+            .replace("ÖÖ", "AM")
+            .replace("ÖS", "PM")
         if (trimmed.isEmpty()) return null
 
         val formats = listOf(
@@ -51,21 +70,42 @@ object ReminderScheduler {
             } catch (_: Exception) {}
         }
 
-        // Manual regex/split fallback
+        // Manual regex/split fallback (supporting AM/PM at start or end)
         try {
-            val parts = trimmed.split(" ")
-            val timeParts = parts[0].split(":")
-            var hour = timeParts[0].toInt()
-            val minute = timeParts[1].toInt()
-            if (parts.size > 1) {
-                val amPm = parts[1].uppercase(Locale.US)
-                if (amPm == "PM" && hour < 12) hour += 12
-                if (amPm == "AM" && hour == 12) hour = 0
+            val isPm = trimmed.contains("PM")
+            val isAm = trimmed.contains("AM")
+            val cleanDigits = trimmed.replace("AM", "").replace("PM", "").trim()
+            val timeParts = cleanDigits.split(":")
+            if (timeParts.size >= 2) {
+                var hour = timeParts[0].trim().toInt()
+                val minute = timeParts[1].trim().toInt()
+                if (isPm && hour < 12) hour += 12
+                if (isAm && hour == 12) hour = 0
+                return Pair(hour, minute)
             }
-            return Pair(hour, minute)
         } catch (_: Exception) {}
 
         return null
+    }
+
+    /**
+     * Parses time strings into minute-of-day (0..1439).
+     * If parsing fails, returns Int.MAX_VALUE so invalid times sort to the end.
+     */
+    fun parseTimeToMinutes(timeStr: String): Int {
+        val pair = parseTimeString(timeStr)
+        return if (pair != null) {
+            pair.first * 60 + pair.second
+        } else {
+            Int.MAX_VALUE
+        }
+    }
+
+    /**
+     * Sorts time strings in chronological ascending order (e.g. 8:00 AM -> 12:00 PM -> 3:21 PM -> 8:00 PM).
+     */
+    fun sortTimeList(times: List<String>): List<String> {
+        return times.sortedWith(compareBy({ parseTimeToMinutes(it) }, { it }))
     }
 
     /**
@@ -174,6 +214,7 @@ object ReminderScheduler {
             putExtra(EXTRA_REMINDER_DESC, reminder.getDisplayDescription())
             putExtra(EXTRA_REMINDER_CATEGORY, reminder.category)
             putExtra(EXTRA_REMINDER_REPEAT, reminder.repeat)
+            putExtra(EXTRA_PROFILE_ID, reminder.profileId)
         }
 
         val requestCode = getRequestCode(reminder.id, timeIndex)

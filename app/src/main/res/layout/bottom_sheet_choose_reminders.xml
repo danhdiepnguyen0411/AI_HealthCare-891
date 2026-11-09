@@ -19,18 +19,51 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_bottom_sheet_drag_handle" />
 
-    <!-- Sheet Title -->
-    <TextView
-        android:id="@+id/tvSheetTitle"
-        android:layout_width="wrap_content"
+    <!-- Sheet Header: Title centered + 40x40 Add Reminder Button on the right -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutSheetHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/urbanist"
-        android:text="@string/title_choose_reminders"
-        android:textColor="#172044"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginBottom="20dp">
+
+        <com.example.healthcareai.ui.widget.MarqueeTextView
+            android:id="@+id/tvSheetTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/title_choose_reminders"
+            android:textColor="#172044"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/btnHeaderAddReminder"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_primary_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/btn_add_reminder"
+                android:src="@drawable/ic_plus_small_white" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Reminders RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -40,6 +73,63 @@
         android:nestedScrollingEnabled="false"
         tools:itemCount="3"
         tools:listitem="@layout/item_choose_reminder" />
+
+    <!-- Empty State when user has no reminders yet -->
+    <LinearLayout
+        android:id="@+id/layoutEmptyReminders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="24dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivEmptyIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_medications"
+            app:tint="#4E75F7" />
+
+        <TextView
+            android:id="@+id/tvEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/urbanist"
+            android:includeFontPadding="false"
+            android:text="@string/no_reminders_yet"
+            android:textColor="@color/color_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvEmptySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/msg_no_reminders_prompt_add"
+            android:textColor="@color/color_subtext"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddReminder"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_primary"
+            android:fontFamily="@font/urbanist"
+            android:stateListAnimator="@null"
+            android:text="@string/btn_add_reminder"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Save Button (Primary) -->
     <androidx.appcompat.widget.AppCompatButton

@@ -23,6 +23,7 @@ import com.example.healthcareai.databinding.ActivityProfileDetailBinding
 import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.databinding.ItemScanHistoryCardBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.camera.AiScanHistoryActivity
 import com.example.healthcareai.ui.camera.AnalysisResultsActivity
 import com.example.healthcareai.ui.camera.CameraActivity
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
@@ -67,21 +68,7 @@ class ProfileDetailActivity : BaseActivity() {
     }
 
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootProfileDetail) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
-            } else {
-                (24 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
-            }
-            insets
-        }
+        setupHeaderTopMargin(binding.topBar, binding.rootProfileDetail)
     }
 
     private fun loadProfileData() {
@@ -107,15 +94,22 @@ class ProfileDetailActivity : BaseActivity() {
             binding.ivProfileAvatar.setImageResource(R.drawable.profile_person)
         }
 
-        // Name
+        // Name & Relationship
         binding.tvProfileName.text = if (profile.name.isNotBlank()) profile.name else "--"
+        if (!profile.relationship.isNullOrBlank()) {
+            val locRel = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(this, profile.relationship)
+            if (locRel.isNotBlank()) {
+                binding.tvProfileRelationship.visibility = View.VISIBLE
+                binding.tvProfileRelationship.text = "($locRel)"
+            } else {
+                binding.tvProfileRelationship.visibility = View.GONE
+            }
+        } else {
+            binding.tvProfileRelationship.visibility = View.GONE
+        }
 
-        // Gender & Relationship
-        binding.tvProfileGender.text = com.example.healthcareai.util.ProfileLocalizationHelper.formatGenderAndRelationship(
-            this,
-            profile.gender,
-            profile.relationship
-        )
+        // Gender
+        binding.tvProfileGender.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedGender(this, profile.gender)
 
         // Stats: Age, Height, Weight
         binding.tvAge.text = calculateAge(profile.dateOfBirth)
@@ -126,8 +120,7 @@ class ProfileDetailActivity : BaseActivity() {
     private fun calculateAge(dobString: String?): String {
         if (dobString.isNullOrBlank()) return "--"
         return try {
-            val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-            val birthDate = sdf.parse(dobString) ?: return "--"
+            val birthDate = com.example.healthcareai.util.LocaleHelper.parseStoredDate(dobString) ?: return "--"
             val birthCal = Calendar.getInstance().apply { time = birthDate }
             val nowCal = Calendar.getInstance()
             var age = nowCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR)
@@ -144,6 +137,14 @@ class ProfileDetailActivity : BaseActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+
+        val onEditClick = View.OnClickListener {
+            currentProfile?.let { profile ->
+                AddProfileActivity.startEdit(this, profile.id)
+            }
+        }
+        binding.cardProfile.setOnClickListener(onEditClick)
+        binding.ivEditProfile.setOnClickListener(onEditClick)
 
         binding.btnDelete.setOnClickListener {
             currentProfile?.let { profile ->
@@ -174,6 +175,11 @@ class ProfileDetailActivity : BaseActivity() {
             ReminderActivity.start(this, profileId = currentProfile?.id)
         }
 
+        binding.tvViewAllScans.setOnClickListener {
+            val targetId = currentProfile?.id ?: profileRepository.getPrimaryProfile().id
+            AiScanHistoryActivity.start(this, targetId)
+        }
+
         // AI Scan
         binding.btnStartFirstScan.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java).apply {
@@ -191,20 +197,26 @@ class ProfileDetailActivity : BaseActivity() {
         if (scans.isEmpty()) {
             binding.cardScan.visibility = View.VISIBLE
             binding.layoutScanList.visibility = View.GONE
+            binding.tvViewAllScans.visibility = View.GONE
         } else {
             binding.cardScan.visibility = View.GONE
             binding.layoutScanList.visibility = View.VISIBLE
+            binding.tvViewAllScans.visibility = View.VISIBLE
             binding.layoutScanList.removeAllViews()
 
-            for (scan in scans) {
+            for (scan in scans.take(2)) {
                 val itemBinding = ItemScanHistoryCardBinding.inflate(
                     layoutInflater,
                     binding.layoutScanList,
                     false
                 )
 
-                itemBinding.tvScanTitle.text = scan.title
-                itemBinding.tvScanDate.text = scan.dateFormatted
+                itemBinding.tvScanTitle.text = com.example.healthcareai.util.LocaleHelper.formatScanTitle(this, scan.title, scan.category)
+                itemBinding.tvScanDate.text = if (scan.timestamp > 0L) {
+                    com.example.healthcareai.util.LocaleHelper.formatDate(this, scan.timestamp)
+                } else {
+                    com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, scan.dateFormatted)
+                }
 
                 val imagePath = scan.imagePath
                 if (!imagePath.isNullOrEmpty() && File(imagePath).exists()) {
@@ -216,17 +228,42 @@ class ProfileDetailActivity : BaseActivity() {
                     itemBinding.ivScanThumbnail.setImageResource(R.drawable.no_scans_yet)
                 }
 
-                itemBinding.root.setOnClickListener {
-                    val intent = Intent(this, AnalysisResultsActivity::class.java).apply {
-                        putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
-                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
-                        putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
-                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
-                        putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
-                        putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
-                        scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                itemBinding.swipeRevealLayout.close(false)
+                val openDetailListener = View.OnClickListener {
+                    if (itemBinding.swipeRevealLayout.isOpen) {
+                        itemBinding.swipeRevealLayout.close(true)
+                    } else {
+                        val intent = Intent(this, AnalysisResultsActivity::class.java).apply {
+                            putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
+                            putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
+                            putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
+                            putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
+                            putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
+                            putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
+                            scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+                }
+                itemBinding.cardScanRoot.setOnClickListener(openDetailListener)
+                itemBinding.swipeRevealLayout.setOnClickListener(openDetailListener)
+
+                itemBinding.btnDeleteAction.setOnClickListener {
+                    itemBinding.swipeRevealLayout.close(false)
+                    DeleteConfirmationDialog.show(
+                        context = this,
+                        onDeleteConfirmed = {
+                            scanRepo.deleteScan(scan.id)
+                            try {
+                                scan.imagePath?.let { path ->
+                                    val file = File(path)
+                                    if (file.exists()) file.delete()
+                                }
+                            } catch (_: Exception) {}
+                            Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()
+                            syncScanHistory()
+                        }
+                    )
                 }
 
                 binding.layoutScanList.addView(itemBinding.root)
@@ -278,7 +315,7 @@ class ProfileDetailActivity : BaseActivity() {
 
             val sorted = reminders.sortedWith(
                 compareBy<ReminderItem> { it.isDone }
-                    .thenBy { it.timeList.firstOrNull() ?: "" }
+                    .thenBy { com.example.healthcareai.util.ReminderScheduler.parseTimeToMinutes(it.timeList.firstOrNull().orEmpty()) }
             )
 
             for (reminder in sorted.take(2)) {
@@ -299,7 +336,7 @@ class ProfileDetailActivity : BaseActivity() {
                     cardBinding.tvReminderDesc.visibility = View.GONE
                 }
 
-                val time = reminder.getDisplayTime()
+                val time = reminder.getDisplayTime(this)
                 if (time.isNotBlank()) {
                     cardBinding.tvReminderTime.visibility = View.VISIBLE
                     cardBinding.tvReminderTime.text = time

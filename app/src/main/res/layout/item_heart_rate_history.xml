@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    android:background="@drawable/bg_history_delete_card"
-    android:elevation="2dp">
+    android:background="@drawable/bg_history_delete_card">
 
     <!-- Secondary View: Background Red Delete Action (Figma: 90px width, #FF4D4F, 20px radius) -->
     <FrameLayout
@@ -28,7 +27,7 @@
 
     </FrameLayout>
 
-    <!-- Main View: Foreground White Card (Figma: 358px Fill, Hug 133.91px, Radius 20px, Elevation 2dp) -->
+    <!-- Main View: Foreground White Card (Figma: 358px Fill, Hug 133.91px, Radius 20px) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardForeground"
         android:layout_width="match_parent"
@@ -37,7 +36,6 @@
         android:background="@drawable/bg_card_white_18"
         android:clickable="true"
         android:focusable="true"
-        android:elevation="2dp"
         android:padding="20dp">
 
         <!-- Left Heart Illustration Container (Figma: 109px × 93.91px) -->

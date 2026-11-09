@@ -263,15 +263,7 @@ class CameraActivity : BaseActivity() {
     // =========================================================================
 
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootCameraLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
-                }
-            }
-            insets
-        }
+        setupHeaderTopMargin(binding.topBar, binding.rootCameraLayout)
     }
 
     private fun setupViewfinderOverlay() {

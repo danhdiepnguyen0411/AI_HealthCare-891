@@ -70,7 +70,7 @@ class ReminderDetailBottomSheetDialog : BottomSheetDialogFragment() {
         } else {
             binding.tvReminderDesc.visibility = View.GONE
         }
-        val time = reminder.getDisplayTime()
+        val time = reminder.getDisplayTime(requireContext())
         if (time.isNotBlank()) {
             binding.tvReminderTime.visibility = View.VISIBLE
             binding.tvReminderTime.text = time

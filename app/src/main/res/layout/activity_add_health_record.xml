@@ -41,12 +41,15 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:text="@string/title_add_medication"
             android:textColor="@color/color_text"
             android:textSize="22sp"
@@ -106,6 +109,7 @@
                     android:importantForAutofill="no"
                     android:includeFontPadding="false"
                     android:inputType="textCapSentences"
+                    android:maxLength="30"
                     android:maxLines="1"
                     android:paddingHorizontal="16dp"
                     android:textColor="@color/color_text"
@@ -157,6 +161,7 @@
                             android:importantForAutofill="no"
                             android:includeFontPadding="false"
                             android:inputType="text"
+                            android:maxLength="20"
                             android:maxLines="1"
                             android:paddingHorizontal="16dp"
                             android:textColor="@color/color_text"
@@ -248,6 +253,7 @@
                     android:importantForAutofill="no"
                     android:includeFontPadding="false"
                     android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="100"
                     android:minHeight="54dp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="14dp"

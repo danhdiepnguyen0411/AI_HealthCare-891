@@ -10,6 +10,7 @@ import androidx.core.view.updateLayoutParams
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.ActivitySymptomCheckerBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 
 class SymptomCheckerActivity : BaseActivity() {
 
@@ -26,15 +27,11 @@ class SymptomCheckerActivity : BaseActivity() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootSymptomCheckerLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.topBar.applyHeaderTopMargin(insets)
+
             val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val density = resources.displayMetrics.density
 
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + (8 * density).toInt()
-                }
-            }
             if (navBarBottom > 0) {
                 binding.btnStartAssessment.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                     bottomMargin = navBarBottom + (16 * density).toInt()

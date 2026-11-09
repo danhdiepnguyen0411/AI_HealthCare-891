@@ -120,7 +120,11 @@ class AiProcessingDialog : DialogFragment() {
         super.onStart()
         dialog?.window?.let { window ->
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            val density = resources.displayMetrics.density
+            val maxWidthPx = (300 * density).toInt()
+            val screenWidthPx = (resources.displayMetrics.widthPixels * 0.85f).toInt()
+            val dialogWidth = screenWidthPx.coerceAtMost(maxWidthPx)
+            window.setLayout(dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
             window.setDimAmount(0.5f)
             DialogImmersiveHelper.hideWindowNavigationBar(window)
         }

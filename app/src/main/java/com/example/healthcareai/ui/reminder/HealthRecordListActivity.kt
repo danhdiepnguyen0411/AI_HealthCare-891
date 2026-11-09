@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthcareai.R
@@ -14,6 +15,9 @@ import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.databinding.ActivityHealthRecordListBinding
 import com.example.healthcareai.databinding.ItemHealthRecordCardBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
+import com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout
+import com.example.healthcareai.util.LocaleHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,7 +29,12 @@ class HealthRecordListActivity : BaseActivity() {
     private var profileId: String? = null
 
     private lateinit var adapter: HealthRecordListAdapter
-    private val dateFormat = SimpleDateFormat("MMM d", Locale.US)
+    private val dateFormat: SimpleDateFormat
+        get() {
+            val locale = LocaleHelper.getSavedLocale(this)
+            val pattern = android.text.format.DateFormat.getBestDateTimePattern(locale, "MMMd")
+            return SimpleDateFormat(pattern, locale)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +44,7 @@ class HealthRecordListActivity : BaseActivity() {
         currentCategory = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_MEDICATION
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
 
+        setupHeaderTopMargin(binding.topBar, binding.root)
         setupUI()
         setupRecyclerView()
         loadData()
@@ -75,6 +85,12 @@ class HealthRecordListActivity : BaseActivity() {
                 binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.record_vaccinations).lowercase())
                 binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
             }
+            CATEGORY_APPOINTMENTS.lowercase(), "appointment", "appointments" -> {
+                binding.tvTitle.text = getString(R.string.category_appointments_title)
+                binding.tvAddButtonText.text = getString(R.string.title_add_appointment)
+                binding.tvEmptyTitle.text = getString(R.string.no_records_yet_format, getString(R.string.category_appointments_title).lowercase())
+                binding.tvEmptySubtitle.text = getString(R.string.empty_records_desc)
+            }
             else -> {
                 binding.tvTitle.text = currentCategory
                 binding.tvAddButtonText.text = getString(R.string.btn_add_record_format, currentCategory)
@@ -89,17 +105,35 @@ class HealthRecordListActivity : BaseActivity() {
                 CATEGORY_ALLERGIES.lowercase(), "allergy" -> AddAllergyActivity.start(this, profileId = profileId)
                 CATEGORY_CONDITIONS.lowercase(), "condition" -> AddConditionActivity.start(this, profileId = profileId)
                 CATEGORY_VACCINATIONS.lowercase(), "vaccination" -> AddVaccinationActivity.start(this, profileId = profileId)
+                CATEGORY_APPOINTMENTS.lowercase(), "appointment", "appointments" -> AddAppointmentActivity.start(this, profileId = profileId)
                 else -> AddMedicationActivity.start(this, profileId = profileId)
             }
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = HealthRecordListAdapter(emptyList()) { item ->
-            HealthRecordDetailActivity.start(this, item.id, currentCategory, profileId = profileId ?: item.profileId)
-        }
+        adapter = HealthRecordListAdapter(
+            items = emptyList(),
+            onItemClick = { item ->
+                HealthRecordDetailActivity.start(this, item.id, currentCategory, profileId = profileId ?: item.profileId)
+            },
+            onItemDelete = { item ->
+                showDeleteConfirmationDialog(item)
+            }
+        )
         binding.rvHealthRecords.layoutManager = LinearLayoutManager(this)
         binding.rvHealthRecords.adapter = adapter
+    }
+
+    private fun showDeleteConfirmationDialog(record: HealthRecordItem) {
+        DeleteConfirmationDialog.show(
+            context = this,
+            onDeleteConfirmed = {
+                HealthRecordRepository.getInstance(this).deleteRecord(record.id)
+                Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()
+                loadData()
+            }
+        )
     }
 
     private fun loadData() {
@@ -116,11 +150,15 @@ class HealthRecordListActivity : BaseActivity() {
 
     private inner class HealthRecordListAdapter(
         private var items: List<HealthRecordItem>,
-        private val onItemClick: (HealthRecordItem) -> Unit
+        private val onItemClick: (HealthRecordItem) -> Unit,
+        private val onItemDelete: (HealthRecordItem) -> Unit
     ) : RecyclerView.Adapter<HealthRecordListAdapter.ViewHolder>() {
+
+        private var currentlyOpenLayout: SwipeRevealLayout? = null
 
         fun updateItems(newItems: List<HealthRecordItem>) {
             items = newItems
+            currentlyOpenLayout = null
             notifyDataSetChanged()
         }
 
@@ -140,12 +178,16 @@ class HealthRecordListActivity : BaseActivity() {
             val item = items[position]
 
             // 1. Date
+            val ctx = this@HealthRecordListActivity
             val dateText = when (currentCategory.trim().lowercase()) {
                 CATEGORY_ALLERGIES.lowercase(), "allergy" -> {
-                    if (item.firstNoticedDate.isNotBlank()) item.firstNoticedDate else dateFormat.format(Date(item.createdAt))
+                    if (item.firstNoticedDate.isNotBlank()) LocaleHelper.formatStoredDate(ctx, item.firstNoticedDate, "MMMd") else dateFormat.format(Date(item.createdAt))
                 }
                 CATEGORY_CONDITIONS.lowercase(), "condition" -> {
-                    if (item.diagnosisDate.isNotBlank()) item.diagnosisDate else dateFormat.format(Date(item.createdAt))
+                    if (item.diagnosisDate.isNotBlank()) LocaleHelper.formatStoredDate(ctx, item.diagnosisDate, "MMMd") else dateFormat.format(Date(item.createdAt))
+                }
+                CATEGORY_APPOINTMENTS.lowercase(), "appointment", "appointments" -> {
+                    if (item.diagnosisDate.isNotBlank()) LocaleHelper.formatStoredDate(ctx, item.diagnosisDate, "MMMd") else dateFormat.format(Date(item.createdAt))
                 }
                 else -> {
                     dateFormat.format(Date(item.createdAt))
@@ -160,9 +202,10 @@ class HealthRecordListActivity : BaseActivity() {
             val subtitleText = when (currentCategory.trim().lowercase()) {
                 CATEGORY_MEDICATION.lowercase(), "medications" -> {
                     when {
-                        item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · 1 ${item.form} · Once daily"
+                        item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · 1 ${item.form}"
                         item.strength.isNotBlank() -> item.strength
-                        item.details.isNotBlank() -> item.details
+                        item.form.isNotBlank() -> item.form
+                        item.details.isNotBlank() -> item.details.replace(" · Once daily", "").replace("Once daily", "").trim()
                         item.reason.isNotBlank() -> item.reason
                         else -> item.notes
                     }
@@ -194,6 +237,15 @@ class HealthRecordListActivity : BaseActivity() {
                         else -> item.notes
                     }
                 }
+                CATEGORY_APPOINTMENTS.lowercase(), "appointment", "appointments" -> {
+                    when {
+                        item.clinician.isNotBlank() && item.clinic.isNotBlank() -> "${item.clinician} · ${item.clinic}"
+                        item.clinician.isNotBlank() -> item.clinician
+                        item.clinic.isNotBlank() -> item.clinic
+                        item.details.isNotBlank() -> item.details
+                        else -> item.notes
+                    }
+                }
                 else -> item.details.ifBlank { item.notes }
             }
 
@@ -204,8 +256,40 @@ class HealthRecordListActivity : BaseActivity() {
                 holder.binding.tvRecordSubtitle.visibility = View.GONE
             }
 
-            holder.binding.cardRecordRoot.setOnClickListener {
-                onItemClick(item)
+            // Close swipe layout on bind
+            holder.binding.swipeRevealLayout.close(false)
+
+            // Close other open swipe layouts when this one opens
+            holder.binding.swipeRevealLayout.onSwipeListener = object : SwipeRevealLayout.OnSwipeListener {
+                override fun onOpened(layout: SwipeRevealLayout) {
+                    if (currentlyOpenLayout != null && currentlyOpenLayout != layout) {
+                        currentlyOpenLayout?.close(true)
+                    }
+                    currentlyOpenLayout = layout
+                }
+
+                override fun onClosed(layout: SwipeRevealLayout) {
+                    if (currentlyOpenLayout == layout) {
+                        currentlyOpenLayout = null
+                    }
+                }
+            }
+
+            // Click listener for foreground
+            val clickListener = View.OnClickListener {
+                if (holder.binding.swipeRevealLayout.isOpen) {
+                    holder.binding.swipeRevealLayout.close(true)
+                } else {
+                    onItemClick(item)
+                }
+            }
+            holder.binding.cardRecordRoot.setOnClickListener(clickListener)
+            holder.binding.swipeRevealLayout.setOnClickListener(clickListener)
+
+            // Delete action button
+            holder.binding.btnDeleteAction.setOnClickListener {
+                holder.binding.swipeRevealLayout.close(false)
+                onItemDelete(item)
             }
         }
 
@@ -220,6 +304,7 @@ class HealthRecordListActivity : BaseActivity() {
         const val CATEGORY_ALLERGIES = "Allergies"
         const val CATEGORY_CONDITIONS = "Conditions"
         const val CATEGORY_VACCINATIONS = "Vaccinations"
+        const val CATEGORY_APPOINTMENTS = "Appointments"
 
         fun start(context: Context, category: String, profileId: String? = null) {
             val intent = Intent(context, HealthRecordListActivity::class.java).apply {

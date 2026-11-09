@@ -64,6 +64,7 @@ class HealthRecordRepository private constructor(context: Context) {
                 (target == "allergy" || target == "allergies") && (cat == "allergy" || cat == "allergies") -> true
                 (target == "condition" || target == "conditions") && (cat == "condition" || cat == "conditions") -> true
                 (target == "vaccination" || target == "vaccinations") && (cat == "vaccination" || cat == "vaccinations") -> true
+                (target == "appointment" || target == "appointments") && (cat == "appointment" || cat == "appointments") -> true
                 else -> false
             }
         }

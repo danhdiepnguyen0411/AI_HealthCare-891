@@ -39,15 +39,18 @@
         </FrameLayout>
 
         <!-- Centered Title: Urbanist 700 Bold, 22sp, line height 27sp, color #242E49 -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
             app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:letterSpacing="0"
             android:lineHeight="27sp"
+            android:singleLine="true"
             android:text="@string/title_heart_rate"
             android:textColor="@color/color_text"
             android:textSize="22sp"
@@ -348,7 +351,8 @@
         android:layout_marginBottom="36dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="22dp"
-        app:cardElevation="1dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

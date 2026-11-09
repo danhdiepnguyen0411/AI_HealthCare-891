@@ -17,6 +17,8 @@ import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.repository.HealthRecordRepository
 import com.example.healthcareai.databinding.ActivityHealthRecordDetailBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
+import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,19 +55,9 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootHealthRecordDetail) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
-            } else {
-                (16 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
-            }
+            binding.topBar.applyHeaderTopMargin(insets)
 
+            val density = resources.displayMetrics.density
             val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             binding.layoutBottomAction.updatePadding(bottom = (24 * density).toInt() + navBarBottom)
             insets
@@ -75,6 +67,19 @@ open class HealthRecordDetailActivity : BaseActivity() {
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnDelete.setOnClickListener {
+            DeleteConfirmationDialog.show(
+                context = this,
+                onDeleteConfirmed = {
+                    currentRecord?.let { record ->
+                        HealthRecordRepository.getInstance(this).deleteRecord(record.id)
+                        Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+            )
         }
     }
 
@@ -96,6 +101,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
             cat == "allergy" || cat == "allergies" -> bindAllergy(record)
             cat == "condition" || cat == "conditions" -> bindCondition(record)
             cat == "vaccination" || cat == "vaccinations" -> bindVaccination(record)
+            cat == "appointment" || cat == "appointments" -> bindAppointment(record)
             else -> bindMedication(record)
         }
     }
@@ -157,10 +163,14 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
         // Row 2: First noticed | Updated
         binding.tvLabelRow2Left.text = getString(R.string.label_first_noticed)
-        binding.tvValueRow2Left.text = record.firstNoticedDate.ifBlank { getString(R.string.not_provided) }
+        binding.tvValueRow2Left.text = if (record.firstNoticedDate.isNotBlank()) {
+            com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.firstNoticedDate)
+        } else {
+            getString(R.string.not_provided)
+        }
 
         binding.tvLabelRow2Right.text = getString(R.string.label_updated)
-        binding.tvValueRow2Right.text = dateFormat.format(Date(record.createdAt))
+        binding.tvValueRow2Right.text = com.example.healthcareai.util.LocaleHelper.formatDate(this, record.createdAt)
         binding.layoutRow2Right.visibility = View.VISIBLE
 
         // Row 3: Note
@@ -196,7 +206,11 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
         // Row 2: Diagnosis date | (hidden)
         binding.tvLabelRow2Left.text = getString(R.string.label_diagnosis_date)
-        binding.tvValueRow2Left.text = record.diagnosisDate.ifBlank { getString(R.string.not_provided) }
+        binding.tvValueRow2Left.text = if (record.diagnosisDate.isNotBlank()) {
+            com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.diagnosisDate)
+        } else {
+            getString(R.string.not_provided)
+        }
 
         binding.layoutRow2Right.visibility = View.INVISIBLE
 
@@ -247,7 +261,11 @@ open class HealthRecordDetailActivity : BaseActivity() {
         binding.tvValueRow2Left.text = record.clinic.ifBlank { getString(R.string.not_provided) }
 
         binding.tvLabelRow2Right.text = getString(R.string.label_date_received)
-        binding.tvValueRow2Right.text = if (record.diagnosisDate.isNotBlank()) record.diagnosisDate else getString(R.string.not_provided)
+        binding.tvValueRow2Right.text = if (record.diagnosisDate.isNotBlank()) {
+            com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.diagnosisDate)
+        } else {
+            getString(R.string.not_provided)
+        }
         binding.layoutRow2Right.visibility = View.VISIBLE
 
         // Row 3: Note
@@ -258,6 +276,61 @@ open class HealthRecordDetailActivity : BaseActivity() {
         binding.tvEditButtonText.text = getString(R.string.title_edit_vaccination)
         binding.btnEditRecord.setOnClickListener {
             AddVaccinationActivity.start(this, record.id, record.profileId ?: profileId)
+        }
+        binding.btnUpdateStatus.visibility = View.GONE
+    }
+
+    private fun bindAppointment(record: HealthRecordItem) {
+        binding.tvTopBarTitle.text = getString(R.string.title_appointment_details)
+        binding.flIconContainer.setBackgroundResource(R.drawable.bg_icon_appointment)
+        binding.ivRecordIcon.setImageResource(R.drawable.ic_appointments)
+        binding.ivRecordIcon.setColorFilter(Color.parseColor("#0F67FE"))
+
+        binding.tvRecordName.text = record.name
+        val subtitle = when {
+            record.clinician.isNotBlank() && record.clinic.isNotBlank() -> "${record.clinician} · ${record.clinic}"
+            record.clinician.isNotBlank() -> record.clinician
+            record.clinic.isNotBlank() -> record.clinic
+            else -> ""
+        }
+        if (subtitle.isNotBlank()) {
+            binding.tvRecordSubtitle.visibility = View.VISIBLE
+            binding.tvRecordSubtitle.text = subtitle
+        } else {
+            binding.tvRecordSubtitle.visibility = View.GONE
+        }
+
+        binding.tvStatusBadge.visibility = if (record.status.isNotBlank()) View.VISIBLE else View.GONE
+        binding.tvStatusBadge.text = record.status
+
+        // Row 1: Clinician | Clinic
+        binding.tvLabelRow1Left.text = getString(R.string.label_clinician)
+        binding.tvValueRow1Left.text = record.clinician.ifBlank { getString(R.string.not_provided) }
+
+        binding.tvLabelRow1Right.text = getString(R.string.label_clinic)
+        binding.tvValueRow1Right.text = record.clinic.ifBlank { getString(R.string.not_provided) }
+        binding.layoutRow1Right.visibility = View.VISIBLE
+
+        // Row 2: Appointment date | Updated
+        binding.tvLabelRow2Left.text = getString(R.string.label_appointment_date)
+        binding.tvValueRow2Left.text = if (record.diagnosisDate.isNotBlank()) {
+            com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.diagnosisDate)
+        } else {
+            getString(R.string.not_provided)
+        }
+
+        binding.tvLabelRow2Right.text = getString(R.string.label_updated)
+        binding.tvValueRow2Right.text = com.example.healthcareai.util.LocaleHelper.formatDate(this, record.createdAt)
+        binding.layoutRow2Right.visibility = View.VISIBLE
+
+        // Row 3: Note
+        binding.tvLabelNotes.text = getString(R.string.label_note)
+        binding.tvValueNotes.text = record.notes.ifBlank { getString(R.string.not_provided) }
+
+        // Bottom button
+        binding.tvEditButtonText.text = getString(R.string.title_edit_appointment)
+        binding.btnEditRecord.setOnClickListener {
+            AddAppointmentActivity.start(this, record.id, record.profileId ?: profileId)
         }
         binding.btnUpdateStatus.visibility = View.GONE
     }
@@ -288,6 +361,7 @@ open class HealthRecordDetailActivity : BaseActivity() {
                 cat == "allergy" || cat == "allergies" -> AllergyDetailActivity.start(context, recordId, profileId)
                 cat == "condition" || cat == "conditions" -> ConditionDetailActivity.start(context, recordId, profileId)
                 cat == "vaccination" || cat == "vaccinations" -> VaccinationDetailActivity.start(context, recordId, profileId)
+                cat == "appointment" || cat == "appointments" -> AppointmentDetailActivity.start(context, recordId, profileId)
                 else -> {
                     val intent = Intent(context, HealthRecordDetailActivity::class.java).apply {
                         putExtra(EXTRA_RECORD_ID, recordId)
@@ -346,6 +420,19 @@ class VaccinationDetailActivity : HealthRecordDetailActivity() {
             val intent = Intent(context, VaccinationDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD_ID, recordId)
                 putExtra(EXTRA_CATEGORY, "Vaccinations")
+                profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
+            }
+            context.startActivity(intent)
+        }
+    }
+}
+
+class AppointmentDetailActivity : HealthRecordDetailActivity() {
+    companion object {
+        fun start(context: Context, recordId: String, profileId: String? = null) {
+            val intent = Intent(context, AppointmentDetailActivity::class.java).apply {
+                putExtra(EXTRA_RECORD_ID, recordId)
+                putExtra(EXTRA_CATEGORY, "Appointments")
                 profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
             }
             context.startActivity(intent)

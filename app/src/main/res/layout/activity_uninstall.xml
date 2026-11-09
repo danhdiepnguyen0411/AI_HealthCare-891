@@ -67,200 +67,180 @@
                 android:textSize="24sp" />
 
             <!-- Card 1: Unable to use features and save result -->
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardProblem1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardMaxElevation="4dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="false">
+                android:background="@drawable/bg_uninstall_problem_card"
+                android:padding="16dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:id="@+id/flIcon1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_red_badge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivIconProblem1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/unable_to_use_features_and_save_result" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvCardProblem1Title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/urbanist_bold"
+                    app:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="24sp"
+                    android:text="@string/uninstall_card1_title"
+                    android:textColor="@color/uninstall_text_title"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flIcon1"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <FrameLayout
-                        android:id="@+id/flIcon1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_circle_red_badge"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/tvCardProblem1Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/urbanist_regular"
+                    app:fontFamily="@font/urbanist_regular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="16sp"
+                    android:text="@string/uninstall_card1_desc"
+                    android:textColor="@color/uninstall_text_desc"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flIcon1"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardProblem1Title" />
 
-                        <ImageView
-                            android:id="@+id/ivIconProblem1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@null"
-                            android:src="@drawable/unable_to_use_features_and_save_result" />
-                    </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/btnTryAgain1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_uninstall_card_pill_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardProblem1Desc">
 
                     <TextView
-                        android:id="@+id/tvCardProblem1Title"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/urbanist_bold"
                         app:fontFamily="@font/urbanist_bold"
                         android:includeFontPadding="false"
-                        android:letterSpacing="0"
-                        android:lineHeight="24sp"
-                        android:text="@string/uninstall_card1_title"
-                        android:textColor="@color/uninstall_text_title"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/flIcon1"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:text="@string/uninstall_btn_try_again"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tvCardProblem1Desc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="@font/urbanist_regular"
-                        app:fontFamily="@font/urbanist_regular"
-                        android:includeFontPadding="false"
-                        android:letterSpacing="0"
-                        android:lineHeight="16sp"
-                        android:text="@string/uninstall_card1_desc"
-                        android:textColor="@color/uninstall_text_desc"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/flIcon1"
-                        app:layout_constraintTop_toBottomOf="@id/tvCardProblem1Title" />
-
-                    <FrameLayout
-                        android:id="@+id/btnTryAgain1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/bg_uninstall_card_pill_btn"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingHorizontal="22dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvCardProblem1Desc">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/urbanist_bold"
-                            app:fontFamily="@font/urbanist_bold"
-                            android:includeFontPadding="false"
-                            android:text="@string/uninstall_btn_try_again"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </FrameLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Card 2: Not currently available for use -->
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardProblem2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardMaxElevation="4dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="false">
+                android:background="@drawable/bg_uninstall_problem_card"
+                android:padding="16dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:id="@+id/flIcon2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_circle_blue_grey_badge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivIconProblem2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/not_currently_available_for_use" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvCardProblem2Title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/urbanist_bold"
+                    app:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="24sp"
+                    android:text="@string/uninstall_card2_title"
+                    android:textColor="@color/uninstall_text_title"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flIcon2"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <FrameLayout
-                        android:id="@+id/flIcon2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_circle_blue_grey_badge"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/tvCardProblem2Desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/urbanist_regular"
+                    app:fontFamily="@font/urbanist_regular"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="16sp"
+                    android:text="@string/uninstall_card2_desc"
+                    android:textColor="@color/uninstall_text_desc"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flIcon2"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardProblem2Title" />
 
-                        <ImageView
-                            android:id="@+id/ivIconProblem2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@null"
-                            android:src="@drawable/not_currently_available_for_use" />
-                    </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/btnExplore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_uninstall_card_pill_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardProblem2Desc">
 
                     <TextView
-                        android:id="@+id/tvCardProblem2Title"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/urbanist_bold"
                         app:fontFamily="@font/urbanist_bold"
                         android:includeFontPadding="false"
-                        android:letterSpacing="0"
-                        android:lineHeight="24sp"
-                        android:text="@string/uninstall_card2_title"
-                        android:textColor="@color/uninstall_text_title"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/flIcon2"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:text="@string/uninstall_btn_explore"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tvCardProblem2Desc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="@font/urbanist_regular"
-                        app:fontFamily="@font/urbanist_regular"
-                        android:includeFontPadding="false"
-                        android:letterSpacing="0"
-                        android:lineHeight="16sp"
-                        android:text="@string/uninstall_card2_desc"
-                        android:textColor="@color/uninstall_text_desc"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/flIcon2"
-                        app:layout_constraintTop_toBottomOf="@id/tvCardProblem2Title" />
-
-                    <FrameLayout
-                        android:id="@+id/btnExplore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/bg_uninstall_card_pill_btn"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingHorizontal="22dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvCardProblem2Desc">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/urbanist_bold"
-                            app:fontFamily="@font/urbanist_bold"
-                            android:includeFontPadding="false"
-                            android:text="@string/uninstall_btn_explore"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </FrameLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

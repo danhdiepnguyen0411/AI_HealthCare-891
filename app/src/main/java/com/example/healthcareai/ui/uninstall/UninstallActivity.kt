@@ -33,8 +33,8 @@ class UninstallActivity : BaseActivity() {
             val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navBar = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
 
-            // Top status bar padding for back button
-            val topMargin = statusBar.top + (12 * density).toInt()
+            // Top status bar padding for back button (standardized 16dp spacing)
+            val topMargin = statusBar.top + (16 * density).toInt()
             (binding.btnBack.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
                 if (lp.topMargin != topMargin) {
                     lp.topMargin = topMargin

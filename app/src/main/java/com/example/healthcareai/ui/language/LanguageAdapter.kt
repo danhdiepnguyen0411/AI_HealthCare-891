@@ -16,11 +16,20 @@ class LanguageAdapter(
     private val onItemSelected: (LanguageModel) -> Unit
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
 
+    var item4RadioView: View? = null
     var onItemBound: ((position: Int, itemView: View) -> Unit)? = null
 
     fun updateLayoutDirection(dir: Int) {
         if (this.layoutDirection != dir) {
             this.layoutDirection = dir
+            notifyDataSetChanged()
+        }
+    }
+
+    fun selectPosition(position: Int) {
+        if (position in 0 until items.size) {
+            items.forEach { it.isSelected = false }
+            items[position].isSelected = true
             notifyDataSetChanged()
         }
     }
@@ -38,6 +47,11 @@ class LanguageAdapter(
 
     override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
         holder.bind(items[position])
+        if (position == 3) {
+            item4RadioView = holder.binding.ivRadio
+        } else if (item4RadioView === holder.binding.ivRadio) {
+            item4RadioView = null
+        }
         onItemBound?.invoke(position, holder.binding.root)
     }
 
