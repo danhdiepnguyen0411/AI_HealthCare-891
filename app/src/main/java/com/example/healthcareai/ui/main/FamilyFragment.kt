@@ -15,6 +15,7 @@ import com.example.healthcareai.R
 import com.example.healthcareai.data.model.UserProfile
 import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.databinding.FragmentFamilyBinding
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 import com.example.healthcareai.ui.dialog.DeleteConfirmationDialog
 import com.example.healthcareai.ui.profile.AddProfileActivity
 import com.example.healthcareai.ui.profile.ProfileDetailActivity
@@ -77,18 +78,7 @@ class FamilyFragment : Fragment() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootFamilyLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
-            } else {
-                (24 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
-            }
+            binding.topBar.applyHeaderTopMargin(insets)
             insets
         }
     }

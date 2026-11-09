@@ -38,14 +38,17 @@
         </FrameLayout>
 
         <!-- Centered Screen Title: "Statistics" (Figma: Urbanist Bold 700, 24sp, Line Height 27sp, #242E49) -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
             app:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:lineHeight="27sp"
+            android:singleLine="true"
             android:text="@string/statistics_title"
             android:textColor="@color/color_text"
             android:textSize="24sp"
@@ -105,13 +108,15 @@
                 android:textSize="32sp"
                 tools:text="82" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.example.healthcareai.ui.widget.MarqueeTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist_medium"
                 app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
                 android:includeFontPadding="false"
+                android:singleLine="true"
                 android:text="@string/statistics_average"
                 android:textColor="@color/text_stat_label"
                 android:textSize="13sp" />
@@ -157,13 +162,15 @@
                 android:textSize="32sp"
                 tools:text="96" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.example.healthcareai.ui.widget.MarqueeTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist_medium"
                 app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
                 android:includeFontPadding="false"
+                android:singleLine="true"
                 android:text="@string/statistics_highest"
                 android:textColor="@color/text_stat_label"
                 android:textSize="13sp" />
@@ -209,13 +216,15 @@
                 android:textSize="32sp"
                 tools:text="64" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.example.healthcareai.ui.widget.MarqueeTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist_medium"
                 app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
                 android:includeFontPadding="false"
+                android:singleLine="true"
                 android:text="@string/statistics_lowest"
                 android:textColor="@color/text_stat_label"
                 android:textSize="13sp" />

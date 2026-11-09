@@ -21,6 +21,7 @@ import androidx.camera.core.ImageProxy
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -152,17 +153,13 @@ class HeartRateActivity : BaseActivity() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootHeartRateLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            binding.topBar.applyHeaderTopMargin(insets)
 
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
-                }
-            }
+            val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val density = resources.displayMetrics.density
             if (navBarBottom > 0) {
                 binding.cardProgressPill.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    bottomMargin = navBarBottom + 28
+                    bottomMargin = navBarBottom + (28 * density).toInt()
                 }
             }
             insets

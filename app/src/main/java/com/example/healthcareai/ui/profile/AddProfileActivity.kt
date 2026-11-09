@@ -1,10 +1,12 @@
 package com.example.healthcareai.ui.profile
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
@@ -29,9 +31,12 @@ import com.example.healthcareai.databinding.BottomSheetSelectGenderBinding
 import com.example.healthcareai.databinding.BottomSheetSelectRelationshipBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.main.MainActivity
+import com.example.healthcareai.util.DialogImmersiveHelper
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -49,6 +54,9 @@ class AddProfileActivity : BaseActivity() {
     private var selectedGender: String = ""
     private var selectedRelationship: String = ""
     private var isAddMemberMode: Boolean = false
+    private var isEditMode: Boolean = false
+    private var editProfileId: String? = null
+    private var editingProfile: UserProfile? = null
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -57,11 +65,27 @@ class AddProfileActivity : BaseActivity() {
     private var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
     private var wasKeyboardOpen = false
 
+    private fun saveAvatarToInternalStorage(uri: Uri): Uri? {
+        return try {
+            val avatarDir = File(filesDir, "avatars").apply { if (!exists()) mkdirs() }
+            val avatarFile = File(avatarDir, "avatar_${System.currentTimeMillis()}.jpg")
+            contentResolver.openInputStream(uri)?.use { input ->
+                avatarFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+            Uri.fromFile(avatarFile)
+        } catch (_: Exception) {
+            uri
+        }
+    }
+
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                selectedAvatarUri = it
-                binding.ivAvatar.load(it) {
+            uri?.let { rawUri ->
+                val savedUri = saveAvatarToInternalStorage(rawUri) ?: rawUri
+                selectedAvatarUri = savedUri
+                binding.ivAvatar.load(savedUri) {
                     crossfade(true)
                     transformations(CircleCropTransformation())
                 }
@@ -76,14 +100,71 @@ class AddProfileActivity : BaseActivity() {
         profileRepository = ProfileRepository.getInstance(this)
         preferenceHelper = PreferenceHelper.getInstance(this)
 
-        isAddMemberMode = intent.getBooleanExtra(EXTRA_IS_ADD_MEMBER, false) || preferenceHelper.isProfileCreated
-        if (isAddMemberMode) {
-            binding.tvTitle.setText(R.string.title_add_member)
-            binding.tvBtnCreateProfile.setText(R.string.title_add_member)
+        editProfileId = intent.getStringExtra(EXTRA_PROFILE_ID)
+        isEditMode = intent.getBooleanExtra(EXTRA_IS_EDIT, false) && !editProfileId.isNullOrBlank()
+
+        if (isEditMode) {
+            editingProfile = profileRepository.getProfileById(editProfileId!!)
+                ?: if (editProfileId == ProfileRepository.PRIMARY_PROFILE_ID) profileRepository.getPrimaryProfile() else null
+        }
+
+        if (isEditMode && editingProfile != null) {
+            val profile = editingProfile!!
+            binding.tvTitle.setText(R.string.title_edit_profile)
+            binding.tvBtnCreateProfile.setText(R.string.btn_save)
             binding.btnBack.visibility = View.VISIBLE
             binding.btnBack.setOnClickListener { finish() }
-            binding.layoutRelationship.visibility = View.VISIBLE
-            binding.cardRelationship.setOnClickListener { showRelationshipBottomSheet() }
+
+            // Pre-fill profile info
+            binding.etFullName.setText(profile.name)
+            selectedDob = profile.dateOfBirth
+            if (selectedDob.isNotBlank()) {
+                com.example.healthcareai.util.LocaleHelper.parseStoredDate(selectedDob)?.let { calendar.time = it }
+                binding.tvDateOfBirth.text = com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, selectedDob)
+            }
+            selectedGender = profile.gender
+            binding.tvGender.text = when (profile.gender) {
+                "Male" -> getString(R.string.gender_male)
+                "Female" -> getString(R.string.gender_female)
+                else -> getString(R.string.gender_other)
+            }
+            if (profile.heightCm > 0) binding.etHeight.setText(profile.heightCm.toString())
+            if (profile.weightKg > 0) binding.etWeight.setText(profile.weightKg.toString())
+
+            if (!profile.avatarUri.isNullOrEmpty()) {
+                selectedAvatarUri = Uri.parse(profile.avatarUri)
+                binding.ivAvatar.load(profile.avatarUri) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                }
+            }
+
+            if (!profile.isPrimary) {
+                binding.layoutRelationship.visibility = View.VISIBLE
+                binding.cardRelationship.setOnClickListener {
+                    binding.cardRelationship.setBackgroundResource(R.drawable.bg_profile_input_card)
+                    showRelationshipBottomSheet()
+                }
+                selectedRelationship = profile.relationship.orEmpty()
+                if (selectedRelationship.isNotBlank()) {
+                    binding.tvRelationship.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(this, selectedRelationship)
+                }
+            } else {
+                binding.layoutRelationship.visibility = View.GONE
+            }
+        } else {
+            isAddMemberMode = intent.getBooleanExtra(EXTRA_IS_ADD_MEMBER, false) || preferenceHelper.isProfileCreated
+            if (isAddMemberMode) {
+                binding.tvTitle.setText(R.string.title_add_member)
+                binding.tvBtnCreateProfile.setText(R.string.title_add_member)
+                binding.btnBack.visibility = View.VISIBLE
+                binding.btnBack.setOnClickListener { finish() }
+                binding.layoutRelationship.visibility = View.VISIBLE
+                binding.cardRelationship.setOnClickListener {
+                    binding.cardRelationship.setBackgroundResource(R.drawable.bg_profile_input_card)
+                    showRelationshipBottomSheet()
+                }
+            }
         }
 
         setupKeyboardInsetsListener()
@@ -94,9 +175,10 @@ class AddProfileActivity : BaseActivity() {
     private fun setupBackPress() {
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (isAddMemberMode) {
+                if (isEditMode || isAddMemberMode) {
                     finish()
                 } else {
+                    preferenceHelper.clearLanguageIfIntroNotCompleted(this@AddProfileActivity)
                     finishAffinity()
                 }
             }
@@ -197,9 +279,9 @@ class AddProfileActivity : BaseActivity() {
         val keyboardStateChanged = isKeyboardOpen != wasKeyboardOpen
         wasKeyboardOpen = isKeyboardOpen
 
-        // Update top bar margin for status bar
+        // Update top bar margin for status bar (standardized 16dp spacing below status bar)
         if (statusTop > 0) {
-            val targetTopMargin = statusTop + (8 * density).toInt()
+            val targetTopMargin = statusTop + (16 * density).toInt()
             (binding.topBar.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
                 if (lp.topMargin != targetTopMargin) {
                     lp.topMargin = targetTopMargin
@@ -258,10 +340,21 @@ class AddProfileActivity : BaseActivity() {
     }
 
     private fun setupListeners() {
-        // Enforce input length limits (50 chars for name, 3 digits for height and weight)
-        binding.etFullName.filters = arrayOf(InputFilter.LengthFilter(50))
+        // Enforce input length limits (30 chars for name, 3 digits for height and weight)
+        binding.etFullName.filters = arrayOf(InputFilter.LengthFilter(30))
         binding.etHeight.filters = arrayOf(InputFilter.LengthFilter(3))
         binding.etWeight.filters = arrayOf(InputFilter.LengthFilter(3))
+
+        // Reset error styling when user types
+        binding.etFullName.doAfterTextChanged {
+            binding.cardFullNameInput.setBackgroundResource(R.drawable.bg_profile_input_card)
+        }
+        binding.etHeight.doAfterTextChanged {
+            binding.cardHeightInput.setBackgroundResource(R.drawable.bg_profile_input_card)
+        }
+        binding.etWeight.doAfterTextChanged {
+            binding.cardWeightInput.setBackgroundResource(R.drawable.bg_profile_input_card)
+        }
 
         // Dismiss keyboard when touching background
         binding.rootAddProfile.setOnClickListener {
@@ -322,6 +415,7 @@ class AddProfileActivity : BaseActivity() {
 
         // Date of birth picker
         binding.cardDateOfBirth.setOnClickListener {
+            binding.cardDateOfBirth.setBackgroundResource(R.drawable.bg_profile_input_card)
             currentFocus?.clearFocus()
             hideKeyboard()
             showDatePicker()
@@ -329,6 +423,7 @@ class AddProfileActivity : BaseActivity() {
 
         // Gender picker
         binding.cardGender.setOnClickListener {
+            binding.cardGender.setBackgroundResource(R.drawable.bg_profile_input_card)
             currentFocus?.clearFocus()
             hideKeyboard()
             showGenderBottomSheet()
@@ -344,6 +439,7 @@ class AddProfileActivity : BaseActivity() {
 
     private fun showDatePicker() {
         hideKeyboard()
+        Locale.setDefault(com.example.healthcareai.util.LocaleHelper.getSavedLocale(this))
         val cal = Calendar.getInstance()
         if (selectedDob.isNotEmpty()) {
             cal.time = calendar.time
@@ -359,7 +455,8 @@ class AddProfileActivity : BaseActivity() {
                 calendar.set(Calendar.MONTH, month)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 selectedDob = dobDateFormat.format(calendar.time)
-                binding.tvDateOfBirth.text = selectedDob
+                binding.tvDateOfBirth.text = com.example.healthcareai.util.LocaleHelper.formatDate(this, calendar.time)
+                binding.cardDateOfBirth.setBackgroundResource(R.drawable.bg_profile_input_card)
             },
             cal.get(Calendar.YEAR),
             cal.get(Calendar.MONTH),
@@ -367,7 +464,8 @@ class AddProfileActivity : BaseActivity() {
         )
         // Upper bound: today
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-        datePickerDialog.show()
+        datePickerDialog.setOnDismissListener { hideNavigationBar() }
+        DialogImmersiveHelper.showImmersive(datePickerDialog)
     }
 
     private fun showGenderBottomSheet() {
@@ -378,6 +476,12 @@ class AddProfileActivity : BaseActivity() {
 
         bottomSheet.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheet.behavior.skipCollapsed = true
+        bottomSheet.setOnShowListener {
+            DialogImmersiveHelper.setupBottomSheetImmersive(bottomSheet)
+        }
+        bottomSheet.setOnDismissListener {
+            hideNavigationBar()
+        }
 
         var tempGender = selectedGender.ifEmpty { "Male" }
 
@@ -423,10 +527,11 @@ class AddProfileActivity : BaseActivity() {
                 "Female" -> getString(R.string.gender_female)
                 else -> getString(R.string.gender_other)
             }
+            binding.cardGender.setBackgroundResource(R.drawable.bg_profile_input_card)
             bottomSheet.dismiss()
         }
 
-        bottomSheet.show()
+        DialogImmersiveHelper.showImmersive(bottomSheet)
     }
 
     private fun showRelationshipBottomSheet() {
@@ -437,8 +542,14 @@ class AddProfileActivity : BaseActivity() {
 
         bottomSheet.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheet.behavior.skipCollapsed = true
+        bottomSheet.setOnShowListener {
+            DialogImmersiveHelper.setupBottomSheetImmersive(bottomSheet)
+        }
+        bottomSheet.setOnDismissListener {
+            hideNavigationBar()
+        }
 
-        var tempRelationship = selectedRelationship.ifEmpty { "Son" }
+        var tempRelationship = selectedRelationship
 
         val relOptions = listOf(
             Triple(sheetBinding.cardRelFather, sheetBinding.tvRelFather, sheetBinding.ivCheckFather) to "Father",
@@ -456,7 +567,7 @@ class AddProfileActivity : BaseActivity() {
             tempRelationship = selected
             for ((views, name) in relOptions) {
                 val (card, tv, iv) = views
-                val isSelected = (name == selected)
+                val isSelected = selected.isNotBlank() && (name.equals(selected, ignoreCase = true))
                 if (isSelected) {
                     card.setBackgroundResource(R.drawable.bg_bottom_sheet_item_selected)
                     tv.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -482,29 +593,44 @@ class AddProfileActivity : BaseActivity() {
         }
 
         sheetBinding.btnSaveRelationship.setOnClickListener {
-            selectedRelationship = tempRelationship
-            binding.tvRelationship.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(this, tempRelationship)
-            bottomSheet.dismiss()
+            if (tempRelationship.isNotBlank()) {
+                selectedRelationship = tempRelationship
+                binding.tvRelationship.text = com.example.healthcareai.util.ProfileLocalizationHelper.getLocalizedRelationship(this, tempRelationship)
+                binding.cardRelationship.setBackgroundResource(R.drawable.bg_profile_input_card)
+                bottomSheet.dismiss()
+            } else {
+                Toast.makeText(this, R.string.error_relationship_empty, Toast.LENGTH_SHORT).show()
+            }
         }
 
-        bottomSheet.show()
+        DialogImmersiveHelper.showImmersive(bottomSheet)
     }
 
     private fun handleCreateProfile() {
         val name = binding.etFullName.text?.toString()?.trim().orEmpty()
         if (name.isEmpty()) {
+            binding.cardFullNameInput.setBackgroundResource(R.drawable.bg_profile_input_card_error)
             Toast.makeText(this, R.string.error_name_empty, Toast.LENGTH_SHORT).show()
             binding.etFullName.requestFocus()
             return
         }
 
+        if (binding.layoutRelationship.visibility == View.VISIBLE && selectedRelationship.isBlank()) {
+            binding.cardRelationship.setBackgroundResource(R.drawable.bg_profile_input_card_error)
+            Toast.makeText(this, R.string.error_relationship_empty, Toast.LENGTH_SHORT).show()
+            showRelationshipBottomSheet()
+            return
+        }
+
         if (selectedDob.isEmpty()) {
+            binding.cardDateOfBirth.setBackgroundResource(R.drawable.bg_profile_input_card_error)
             Toast.makeText(this, R.string.error_dob_empty, Toast.LENGTH_SHORT).show()
             showDatePicker()
             return
         }
 
         if (selectedGender.isEmpty()) {
+            binding.cardGender.setBackgroundResource(R.drawable.bg_profile_input_card_error)
             Toast.makeText(this, R.string.error_gender_empty, Toast.LENGTH_SHORT).show()
             showGenderBottomSheet()
             return
@@ -512,7 +638,8 @@ class AddProfileActivity : BaseActivity() {
 
         val heightStr = binding.etHeight.text?.toString()?.trim().orEmpty()
         val height = heightStr.toIntOrNull()
-        if (height == null) {
+        if (height == null || height <= 0) {
+            binding.cardHeightInput.setBackgroundResource(R.drawable.bg_profile_input_card_error)
             Toast.makeText(this, R.string.error_height_empty, Toast.LENGTH_SHORT).show()
             binding.etHeight.requestFocus()
             return
@@ -520,9 +647,27 @@ class AddProfileActivity : BaseActivity() {
 
         val weightStr = binding.etWeight.text?.toString()?.trim().orEmpty()
         val weight = weightStr.toIntOrNull()
-        if (weight == null) {
+        if (weight == null || weight <= 0) {
+            binding.cardWeightInput.setBackgroundResource(R.drawable.bg_profile_input_card_error)
             Toast.makeText(this, R.string.error_weight_empty, Toast.LENGTH_SHORT).show()
             binding.etWeight.requestFocus()
+            return
+        }
+
+        if (isEditMode && editingProfile != null) {
+            val current = editingProfile!!
+            val updated = current.copy(
+                name = name,
+                avatarUri = selectedAvatarUri?.toString(),
+                dateOfBirth = selectedDob,
+                gender = selectedGender,
+                heightCm = height,
+                weightKg = weight,
+                relationship = if (!current.isPrimary) selectedRelationship.ifEmpty { null } else null
+            )
+            profileRepository.updateProfile(updated)
+            Toast.makeText(this, R.string.msg_profile_updated, Toast.LENGTH_SHORT).show()
+            finish()
             return
         }
 
@@ -562,15 +707,32 @@ class AddProfileActivity : BaseActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, 0, 0)
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, 0, 0)
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
+        }
         finish()
     }
 
     companion object {
         const val EXTRA_IS_ADD_MEMBER = "extra_is_add_member"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
+        const val EXTRA_IS_EDIT = "extra_is_edit"
 
         fun start(context: Context, isAddMember: Boolean = false) {
             val intent = Intent(context, AddProfileActivity::class.java).apply {
                 putExtra(EXTRA_IS_ADD_MEMBER, isAddMember)
+            }
+            context.startActivity(intent)
+        }
+
+        fun startEdit(context: Context, profileId: String) {
+            val intent = Intent(context, AddProfileActivity::class.java).apply {
+                putExtra(EXTRA_PROFILE_ID, profileId)
+                putExtra(EXTRA_IS_EDIT, true)
             }
             context.startActivity(intent)
         }

@@ -36,11 +36,14 @@
         </FrameLayout>
 
         <!-- Title: Confirm Photo -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:singleLine="true"
             android:text="@string/title_confirm_photo"
             android:textColor="@color/color_text"
             android:textSize="20sp"
@@ -73,8 +76,8 @@
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/black"
             app:cardCornerRadius="24dp"
-            app:cardElevation="6dp"
-            app:cardMaxElevation="8dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 

@@ -18,6 +18,7 @@ import com.example.healthcareai.data.repository.HeartRateRecord
 import com.example.healthcareai.data.repository.HeartRateRepository
 import com.example.healthcareai.databinding.ActivityHeartRateStatisticsBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.util.LocaleHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -62,13 +63,7 @@ class HeartRateStatisticsActivity : BaseActivity() {
     }
 
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootView) { _, insets ->
-            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = statusBars.top.coerceAtLeast(12)
-            }
-            insets
-        }
+        setupHeaderTopMargin(binding.topBar, binding.rootView)
     }
 
     private fun setupRecyclerView() {
@@ -267,14 +262,23 @@ class HeartRateStatisticsActivity : BaseActivity() {
     }
 
     private fun formatWeekRange(startCal: Calendar, endCal: Calendar): String {
+        val locale = LocaleHelper.getSavedLocale(this)
         val sameMonth = startCal.get(Calendar.MONTH) == endCal.get(Calendar.MONTH)
-        return if (sameMonth) {
-            val monthFormat = SimpleDateFormat("MMMM d", Locale.ENGLISH)
-            val endDayFormat = SimpleDateFormat("d", Locale.ENGLISH)
-            "${monthFormat.format(startCal.time)} - ${endDayFormat.format(endCal.time)}"
+        return if (locale.language == "vi") {
+            if (sameMonth) {
+                "${startCal.get(Calendar.DAY_OF_MONTH)} - ${endCal.get(Calendar.DAY_OF_MONTH)} Tháng ${endCal.get(Calendar.MONTH) + 1}"
+            } else {
+                "${startCal.get(Calendar.DAY_OF_MONTH)} Tháng ${startCal.get(Calendar.MONTH) + 1} - ${endCal.get(Calendar.DAY_OF_MONTH)} Tháng ${endCal.get(Calendar.MONTH) + 1}"
+            }
         } else {
-            val format = SimpleDateFormat("MMMM d", Locale.ENGLISH)
-            "${format.format(startCal.time)} - ${format.format(endCal.time)}"
+            val datePattern = android.text.format.DateFormat.getBestDateTimePattern(locale, "MMMMd")
+            val monthFormat = SimpleDateFormat(datePattern, locale)
+            val endDayFormat = SimpleDateFormat("d", locale)
+            if (sameMonth) {
+                "${monthFormat.format(startCal.time)} - ${endDayFormat.format(endCal.time)}"
+            } else {
+                "${monthFormat.format(startCal.time)} - ${monthFormat.format(endCal.time)}"
+            }
         }
     }
 

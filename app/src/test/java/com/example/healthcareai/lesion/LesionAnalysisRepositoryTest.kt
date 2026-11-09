@@ -100,5 +100,72 @@ class LesionAnalysisRepositoryTest {
         )
         assertTrue(LesionAnalysisRepository.isIdentified(validResult))
     }
+
+    @Test
+    fun testIsIdentified_returnsFalseWhenSummaryHasNoDataOrNegative() {
+        // Summary indicating no condition detected
+        val noConditionResult = LesionAnalysisResult(
+            summary = "No skin condition or lesion detected.",
+            keyFindings = listOf(KeyFinding(title = "Mild spot"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(noConditionResult))
+
+        // Vietnamese negative summary
+        val vnNegativeResult = LesionAnalysisResult(
+            summary = "Không phát hiện tổn thương bất thường nào trên vùng da này.",
+            keyFindings = listOf(KeyFinding(title = "Vết thâm"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(vnNegativeResult))
+
+        // Wrong area summary
+        val wrongAreaResult = LesionAnalysisResult(
+            summary = "Hình ảnh sai vùng hoặc không đúng danh mục móng tay đã chọn.",
+            keyFindings = listOf(KeyFinding(title = "Móng"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(wrongAreaResult))
+    }
+
+    @Test
+    fun testIsIdentified_returnsFalseWhenKeyFindingsAreEmpty() {
+        // Even if summary is positive/descriptive, if keyFindings is empty, it must be considered unidentified
+        val emptyFindingsResult = LesionAnalysisResult(
+            summary = "Possible skin anomaly was observed on the patient's arm.",
+            keyFindings = emptyList()
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(emptyFindingsResult))
+
+        val nullFindingsResult = LesionAnalysisResult(
+            summary = "Skin examined.",
+            keyFindings = null
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(nullFindingsResult))
+    }
+
+    @Test
+    fun testIsIdentified_returnsFalseWhenKeyFindingsHavePlaceholderOrNoneTitles() {
+        val noneTitleResult = LesionAnalysisResult(
+            summary = "Analysis complete.",
+            keyFindings = listOf(KeyFinding(title = "None"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(noneTitleResult))
+
+        val noLesionTitleResult = LesionAnalysisResult(
+            summary = "Skin check completed.",
+            keyFindings = listOf(KeyFinding(title = "No lesion detected"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(noLesionTitleResult))
+
+        val binhThuongResult = LesionAnalysisResult(
+            summary = "Kết quả kiểm tra da.",
+            keyFindings = listOf(KeyFinding(title = "Bình thường"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(binhThuongResult))
+
+        val khongPhatHienResult = LesionAnalysisResult(
+            summary = "Kiểm tra hoàn tất.",
+            keyFindings = listOf(KeyFinding(title = "Không phát hiện tổn thương"))
+        )
+        assertFalse(LesionAnalysisRepository.isIdentified(khongPhatHienResult))
+    }
 }
 

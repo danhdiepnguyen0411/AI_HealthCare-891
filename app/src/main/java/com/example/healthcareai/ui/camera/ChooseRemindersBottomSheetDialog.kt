@@ -1,12 +1,14 @@
 package com.example.healthcareai.ui.camera
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import com.example.healthcareai.databinding.BottomSheetChooseRemindersBinding
 import com.example.healthcareai.databinding.ItemChooseReminderBinding
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.util.DialogImmersiveHelper
+import com.example.healthcareai.util.ReminderLocalizationHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -36,6 +39,12 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
 
     private val remindersList = mutableListOf<RecommendedReminder>()
     private lateinit var adapter: RecommendedRemindersAdapter
+
+    private val newReminderLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        refreshRemindersList()
+    }
 
     data class RecommendedReminder(
         val id: String = UUID.randomUUID().toString(),
@@ -70,88 +79,75 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buildRecommendations()
         setupRecyclerView()
+        refreshRemindersList()
         setupActions()
-        updateSaveButtonState()
     }
 
-    private fun buildRecommendations() {
-        remindersList.clear()
+    private fun refreshRemindersList() {
+        if (!isAdded || _binding == null) return
 
-        val dailyStr = getString(R.string.repeat_every_day)
-        val chooseTimesStr = getString(R.string.hint_repeat_schedule)
-
-        // 1. Vital sign / Infection monitor: "Check temperature"
-        remindersList.add(
-            RecommendedReminder(
-                name = getString(R.string.reminder_check_temperature_title),
-                category = "Temperature",
-                repeat = "Daily",
-                scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
-                timeList = listOf("08:00 AM", "08:00 PM"),
-                notes = getString(R.string.reminder_check_temperature_notes),
-                iconResId = R.drawable.ic_temperature,
-                isChecked = false
-            )
-        )
-
-        // 2. AI Tailored Care Suggestion(s) based on scan results
-        val suggestions = analysisResult?.careSuggestions.orEmpty()
-        if (suggestions.isNotEmpty()) {
-            val firstSuggestion = suggestions.first()
-            val defaultCareTitle = getString(R.string.reminder_observe_area_title)
-            val title = firstSuggestion.title?.takeIf { it.isNotBlank() } ?: defaultCareTitle
-            val desc = firstSuggestion.description.orEmpty()
-            val lower = title.lowercase()
-            val icon = when {
-                lower.contains("water") || lower.contains("hydrat") -> R.drawable.ic_drink_water
-                lower.contains("temp") -> R.drawable.ic_temperature
-                else -> R.drawable.ic_medications
-            }
-
-            remindersList.add(
-                RecommendedReminder(
-                    name = title,
-                    category = "Medication",
-                    repeat = "Daily",
-                    scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
-                    timeList = listOf("08:00 AM", "08:00 PM"),
-                    notes = desc,
-                    iconResId = icon,
-                    isChecked = false
-                )
-            )
+        val repo = ReminderRepository.getInstance(requireContext())
+        val allSaved = repo.getAllReminders()
+        val profileReminders = if (!profileId.isNullOrEmpty()) {
+            repo.getRemindersForProfile(profileId)
         } else {
-            // Default tailored treatment observation reminder
-            val defaultCareTitle = getString(R.string.reminder_observe_area_title)
-            remindersList.add(
+            allSaved
+        }
+
+        val existingMap = remindersList.associateBy { it.id }
+        val newList = mutableListOf<RecommendedReminder>()
+
+        // Load real reminders for this profile, eliminating any hardcoded items
+        for (item in profileReminders) {
+            val sortedTimes = com.example.healthcareai.util.ReminderScheduler.sortTimeList(item.timeList)
+            val rep = ReminderLocalizationHelper.getLocalizedRepeat(requireContext(), item.repeat)
+            val schedule = if (sortedTimes.isNotEmpty()) {
+                "$rep · ${sortedTimes.joinToString(", ")}"
+            } else {
+                rep
+            }
+            val existingItem = existingMap[item.id]
+            // Newly added reminders default to checked = true.
+            // Existing reminders preserve their user-selected check status.
+            val isChecked = existingItem?.isChecked ?: true
+
+            newList.add(
                 RecommendedReminder(
-                    name = defaultCareTitle,
-                    category = "Observation",
-                    repeat = "Daily",
-                    scheduleDisplay = "$dailyStr · 8:00 AM, 8:00 PM",
-                    timeList = listOf("08:00 AM", "08:00 PM"),
-                    notes = getString(R.string.reminder_observe_area_notes),
-                    iconResId = R.drawable.ic_medications,
-                    isChecked = false
+                    id = item.id,
+                    name = item.name,
+                    category = item.category,
+                    repeat = item.repeat,
+                    scheduleDisplay = schedule,
+                    timeList = sortedTimes,
+                    notes = item.notes,
+                    iconResId = item.getIconResId(),
+                    isChecked = isChecked
                 )
             )
         }
 
-        // 3. Hydration & Cellular Recovery: "Drink water"
-        remindersList.add(
-            RecommendedReminder(
-                name = getString(R.string.reminder_water_title),
-                category = "Water",
-                repeat = "Daily",
-                scheduleDisplay = chooseTimesStr,
-                timeList = listOf("08:00 AM", "12:00 PM", "04:00 PM", "08:00 PM"),
-                notes = getString(R.string.reminder_water_notes),
-                iconResId = R.drawable.ic_drink_water,
-                isChecked = false
-            )
-        )
+        remindersList.clear()
+        remindersList.addAll(newList)
+        if (::adapter.isInitialized) {
+            adapter.notifyDataSetChanged()
+        }
+        updateRemindersView()
+        updateSaveButtonState()
+    }
+
+    private fun updateRemindersView() {
+        if (remindersList.isEmpty()) {
+            binding.rvReminders.visibility = View.GONE
+            binding.layoutEmptyReminders.visibility = View.VISIBLE
+            binding.btnSaveReminders.visibility = View.GONE
+            binding.btnHeaderAddReminder.visibility = View.GONE
+        } else {
+            binding.rvReminders.visibility = View.VISIBLE
+            binding.layoutEmptyReminders.visibility = View.GONE
+            binding.btnSaveReminders.visibility = View.VISIBLE
+            binding.btnHeaderAddReminder.visibility = View.VISIBLE
+        }
     }
 
     private fun setupRecyclerView() {
@@ -168,24 +164,47 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         binding.rvReminders.adapter = adapter
     }
 
+    private fun openNewReminder() {
+        val intent = Intent(requireContext(), NewReminderActivity::class.java).apply {
+            profileId?.let { putExtra(NewReminderActivity.EXTRA_PROFILE_ID, it) }
+        }
+        newReminderLauncher.launch(intent)
+    }
+
     private fun setupActions() {
+        binding.btnHeaderAddReminder.setOnClickListener {
+            openNewReminder()
+        }
+
+        binding.btnAddReminder.setOnClickListener {
+            openNewReminder()
+        }
+
         // Save Button
         binding.btnSaveReminders.setOnClickListener {
-            val selectedItems = remindersList.filter { it.isChecked }
-            if (selectedItems.isEmpty()) return@setOnClickListener
-
             val repo = ReminderRepository.getInstance(requireContext())
+            val selectedItems = remindersList.filter { it.isChecked }
+            val unselectedItems = remindersList.filter { !it.isChecked }
+
+            // Delete unselected items if they were previously saved in repository
+            for (unselected in unselectedItems) {
+                if (repo.getReminder(unselected.id) != null) {
+                    repo.deleteReminder(unselected.id)
+                }
+            }
+
             for (item in selectedItems) {
+                val existing = repo.getReminder(item.id)
                 val reminder = ReminderItem(
                     id = item.id,
-                    profileId = profileId,
+                    profileId = profileId ?: existing?.profileId,
                     name = item.name,
                     category = item.category,
                     repeat = item.repeat,
                     timeList = item.timeList,
                     notes = item.notes,
-                    isDone = false,
-                    createdAt = System.currentTimeMillis()
+                    isDone = existing?.isDone ?: false,
+                    createdAt = existing?.createdAt ?: System.currentTimeMillis()
                 )
                 repo.saveReminder(reminder)
             }
@@ -194,7 +213,7 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             val msg = if (count == 1) {
                 getString(R.string.msg_reminder_saved)
             } else {
-                "$count reminders saved successfully"
+                getString(R.string.btn_save_reminders_count, count)
             }
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             onRemindersSavedListener?.invoke(count)
@@ -226,7 +245,14 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
 
     private fun handleEditReminder(item: RecommendedReminder) {
         val repo = ReminderRepository.getInstance(requireContext())
-        val reminder = ReminderItem(
+        val existing = repo.getReminder(item.id)
+        val reminder = existing?.copy(
+            name = item.name,
+            category = item.category,
+            repeat = item.repeat,
+            timeList = item.timeList,
+            notes = item.notes
+        ) ?: ReminderItem(
             id = item.id,
             profileId = profileId,
             name = item.name,
@@ -239,12 +265,25 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         )
         repo.saveReminder(reminder)
 
-        NewReminderActivity.start(
-            context = requireContext(),
-            reminderId = reminder.id,
-            profileId = profileId
-        )
-        dismiss()
+        val intent = Intent(requireContext(), NewReminderActivity::class.java).apply {
+            putExtra(NewReminderActivity.EXTRA_REMINDER_ID, reminder.id)
+            (profileId ?: existing?.profileId)?.let { putExtra(NewReminderActivity.EXTRA_PROFILE_ID, it) }
+        }
+        newReminderLauncher.launch(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.let {
+            if (it is BottomSheetDialog) {
+                DialogImmersiveHelper.setupBottomSheetImmersive(it)
+                val bottomSheet = it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                bottomSheet?.let { sheet ->
+                    BottomSheetBehavior.from(sheet).state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+        }
+        refreshRemindersList()
     }
 
     override fun onStart() {

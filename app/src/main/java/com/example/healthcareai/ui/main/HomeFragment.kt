@@ -28,6 +28,7 @@ import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ItemReminderCardBinding
 import com.example.healthcareai.databinding.ItemScanHistoryCardBinding
+import com.example.healthcareai.ui.camera.AiScanHistoryActivity
 import com.example.healthcareai.ui.camera.AnalysisResultsActivity
 import com.example.healthcareai.ui.chat.AiChatActivity
 import com.example.healthcareai.ui.profile.AddProfileActivity
@@ -76,9 +77,9 @@ class HomeFragment : Fragment() {
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             val density = resources.displayMetrics.density
             val topPadding = if (statusBarTop > 0) {
-                statusBarTop + (10 * density).toInt()
+                statusBarTop + (16 * density).toInt()
             } else {
-                (50 * density).toInt()
+                (24 * density).toInt()
             }
             if (binding.topBar.paddingTop != topPadding) {
                 val sidePadding = (16 * density).toInt()
@@ -121,7 +122,10 @@ class HomeFragment : Fragment() {
 
         // "Chat with AI" button in the assistant card
         binding.btnChatWithAi.setOnClickListener {
-            startActivity(Intent(requireContext(), AiChatActivity::class.java))
+            val intent = Intent(requireContext(), AiChatActivity::class.java).apply {
+                putExtra(AiChatActivity.EXTRA_START_NEW_CHAT, true)
+            }
+            startActivity(intent)
         }
 
         // Feature Card 1: Health Scan -> Switch to Scan Tab
@@ -152,7 +156,8 @@ class HomeFragment : Fragment() {
 
         // AI scan history: "View all" and "Start first scan"
         binding.tvViewAllScans.setOnClickListener {
-            (activity as? MainActivity)?.navigateToTab(1)
+            val primaryId = ProfileRepository.getInstance(requireContext()).getPrimaryProfile().id
+            AiScanHistoryActivity.start(requireContext(), primaryId)
         }
 
         binding.btnStartFirstScan.setOnClickListener {
@@ -215,9 +220,12 @@ class HomeFragment : Fragment() {
 
         if (familyMembers.isEmpty()) {
             selectedFamilyMemberIndex = -1
-            (addBtn.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
-                marginStart = 0
-            }
+            val emptyAddLp = (addBtn.layoutParams as? LinearLayout.LayoutParams)
+                ?: LinearLayout.LayoutParams((64 * density).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
+            emptyAddLp.leftMargin = 0
+            emptyAddLp.rightMargin = 0
+            emptyAddLp.marginStart = 0
+            addBtn.layoutParams = emptyAddLp
             binding.cardFamilyHub.selectMember(-1, animate = false, force = true)
             updateFamilyStats(null)
             return
@@ -227,17 +235,24 @@ class HomeFragment : Fragment() {
             selectedFamilyMemberIndex = 0
         }
 
-        (addBtn.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
-            marginStart = (20 * density).toInt()
-        }
+        val itemSpacing = (24 * density).toInt()
+        val activeAddLp = (addBtn.layoutParams as? LinearLayout.LayoutParams)
+            ?: LinearLayout.LayoutParams((64 * density).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
+        activeAddLp.leftMargin = itemSpacing
+        activeAddLp.rightMargin = 0
+        activeAddLp.marginStart = itemSpacing
+        addBtn.layoutParams = activeAddLp
 
         for ((index, profile) in familyMembers.withIndex()) {
             val itemBinding = ItemHomeFamilyAvatarBinding.inflate(layoutInflater, row, false)
+            val m = if (index == 0) 0 else itemSpacing
             val lp = LinearLayout.LayoutParams(
                 (64 * density).toInt(),
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                marginStart = if (index == 0) 0 else (20 * density).toInt()
+                leftMargin = m
+                rightMargin = 0
+                marginStart = m
             }
             itemBinding.root.layoutParams = lp
 
@@ -270,6 +285,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardFamilyHub.selectMember(selectedFamilyMemberIndex, animate = false, force = true)
+        row.post {
+            binding.cardFamilyHub.updateTabBoundsForScroll()
+        }
         val initialProfile = familyMembers.getOrNull(selectedFamilyMemberIndex) ?: familyMembers.firstOrNull()
         updateFamilyStats(initialProfile?.id)
     }
@@ -363,7 +381,7 @@ class HomeFragment : Fragment() {
             binding.layoutReminderList.removeAllViews()
             val sorted = reminders.sortedWith(
                 compareBy<ReminderItem> { it.isDone }
-                    .thenBy { it.timeList.firstOrNull() ?: "" }
+                    .thenBy { com.example.healthcareai.util.ReminderScheduler.parseTimeToMinutes(it.timeList.firstOrNull().orEmpty()) }
             )
             for (item in sorted.take(2)) {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
@@ -376,7 +394,7 @@ class HomeFragment : Fragment() {
                 } else {
                     cardBinding.tvReminderDesc.visibility = View.GONE
                 }
-                val time = item.getDisplayTime()
+                val time = item.getDisplayTime(requireContext())
                 if (time.isNotBlank()) {
                     cardBinding.tvReminderTime.visibility = View.VISIBLE
                     cardBinding.tvReminderTime.text = time
@@ -439,8 +457,12 @@ class HomeFragment : Fragment() {
                     binding.layoutScanList,
                     false
                 )
-                itemBinding.tvScanTitle.text = scan.title
-                itemBinding.tvScanDate.text = scan.dateFormatted
+                itemBinding.tvScanTitle.text = com.example.healthcareai.util.LocaleHelper.formatScanTitle(ctx, scan.title, scan.category)
+                itemBinding.tvScanDate.text = if (scan.timestamp > 0L) {
+                    com.example.healthcareai.util.LocaleHelper.formatDate(ctx, scan.timestamp)
+                } else {
+                    com.example.healthcareai.util.LocaleHelper.formatStoredDate(ctx, scan.dateFormatted)
+                }
 
                 val imagePath = scan.imagePath
                 if (!imagePath.isNullOrEmpty() && File(imagePath).exists()) {
@@ -452,17 +474,42 @@ class HomeFragment : Fragment() {
                     itemBinding.ivScanThumbnail.setImageResource(R.drawable.no_scans_yet)
                 }
 
-                itemBinding.root.setOnClickListener {
-                    val intent = Intent(requireContext(), AnalysisResultsActivity::class.java).apply {
-                        putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
-                        putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
-                        putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
-                        putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
-                        putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
-                        putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
-                        scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                itemBinding.swipeRevealLayout.close(false)
+                val openDetailListener = View.OnClickListener {
+                    if (itemBinding.swipeRevealLayout.isOpen) {
+                        itemBinding.swipeRevealLayout.close(true)
+                    } else {
+                        val intent = Intent(requireContext(), AnalysisResultsActivity::class.java).apply {
+                            putExtra(AnalysisResultsActivity.EXTRA_IMAGE_PATH, scan.imagePath)
+                            putExtra(AnalysisResultsActivity.EXTRA_CATEGORY, scan.category)
+                            putExtra(AnalysisResultsActivity.EXTRA_PROFILE_ID, scan.profileId)
+                            putExtra(AnalysisResultsActivity.EXTRA_IS_SUCCESS, true)
+                            putExtra(AnalysisResultsActivity.EXTRA_ANALYSIS_RESULT, scan.analysisResult)
+                            putExtra(AnalysisResultsActivity.EXTRA_SCAN_ID, scan.id)
+                            scan.conversationId?.let { putExtra(AnalysisResultsActivity.EXTRA_CONVERSATION_ID, it) }
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+                }
+                itemBinding.cardScanRoot.setOnClickListener(openDetailListener)
+                itemBinding.swipeRevealLayout.setOnClickListener(openDetailListener)
+
+                itemBinding.btnDeleteAction.setOnClickListener {
+                    itemBinding.swipeRevealLayout.close(false)
+                    com.example.healthcareai.ui.dialog.DeleteConfirmationDialog.show(
+                        context = requireContext(),
+                        onDeleteConfirmed = {
+                            ScanHistoryRepository.getInstance(requireContext()).deleteScan(scan.id)
+                            try {
+                                scan.imagePath?.let { path ->
+                                    val file = File(path)
+                                    if (file.exists()) file.delete()
+                                }
+                            } catch (_: Exception) {}
+                            android.widget.Toast.makeText(requireContext(), R.string.msg_record_deleted, android.widget.Toast.LENGTH_SHORT).show()
+                            syncScanHistory()
+                        }
+                    )
                 }
 
                 binding.layoutScanList.addView(itemBinding.root)

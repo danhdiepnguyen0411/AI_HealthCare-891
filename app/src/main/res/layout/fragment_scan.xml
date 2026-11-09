@@ -17,14 +17,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Center Screen Title: AI Scan -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvScreenTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:fontFamily="@font/urbanist"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:letterSpacing="0"
             android:lineHeight="27sp"
+            android:singleLine="true"
             android:text="@string/title_ai_scan"
             android:textColor="@color/color_text"
             android:textSize="22sp"

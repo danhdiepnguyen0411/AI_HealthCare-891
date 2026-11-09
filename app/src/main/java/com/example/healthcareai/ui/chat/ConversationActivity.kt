@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthcareai.data.repository.AiChatRepository
 import com.example.healthcareai.databinding.ActivityConversationBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 
 /**
  * Screen displaying the user's past Conversation sessions with the AI Health Assistant.
@@ -41,19 +42,10 @@ class ConversationActivity : BaseActivity() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootConversation) { _, insets ->
-            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            binding.topBar.applyHeaderTopMargin(insets)
+
             val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             val density = resources.displayMetrics.density
-
-            // Position header comfortably below the status bar
-            val targetTopMargin = if (statusBars.top > 0) {
-                statusBars.top + (6 * density).toInt()
-            } else {
-                (20 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = targetTopMargin
-            }
 
             // Bottom navigation bar inset padding for RecyclerView and Empty layout
             val bottomPadding = if (navBars.bottom > 0) navBars.bottom + (16 * density).toInt() else (24 * density).toInt()
@@ -71,6 +63,14 @@ class ConversationActivity : BaseActivity() {
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
+            finish()
+        }
+        binding.btnNewChat.setOnClickListener {
+            val intent = Intent(this, AiChatActivity::class.java).apply {
+                putExtra(AiChatActivity.EXTRA_START_NEW_CHAT, true)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            startActivity(intent)
             finish()
         }
     }

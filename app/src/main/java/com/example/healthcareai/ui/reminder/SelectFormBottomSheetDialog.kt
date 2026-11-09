@@ -74,7 +74,8 @@ class SelectFormBottomSheetDialog : BottomSheetDialogFragment() {
             val context = context ?: return
 
             for (bundle in formOptions) {
-                val isSelected = bundle.key.equals(selectedKey, ignoreCase = true)
+                val isSelected = bundle.key.equals(selectedKey, ignoreCase = true) ||
+                        bundle.tvTitle.text.toString().equals(selectedKey, ignoreCase = true)
                 if (isSelected) {
                     bundle.card.setBackgroundResource(R.drawable.bg_category_card_selected)
                     bundle.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white))

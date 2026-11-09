@@ -38,14 +38,17 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:letterSpacing="0"
             android:lineHeight="27sp"
+            android:singleLine="true"
             android:text="@string/title_reminder"
             android:textColor="@color/color_text"
             android:textSize="22sp"
@@ -60,6 +63,8 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_circle_primary_button"
             android:clickable="true"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:elevation="2dp"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,74 +114,201 @@
 
             <ImageView
                 android:id="@+id/ivCalendarAction"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_calendar" />
         </LinearLayout>
 
-        <!-- Week Days Row (7 Days) -->
-        <LinearLayout
-            android:id="@+id/layoutWeekDaysRow"
+        <!-- Horizontal Scrollable Week Days Strip (Scroll to see past and upcoming days) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCalendarDays"
             android:layout_width="match_parent"
             android:layout_height="76dp"
             android:layout_marginTop="12dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="7">
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <include
-                android:id="@+id/day0"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+        <!-- Custom Full Month Calendar Dropdown (Expands when clicking ivCalendarAction) -->
+        <LinearLayout
+            android:id="@+id/layoutFullMonthCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_custom_month_calendar"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="14dp"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-            <include
-                android:id="@+id/day1"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+            <!-- Month Navigation Header with 2 Arrow Icons -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
 
-            <include
-                android:id="@+id/day2"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+                <FrameLayout
+                    android:id="@+id/btnPrevMonth"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/day3"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/arrow_reminder_left" />
+                </FrameLayout>
 
-            <include
-                android:id="@+id/day4"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/tvFullMonthYearTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="April 2026" />
 
-            <include
-                android:id="@+id/day5"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+                <FrameLayout
+                    android:id="@+id/btnNextMonth"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/day6"
-                layout="@layout/item_calendar_day"
-                android:layout_width="0dp"
-                android:layout_height="76dp"
-                android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/arrow_reminder_right" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Weekday Labels (7 Columns: Mon -> Sun) -->
+            <LinearLayout
+                android:id="@+id/layoutWeekdayLabels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <TextView
+                    android:id="@+id/tvWeekday0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T2" />
+
+                <TextView
+                    android:id="@+id/tvWeekday1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T3" />
+
+                <TextView
+                    android:id="@+id/tvWeekday2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T4" />
+
+                <TextView
+                    android:id="@+id/tvWeekday3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T5" />
+
+                <TextView
+                    android:id="@+id/tvWeekday4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T6" />
+
+                <TextView
+                    android:id="@+id/tvWeekday5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="T7" />
+
+                <TextView
+                    android:id="@+id/tvWeekday6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_medium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_subtext"
+                    android:textSize="12sp"
+                    tools:text="CN" />
+            </LinearLayout>
+
+            <!-- 7-Column Days Grid -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMonthDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
 
         </LinearLayout>
 

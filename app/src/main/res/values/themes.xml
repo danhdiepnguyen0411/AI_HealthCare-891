@@ -11,14 +11,23 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Background and Window -->
         <item name="android:windowBackground">@color/screen_bg</item>
+        <item name="android:colorBackground">@color/screen_bg</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/screen_bg</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
-        
-        <!-- Android 12+ Splash Screen configurations -->
+    </style>
+
+    <!-- Dedicated Splash Theme (prevents splash attributes from bleeding into other activities) -->
+    <style name="Theme.HealthCareAI.Splash" parent="Theme.HealthCareAI">
+        <item name="android:windowBackground">@color/splash_bg</item>
+        <item name="android:colorBackground">@color/splash_bg</item>
+        <item name="android:windowDisablePreview">false</item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher</item>
         <item name="android:windowSplashScreenIconBackgroundColor" tools:targetApi="s">@color/splash_bg</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/splash_bg</item>
     </style>
 
     <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

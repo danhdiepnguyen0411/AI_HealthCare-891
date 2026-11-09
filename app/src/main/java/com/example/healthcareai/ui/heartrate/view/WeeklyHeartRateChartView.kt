@@ -35,8 +35,23 @@ class WeeklyHeartRateChartView @JvmOverloads constructor(
     private var dayBpms: FloatArray = FloatArray(7) { 0f }
     private var maxScale: Float = 100f
     private var animProgress: Float = 1f
-    private val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     private val yTicks = intArrayOf(0, 20, 40, 60, 80, 100)
+
+    private fun getLocalizedDayLabels(): Array<String> {
+        val locale = com.example.healthcareai.util.LocaleHelper.getSavedLocale(context)
+        if (locale.language == "vi") {
+            return arrayOf("T2", "T3", "T4", "T5", "T6", "T7", "CN")
+        }
+        val cal = java.util.Calendar.getInstance(locale).apply {
+            set(java.util.Calendar.DAY_OF_WEEK, java.util.Calendar.MONDAY)
+        }
+        val dayFormat = java.text.SimpleDateFormat("EEE", locale)
+        return Array(7) {
+            val label = dayFormat.format(cal.time)
+            cal.add(java.util.Calendar.DAY_OF_WEEK, 1)
+            label.replace(".", "")
+        }
+    }
 
     private val urbanistTypeface: Typeface? by lazy {
         try {
@@ -168,13 +183,14 @@ class WeeklyHeartRateChartView @JvmOverloads constructor(
         val columnWidth = chartWidth / 7f
         val barWidth = dpToPx(18f).coerceAtMost(columnWidth * 0.65f)
         val cornerRadius = barWidth / 2f
+        val labels = getLocalizedDayLabels()
 
         for (i in 0 until 7) {
             val colCenterX = chartLeft + (i + 0.5f) * columnWidth
 
             // Draw X-axis label
             canvas.drawText(
-                dayLabels[i],
+                labels[i],
                 colCenterX,
                 h - dpToPx(6f),
                 xLabelPaint

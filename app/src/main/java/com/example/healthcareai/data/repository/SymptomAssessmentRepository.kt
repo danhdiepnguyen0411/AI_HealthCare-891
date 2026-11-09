@@ -272,12 +272,17 @@ class SymptomAssessmentRepository private constructor(private val context: Conte
             Log.d(TAG, "Input: age=$age, gender=$gender, bodyRegion=$bodyRegion, insectBite=$insectBite, language=$language")
             Log.d(TAG, "Symptoms: $symptomsSummary")
 
+            val langCode = LocaleHelper.getSavedLanguageCode(context)
+            val langDisplayName = LocaleHelper.getNativeNameByCode(langCode)
+            val langInstruction = "IMPORTANT: All text fields in the JSON response (triage_level, triage_description, possible_conditions[].name, possible_conditions[].match_label, possible_conditions[].recommended_actions[], care_advice) MUST be written in $language ($langDisplayName, locale: $langCode)."
+
             val prompt = "Patient Assessment Profile: Age $age, Gender $gender. " +
                     "Affected body region: $bodyRegion. Reported primary symptoms: ${symptoms.joinToString(", ")}. " +
                     "Related symptoms: ${relatedSymptoms.joinToString(", ")}. " +
                     "Recent insect bite: $insectBite. " +
-                    "Language: $language. " +
-                    "Please analyze symptoms and provide clinical triage (e.g. 'Consult a doctor'), possible conditions with match likelihoods and recommended actions, and structured care advice including self-care, monitor symptoms, and when to seek medical care."
+                    "Language: $language ($langDisplayName). " +
+                    "Please analyze symptoms and provide clinical triage (e.g. 'Consult a doctor'), possible conditions with match likelihoods and recommended actions, and structured care advice including self-care, monitor symptoms, and when to seek medical care. " +
+                    langInstruction
 
             val optionsMap = mutableMapOf<String, Any>(
                 "age" to age,
@@ -288,6 +293,10 @@ class SymptomAssessmentRepository private constructor(private val context: Conte
                 "related_symptoms" to relatedSymptoms,
                 "insect_bite" to insectBite.uppercase(Locale.ROOT),
                 "language" to language,
+                "lang" to langCode,
+                "output_language" to language,
+                "response_language" to language,
+                "instruction" to langInstruction,
                 "prompt" to prompt
             )
             val optionsJson = gson.toJson(optionsMap)
@@ -437,7 +446,7 @@ class SymptomAssessmentRepository private constructor(private val context: Conte
             }
             lowerText.contains("abdom") || lowerText.contains("stomach") || lowerText.contains("belly") ||
             lowerText.contains("nausea") || lowerText.contains("vomit") || lowerText.contains("diarrhea") ||
-            lowerText.contains("cramp") || lowerText.contains("acid") || lowerText.contains("reflux") ||
+            lowerText.contains("stomach cramp") || lowerText.contains("acid") || lowerText.contains("reflux") ||
             bodyRegion.equals("Abdomen", ignoreCase = true) -> {
                 val conds = listOf(
                     SymptomCondition(
@@ -600,6 +609,48 @@ class SymptomAssessmentRepository private constructor(private val context: Conte
                         "If you cannot bear any weight on the leg or hear a distinct popping sensation at time of injury.",
                         "If you experience sudden, severe calf pain, warmth, redness, and swelling (possible Deep Vein Thrombosis - requires urgent medical evaluation).",
                         "If you develop numbness, tingling, or loss of sensation in your foot or toes."
+                    )
+                )
+                conds to advice
+            }
+            lowerText.contains("shoulder") || lowerText.contains("rotator") ||
+            bodyRegion.equals("Shoulders", ignoreCase = true) || bodyRegion.equals("Shoulder", ignoreCase = true) -> {
+                val conds = listOf(
+                    SymptomCondition(
+                        name = "Rotator Cuff Tendinitis / Impingement",
+                        matchLabel = "Strong Match",
+                        matchProgress = 80,
+                        recommendedActions = listOf(
+                            "Rest the affected shoulder and avoid heavy overhead lifting",
+                            "Apply ice packs for 15-20 minutes 2-3 times daily",
+                            "Perform gentle pendulum exercises to maintain joint mobility"
+                        )
+                    ),
+                    SymptomCondition(
+                        name = "Frozen Shoulder (Adhesive Capsulitis)",
+                        matchLabel = "Moderate Match",
+                        matchProgress = 55,
+                        recommendedActions = listOf(
+                            "Apply warm compresses before gentle stretching",
+                            "Avoid sudden jerking motions with the affected arm",
+                            "Consult a physical therapist for targeted rehabilitation"
+                        )
+                    )
+                )
+                val advice = SymptomCareAdvice(
+                    selfCare = listOf(
+                        "Rest the shoulder joint and avoid lifting items overhead or carrying heavy loads.",
+                        "Apply cold packs wrapped in a towel for 15 minutes during the acute pain phase.",
+                        "Use warm showers or heat packs prior to gentle pendulum stretches to ease stiffness."
+                    ),
+                    monitorSymptoms = listOf(
+                        "Track changes in range of motion (ability to lift arm forward or out to side).",
+                        "Note if pain interferes with sleep or worsens when lying on the affected side."
+                    ),
+                    whenToSeekCare = listOf(
+                        "If shoulder pain is accompanied by chest tightness, pressure, or difficulty breathing (seek immediate emergency care).",
+                        "If you experience sudden, complete inability to raise or move the arm.",
+                        "If the shoulder appears visibly deformed, bruised, or dislocated after an injury."
                     )
                 )
                 conds to advice

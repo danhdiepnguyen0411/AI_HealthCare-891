@@ -20,7 +20,6 @@ import com.example.healthcareai.data.model.HealthRecordItem
 import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityNewReminderBinding
-import com.example.healthcareai.databinding.ItemReminderTimeChipBinding
 import com.example.healthcareai.ui.base.BaseActivity
 import android.app.Dialog
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,31 +35,15 @@ class NewReminderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityNewReminderBinding
 
-    // Time chips list starts empty (no mock data)
-    private val timeChipsList = mutableListOf<String>()
-
-    private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
+    // Selected hour (0..23) and minute (0..59) for single reminder time
+    private var selectedHour: Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    private var selectedMinute: Int = Calendar.getInstance().get(Calendar.MINUTE)
 
     private var editingReminderId: String? = null
     private var profileId: String? = null
     private var selectedHealthRecordItem: HealthRecordItem? = null
     private var currentCategoryKey: String = SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
-    private var notificationPermissionDialog: Dialog? = null
-
-    private val requestNotificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        notificationPermissionDialog = NotificationPermissionHelper.onPermissionResult(
-            activity = this,
-            isGranted = isGranted,
-            onGranted = {
-                finish()
-            },
-            onDenied = {
-                finish()
-            }
-        )
-    }
+    private var currentRepeatKey: String = SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -164,10 +147,15 @@ class NewReminderActivity : BaseActivity() {
         binding.cardChooseItem.setOnClickListener {
             hideKeyboard()
             val currentCategory = currentCategoryKey
+            val currentItemText = binding.tvChooseItem.text?.toString()?.trim().orEmpty()
+            val selectedId = selectedHealthRecordItem?.id?.takeIf { it.isNotBlank() }
+                ?: selectedHealthRecordItem?.name?.takeIf { it.isNotBlank() }
+                ?: currentItemText.takeIf { it.isNotBlank() }
+
             ChooseHealthItemBottomSheetDialog.show(
                 supportFragmentManager,
                 category = currentCategory,
-                selectedItemId = selectedHealthRecordItem?.id ?: binding.tvChooseItem.text.toString(),
+                selectedItemId = selectedId,
                 profileId = profileId
             ) { item ->
                 selectedHealthRecordItem = item
@@ -211,30 +199,16 @@ class NewReminderActivity : BaseActivity() {
             binding.scrollForm.postDelayed({ scrollToNotes() }, 150)
         }
 
-        // Form selector
+        // Form selector (Bottom Sheet Dialog with standard app styling)
         binding.cardForm.setOnClickListener {
             hideKeyboard()
-            val formOptions = arrayOf(
-                getString(R.string.form_tablet),
-                getString(R.string.form_capsule),
-                getString(R.string.form_liquid),
-                getString(R.string.form_drops),
-                getString(R.string.form_injection),
-                getString(R.string.form_inhaler),
-                getString(R.string.form_other)
-            )
-
-            val currentForm = binding.tvForm.text.toString()
-            val selectedIndex = formOptions.indexOf(currentForm).coerceAtLeast(-1)
-
-            AlertDialog.Builder(this)
-                .setTitle(R.string.label_reminder_form)
-                .setSingleChoiceItems(formOptions, selectedIndex) { dialog, which ->
-                    binding.tvForm.text = formOptions[which]
-                    dialog.dismiss()
-                }
-                .setNegativeButton(R.string.btn_cancel, null)
-                .show()
+            val currentForm = binding.tvForm.text.toString().trim()
+            SelectFormBottomSheetDialog.show(
+                supportFragmentManager,
+                if (currentForm.isNotEmpty()) currentForm else SelectFormBottomSheetDialog.FORM_TABLET
+            ) { selectedForm ->
+                binding.tvForm.text = selectedForm
+            }
         }
     }
 
@@ -243,56 +217,32 @@ class NewReminderActivity : BaseActivity() {
 
         binding.cardRepeat.setOnClickListener {
             hideKeyboard()
-            val currentRepeat = binding.tvRepeat.text.toString().ifEmpty {
+            val repeatToPass = currentRepeatKey.ifEmpty {
                 SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
             }
-            SelectRepeatBottomSheetDialog.show(supportFragmentManager, currentRepeat) { selected ->
-                binding.tvRepeat.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedRepeat(this, selected)
+            SelectRepeatBottomSheetDialog.show(supportFragmentManager, repeatToPass) { selectedKey ->
+                currentRepeatKey = selectedKey
+                binding.tvRepeat.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedRepeat(this, selectedKey)
             }
         }
     }
 
     private fun setupTimeSection() {
-        renderTimeChips()
+        val hourItems = (0..23).map { String.format(Locale.US, "%02d", it) }
+        val minuteItems = (0..59).map { String.format(Locale.US, "%02d", it) }
 
-        val onAddTimeClicked = View.OnClickListener {
-            hideKeyboard()
-            AddTimeCustomDialog.show(
-                this,
-                alreadyAddedTimes = timeChipsList,
-                onTimeAdded = { newTime ->
-                    timeChipsList.add(newTime)
-                    renderTimeChips()
-                },
-                onTimeRemoved = { removedTime ->
-                    timeChipsList.remove(removedTime)
-                    renderTimeChips()
-                }
-            )
+        binding.wheelHours.setItems(hourItems)
+        binding.wheelMinutes.setItems(minuteItems)
+
+        binding.wheelHours.setSelectedPosition(selectedHour)
+        binding.wheelMinutes.setSelectedPosition(selectedMinute)
+
+        binding.wheelHours.setOnItemSelectedListener { pos, _ ->
+            selectedHour = pos
         }
 
-        binding.btnAddTimeEmpty.setOnClickListener(onAddTimeClicked)
-        binding.btnAddTimeFilled.setOnClickListener(onAddTimeClicked)
-    }
-
-    private fun renderTimeChips() {
-        if (timeChipsList.isEmpty()) {
-            binding.layoutTimeEmpty.visibility = View.VISIBLE
-            binding.layoutTimeFilled.visibility = View.GONE
-        } else {
-            binding.layoutTimeEmpty.visibility = View.GONE
-            binding.layoutTimeFilled.visibility = View.VISIBLE
-
-            binding.flowTimeChips.removeAllViews()
-            for (timeStr in timeChipsList) {
-                val chipBinding = ItemReminderTimeChipBinding.inflate(layoutInflater, binding.flowTimeChips, false)
-                chipBinding.tvChipTime.text = timeStr
-                chipBinding.btnRemoveTime.setOnClickListener {
-                    timeChipsList.remove(timeStr)
-                    renderTimeChips()
-                }
-                binding.flowTimeChips.addView(chipBinding.root)
-            }
+        binding.wheelMinutes.setOnItemSelectedListener { pos, _ ->
+            selectedMinute = pos
         }
     }
 
@@ -302,19 +252,25 @@ class NewReminderActivity : BaseActivity() {
 
         binding.tvTitle.text = getString(R.string.title_edit_reminder)
         updateCategoryState(existing.category)
-        binding.tvChooseItem.text = existing.getLocalizedName(this)
+        binding.tvChooseItem.text = existing.name.ifBlank { existing.getLocalizedName(this) }
         binding.etStrength.setText(existing.strength)
         if (existing.form.isNotBlank()) {
             binding.tvForm.text = existing.form
         }
         if (existing.repeat.isNotBlank()) {
+            currentRepeatKey = existing.repeat
             binding.tvRepeat.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedRepeat(this, existing.repeat)
         }
 
         if (existing.timeList.isNotEmpty()) {
-            timeChipsList.clear()
-            timeChipsList.addAll(existing.timeList)
-            renderTimeChips()
+            val firstTime = existing.timeList.first()
+            val parsed = com.example.healthcareai.util.ReminderScheduler.parseTimeString(firstTime)
+            if (parsed != null) {
+                selectedHour = parsed.first
+                selectedMinute = parsed.second
+                binding.wheelHours.setSelectedPosition(selectedHour)
+                binding.wheelMinutes.setSelectedPosition(selectedMinute)
+            }
         }
 
         binding.etReminderNotes.setText(existing.notes)
@@ -353,10 +309,17 @@ class NewReminderActivity : BaseActivity() {
             val repo = ReminderRepository.getInstance(this)
             val existing = editingReminderId?.let { repo.getReminder(it) }
 
-            val chosenRepeat = binding.tvRepeat.text.toString().ifBlank {
+            val chosenRepeat = currentRepeatKey.ifBlank {
                 SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
             }
-            val times = timeChipsList.toList()
+            val hour12 = when {
+                selectedHour == 0 -> 12
+                selectedHour > 12 -> selectedHour - 12
+                else -> selectedHour
+            }
+            val amPm = if (selectedHour >= 12) "PM" else "AM"
+            val formattedTime = String.format(Locale.US, "%02d:%02d %s", hour12, selectedMinute, amPm)
+            val times = listOf(formattedTime)
 
             val strength = if (chosenCategory.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)) {
                 binding.etStrength.text?.toString()?.trim().orEmpty()
@@ -370,6 +333,14 @@ class NewReminderActivity : BaseActivity() {
                 ?: profileId
                 ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
 
+            val now = System.currentTimeMillis()
+            val createdTime = if (existing != null && existing.createdAt > 0) existing.createdAt else now
+            val effectiveStartDate = if (existing != null && existing.startDate.isNotBlank()) {
+                existing.startDate
+            } else {
+                SimpleDateFormat("yyyy-MM-dd", Locale.US).format(java.util.Date(createdTime))
+            }
+
             val itemToSave = ReminderItem(
                 id = existing?.id ?: UUID.randomUUID().toString(),
                 profileId = effectiveProfileId,
@@ -379,35 +350,23 @@ class NewReminderActivity : BaseActivity() {
                 form = form,
                 repeat = chosenRepeat,
                 timeList = times,
-                startDate = existing?.startDate.orEmpty(),
+                startDate = effectiveStartDate,
                 endDate = existing?.endDate.orEmpty(),
                 notes = binding.etReminderNotes.text?.toString()?.trim().orEmpty(),
                 isDone = existing?.isDone ?: false,
-                createdAt = existing?.createdAt ?: System.currentTimeMillis()
+                createdAt = createdTime
             )
 
             repo.saveReminder(itemToSave)
 
             val msg = if (existing != null) R.string.msg_reminder_updated else R.string.msg_reminder_saved
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-
-            if (!PermissionReturnHelper.isNotificationGranted(this)) {
-                notificationPermissionDialog = NotificationPermissionHelper.checkAndRequest(
-                    activity = this,
-                    launcher = requestNotificationPermissionLauncher,
-                    onGranted = {
-                        finish()
-                    },
-                    onDenied = {
-                        finish()
-                    }
-                )
-            } else {
-                finish()
-            }
+            setResult(RESULT_OK, Intent().putExtra(EXTRA_REMINDER_ID, itemToSave.id))
+            finish()
         }
 
         binding.btnCancel.setOnClickListener {
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -507,9 +466,9 @@ class NewReminderActivity : BaseActivity() {
         val keyboardStateChanged = isKeyboardOpen != wasKeyboardOpen
         wasKeyboardOpen = isKeyboardOpen
 
-        // Adjust top bar margin for status bar
+        // Adjust top bar margin for status bar (standardized 16dp spacing below status bar)
         if (statusTop > 0) {
-            val targetTopMargin = statusTop + (8 * density).toInt()
+            val targetTopMargin = statusTop + (16 * density).toInt()
             (binding.topBar.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
                 if (lp.topMargin != targetTopMargin) {
                     lp.topMargin = targetTopMargin
@@ -605,9 +564,6 @@ class NewReminderActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         PermissionReturnHelper.stopPolling()
-        if (notificationPermissionDialog?.isShowing == true) {
-            try { notificationPermissionDialog?.dismiss() } catch (_: Exception) {}
-        }
         globalLayoutListener?.let {
             window.decorView.viewTreeObserver.removeOnGlobalLayoutListener(it)
         }

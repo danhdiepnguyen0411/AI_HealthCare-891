@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.BottomSheetSelectRepeatBinding
 import com.example.healthcareai.util.DialogImmersiveHelper
+import com.example.healthcareai.util.ReminderLocalizationHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -59,7 +60,13 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
     )
 
     private fun setupRepeatSelection() {
-        val repeatOptions = listOf(
+        val standardBundles = listOf(
+            RepeatViewBundle(
+                REPEAT_ONCE,
+                binding.cardRepeatOnce,
+                binding.tvTitleRepeatOnce,
+                binding.ivCheckRepeatOnce
+            ),
             RepeatViewBundle(
                 REPEAT_EVERY_DAY,
                 binding.cardRepeatEveryDay,
@@ -71,39 +78,22 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
                 binding.cardRepeatWeekdays,
                 binding.tvTitleRepeatWeekdays,
                 binding.ivCheckRepeatWeekdays
-            ),
-            RepeatViewBundle(
-                REPEAT_WEEKENDS,
-                binding.cardRepeatWeekends,
-                binding.tvTitleRepeatWeekends,
-                binding.ivCheckRepeatWeekends
-            ),
-            RepeatViewBundle(
-                REPEAT_WEEKLY,
-                binding.cardRepeatWeekly,
-                binding.tvTitleRepeatWeekly,
-                binding.ivCheckRepeatWeekly
-            ),
-            RepeatViewBundle(
-                REPEAT_MONTHLY,
-                binding.cardRepeatMonthly,
-                binding.tvTitleRepeatMonthly,
-                binding.ivCheckRepeatMonthly
-            ),
-            RepeatViewBundle(
-                REPEAT_ONCE,
-                binding.cardRepeatOnce,
-                binding.tvTitleRepeatOnce,
-                binding.ivCheckRepeatOnce
             )
         )
+
+        fun isCustomKey(key: String): Boolean {
+            return key.startsWith("Custom:", ignoreCase = true) ||
+                    key.equals(REPEAT_CUSTOM, ignoreCase = true)
+        }
 
         fun updateUI(selectedKey: String) {
             currentSelectedRepeat = selectedKey
             val context = context ?: return
 
-            for (bundle in repeatOptions) {
-                val isSelected = bundle.key.equals(selectedKey, ignoreCase = true)
+            val isCustom = isCustomKey(selectedKey)
+
+            for (bundle in standardBundles) {
+                val isSelected = !isCustom && bundle.key.equals(selectedKey, ignoreCase = true)
                 if (isSelected) {
                     bundle.card.setBackgroundResource(R.drawable.bg_category_card_selected)
                     bundle.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -114,13 +104,43 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
                     bundle.ivCheck.setImageResource(R.drawable.bg_checkbox_unchecked)
                 }
             }
+
+            // Update Custom Card UI
+            if (isCustom) {
+                binding.cardRepeatCustom.setBackgroundResource(R.drawable.bg_category_card_selected)
+                binding.tvTitleRepeatCustom.setTextColor(ContextCompat.getColor(context, R.color.white))
+                binding.ivCheckRepeatCustom.setImageResource(R.drawable.bg_checkbox_selected_white)
+
+                if (selectedKey.startsWith("Custom:", ignoreCase = true)) {
+                    val formatted = ReminderLocalizationHelper.getLocalizedRepeat(context, selectedKey)
+                    binding.tvSubtitleRepeatCustom.text = formatted
+                    binding.tvSubtitleRepeatCustom.setTextColor(Color.parseColor("#DCE6FF"))
+                    binding.tvSubtitleRepeatCustom.visibility = View.VISIBLE
+                } else {
+                    binding.tvSubtitleRepeatCustom.visibility = View.GONE
+                }
+            } else {
+                binding.cardRepeatCustom.setBackgroundResource(R.drawable.bg_category_card_unselected)
+                binding.tvTitleRepeatCustom.setTextColor(ContextCompat.getColor(context, R.color.color_text))
+                binding.ivCheckRepeatCustom.setImageResource(R.drawable.bg_checkbox_unchecked)
+                binding.tvSubtitleRepeatCustom.visibility = View.GONE
+            }
         }
 
         updateUI(currentSelectedRepeat)
 
-        for (bundle in repeatOptions) {
+        for (bundle in standardBundles) {
             bundle.card.setOnClickListener {
                 updateUI(bundle.key)
+            }
+        }
+
+        binding.cardRepeatCustom.setOnClickListener {
+            SelectCustomDaysBottomSheetDialog.show(
+                childFragmentManager,
+                currentKey = if (isCustomKey(currentSelectedRepeat)) currentSelectedRepeat else ""
+            ) { customResultKey ->
+                updateUI(customResultKey)
             }
         }
     }
@@ -159,12 +179,15 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
         const val TAG = "SelectRepeatBottomSheetDialog"
         private const val ARG_SELECTED_REPEAT = "arg_selected_repeat"
 
+        const val REPEAT_ONCE = "Once"
         const val REPEAT_EVERY_DAY = "Every day"
         const val REPEAT_WEEKDAYS = "Weekdays"
+        const val REPEAT_CUSTOM = "Custom"
+
+        // Deprecated aliases kept for compatibility
         const val REPEAT_WEEKENDS = "Weekends"
         const val REPEAT_WEEKLY = "Weekly"
         const val REPEAT_MONTHLY = "Monthly"
-        const val REPEAT_ONCE = "Once"
 
         fun show(
             fragmentManager: FragmentManager,

@@ -25,14 +25,17 @@
             android:layout_marginTop="24dp"
             android:paddingHorizontal="16dp">
 
-            <TextView
+            <com.example.healthcareai.ui.widget.MarqueeTextView
                 android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:fontFamily="@font/urbanist"
+                android:gravity="center"
                 android:includeFontPadding="false"
                 android:letterSpacing="0"
                 android:lineHeight="27sp"
+                android:singleLine="true"
                 android:text="@string/title_setting"
                 android:textColor="@color/color_text"
                 android:textSize="24sp"
@@ -72,8 +75,8 @@
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:cardMaxElevation="4dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 
@@ -149,8 +152,8 @@
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:cardMaxElevation="4dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 
@@ -227,8 +230,8 @@
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:cardMaxElevation="4dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 
@@ -289,8 +292,8 @@
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:cardMaxElevation="4dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 
@@ -351,8 +354,8 @@
             android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:cardMaxElevation="4dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="false">
 

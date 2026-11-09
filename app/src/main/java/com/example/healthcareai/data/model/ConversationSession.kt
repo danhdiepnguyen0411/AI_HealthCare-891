@@ -9,6 +9,7 @@ data class ConversationSession(
     val id: String = UUID.randomUUID().toString(),
     var title: String = "",
     var lastSnippet: String = "",
+    var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis(),
     val messages: MutableList<ChatMessage> = mutableListOf()
 )

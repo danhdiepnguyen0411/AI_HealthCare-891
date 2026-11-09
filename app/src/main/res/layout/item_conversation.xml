@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="6dp"
-    android:background="@drawable/bg_history_delete_card"
-    android:elevation="1.5dp">
+    android:background="@drawable/bg_history_delete_card">
 
     <!-- Secondary View: Background Red Delete Action (Figma: 90px width, #FF4D4F, 20px radius) -->
     <FrameLayout
@@ -38,7 +37,6 @@
         android:background="@drawable/bg_conversation_card"
         android:clickable="true"
         android:focusable="true"
-        android:elevation="1.5dp"
         android:padding="20dp">
 
         <!-- Conversation Title (Figma: Urbanist SemiBold 600, 16sp, lineHeight 24sp, #242E49) -->

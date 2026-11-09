@@ -12,5 +12,6 @@ data class ChatMessage(
     val timestamp: Long = System.currentTimeMillis(),
     var isLoading: Boolean = false,
     val isDateHeader: Boolean = false,
-    val formattedDate: String? = null
+    val formattedDate: String? = null,
+    val imageUri: String? = null
 )

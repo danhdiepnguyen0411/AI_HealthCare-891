@@ -6,7 +6,7 @@
     <string name="tab_scan">Scan</string>
     <string name="tab_my_health">My Health</string>
     <string name="tab_family">Family Hub</string>
-    <string name="tab_settings">Setting</string>
+    <string name="tab_settings">Settings</string>
     
     <!-- Screen Placeholders -->
     <string name="screen_home">Home Screen</string>
@@ -60,9 +60,12 @@
     <!-- Add Profile -->
     <string name="title_add_profile">Add profile</string>
     <string name="title_add_member">Add member</string>
-    <string name="title_detail_profile">Detail Profile</string>
-    <string name="title_profile_detail">Detail Profile</string>
+    <string name="title_edit_profile">Edit profile</string>
+    <string name="title_detail_profile">Profile detail</string>
+    <string name="title_profile_detail">Profile detail</string>
     <string name="msg_member_added">Member added to Family!</string>
+    <string name="msg_profile_updated">Profile updated successfully</string>
+    <string name="error_relationship_empty">Please select a relationship</string>
     <string name="add_avatar">Add Avatar</string>
     <string name="label_full_name">Full name</string>
     <string name="hint_full_name">Enter full name</string>
@@ -183,6 +186,10 @@
     <string name="dialog_camera_btn_dont_allow">Don’t allow</string>
     <string name="dialog_camera_btn_cancel">Not Now</string>
 
+    <!-- Microphone Permission Custom Dialog -->
+    <string name="dialog_mic_permission_title">Enable Microphone Access</string>
+    <string name="dialog_mic_permission_desc">Allow Healthcare AI to access your microphone so you can ask health questions using voice input.</string>
+
     <!-- Camera Screen &amp; Guide -->
     <string name="camera_guide_title">Photo Guide</string>
     <string name="camera_guide_tip_1">1. Keep the target area well-centered in the frame.</string>
@@ -206,7 +213,7 @@
     <string name="home_greeting_morning">Good morning</string>
     <string name="home_greeting_afternoon">Good afternoon</string>
     <string name="home_greeting_evening">Good evening</string>
-    <string name="home_subtitle">Your health is looking great today.</string>
+    <string name="home_subtitle">Ready for your daily health check?</string>
     <string name="home_ai_assistant_badge">AI Health Assistant</string>
     <string name="home_ai_assistant_title">Your personal\nhealth assistant</string>
     <string name="home_btn_chat_ai">Chat with AI</string>
@@ -314,7 +321,7 @@
     <string name="family_add_member_hint">Add family member feature is coming soon.</string>
 
     <!-- Settings Screen -->
-    <string name="title_setting">Setting</string>
+    <string name="title_setting">Settings</string>
     <string name="settings_section_general">General</string>
     <string name="settings_section_support">Support</string>
     <string name="settings_item_language">Language</string>
@@ -432,11 +439,20 @@
     <string name="reminder_btn_add_time">Add time</string>
     <string name="btn_save_reminder">Save reminder</string>
     <string name="repeat_every_day">Every day</string>
-    <string name="repeat_weekdays">Weekdays</string>
+    <string name="repeat_weekdays">Monday to Friday</string>
     <string name="repeat_weekends">Weekends</string>
     <string name="repeat_weekly">Weekly</string>
     <string name="repeat_monthly">Monthly</string>
     <string name="repeat_once">Once</string>
+    <string name="repeat_custom">Custom</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+    <string name="error_select_at_least_one_day">Please select at least one day</string>
     <string name="form_tablet">Tablet</string>
     <string name="form_capsule">Capsule</string>
     <string name="form_liquid">Liquid</string>
@@ -471,7 +487,7 @@
     <string name="title_edit_reminder">Edit reminder</string>
     <string name="reminder_action_edit">Edit reminder</string>
     <string name="reminder_action_delete">Delete reminder</string>
-    <string name="reminder_status_taken">Taken</string>
+    <string name="reminder_status_taken">Completed</string>
     <string name="reminder_action_undo">Undo</string>
     <string name="msg_reminder_deleted">Reminder deleted</string>
     <string name="msg_reminder_updated">Reminder updated</string>
@@ -575,6 +591,9 @@
     <string name="title_report_result">Report result</string>
     <string name="btn_report">Report</string>
     <string name="title_choose_reminders">Choose your reminders</string>
+    <string name="no_reminders_yet">No reminders yet</string>
+    <string name="msg_no_reminders_prompt_add">You haven\'t set up any reminders yet. Please add a reminder to get started.</string>
+    <string name="btn_add_reminder">+ Add reminder</string>
     <string name="btn_save_reminders_count">Save %1$d reminders</string>
     <string name="btn_save_reminder_single">Save 1 reminder</string>
     <string name="btn_edit">Edit</string>
@@ -603,8 +622,24 @@
     <string name="title_edit_vaccination">Edit vaccination</string>
     <string name="label_vaccine_name">Vaccine name</string>
     <string name="label_dose_number">Dose number</string>
+    <string name="hint_dose_number">e.g. 1</string>
     <string name="label_batch_number">Batch number</string>
     <string name="btn_save_vaccination">Save vaccination</string>
+    <string name="msg_vaccination_saved">Vaccination saved</string>
+    <string name="error_vaccine_name_empty">Please enter vaccine name</string>
+    <string name="error_dose_number_empty">Please enter dose number</string>
+    <string name="error_dose_number_invalid">Dose number must be between 1 and 99</string>
+    <string name="title_add_appointment">Add appointment</string>
+    <string name="title_edit_appointment">Edit appointment</string>
+    <string name="title_appointment_details">Appointment details</string>
+    <string name="label_appointment_title">Appointment title</string>
+    <string name="label_appointment_date">Appointment date</string>
+    <string name="btn_save_appointment">Save appointment</string>
+    <string name="msg_appointment_saved">Appointment saved</string>
+    <string name="error_appointment_name_empty">Please enter appointment title</string>
+    <string name="status_upcoming_title">Upcoming</string>
+    <string name="status_completed_title">Completed</string>
+    <string name="status_cancelled_title">Cancelled</string>
     <string name="title_add_medication">Add medication</string>
     <string name="title_edit_medication">Edit medication</string>
     <string name="label_reason">Reason</string>
@@ -613,6 +648,7 @@
     <string name="label_medication_name">Medication Name</string>
     <string name="no_records_yet_format">No %1$s yet</string>
     <string name="empty_records_desc">Add your first record using the button below</string>
+    <string name="msg_record_deleted">Record deleted</string>
     <string name="btn_add_record_format">Add %1$s</string>
     <string name="title_choose_item_format">Choose %1$s</string>
     <string name="no_items_added_yet_format">No %1$s added yet</string>
@@ -669,4 +705,14 @@
     <string name="dialog_leave_without_saving_message">Your analysis is not saved. If you leave now,\nyou won\'t be able to view these results again.</string>
     <string name="btn_stay_on_page">Stay on this page</string>
     <string name="btn_exit_without_saving">Exit without saving</string>
+
+    <!-- AI Scan History & Detailed Results (Figma 14:1555 & 14:1585) -->
+    <string name="title_detailed_results">Detailed results</string>
+    <string name="results_for">Results for</string>
+    <string name="title_ai_scan_history">AI scan history</string>
+    <string name="scan_history_empty_title">No scan history yet</string>
+    <string name="scan_history_empty_desc">Your completed AI health scans will appear here.</string>
+    <!-- Custom System Notification (Figma 1:4045) -->
+    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_time_now">just now</string>
 </resources>

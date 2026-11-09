@@ -91,6 +91,10 @@ class PreferenceHelper private constructor(context: Context) {
         get() = prefs.getInt(KEY_CAMERA_DENIAL_COUNT, 0)
         set(value) = prefs.edit().putInt(KEY_CAMERA_DENIAL_COUNT, value).apply()
 
+    var micDenialCount: Int
+        get() = prefs.getInt("pref_key_mic_denial_count", 0)
+        set(value) = prefs.edit().putInt("pref_key_mic_denial_count", value).apply()
+
     var isAppRated: Boolean
         get() = prefs.getBoolean(KEY_APP_RATED, false)
         set(value) = prefs.edit().putBoolean(KEY_APP_RATED, value).apply()
@@ -99,13 +103,14 @@ class PreferenceHelper private constructor(context: Context) {
      * Resets language selection back to system default if onboarding was not fully completed.
      */
     fun clearLanguageIfIntroNotCompleted(context: Context? = null) {
-        if (!isIntroCompleted) {
+        if (!isProfileCreated) {
             val devLang = LocaleHelper.getDeviceLanguageCode()
             prefs.edit()
                 .remove(KEY_FIRST_LANGUAGE_SET)
                 .remove(KEY_SELECTED_LANGUAGE)
+                .remove(KEY_INTRO_COMPLETED)
                 .remove(KEY_PROFILE_CREATED)
-                .apply()
+                .commit()
             context?.let { ctx ->
                 LocaleHelper.setLocale(ctx, devLang)
             }

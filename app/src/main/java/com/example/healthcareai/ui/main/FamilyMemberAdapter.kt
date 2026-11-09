@@ -131,8 +131,7 @@ class FamilyMemberAdapter(
         private fun calculateAge(dobString: String?): String {
             if (dobString.isNullOrBlank()) return "--"
             return try {
-                val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-                val birthDate = sdf.parse(dobString) ?: return "--"
+                val birthDate = com.example.healthcareai.util.LocaleHelper.parseStoredDate(dobString) ?: return "--"
                 val birthCal = Calendar.getInstance().apply { time = birthDate }
                 val nowCal = Calendar.getInstance()
                 var age = nowCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR)

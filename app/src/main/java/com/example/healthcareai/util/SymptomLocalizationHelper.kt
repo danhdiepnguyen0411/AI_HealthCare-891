@@ -121,7 +121,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "ألم في الجلد",
         "Pain when pressing upper limb" to "ألم عند الضغط على الطرف العلوي",
         "Skin wound" to "جرح جلدي",
-        "Contact with allergen" to "ملامسة مادة مسببة للحساسية"
+        "Contact with allergen" to "ملامسة مادة مسببة للحساسية",
+        "Rotator cuff pain" to "ألم الكفة المدورة",
+        "Shoulder blade pain" to "ألم لوح الكتف",
+        "Inability to lift arm above head" to "عدم القدرة على رفع الذراع فوق الرأس",
+        "Clicking or popping in shoulder" to "طقطقة أو فرقعة في الكتف",
+        "Shoulder muscle spasms" to "تشنجات عضلات الكتف",
+        "Stiffness or limited range of motion" to "تيبس أو نطاق حركة محدود",
+        "Sharp pain when lifting arm overhead" to "ألم حاد عند رفع الذراع لأعلى",
+        "Dull ache radiating down upper arm" to "ألم خفيف يمتد إلى أعلى الذراع",
+        "Clicking or popping sensation in shoulder" to "شعور بطقطقة أو فرقعة في الكتف",
+        "Muscle tightness in upper back and neck" to "شد عضلي في أعلى الظهر والرقبة",
+        "Weakness when carrying objects" to "ضعف عند حمل الأشياء"
     )
 
     private val hiTranslations = mapOf(
@@ -241,7 +252,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "त्वचा में दर्द",
         "Pain when pressing upper limb" to "ऊपरी अंग को दबाने पर दर्द",
         "Skin wound" to "त्वचा का घाव",
-        "Contact with allergen" to "एलर्जेन के संपर्क में आना"
+        "Contact with allergen" to "एलर्जेन के संपर्क में आना",
+        "Rotator cuff pain" to "रोटेटर कफ में दर्द",
+        "Shoulder blade pain" to "कंधे की हड्डी (शोल्डर ब्लेड) में दर्द",
+        "Inability to lift arm above head" to "हाथ सिर के ऊपर उठाने में असमर्थता",
+        "Clicking or popping in shoulder" to "कंधे में चटकने या पॉपिंग की आवाज",
+        "Shoulder muscle spasms" to "कंधे की मांसपेशियों में ऐंठन",
+        "Stiffness or limited range of motion" to "जकड़न या सीमित गतिशीलता",
+        "Sharp pain when lifting arm overhead" to "हाथ ऊपर उठाते समय तेज दर्द",
+        "Dull ache radiating down upper arm" to "ऊपरी बांह में फैलता हुआ धीमा दर्द",
+        "Clicking or popping sensation in shoulder" to "कंधे में चटकने का अहसास",
+        "Muscle tightness in upper back and neck" to "पीठ के ऊपरी हिस्से और गर्दन में मांसपेशियों का खिंचाव",
+        "Weakness when carrying objects" to "सामान उठाते समय बांह में कमजोरी"
     )
 
     private val viTranslations = mapOf(
@@ -361,7 +383,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Đau rát da",
         "Pain when pressing upper limb" to "Đau khi ấn vào chi trên",
         "Skin wound" to "Vết thương hở trên da",
-        "Contact with allergen" to "Tiếp xúc với chất gây dị ứng"
+        "Contact with allergen" to "Tiếp xúc với chất gây dị ứng",
+        "Rotator cuff pain" to "Đau chóp xoay vai",
+        "Shoulder blade pain" to "Đau xương bả vai",
+        "Inability to lift arm above head" to "Không thể giơ tay qua đầu",
+        "Clicking or popping in shoulder" to "Tiếng lạo xạo hoặc lục cục ở vai",
+        "Shoulder muscle spasms" to "Co thắt cơ vai",
+        "Stiffness or limited range of motion" to "Cứng khớp hoặc hạn chế vận động",
+        "Sharp pain when lifting arm overhead" to "Đau nhói khi giơ tay qua đầu",
+        "Dull ache radiating down upper arm" to "Đau âm ỉ lan xuống cánh tay trên",
+        "Clicking or popping sensation in shoulder" to "Cảm giác lục cục hoặc lạo xạo ở vai",
+        "Muscle tightness in upper back and neck" to "Căng cơ lưng trên và cổ",
+        "Weakness when carrying objects" to "Yếu tay khi mang vác đồ vật"
     )
 
     private val esTranslations = mapOf(
@@ -481,7 +514,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Dolor en la piel",
         "Pain when pressing upper limb" to "Dolor al presionar el miembro superior",
         "Skin wound" to "Herida en la piel",
-        "Contact with allergen" to "Contacto con un alérgeno"
+        "Contact with allergen" to "Contacto con un alérgeno",
+        "Rotator cuff pain" to "Dolor del manguito rotador",
+        "Shoulder blade pain" to "Dolor en el omóplato",
+        "Inability to lift arm above head" to "Incapacidad para levantar el brazo por encima de la cabeza",
+        "Clicking or popping in shoulder" to "Chasquidos o crujidos en el hombro",
+        "Shoulder muscle spasms" to "Espasmos musculares en el hombro",
+        "Stiffness or limited range of motion" to "Rigidez o limitación del movimiento",
+        "Sharp pain when lifting arm overhead" to "Dolor agudo al levantar el brazo",
+        "Dull ache radiating down upper arm" to "Dolor sordo que se irradia por el brazo",
+        "Clicking or popping sensation in shoulder" to "Sensación de chasquido en el hombro",
+        "Muscle tightness in upper back and neck" to "Tensión muscular en la espalda superior y el cuello",
+        "Weakness when carrying objects" to "Debilidad al cargar objetos"
     )
 
     private val frTranslations = mapOf(
@@ -601,7 +645,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Douleur cutanée",
         "Pain when pressing upper limb" to "Douleur à la palpation du membre supérieur",
         "Skin wound" to "Plaie cutanée",
-        "Contact with allergen" to "Contact avec un allergène"
+        "Contact with allergen" to "Contact avec un allergène",
+        "Rotator cuff pain" to "Douleur de la coiffe des rotateurs",
+        "Shoulder blade pain" to "Douleur à l'omoplate",
+        "Inability to lift arm above head" to "Incapacité à lever le bras au-dessus de la tête",
+        "Clicking or popping in shoulder" to "Craquements ou claquements dans l'épaule",
+        "Shoulder muscle spasms" to "Spasmes musculaires de l'épaule",
+        "Stiffness or limited range of motion" to "Raideur ou amplitude de mouvement limitée",
+        "Sharp pain when lifting arm overhead" to "Douleur aiguë en levant le bras",
+        "Dull ache radiating down upper arm" to "Douleur sourde irradiant dans le haut du bras",
+        "Clicking or popping sensation in shoulder" to "Sensation de craquement dans l'épaule",
+        "Muscle tightness in upper back and neck" to "Tension musculaire dans le haut du dos et le cou",
+        "Weakness when carrying objects" to "Faiblesse lors du port d'objets"
     )
 
     private val deTranslations = mapOf(
@@ -721,7 +776,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Hautschmerzen",
         "Pain when pressing upper limb" to "Druckschmerz an der oberen Extremität",
         "Skin wound" to "Hautwunde",
-        "Contact with allergen" to "Kontakt mit Allergen"
+        "Contact with allergen" to "Kontakt mit Allergen",
+        "Rotator cuff pain" to "Schmerzen der Rotatorenmanschette",
+        "Shoulder blade pain" to "Schulterblattschmerzen",
+        "Inability to lift arm above head" to "Unfähigkeit, den Arm über den Kopf zu heben",
+        "Clicking or popping in shoulder" to "Knacken oder Klicken in der Schulter",
+        "Shoulder muscle spasms" to "Muskelkrämpfe in der Schulter",
+        "Stiffness or limited range of motion" to "Steifheit oder eingeschränkte Beweglichkeit",
+        "Sharp pain when lifting arm overhead" to "Stechender Schmerz beim Heben des Arms über Kopf",
+        "Dull ache radiating down upper arm" to "Dumpfer Schmerz, der in den Oberarm ausstrahlt",
+        "Clicking or popping sensation in shoulder" to "Knackendes Gefühl in der Schulter",
+        "Muscle tightness in upper back and neck" to "Muskelverspannungen im oberen Rücken und Nacken",
+        "Weakness when carrying objects" to "Schwäche beim Tragen von Gegenständen"
     )
 
     private val ptTranslations = mapOf(
@@ -841,7 +907,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Dor na pele",
         "Pain when pressing upper limb" to "Dor ao pressionar o membro superior",
         "Skin wound" to "Ferida na pele",
-        "Contact with allergen" to "Contato com alérgeno"
+        "Contact with allergen" to "Contato com alérgeno",
+        "Rotator cuff pain" to "Dor no manguito rotador",
+        "Shoulder blade pain" to "Dor na escápula (omoplata)",
+        "Inability to lift arm above head" to "Incapacidade de levantar o braço acima da cabeça",
+        "Clicking or popping in shoulder" to "Estalos ou estalidos no ombro",
+        "Shoulder muscle spasms" to "Espasmos musculares no ombro",
+        "Stiffness or limited range of motion" to "Rigidez ou limitação de movimentos",
+        "Sharp pain when lifting arm overhead" to "Dor aguda ao levantar o braço acima da cabeça",
+        "Dull ache radiating down upper arm" to "Dor incômoda irradiando para o braço",
+        "Clicking or popping sensation in shoulder" to "Sensação de estalos no ombro",
+        "Muscle tightness in upper back and neck" to "Tensão muscular na parte superior das costas e pescoço",
+        "Weakness when carrying objects" to "Fraqueza ao carregar objetos"
     )
 
     private val ruTranslations = mapOf(
@@ -961,7 +1038,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Боль в коже",
         "Pain when pressing upper limb" to "Боль при нажатии на руку",
         "Skin wound" to "Рана на коже",
-        "Contact with allergen" to "Контакт с аллергеном"
+        "Contact with allergen" to "Контакт с аллергеном",
+        "Rotator cuff pain" to "Боль во вращательной манжете плеча",
+        "Shoulder blade pain" to "Боль в лопатке",
+        "Inability to lift arm above head" to "Невозможность поднять руку выше головы",
+        "Clicking or popping in shoulder" to "Щелчки или хруст в плече",
+        "Shoulder muscle spasms" to "Спазмы мышц плеча",
+        "Stiffness or limited range of motion" to "Скованность или ограничение движений",
+        "Sharp pain when lifting arm overhead" to "Острая боль при подъеме руки над головой",
+        "Dull ache radiating down upper arm" to "Тупая боль, отдающая в плечо и предплечье",
+        "Clicking or popping sensation in shoulder" to "Ощущение щелчков или треска в плече",
+        "Muscle tightness in upper back and neck" to "Напряжение мышц верхней части спины и шеи",
+        "Weakness when carrying objects" to "Слабость при переноске предметов"
     )
 
     private val jaTranslations = mapOf(
@@ -1081,7 +1169,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "皮膚の痛み",
         "Pain when pressing upper limb" to "上肢を押したときの痛み",
         "Skin wound" to "皮膚の傷口",
-        "Contact with allergen" to "アレルゲン（アレルギー原因物質）との接触"
+        "Contact with allergen" to "アレルゲン（アレルギー原因物質）との接触",
+        "Rotator cuff pain" to "腱板の痛み",
+        "Shoulder blade pain" to "肩甲骨の痛み",
+        "Inability to lift arm above head" to "腕を頭の上に上げられない",
+        "Clicking or popping in shoulder" to "肩がポキポキ鳴る",
+        "Shoulder muscle spasms" to "肩の筋肉のけいれん",
+        "Stiffness or limited range of motion" to "こわばりまたは可動域の制限",
+        "Sharp pain when lifting arm overhead" to "腕を上に挙げたときの鋭い痛み",
+        "Dull ache radiating down upper arm" to "二の腕に広がる鈍い痛み",
+        "Clicking or popping sensation in shoulder" to "肩が鳴るような感覚",
+        "Muscle tightness in upper back and neck" to "背中上部と首の筋肉の張り",
+        "Weakness when carrying objects" to "物を持つときの脱力感"
     )
 
     private val koTranslations = mapOf(
@@ -1201,7 +1300,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "피부 통증",
         "Pain when pressing upper limb" to "팔 부위를 누를 때의 통증",
         "Skin wound" to "피부 상처",
-        "Contact with allergen" to "알레르겐 (알레르기 유발 물질) 접촉"
+        "Contact with allergen" to "알레르겐 (알레르기 유발 물질) 접촉",
+        "Rotator cuff pain" to "회전근개 통증",
+        "Shoulder blade pain" to "견갑골(날개뼈) 통증",
+        "Inability to lift arm above head" to "팔을 머리 위로 들 수 없음",
+        "Clicking or popping in shoulder" to "어깨에서 뚝뚝 소리가 남",
+        "Shoulder muscle spasms" to "어깨 근육 경련",
+        "Stiffness or limited range of motion" to "뻣뻣함 또는 관절 가동 범위 제한",
+        "Sharp pain when lifting arm overhead" to "팔을 머리 위로 들 때 찌르는 듯한 통증",
+        "Dull ache radiating down upper arm" to "윗팔로 방사되는 둔한 통증",
+        "Clicking or popping sensation in shoulder" to "어깨에서 무언가 걸리는 듯한 느낌",
+        "Muscle tightness in upper back and neck" to "등 위쪽 및 목 근육의 뻐근함",
+        "Weakness when carrying objects" to "물건을 들 때 팔에 힘이 빠짐"
     )
 
     private val zhTranslations = mapOf(
@@ -1321,7 +1431,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "皮肤疼痛",
         "Pain when pressing upper limb" to "按压上肢时疼痛",
         "Skin wound" to "皮肤伤口",
-        "Contact with allergen" to "接触过敏原"
+        "Contact with allergen" to "接触过敏原",
+        "Rotator cuff pain" to "肩袖损伤疼痛",
+        "Shoulder blade pain" to "肩胛骨疼痛",
+        "Inability to lift arm above head" to "手臂无法抬过头顶",
+        "Clicking or popping in shoulder" to "肩部弹响或咔嗒声",
+        "Shoulder muscle spasms" to "肩部肌肉痉挛",
+        "Stiffness or limited range of motion" to "僵硬或活动范围受限",
+        "Sharp pain when lifting arm overhead" to "手臂举过头顶时感到剧痛",
+        "Dull ache radiating down upper arm" to "上臂放射性隐痛",
+        "Clicking or popping sensation in shoulder" to "肩部有弹响感",
+        "Muscle tightness in upper back and neck" to "上背部和颈部肌肉紧绷",
+        "Weakness when carrying objects" to "搬运物品时手臂无力"
     )
 
     private val idTranslations = mapOf(
@@ -1441,7 +1562,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Nyeri kulit",
         "Pain when pressing upper limb" to "Nyeri saat menekan anggota tubuh bagian atas",
         "Skin wound" to "Luka kulit",
-        "Contact with allergen" to "Kontak dengan alergen"
+        "Contact with allergen" to "Kontak dengan alergen",
+        "Rotator cuff pain" to "Nyeri rotator cuff (manset rotator)",
+        "Shoulder blade pain" to "Nyeri tulang belikat",
+        "Inability to lift arm above head" to "Tidak dapat mengangkat tangan ke atas kepala",
+        "Clicking or popping in shoulder" to "Bunyi klik atau meletup di bahu",
+        "Shoulder muscle spasms" to "Spasme otot bahu",
+        "Stiffness or limited range of motion" to "Kekakuan atau rentang gerak terbatas",
+        "Sharp pain when lifting arm overhead" to "Nyeri tajam saat mengangkat tangan ke atas kepala",
+        "Dull ache radiating down upper arm" to "Nyeri tumpul menjalar ke lengan atas",
+        "Clicking or popping sensation in shoulder" to "Sensasi berbunyi klik di bahu",
+        "Muscle tightness in upper back and neck" to "Ketegangan otot punggung atas dan leher",
+        "Weakness when carrying objects" to "Kelemahan saat mengangkat atau membawa barang"
     )
 
     private val trTranslations = mapOf(
@@ -1561,7 +1693,18 @@ object SymptomLocalizationHelper {
         "Skin pain" to "Cilt ağrısı",
         "Pain when pressing upper limb" to "Üst uzva basıldığında ağrı",
         "Skin wound" to "Cilt yarası",
-        "Contact with allergen" to "Alerjenle temas"
+        "Contact with allergen" to "Alerjenle temas",
+        "Rotator cuff pain" to "Rotator manşet ağrısı",
+        "Shoulder blade pain" to "Kürek kemiği ağrısı",
+        "Inability to lift arm above head" to "Kolu başın üzerine kaldıramama",
+        "Clicking or popping in shoulder" to "Omuzda çıtlama veya ses gelmesi",
+        "Shoulder muscle spasms" to "Omuz kas spazmları",
+        "Stiffness or limited range of motion" to "Sertlik veya kısıtlı hareket aralığı",
+        "Sharp pain when lifting arm overhead" to "Kolu baş üzerine kaldırırken keskin ağrı",
+        "Dull ache radiating down upper arm" to "Üst kola yayılan donuk ağrı",
+        "Clicking or popping sensation in shoulder" to "Omuzda tıklama hissi",
+        "Muscle tightness in upper back and neck" to "Üst sırt ve boyunda kas gerginliği",
+        "Weakness when carrying objects" to "Eşya taşırken güçsüzlük"
     )
 
     private val bnTranslations = mapOf(
@@ -1681,12 +1824,29 @@ object SymptomLocalizationHelper {
         "Skin pain" to "ত্বকে ব্যথা",
         "Pain when pressing upper limb" to "হাতে চাপ দিলে ব্যথা",
         "Skin wound" to "ত্বকের ক্ষত",
-        "Contact with allergen" to "অ্যালার্জেনের সংস্পর্শ"
+        "Contact with allergen" to "অ্যালার্জেনের সংস্পর্শ",
+        "Rotator cuff pain" to "রোটেটর কাফ ব্যথা",
+        "Shoulder blade pain" to "কাঁধের হাড়ে (স্ক্যাপুলা) ব্যথা",
+        "Inability to lift arm above head" to "মাথার উপরে হাত তুলতে অক্ষমতা",
+        "Clicking or popping in shoulder" to "কাঁধে খটখট শব্দ হওয়া",
+        "Shoulder muscle spasms" to "কাঁধের পেশীর টান বা খিঁচুনি",
+        "Stiffness or limited range of motion" to "অনমনীয়তা বা সীমিত পরিসরে নড়াচড়া",
+        "Sharp pain when lifting arm overhead" to "হাত উপরে তোলার সময় তীব্র ব্যথা",
+        "Dull ache radiating down upper arm" to "বাহুতে ছড়িয়ে পড়া ভোঁতা ব্যথা",
+        "Clicking or popping sensation in shoulder" to "কাঁধে খটখট অনুভূতি",
+        "Muscle tightness in upper back and neck" to "পিঠের উপরের অংশ ও ঘাড়ে পেশির টান",
+        "Weakness when carrying objects" to "ভারী জিনিস বহন করার সময় দুর্বলতা"
     )
 
     fun getLocalizedSymptom(context: Context, rawSymptom: String): String {
         if (rawSymptom.isBlank()) return rawSymptom
-        val lang = LocaleHelper.getSavedLanguageCode(context).lowercase()
+        val lang = LocaleHelper.getSavedLanguageCode(context)
+        return getLocalizedSymptom(lang, rawSymptom)
+    }
+
+    fun getLocalizedSymptom(langCode: String, rawSymptom: String): String {
+        if (rawSymptom.isBlank()) return rawSymptom
+        val lang = langCode.lowercase()
         val map = when {
             lang.startsWith("ar") -> arTranslations
             lang.startsWith("hi") -> hiTranslations

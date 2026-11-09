@@ -29,6 +29,7 @@ class AddHealthRecordActivity : BaseActivity() {
                 "allergies", "allergy" -> Intent(context, AddAllergyActivity::class.java)
                 "conditions", "condition" -> Intent(context, AddConditionActivity::class.java)
                 "vaccination", "vaccinations" -> Intent(context, AddVaccinationActivity::class.java)
+                "appointment", "appointments" -> Intent(context, AddAppointmentActivity::class.java)
                 else -> Intent(context, AddMedicationActivity::class.java)
             }
             profileId?.let { intent.putExtra(EXTRA_PROFILE_ID, it) }

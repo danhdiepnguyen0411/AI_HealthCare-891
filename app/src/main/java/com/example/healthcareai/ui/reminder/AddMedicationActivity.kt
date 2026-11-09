@@ -3,6 +3,7 @@ package com.example.healthcareai.ui.reminder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.healthcareai.R
@@ -23,6 +24,12 @@ class AddMedicationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddMedicationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupHeaderTopMargin(binding.topBar, binding.root)
+
+        binding.etName.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etReason.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etStrength.filters = arrayOf(InputFilter.LengthFilter(20))
+        binding.etNotes.filters = arrayOf(InputFilter.LengthFilter(100))
 
         editingRecordId = intent.getStringExtra(EXTRA_RECORD_ID)
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
@@ -32,7 +39,7 @@ class AddMedicationActivity : BaseActivity() {
                 profileId = existingRecord?.profileId
             }
             existingRecord?.let { record ->
-                binding.tvTitle.text = "Edit medication"
+                binding.tvTitle.text = getString(R.string.title_edit_medication)
                 binding.etName.setText(record.name)
                 binding.etReason.setText(record.reason)
                 binding.etStrength.setText(record.strength)

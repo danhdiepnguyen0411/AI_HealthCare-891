@@ -4,15 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.healthcareai.HealthCareApp
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.ChatMessage
 import com.example.healthcareai.data.model.ConversationSession
 import com.example.healthcareai.util.LocaleHelper
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.resume
 
 /**
@@ -114,7 +120,13 @@ class AiChatRepository private constructor(private val context: Context) {
         return try {
             val type = object : TypeToken<MutableList<ConversationSession>>() {}.type
             val list = gson.fromJson<MutableList<ConversationSession>>(json, type) ?: mutableListOf()
-            list.sortByDescending { it.updatedAt }
+            list.forEach { session ->
+                if (session.createdAt <= 0L) {
+                    val firstUserMsg = session.messages.firstOrNull { it.isUser }
+                    session.createdAt = firstUserMsg?.timestamp ?: session.updatedAt
+                }
+            }
+            list.sortByDescending { if (it.createdAt > 0L) it.createdAt else it.updatedAt }
             list
         } catch (e: Exception) {
             Log.e(TAG, "Failed to parse saved conversation sessions", e)
@@ -146,17 +158,18 @@ class AiChatRepository private constructor(private val context: Context) {
             session.messages.clear()
             session.messages.addAll(cleanMessages)
 
+            val firstUserMsg = cleanMessages.firstOrNull { it.isUser }
             if (session.title.isBlank()) {
-                val firstUserMsg = cleanMessages.firstOrNull { it.isUser }?.content.orEmpty()
-                session.title = generateTitleFromMessage(firstUserMsg)
+                session.title = generateTitleFromMessage(firstUserMsg?.content.orEmpty())
             }
 
-            if (session.lastSnippet.isBlank()) {
-                val lastMsg = cleanMessages.lastOrNull { !it.isDateHeader }?.content.orEmpty()
-                session.lastSnippet = lastMsg.take(80)
+            if (session.createdAt <= 0L || (firstUserMsg != null && session.createdAt > firstUserMsg.timestamp)) {
+                session.createdAt = firstUserMsg?.timestamp ?: session.createdAt
             }
 
-            session.updatedAt = System.currentTimeMillis()
+            val lastMsg = cleanMessages.lastOrNull { !it.isDateHeader }
+            session.lastSnippet = lastMsg?.content.orEmpty().take(80)
+            session.updatedAt = lastMsg?.timestamp ?: session.createdAt
 
             if (existingIndex != -1) {
                 list[existingIndex] = session
@@ -166,9 +179,39 @@ class AiChatRepository private constructor(private val context: Context) {
 
             val json = gson.toJson(list)
             prefs.edit().putString(KEY_CONVERSATIONS, json).apply()
-            Log.d(TAG, "Saved conversation: ${session.id} ('${session.title}') with ${session.messages.size} msgs")
+            Log.d(TAG, "Saved conversation: ${session.id} ('${session.title}') with ${session.messages.size} msgs, createdAt=${session.createdAt}")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to save conversation session", e)
+        }
+    }
+
+    /**
+     * Appends an AI bot response to the persistent conversation session.
+     * Thread-safe and persists directly to storage so the answer is never lost if the user backs out.
+     */
+    @Synchronized
+    fun appendBotMessageToSession(sessionId: String, botMessage: ChatMessage) {
+        try {
+            val list = getConversations()
+            val existingIndex = list.indexOfFirst { it.id == sessionId }
+            val session = if (existingIndex != -1) {
+                list[existingIndex]
+            } else {
+                ConversationSession(id = sessionId).also { list.add(0, it) }
+            }
+
+            val alreadyPresent = session.messages.any {
+                !it.isUser && !it.isLoading && it.content == botMessage.content &&
+                        Math.abs(it.timestamp - botMessage.timestamp) < 5000
+            }
+            if (!alreadyPresent) {
+                session.messages.removeAll { it.isLoading }
+                session.messages.add(botMessage)
+                saveOrUpdateConversation(session)
+                Log.d(TAG, "Appended bot message to session $sessionId: ${botMessage.content.take(40)}")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to append bot message to session $sessionId", e)
         }
     }
 
@@ -192,16 +235,20 @@ class AiChatRepository private constructor(private val context: Context) {
      * Helper to generate a friendly concise title from the user's initial prompt.
      */
     fun generateTitleFromMessage(userMessage: String): String {
+        val localizedCtx = LocaleHelper.onAttach(context)
         val lower = userMessage.lowercase()
         return when {
-            lower.contains("lifestyle") || lower.contains("habit") || lower.contains("healthy") ->
-                "Healthy lifestyle tips"
-            lower.contains("scan") || lower.contains("skin") || lower.contains("dental") ->
-                "Explain my scan results"
-            lower.contains("health data") || lower.contains("heart rate") || lower.contains("activity") ->
-                "Review my health data"
-            lower.contains("symptom") || lower.contains("headache") || lower.contains("fever") ->
-                "Check my symptoms"
+            userMessage == localizedCtx.getString(R.string.ai_chat_suggestion_1_query) ||
+                lower.contains("lifestyle") || lower.contains("habit") ->
+                localizedCtx.getString(R.string.ai_chat_suggestion_1_title)
+            userMessage == localizedCtx.getString(R.string.ai_chat_suggestion_2_query) ||
+                lower.contains("scan") ->
+                localizedCtx.getString(R.string.ai_chat_suggestion_2_title)
+            userMessage == localizedCtx.getString(R.string.ai_chat_suggestion_3_query) ||
+                lower.contains("health data") ->
+                localizedCtx.getString(R.string.ai_chat_suggestion_3_title)
+            lower.contains("symptom") ->
+                localizedCtx.getString(R.string.title_symptom_checker)
             else -> {
                 val trimmed = userMessage.trim().replace("\n", " ")
                 if (trimmed.length > 32) trimmed.take(30).trimEnd() + "..." else trimmed.replaceFirstChar { it.uppercase() }
@@ -210,8 +257,87 @@ class AiChatRepository private constructor(private val context: Context) {
     }
 
     // =========================================================================
-    // API CALL VIA ARTMAGIC SDK (agentId: 402)
+    // API CALL VIA ARTMAGIC SDK (agentId: 402) & BACKGROUND SESSION DISPATCH
     // =========================================================================
+
+    interface MessageResponseListener {
+        fun onResponse(sessionId: String, botMessage: ChatMessage)
+        fun onError(sessionId: String, error: Throwable)
+    }
+
+    private val activeListeners = ConcurrentHashMap<String, MessageResponseListener>()
+    private val pendingRequests = ConcurrentHashMap<String, Job>()
+    private val repositoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    fun registerListener(sessionId: String, listener: MessageResponseListener) {
+        activeListeners[sessionId] = listener
+    }
+
+    fun unregisterListener(sessionId: String) {
+        activeListeners.remove(sessionId)
+    }
+
+    fun isSessionPendingResponse(sessionId: String): Boolean {
+        return pendingRequests[sessionId]?.isActive == true
+    }
+
+    /**
+     * Sends a message bound to a specific conversation session using repositoryScope.
+     * Guarantees that even if the user navigates away or backs out, the AI response
+     * is received and persisted to the session in storage so the conversation can continue.
+     */
+    fun sendMessageForSession(
+        sessionId: String,
+        content: String,
+        langCode: String = LocaleHelper.getSavedLanguageCode(context),
+        callback: ((Result<String>) -> Unit)? = null
+    ) {
+        if (isSessionPendingResponse(sessionId)) {
+            Log.d(TAG, "Request already in-flight for session $sessionId, skipping duplicate call")
+            return
+        }
+
+        val job = repositoryScope.launch {
+            try {
+                Log.d(TAG, "Sending message in repositoryScope for session: $sessionId")
+                val result = sendMessage(content, langCode)
+                val botContent = result.getOrElse {
+                    context.getString(R.string.ai_chat_error_fallback)
+                }.ifBlank {
+                    context.getString(R.string.ai_chat_error_fallback)
+                }
+
+                val botMsg = ChatMessage(
+                    content = botContent,
+                    isUser = false,
+                    timestamp = System.currentTimeMillis()
+                )
+
+                appendBotMessageToSession(sessionId, botMsg)
+
+                withContext(Dispatchers.Main) {
+                    activeListeners[sessionId]?.onResponse(sessionId, botMsg)
+                    callback?.invoke(Result.success(botContent))
+                }
+            } catch (e: Throwable) {
+                Log.e(TAG, "Error in sendMessageForSession for session: $sessionId", e)
+                val fallback = context.getString(R.string.ai_chat_error_fallback)
+                val botMsg = ChatMessage(
+                    content = fallback,
+                    isUser = false,
+                    timestamp = System.currentTimeMillis()
+                )
+                appendBotMessageToSession(sessionId, botMsg)
+                withContext(Dispatchers.Main) {
+                    activeListeners[sessionId]?.onResponse(sessionId, botMsg)
+                    callback?.invoke(Result.failure(e))
+                }
+            } finally {
+                pendingRequests.remove(sessionId)
+            }
+        }
+        pendingRequests[sessionId] = job
+    }
 
     /**
      * Sends a message to the AI Assistant via ArtMagicClient using agentId = 402.

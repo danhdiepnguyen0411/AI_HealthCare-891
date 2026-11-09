@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.healthcareai.R
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.databinding.FragmentSettingsBinding
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 import com.example.healthcareai.ui.dialog.RateAppDialog
 import com.example.healthcareai.ui.language.LanguageActivity
 import com.example.healthcareai.util.LocaleHelper
@@ -54,18 +55,7 @@ class SettingsFragment : Fragment() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootSettingsContainer) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
-            } else {
-                (24 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
-            }
+            binding.topBar.applyHeaderTopMargin(insets)
             insets
         }
     }
@@ -112,34 +102,13 @@ class SettingsFragment : Fragment() {
 
         // 4. Rate Us
         binding.cardRateUs.setOnClickListener {
-            RateAppDialog.show(requireContext()) { rating ->
+            RateAppDialog.show(requireContext()) { _ ->
                 binding.cardRateUs.visibility = View.GONE
                 Toast.makeText(
                     requireContext(),
                     R.string.rate_dialog_thank_you,
                     Toast.LENGTH_SHORT
                 ).show()
-
-                if (rating >= 4) {
-                    val appPackageName = requireContext().packageName
-                    try {
-                        startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("market://details?id=$appPackageName")
-                            )
-                        )
-                    } catch (_: Exception) {
-                        try {
-                            startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                                )
-                            )
-                        } catch (_: Exception) {}
-                    }
-                }
             }
         }
 

@@ -287,8 +287,8 @@ class UninstallReasonActivity : BaseActivity() {
         val keyboardStateChanged = isKeyboardOpen != wasKeyboardOpen
         wasKeyboardOpen = isKeyboardOpen
 
-        // Adjust top back button for status bar
-        val topMargin = statusTop + (12 * density).toInt()
+        // Adjust top back button for status bar (standardized 16dp spacing)
+        val topMargin = statusTop + (16 * density).toInt()
         (binding.btnBack.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
             if (lp.topMargin != topMargin) {
                 lp.topMargin = topMargin

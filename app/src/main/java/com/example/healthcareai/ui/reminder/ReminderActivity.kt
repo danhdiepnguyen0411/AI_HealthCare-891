@@ -1,20 +1,22 @@
 package com.example.healthcareai.ui.reminder
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.healthcareai.R
 import com.example.healthcareai.data.model.ReminderItem
+import com.example.healthcareai.data.repository.ProfileRepository
 import com.example.healthcareai.data.repository.ReminderRepository
 import com.example.healthcareai.databinding.ActivityReminderBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.util.LocaleHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -23,11 +25,17 @@ class ReminderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReminderBinding
     private lateinit var reminderAdapter: ReminderAdapter
+    private lateinit var horizontalCalendarAdapter: HorizontalCalendarAdapter
+    private lateinit var monthCalendarAdapter: MonthCalendarAdapter
+
     private var profileId: String? = null
 
     private var selectedCalendarDay: Calendar = Calendar.getInstance()
-    private val weekDaysCalendar = mutableListOf<Calendar>()
-    private var selectedDayIndex = 3 // default to middle day or today
+    private var displayedMonthCalendar: Calendar = Calendar.getInstance()
+    private var isMonthCalendarExpanded: Boolean = false
+
+    private val daysList = mutableListOf<Calendar>()
+    private var cachedAllReminders = listOf<ReminderItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +44,51 @@ class ReminderActivity : BaseActivity() {
 
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
 
+        setupHeaderTopMargin(binding.topBar, binding.root)
         setupTopBar()
         setupCalendar()
         setupRecyclerView()
+
+        val highlightReminderId = intent.getStringExtra(EXTRA_HIGHLIGHT_REMINDER_ID)
+        if (!highlightReminderId.isNullOrEmpty()) {
+            intent.removeExtra(EXTRA_HIGHLIGHT_REMINDER_ID)
+            binding.root.post {
+                ReminderDetailBottomSheetDialog.show(supportFragmentManager, highlightReminderId) {
+                    loadReminders()
+                }
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        val newProfileId = intent.getStringExtra(EXTRA_PROFILE_ID)
+        val newHighlightId = intent.getStringExtra(EXTRA_HIGHLIGHT_REMINDER_ID)
+        if (!newProfileId.isNullOrEmpty() && newProfileId != profileId) {
+            profileId = newProfileId
+            updateTopBarTitle()
+            loadReminders()
+        }
+        if (!newHighlightId.isNullOrEmpty()) {
+            intent.removeExtra(EXTRA_HIGHLIGHT_REMINDER_ID)
+            binding.root.post {
+                ReminderDetailBottomSheetDialog.show(supportFragmentManager, newHighlightId) {
+                    loadReminders()
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        updateTopBarTitle()
         loadReminders()
     }
 
     private fun setupTopBar() {
+        updateTopBarTitle()
+
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -60,127 +102,172 @@ class ReminderActivity : BaseActivity() {
         }
     }
 
-    private fun setupCalendar() {
-        // Prepare current week (Mon -> Sun) centered around selected day
-        computeWeekDays(selectedCalendarDay)
-
-        binding.ivCalendarAction.setOnClickListener {
-            val datePicker = DatePickerDialog(
-                this,
-                { _, year, month, dayOfMonth ->
-                    selectedCalendarDay.set(year, month, dayOfMonth)
-                    computeWeekDays(selectedCalendarDay)
-                    renderCalendar()
-                },
-                selectedCalendarDay.get(Calendar.YEAR),
-                selectedCalendarDay.get(Calendar.MONTH),
-                selectedCalendarDay.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+    private fun updateTopBarTitle() {
+        val effectiveProfileId = profileId ?: ProfileRepository.getInstance(this).getPrimaryProfile().id
+        val profile = ProfileRepository.getInstance(this).getProfileById(effectiveProfileId)
+        if (profile != null && !profile.isPrimary && profile.name.isNotBlank()) {
+            binding.tvTitle.text = "${profile.name} - ${getString(R.string.title_reminder)}"
+        } else {
+            binding.tvTitle.text = getString(R.string.title_reminder)
         }
-
-        renderCalendar()
     }
 
-    private fun computeWeekDays(centerDate: Calendar) {
-        weekDaysCalendar.clear()
-        val cal = centerDate.clone() as Calendar
-        // Align to Monday of this week
-        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-        val diffToMonday = when (dayOfWeek) {
-            Calendar.SUNDAY -> -6
-            else -> Calendar.MONDAY - dayOfWeek
-        }
-        cal.add(Calendar.DAY_OF_MONTH, diffToMonday)
+    private fun setupCalendar() {
+        generateHorizontalDaysList()
 
-        selectedDayIndex = 0
-        for (i in 0 until 7) {
-            val dayCal = cal.clone() as Calendar
-            weekDaysCalendar.add(dayCal)
-            if (isSameDay(dayCal, centerDate)) {
-                selectedDayIndex = i
+        // 1. Horizontal Scrollable Calendar Days Strip
+        horizontalCalendarAdapter = HorizontalCalendarAdapter { pickedCal ->
+            onDateSelected(pickedCal, fromMonthView = false)
+        }
+        val horizontalLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCalendarDays.layoutManager = horizontalLayoutManager
+        binding.rvCalendarDays.adapter = horizontalCalendarAdapter
+        horizontalCalendarAdapter.setDays(daysList, selectedCalendarDay)
+
+        // Center on today on first load (index 180 - 3)
+        val todayPosition = horizontalCalendarAdapter.getPositionForDate(selectedCalendarDay)
+        if (todayPosition != -1) {
+            val initialScrollPos = (todayPosition - 3).coerceAtLeast(0)
+            binding.rvCalendarDays.scrollToPosition(initialScrollPos)
+        }
+
+        // Update Month Year header when scrolling horizontally
+        binding.rvCalendarDays.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!isMonthCalendarExpanded) {
+                    val firstPos = horizontalLayoutManager.findFirstVisibleItemPosition()
+                    val lastPos = horizontalLayoutManager.findLastVisibleItemPosition()
+                    if (firstPos != RecyclerView.NO_POSITION && lastPos != RecyclerView.NO_POSITION) {
+                        val midPos = (firstPos + lastPos) / 2
+                        horizontalCalendarAdapter.getDateAtPosition(midPos)?.let { cal ->
+                            updateMonthYearHeader(cal)
+                        }
+                    }
+                }
             }
+        })
+
+        // 2. Custom Full Month Calendar Grid
+        monthCalendarAdapter = MonthCalendarAdapter { pickedCal ->
+            onDateSelected(pickedCal, fromMonthView = true)
+        }
+        binding.rvMonthDays.layoutManager = GridLayoutManager(this, 7)
+        binding.rvMonthDays.adapter = monthCalendarAdapter
+
+        setupWeekdayLabels()
+
+        // Month Navigation Buttons (< and >)
+        binding.btnPrevMonth.setOnClickListener {
+            displayedMonthCalendar.add(Calendar.MONTH, -1)
+            renderMonthCalendar()
+        }
+
+        binding.btnNextMonth.setOnClickListener {
+            displayedMonthCalendar.add(Calendar.MONTH, 1)
+            renderMonthCalendar()
+        }
+
+        // Calendar Icon Action (Toggle Expand/Collapse)
+        binding.ivCalendarAction.setOnClickListener {
+            toggleMonthCalendar()
+        }
+
+        updateMonthYearHeader(selectedCalendarDay)
+    }
+
+    private fun generateHorizontalDaysList() {
+        daysList.clear()
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DAY_OF_YEAR, -180) // 180 days in the past
+        for (i in 0..360) {
+            daysList.add(cal.clone() as Calendar)
+            cal.add(Calendar.DAY_OF_YEAR, 1)
+        }
+    }
+
+    private fun setupWeekdayLabels() {
+        val currentLocale = LocaleHelper.getSavedLocale(this)
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+
+        val weekdayViews = listOf(
+            binding.tvWeekday0,
+            binding.tvWeekday1,
+            binding.tvWeekday2,
+            binding.tvWeekday3,
+            binding.tvWeekday4,
+            binding.tvWeekday5,
+            binding.tvWeekday6
+        )
+
+        for (i in 0 until 7) {
+            weekdayViews[i].text = HorizontalCalendarAdapter.getDayOfWeekAbbreviation(cal, currentLocale)
             cal.add(Calendar.DAY_OF_MONTH, 1)
         }
     }
 
-    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
-        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
-    }
+    private fun toggleMonthCalendar() {
+        isMonthCalendarExpanded = !isMonthCalendarExpanded
+        if (isMonthCalendarExpanded) {
+            binding.layoutFullMonthCalendar.visibility = View.VISIBLE
+            binding.rvCalendarDays.visibility = View.GONE
+            binding.ivCalendarAction.setColorFilter(ContextCompat.getColor(this, R.color.brand_primary))
 
-    private fun getDayOfWeekAbbreviation(cal: Calendar, locale: Locale): String {
-        val lang = locale.language.lowercase()
-        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-        if (lang.startsWith("vi")) {
-            return when (dayOfWeek) {
-                Calendar.MONDAY -> "T2"
-                Calendar.TUESDAY -> "T3"
-                Calendar.WEDNESDAY -> "T4"
-                Calendar.THURSDAY -> "T5"
-                Calendar.FRIDAY -> "T6"
-                Calendar.SATURDAY -> "T7"
-                Calendar.SUNDAY -> "CN"
-                else -> ""
-            }
+            displayedMonthCalendar = selectedCalendarDay.clone() as Calendar
+            renderMonthCalendar()
+        } else {
+            binding.layoutFullMonthCalendar.visibility = View.GONE
+            binding.rvCalendarDays.visibility = View.VISIBLE
+            binding.ivCalendarAction.clearColorFilter()
+
+            updateMonthYearHeader(selectedCalendarDay)
+            scrollToSelectedDay()
         }
-        val dayFormat = SimpleDateFormat("EEE", locale)
-        val formatted = dayFormat.format(cal.time)
-        return if (formatted.length > 3) formatted.take(3) else formatted
     }
 
-    private fun renderCalendar() {
-        val currentLocale = com.example.healthcareai.util.LocaleHelper.getSavedLocale(this)
+    private fun renderMonthCalendar() {
+        val currentLocale = LocaleHelper.getSavedLocale(this)
         val monthYearFormat = SimpleDateFormat("MMMM yyyy", currentLocale)
-        val dayNumberFormat = SimpleDateFormat("d", currentLocale)
+        val raw = monthYearFormat.format(displayedMonthCalendar.time)
+        binding.tvFullMonthYearTitle.text = raw.replaceFirstChar { it.uppercase(currentLocale) }
 
-        val rawMonthYear = monthYearFormat.format(selectedCalendarDay.time)
-        binding.tvCalendarMonthYear.text = rawMonthYear.replaceFirstChar { it.uppercase(currentLocale) }
-
-        val dayViews = listOf(
-            binding.day0.root to (binding.day0.tvDayNumber to (binding.day0.tvDayName to binding.day0.viewDayDot)),
-            binding.day1.root to (binding.day1.tvDayNumber to (binding.day1.tvDayName to binding.day1.viewDayDot)),
-            binding.day2.root to (binding.day2.tvDayNumber to (binding.day2.tvDayName to binding.day2.viewDayDot)),
-            binding.day3.root to (binding.day3.tvDayNumber to (binding.day3.tvDayName to binding.day3.viewDayDot)),
-            binding.day4.root to (binding.day4.tvDayNumber to (binding.day4.tvDayName to binding.day4.viewDayDot)),
-            binding.day5.root to (binding.day5.tvDayNumber to (binding.day5.tvDayName to binding.day5.viewDayDot)),
-            binding.day6.root to (binding.day6.tvDayNumber to (binding.day6.tvDayName to binding.day6.viewDayDot))
+        monthCalendarAdapter.setMonthData(
+            monthYear = displayedMonthCalendar,
+            selected = selectedCalendarDay,
+            reminders = cachedAllReminders
         )
+    }
 
-        val textColorNormal = ContextCompat.getColor(this, R.color.color_text)
-        val subtextColorNormal = ContextCompat.getColor(this, R.color.color_subtext)
-        val textSelected = ContextCompat.getColor(this, R.color.white)
-        val subtextSelected = Color.parseColor("#DCE6FF")
+    private fun updateMonthYearHeader(cal: Calendar) {
+        val currentLocale = LocaleHelper.getSavedLocale(this)
+        val monthYearFormat = SimpleDateFormat("MMMM yyyy", currentLocale)
+        val rawMonthYear = monthYearFormat.format(cal.time)
+        binding.tvCalendarMonthYear.text = rawMonthYear.replaceFirstChar { it.uppercase(currentLocale) }
+    }
 
-        for (i in 0 until 7) {
-            val (rootView, texts) = dayViews[i]
-            val (tvNum, nameDot) = texts
-            val (tvName, viewDot) = nameDot
-            val dayCal = weekDaysCalendar[i]
+    private fun onDateSelected(newDate: Calendar, fromMonthView: Boolean) {
+        selectedCalendarDay = newDate.clone() as Calendar
 
-            tvNum.text = dayNumberFormat.format(dayCal.time)
-            tvName.text = getDayOfWeekAbbreviation(dayCal, currentLocale)
+        horizontalCalendarAdapter.setSelectedDay(selectedCalendarDay)
+        monthCalendarAdapter.setSelectedDay(selectedCalendarDay)
 
-            val isSelected = (i == selectedDayIndex)
-            if (isSelected) {
-                rootView.setBackgroundResource(R.drawable.bg_calendar_day_selected)
-                tvNum.setTextColor(textSelected)
-                tvName.setTextColor(subtextSelected)
-                viewDot.visibility = View.VISIBLE
-            } else {
-                rootView.background = null
-                tvNum.setTextColor(textColorNormal)
-                tvName.setTextColor(subtextColorNormal)
-                viewDot.visibility = View.GONE
-            }
+        updateMonthYearHeader(selectedCalendarDay)
+        loadReminders()
 
-            rootView.setOnClickListener {
-                if (selectedDayIndex != i) {
-                    selectedDayIndex = i
-                    selectedCalendarDay = dayCal.clone() as Calendar
-                    renderCalendar()
-                }
-            }
+        if (fromMonthView) {
+            // Also update displayed month if needed
+            displayedMonthCalendar = selectedCalendarDay.clone() as Calendar
+            renderMonthCalendar()
+            scrollToSelectedDay()
+        }
+    }
+
+    private fun scrollToSelectedDay() {
+        val position = horizontalCalendarAdapter.getPositionForDate(selectedCalendarDay)
+        if (position != -1) {
+            val targetPos = (position - 3).coerceAtLeast(0)
+            binding.rvCalendarDays.smoothScrollToPosition(targetPos)
         }
     }
 
@@ -211,28 +298,45 @@ class ReminderActivity : BaseActivity() {
     }
 
     private fun loadReminders() {
-        val effectiveProfileId = profileId ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
-        val reminders = ReminderRepository.getInstance(this).getRemindersForProfile(effectiveProfileId)
-        if (reminders.isEmpty()) {
+        val effectiveProfileId = profileId ?: ProfileRepository.getInstance(this).getPrimaryProfile().id
+        val reminderRepo = ReminderRepository.getInstance(this)
+        val allReminders = reminderRepo.getRemindersForProfile(effectiveProfileId)
+        cachedAllReminders = allReminders
+
+        // Top bar plus button: only visible if profile has any reminder (user request 3)
+        binding.btnAddReminder.visibility = if (allReminders.isEmpty()) View.GONE else View.VISIBLE
+
+        // Filter reminders scheduled for selected date
+        val scheduledReminders = allReminders.filter { it.isScheduledForDay(selectedCalendarDay, this) }
+
+        if (scheduledReminders.isEmpty()) {
             binding.rvReminders.visibility = View.GONE
             binding.layoutEmptyState.visibility = View.VISIBLE
+            binding.btnEmptyAddReminder.visibility = View.VISIBLE
         } else {
             binding.rvReminders.visibility = View.VISIBLE
             binding.layoutEmptyState.visibility = View.GONE
-            val sorted = reminders.sortedWith(
+            val sorted = scheduledReminders.sortedWith(
                 compareBy<ReminderItem> { it.isDone }
-                    .thenBy { it.timeList.firstOrNull() ?: "" }
+                    .thenBy { com.example.healthcareai.util.ReminderScheduler.parseTimeToMinutes(it.timeList.firstOrNull().orEmpty()) }
             )
             reminderAdapter.submitList(sorted)
+        }
+
+        horizontalCalendarAdapter.setAllReminders(allReminders)
+        if (isMonthCalendarExpanded) {
+            renderMonthCalendar()
         }
     }
 
     companion object {
         const val EXTRA_PROFILE_ID = "extra_profile_id"
+        const val EXTRA_HIGHLIGHT_REMINDER_ID = "extra_highlight_reminder_id"
 
-        fun start(context: Context, profileId: String? = null) {
+        fun start(context: Context, profileId: String? = null, highlightReminderId: String? = null) {
             val intent = Intent(context, ReminderActivity::class.java).apply {
                 profileId?.let { putExtra(EXTRA_PROFILE_ID, it) }
+                highlightReminderId?.let { putExtra(EXTRA_HIGHLIGHT_REMINDER_ID, it) }
             }
             context.startActivity(intent)
         }

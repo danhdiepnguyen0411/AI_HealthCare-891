@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRevealLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp">
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_family_delete_card">
 
+    <!-- Secondary View: Background Red Delete Action (width 84dp, #FF4D4F, 16dp radius) -->
+    <FrameLayout
+        android:id="@+id/btnDeleteAction"
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/btn_delete"
+            android:src="@drawable/ic_delete_white" />
+
+    </FrameLayout>
+
+    <!-- Main View: Foreground White Card -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardRecordRoot"
         android:layout_width="match_parent"
@@ -63,7 +85,7 @@
                 android:maxLines="2"
                 android:textColor="@color/color_subtext"
                 android:textSize="13sp"
-                tools:text="10 mg · 1 tablet · Once daily" />
+                tools:text="10 mg · 1 tablet" />
         </LinearLayout>
 
         <ImageView
@@ -79,4 +101,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</com.example.healthcareai.ui.heartrate.view.SwipeRevealLayout>

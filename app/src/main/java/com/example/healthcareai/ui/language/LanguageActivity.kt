@@ -1,15 +1,20 @@
 package com.example.healthcareai.ui.language
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.healthcareai.R
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.data.model.LanguageModel
@@ -29,7 +34,30 @@ class LanguageActivity : BaseActivity() {
     private var isFromSettings = false
     private var initialSavedLangCode = "en"
     private var selectedLanguage: LanguageModel? = null
+    private var hasSelectedLanguage = false
     private var isConfirmed = false
+    private var isHandGifLoaded = false
+
+    private fun loadHandGif() {
+        if (isHandGifLoaded) {
+            (binding.ivFloatingHand.drawable as? android.graphics.drawable.Animatable)?.let {
+                if (!it.isRunning) it.start()
+            }
+            return
+        }
+        isHandGifLoaded = true
+        binding.ivFloatingHand.load(R.drawable.gif_hand_click) {
+            listener(
+                onSuccess = { _, result ->
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                        (result.drawable as? android.graphics.drawable.AnimatedImageDrawable)?.repeatCount =
+                            android.graphics.drawable.AnimatedImageDrawable.REPEAT_INFINITE
+                    }
+                    (result.drawable as? android.graphics.drawable.Animatable)?.start()
+                }
+            )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +68,10 @@ class LanguageActivity : BaseActivity() {
 
         if (!isFromSettings) {
             // Guarantee fresh onboarding state on every first-language entry
+            hasSelectedLanguage = false
             selectedLanguage = null
             preferenceHelper.isFirstLanguageSet = false
+            preferenceHelper.clearLanguageIfIntroNotCompleted(this)
         }
 
         binding = ActivityLanguageBinding.inflate(layoutInflater)
@@ -60,9 +90,9 @@ class LanguageActivity : BaseActivity() {
             val density = resources.displayMetrics.density
 
             val targetPaddingTop = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
+                statusBarTop + (16 * density).toInt()
             } else {
-                (12 * density).toInt()
+                (24 * density).toInt()
             }
             binding.topBar.setPadding(
                 (16 * density).toInt(),
@@ -90,58 +120,38 @@ class LanguageActivity : BaseActivity() {
             binding.tvSubtitle.visibility = View.GONE
             binding.viewCountdown.visibility = View.GONE
             binding.btnDone.visibility = View.VISIBLE
+            binding.ivFloatingHand.visibility = View.GONE
             binding.btnBack.setOnClickListener {
                 handleBackPressed()
             }
             updateDoneButtonState(hasSelection = true, animate = false)
         } else {
-            // First launch: hide back button, show subtitle, countdown 5s before showing Done
+            // First launch: hide back button, show subtitle, countdown & done initially hidden until language selection
             binding.btnBack.visibility = View.GONE
             binding.tvSubtitle.visibility = View.VISIBLE
             binding.btnDone.visibility = View.GONE
             binding.btnDone.alpha = 0f
             binding.btnDone.isEnabled = false
             binding.btnDone.isClickable = false
-            startFirstLanguageCountdown()
+            binding.viewCountdown.visibility = View.GONE
+            loadHandGif()
         }
 
         binding.btnDone.setOnClickListener {
-            if (!binding.btnDone.isEnabled) return@setOnClickListener
+            if (!binding.btnDone.isEnabled && isFromSettings) return@setOnClickListener
             onConfirmLanguage()
         }
-    }
 
-    private fun startFirstLanguageCountdown() {
-        binding.viewCountdown.visibility = View.VISIBLE
-        binding.btnDone.visibility = View.GONE
-        binding.viewCountdown.startCountdown(
-            totalDurationMs = 5000L,
-            onFinished = {
-                showDoneButtonAfterCountdown()
+        binding.viewCountdown.isClickable = false
+        binding.viewCountdown.setOnClickListener(null)
+
+        binding.ivFloatingHand.setOnClickListener {
+            if (!hasSelectedLanguage) {
+                selectLanguageAtPosition(3)
+            } else if (binding.btnDone.visibility == View.VISIBLE && binding.btnDone.isEnabled) {
+                onConfirmLanguage()
             }
-        )
-    }
-
-    private fun showDoneButtonAfterCountdown() {
-        if (isFinishing || isDestroyed) return
-
-        binding.viewCountdown.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .withEndAction {
-                if (isFinishing || isDestroyed) return@withEndAction
-                binding.viewCountdown.visibility = View.GONE
-                binding.btnDone.alpha = 0f
-                binding.btnDone.visibility = View.VISIBLE
-                val hasSelection = (selectedLanguage != null)
-                binding.btnDone.isEnabled = hasSelection
-                binding.btnDone.isClickable = hasSelection
-                binding.btnDone.animate()
-                    .alpha(if (hasSelection) 1.0f else 0.35f)
-                    .setDuration(250L)
-                    .start()
-            }
-            .start()
+        }
     }
 
     private fun updateDoneButtonState(hasSelection: Boolean, animate: Boolean = false) {
@@ -217,20 +227,313 @@ class LanguageActivity : BaseActivity() {
 
         val initialDir = if (LocaleHelper.isRtl(this)) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
         adapter = LanguageAdapter(resultList, initialDir) { selected ->
-            selectedLanguage = selected
-            applyPreviewLanguage(selected.code)
-            if (binding.btnDone.visibility == View.VISIBLE) {
-                updateDoneButtonState(hasSelection = true, animate = true)
+            handleLanguageSelected(selected)
+        }
+
+        if (!isFromSettings) {
+            adapter.onItemBound = { position, itemView ->
+                if (position == 3 && !hasSelectedLanguage) {
+                    itemView.post {
+                        if (!hasSelectedLanguage && !isFinishing && !isDestroyed) {
+                            positionHandOnItem4()
+                        }
+                    }
+                }
             }
         }
 
         binding.rvLanguages.layoutManager = LinearLayoutManager(this)
         binding.rvLanguages.adapter = adapter
 
+        if (!isFromSettings) {
+            binding.rvLanguages.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                if (!hasSelectedLanguage && !isFromSettings && !isFinishing && !isDestroyed) {
+                    positionHandOnItem4()
+                }
+            }
+
+            binding.rvLanguages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!hasSelectedLanguage && !isFromSettings) {
+                        positionHandOnItem4()
+                    }
+                }
+            })
+
+            binding.rvLanguages.post {
+                if (!hasSelectedLanguage && !isFromSettings) {
+                    positionHandOnItem4()
+                }
+            }
+            binding.rvLanguages.postDelayed({
+                if (!hasSelectedLanguage && !isFromSettings) {
+                    positionHandOnItem4()
+                }
+            }, 50)
+            binding.rvLanguages.postDelayed({
+                if (!hasSelectedLanguage && !isFromSettings) {
+                    positionHandOnItem4()
+                }
+            }, 150)
+            binding.rvLanguages.postDelayed({
+                if (!hasSelectedLanguage && !isFromSettings) {
+                    positionHandOnItem4()
+                }
+            }, 300)
+            binding.rvLanguages.postDelayed({
+                if (!hasSelectedLanguage && !isFromSettings) {
+                    positionHandOnItem4()
+                }
+            }, 600)
+        }
+
         selectedLanguage?.let {
             applyPreviewLanguage(it.code)
         } ?: run {
             updateHeaderForLanguage(initialSavedLangCode)
+        }
+    }
+
+    private fun selectLanguageAtPosition(position: Int) {
+        if (position in 0 until adapter.itemCount) {
+            adapter.selectPosition(position)
+            val selected = adapter.getSelectedLanguage() ?: return
+            handleLanguageSelected(selected)
+        }
+    }
+
+    private fun handleLanguageSelected(selected: LanguageModel) {
+        hasSelectedLanguage = true
+        selectedLanguage = selected
+        applyPreviewLanguage(selected.code)
+
+        if (!isFromSettings) {
+            binding.viewCountdown.cancelCountdown()
+            binding.btnDone.visibility = View.GONE
+            binding.btnDone.alpha = 0f
+            binding.btnDone.isEnabled = false
+            binding.btnDone.isClickable = false
+            binding.viewCountdown.visibility = View.VISIBLE
+            binding.viewCountdown.alpha = 1.0f
+
+            binding.viewCountdown.startCountdown(
+                totalDurationMs = 3000L,
+                onFinished = {
+                    if (!isFinishing && !isDestroyed) {
+                        showDoneButtonAfterCountdown()
+                    }
+                }
+            )
+
+            animateHandToDone()
+        } else {
+            updateDoneButtonState(hasSelection = true, animate = true)
+        }
+    }
+
+    private fun showDoneButtonAfterCountdown() {
+        if (isFinishing || isDestroyed) return
+
+        binding.viewCountdown.cancelCountdown()
+        binding.viewCountdown.animate()
+            .alpha(0f)
+            .setDuration(150L)
+            .withEndAction {
+                if (isFinishing || isDestroyed) return@withEndAction
+                binding.viewCountdown.visibility = View.GONE
+            }
+            .start()
+
+        binding.btnDone.visibility = View.VISIBLE
+        binding.btnDone.alpha = 0f
+        binding.btnDone.isEnabled = true
+        binding.btnDone.isClickable = true
+        binding.btnDone.animate()
+            .alpha(1.0f)
+            .setDuration(200L)
+            .start()
+
+        binding.rootLayout.post {
+            if (!isFinishing && !isDestroyed && hasSelectedLanguage) {
+                val (endX, endY) = getTargetDoneEndCoordinates()
+                binding.ivFloatingHand.animate()
+                    .x(endX)
+                    .y(endY)
+                    .setDuration(150L)
+                    .start()
+            }
+        }
+    }
+
+    private fun findRadioViewForPosition(position: Int): View? {
+        if (position == 3) {
+            adapter.item4RadioView?.let {
+                if (it.isAttachedToWindow && it.width > 0) return it
+            }
+        }
+        val lm = binding.rvLanguages.layoutManager as? LinearLayoutManager
+        val itemView = lm?.findViewByPosition(position)
+        val radio = itemView?.findViewById<View>(R.id.ivRadio)
+        if (radio != null && radio.isAttachedToWindow && radio.width > 0) {
+            return radio
+        }
+        val vh = binding.rvLanguages.findViewHolderForAdapterPosition(position) as? LanguageAdapter.LanguageViewHolder
+        val vhRadio = vh?.binding?.ivRadio
+        if (vhRadio != null && vhRadio.isAttachedToWindow && vhRadio.width > 0) {
+            return vhRadio
+        }
+        return null
+    }
+
+    private fun findItem4RadioView(): View? = findRadioViewForPosition(3)
+
+    private fun positionHandOnItem4(): Boolean {
+        if (isFinishing || isDestroyed || isFromSettings || hasSelectedLanguage) return false
+        if (binding.rootLayout.width == 0 || binding.rootLayout.height == 0) return false
+
+        val rootLoc = IntArray(2)
+        binding.rootLayout.getLocationInWindow(rootLoc)
+
+        var radioCenterX = 0f
+        var radioCenterY = 0f
+        var foundPosition = false
+
+        val targetView = findItem4RadioView()
+        if (targetView != null && targetView.isAttachedToWindow && targetView.width > 0) {
+            val targetLoc = IntArray(2)
+            targetView.getLocationInWindow(targetLoc)
+            radioCenterX = (targetLoc[0] - rootLoc[0]) + targetView.width / 2f
+            radioCenterY = (targetLoc[1] - rootLoc[1]) + targetView.height / 2f
+            foundPosition = true
+        } else {
+            val lm = binding.rvLanguages.layoutManager as? LinearLayoutManager
+            val firstChild = lm?.getChildAt(0)
+            if (firstChild != null) {
+                val firstPos = lm.getPosition(firstChild)
+                val radioInFirst = firstChild.findViewById<View>(R.id.ivRadio)
+                if (firstPos != RecyclerView.NO_POSITION && radioInFirst != null && radioInFirst.width > 0) {
+                    val firstRadioLoc = IntArray(2)
+                    radioInFirst.getLocationInWindow(firstRadioLoc)
+                    val lp = firstChild.layoutParams as? ViewGroup.MarginLayoutParams
+                    val itemStride = firstChild.height + (lp?.topMargin ?: 0) + (lp?.bottomMargin ?: 0)
+                    radioCenterX = (firstRadioLoc[0] - rootLoc[0]) + radioInFirst.width / 2f
+                    radioCenterY = (firstRadioLoc[1] - rootLoc[1]) + radioInFirst.height / 2f + (3 - firstPos) * itemStride
+                    foundPosition = true
+                }
+            }
+        }
+
+        if (!foundPosition || radioCenterX <= 0f) {
+            return false
+        }
+
+        val density = resources.displayMetrics.density
+        val handW = HAND_SIZE_DP * density
+        val handH = HAND_SIZE_DP * density
+
+        val startX = radioCenterX - handW * HAND_HOTSPOT_RATIO_X
+        val startY = radioCenterY - handH * HAND_HOTSPOT_RATIO_Y
+
+        binding.topBar.outlineProvider = null
+        binding.topBar.elevation = 10f * density
+
+        val isUnderHeader = radioCenterY < binding.topBar.bottom
+        binding.ivFloatingHand.apply {
+            animate().cancel()
+            elevation = 5f * density
+            x = startX
+            y = startY
+            visibility = if (startY + handH < 0f) View.INVISIBLE else View.VISIBLE
+            isClickable = !isUnderHeader
+            isFocusable = !isUnderHeader
+        }
+        loadHandGif()
+        return true
+    }
+
+    private fun getTargetDoneEndCoordinates(): Pair<Float, Float> {
+        val density = resources.displayMetrics.density
+        val handW = HAND_SIZE_DP * density
+        val handH = HAND_SIZE_DP * density
+
+        val targetView = if (binding.viewCountdown.width > 0 && binding.viewCountdown.visibility == View.VISIBLE) {
+            binding.viewCountdown
+        } else if (binding.btnDone.width > 0 && binding.btnDone.visibility == View.VISIBLE) {
+            binding.btnDone
+        } else {
+            binding.topBar
+        }
+
+        val rootLoc = IntArray(2)
+        val targetLoc = IntArray(2)
+        binding.rootLayout.getLocationInWindow(rootLoc)
+        targetView.getLocationInWindow(targetLoc)
+
+        val targetCenterX = if (targetView == binding.topBar) {
+            val isRtl = binding.rootLayout.layoutDirection == View.LAYOUT_DIRECTION_RTL
+            if (isRtl) {
+                (targetLoc[0] - rootLoc[0]) + 35f * density
+            } else {
+                (targetLoc[0] - rootLoc[0]) + targetView.width - 35f * density
+            }
+        } else {
+            (targetLoc[0] - rootLoc[0]) + targetView.width / 2f
+        }
+
+        val targetCenterY = (targetLoc[1] - rootLoc[1]) + targetView.height / 2f
+
+        val endX = targetCenterX - handW * HAND_HOTSPOT_RATIO_X
+        val endY = targetCenterY - handH * HAND_HOTSPOT_RATIO_Y
+        return Pair(endX, endY)
+    }
+
+    private fun animateHandToDone() {
+        if (isFinishing || isDestroyed) return
+
+        val density = resources.displayMetrics.density
+        val floatingHand = binding.ivFloatingHand
+        floatingHand.animate().cancel()
+        floatingHand.elevation = 100f * density
+        floatingHand.isClickable = true
+        floatingHand.isFocusable = true
+
+        if (floatingHand.visibility != View.VISIBLE || floatingHand.x <= 0f || floatingHand.y < binding.topBar.bottom) {
+            val selectedPos = adapter.getSelectedPosition().takeIf { it >= 0 } ?: 3
+            val selectedRadio = findRadioViewForPosition(selectedPos)
+            if (selectedRadio != null && selectedRadio.isAttachedToWindow && selectedRadio.width > 0) {
+                val rootLoc = IntArray(2)
+                val targetLoc = IntArray(2)
+                binding.rootLayout.getLocationInWindow(rootLoc)
+                selectedRadio.getLocationInWindow(targetLoc)
+                val handW = HAND_SIZE_DP * density
+                val handH = HAND_SIZE_DP * density
+                val radioCenterX = (targetLoc[0] - rootLoc[0]) + selectedRadio.width / 2f
+                val radioCenterY = (targetLoc[1] - rootLoc[1]) + selectedRadio.height / 2f
+                floatingHand.x = radioCenterX - handW * HAND_HOTSPOT_RATIO_X
+                floatingHand.y = radioCenterY - handH * HAND_HOTSPOT_RATIO_Y
+            }
+        }
+
+        loadHandGif()
+        floatingHand.visibility = View.VISIBLE
+
+        binding.rootLayout.post {
+            if (isFinishing || isDestroyed) return@post
+            val (endX, endY) = getTargetDoneEndCoordinates()
+            floatingHand.animate()
+                .x(endX)
+                .y(endY)
+                .setDuration(600L)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .withEndAction {
+                    if (!isFinishing && !isDestroyed) {
+                        floatingHand.x = endX
+                        floatingHand.y = endY
+                        floatingHand.visibility = View.VISIBLE
+                    }
+                }
+                .start()
         }
     }
 
@@ -288,11 +591,18 @@ class LanguageActivity : BaseActivity() {
         if (isFromSettings) {
             val intent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                putExtra(MainActivity.EXTRA_TARGET_TAB, MainActivity.TAB_SETTINGS)
+                putExtra(MainActivity.EXTRA_TARGET_TAB, MainActivity.TAB_HOME)
                 putExtra(MainActivity.EXTRA_SKIP_NOTI_POPUP, true)
             }
             startActivity(intent)
             finish()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, 0, 0)
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, 0, 0)
+            } else {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+            }
         } else {
             startActivity(Intent(this, IntroActivity::class.java))
             finish()
@@ -329,11 +639,16 @@ class LanguageActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         binding.viewCountdown.resumeCountdown()
+        (binding.ivFloatingHand.drawable as? android.graphics.drawable.Animatable)?.let {
+            if (!it.isRunning) it.start()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.viewCountdown.cancelCountdown()
+        binding.ivFloatingHand.animate().cancel()
+        (binding.ivFloatingHand.drawable as? android.graphics.drawable.Animatable)?.stop()
         if (!isConfirmed && isFromSettings) {
             LocaleHelper.setLocale(this, initialSavedLangCode)
         }
@@ -341,5 +656,8 @@ class LanguageActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_IS_FROM_SETTINGS = "extra_is_from_settings"
+        private const val HAND_SIZE_DP = 48f
+        private const val HAND_HOTSPOT_RATIO_X = 478f / 800f
+        private const val HAND_HOTSPOT_RATIO_Y = 169f / 800f
     }
 }

@@ -27,7 +27,8 @@
             android:focusable="true"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -40,11 +41,14 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Title -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvScreenTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:singleLine="true"
             android:text="@string/title_result"
             android:textColor="#242E49"
             android:textSize="22sp"
@@ -63,7 +67,8 @@
             android:focusable="true"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -103,7 +108,8 @@
                 android:layout_gravity="center_horizontal"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="32dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp">
 
                 <ImageView
                     android:layout_width="38dp"

@@ -5,6 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:background="@color/screen_bg">
 
     <!-- Language Items List (placed before topBar so topBar renders on top with zero shadow) -->
@@ -57,7 +59,7 @@
         </FrameLayout>
 
         <!-- Header Title: Language (Centered horizontally) -->
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,9 +69,9 @@
             android:fontFamily="@font/urbanist_bold"
             app:fontFamily="@font/urbanist_bold"
             android:gravity="center"
-            android:textAlignment="center"
             android:includeFontPadding="false"
             android:letterSpacing="0"
+            android:singleLine="true"
             android:text="@string/title_language"
             android:textColor="@color/text_primary"
             android:textSize="26sp"
@@ -143,5 +145,19 @@
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Floating Hand Icon (48dp, renders above all cards, flies to Done/Countdown) -->
+    <ImageView
+        android:id="@+id/ivFloatingHand"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:elevation="100dp"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/gif_hand_click"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

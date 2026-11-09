@@ -1,6 +1,8 @@
 package com.example.healthcareai.ui.main
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -34,6 +36,7 @@ class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private var activeTabId = R.id.tabHome
     private var notificationPermissionDialog: Dialog? = null
+    private var hasCheckedNotiPopupOnEntry = false
 
     private val requestNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -49,6 +52,12 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, 0, 0)
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -75,6 +84,8 @@ class MainActivity : BaseActivity() {
                 checkAndShowCustomNotificationPopupOnHome()
             }
         }
+
+        handleNotificationNavigation(intent)
     }
 
     override fun onResume() {
@@ -101,16 +112,15 @@ class MainActivity : BaseActivity() {
     }
 
     /**
-     * Requirement: Custom notification pop-up is displayed after entering Home (MainActivity),
-     * only when the user has already denied the native prompt at least 2 times (denialCount >= 2),
-     * and has NOT just been prompted in the current session (e.g. at Splash).
+     * Requirement: Custom notification pop-up is displayed ONLY upon entering the app (MainActivity.onCreate),
+     * when the user has already denied the native prompt at least 2 times (denialCount >= 2),
+     * and NEVER repeatedly on onResume when backing from child screens.
      */
     private fun checkAndShowCustomNotificationPopupOnHome() {
-        if (isFinishing || isDestroyed || notificationPermissionDialog?.isShowing == true) return
-        if (NotificationPermissionHelper.hasPromptedInCurrentSession) return
+        if (isFinishing || isDestroyed || hasCheckedNotiPopupOnEntry || notificationPermissionDialog?.isShowing == true) return
+        hasCheckedNotiPopupOnEntry = true
         val pref = PreferenceHelper.getInstance(this)
         if (!PermissionReturnHelper.isNotificationGranted(this) && pref.notiDenialCount >= 2) {
-            NotificationPermissionHelper.hasPromptedInCurrentSession = true
             notificationPermissionDialog = CustomNotificationDialog.show(
                 activity = this,
                 onGranted = {
@@ -133,8 +143,46 @@ class MainActivity : BaseActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        val reloadLang = intent.getBooleanExtra(EXTRA_RELOAD_LANGUAGE, false)
+        if (reloadLang) {
+            intent.removeExtra(EXTRA_RELOAD_LANGUAGE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, 0, 0)
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, 0, 0)
+            } else {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+            }
+            recreate()
+            return
+        }
         val targetTab = intent.getStringExtra(EXTRA_TARGET_TAB) ?: TAB_HOME
         selectTabDirectly(targetTab)
+        handleNotificationNavigation(intent)
+    }
+
+    private fun handleNotificationNavigation(intent: Intent?) {
+        if (intent == null) return
+        val targetScreen = intent.getStringExtra(EXTRA_TARGET_SCREEN)
+        val reminderId = intent.getStringExtra(EXTRA_REMINDER_ID)
+        val profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
+
+        if (targetScreen == TARGET_REMINDER || !reminderId.isNullOrEmpty() || !profileId.isNullOrEmpty()) {
+            val targetProfileId = profileId
+                ?: reminderId?.let { com.example.healthcareai.data.repository.ReminderRepository.getInstance(this).getReminder(it)?.profileId }
+                ?: com.example.healthcareai.data.repository.ProfileRepository.getInstance(this).getPrimaryProfile().id
+
+            // Consume extras so it doesn't re-trigger on orientation change/recreate
+            intent.removeExtra(EXTRA_TARGET_SCREEN)
+            intent.removeExtra(EXTRA_REMINDER_ID)
+            intent.removeExtra(EXTRA_PROFILE_ID)
+
+            com.example.healthcareai.ui.reminder.ReminderActivity.start(
+                context = this,
+                profileId = targetProfileId,
+                highlightReminderId = reminderId
+            )
+        }
     }
 
     private fun setupViewPager() {
@@ -336,6 +384,11 @@ class MainActivity : BaseActivity() {
         const val EXTRA_TARGET_TAB = "extra_target_tab"
         const val EXTRA_SKIP_NOTI_POPUP = "extra_skip_noti_popup"
         const val EXTRA_SKIP_DAILY_REWARD = "extra_skip_daily_reward"
+        const val EXTRA_RELOAD_LANGUAGE = "extra_reload_language"
+        const val EXTRA_TARGET_SCREEN = "extra_target_screen"
+        const val TARGET_REMINDER = "target_reminder"
+        const val EXTRA_REMINDER_ID = "extra_reminder_id"
+        const val EXTRA_PROFILE_ID = "extra_profile_id"
 
         const val TAB_HOME = "home"
         const val TAB_SCAN = "scan"

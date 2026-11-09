@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputFilter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -34,6 +35,11 @@ class AddAllergyActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddAllergyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupHeaderTopMargin(binding.topBar, binding.root)
+
+        binding.etAllergenName.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etReaction.filters = arrayOf(InputFilter.LengthFilter(30))
+        binding.etNotes.filters = arrayOf(InputFilter.LengthFilter(100))
 
         editingRecordId = intent.getStringExtra(EXTRA_RECORD_ID)
         profileId = intent.getStringExtra(EXTRA_PROFILE_ID)
@@ -91,23 +97,33 @@ class AddAllergyActivity : BaseActivity() {
             }
         }
 
-        // Date picker for First noticed
+        // Date picker for First noticed (past/today only)
         binding.cardFirstNoticed.setOnClickListener {
             hideKeyboard()
             val cal = Calendar.getInstance()
-            DatePickerDialog(
+            if (selectedDateFormatted.isNotBlank()) {
+                try {
+                    dateFormat.parse(selectedDateFormatted)?.let { cal.time = it }
+                } catch (_: Exception) {}
+            }
+            val datePickerDialog = DatePickerDialog(
                 this,
                 { _, year, month, dayOfMonth ->
                     val chosenCal = Calendar.getInstance().apply {
                         set(year, month, dayOfMonth)
                     }
+                    if (chosenCal.timeInMillis > System.currentTimeMillis()) {
+                        return@DatePickerDialog
+                    }
                     selectedDateFormatted = dateFormat.format(chosenCal.time)
-                    binding.tvFirstNoticed.text = selectedDateFormatted
+                    binding.tvFirstNoticed.text = com.example.healthcareai.util.LocaleHelper.formatDate(this, chosenCal.time)
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            datePickerDialog.show()
         }
 
         binding.btnSaveAllergy.setOnClickListener {
@@ -172,7 +188,7 @@ class AddAllergyActivity : BaseActivity() {
 
     private fun populateExistingData() {
         val record = existingRecord ?: return
-        binding.tvTitle.text = "Edit allergy"
+        binding.tvTitle.text = getString(R.string.title_edit_allergy)
         binding.etAllergenName.setText(record.name)
         binding.etReaction.setText(record.reaction)
         if (record.severity.isNotBlank()) {
@@ -180,7 +196,7 @@ class AddAllergyActivity : BaseActivity() {
         }
         if (record.firstNoticedDate.isNotBlank()) {
             selectedDateFormatted = record.firstNoticedDate
-            binding.tvFirstNoticed.text = record.firstNoticedDate
+            binding.tvFirstNoticed.text = com.example.healthcareai.util.LocaleHelper.formatStoredDate(this, record.firstNoticedDate)
         }
         binding.etNotes.setText(record.notes)
 

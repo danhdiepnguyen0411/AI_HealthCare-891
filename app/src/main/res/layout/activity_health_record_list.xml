@@ -38,12 +38,15 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist_bold"
+            android:gravity="center"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"

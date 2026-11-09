@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +31,7 @@ import com.example.healthcareai.ui.base.BaseActivity
 import com.example.healthcareai.ui.camera.AiProcessingDialog
 import com.example.healthcareai.ui.dialog.CustomExitAppDialog
 import com.example.healthcareai.util.SymptomLocalizationHelper
+import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -46,9 +48,11 @@ class SymptomAssessmentActivity : BaseActivity() {
     private val minAge = 1
     private val maxAge = 120
     private var selectedGender: Gender = Gender.MALE
+    private var pendingResultIntent: Intent? = null
 
     companion object {
         const val TOTAL_QUESTIONS = 6
+        private const val KEY_PENDING_RESULT_INTENT = "key_pending_result_intent"
     }
 
     private lateinit var gestureDetector: GestureDetector
@@ -56,8 +60,8 @@ class SymptomAssessmentActivity : BaseActivity() {
     private val scrollThresholdDp = 32f
 
     // Question 3: Body Anatomy selection
-    private var selectedBodyRegionId: String = "arms"
-    private var selectedBodyRegionName: String = "Arm"
+    private var selectedBodyRegionId: String = ""
+    private var selectedBodyRegionName: String = ""
 
     // Question 4: Specific symptoms selection
     private lateinit var symptomsAdapter: SymptomsAdapter
@@ -81,6 +85,15 @@ class SymptomAssessmentActivity : BaseActivity() {
         binding = ActivitySymptomAssessmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState != null) {
+            pendingResultIntent = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                savedInstanceState.getParcelable(KEY_PENDING_RESULT_INTENT, Intent::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                savedInstanceState.getParcelable(KEY_PENDING_RESULT_INTENT)
+            }
+        }
+
         setupWindowInsets()
         setupBackNavigation()
         initAgeWheel()
@@ -95,19 +108,34 @@ class SymptomAssessmentActivity : BaseActivity() {
         goToQuestion(1, animate = false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val pending = pendingResultIntent
+        if (pending != null) {
+            pendingResultIntent = null
+            (supportFragmentManager.findFragmentByTag(AiProcessingDialog.TAG) as? AiProcessingDialog)?.dismissAllowingStateLoss()
+            startActivity(pending)
+            finish()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        pendingResultIntent?.let {
+            outState.putParcelable(KEY_PENDING_RESULT_INTENT, it)
+        }
+    }
+
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootAssessmentLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            binding.topBar.applyHeaderTopMargin(insets)
 
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
-                }
-            }
+            val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val density = resources.displayMetrics.density
+
             if (navBarBottom > 0) {
                 binding.layoutBottomButtons.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    bottomMargin = navBarBottom + 24
+                    bottomMargin = navBarBottom + (24 * density).toInt()
                 }
             }
             insets
@@ -317,17 +345,23 @@ class SymptomAssessmentActivity : BaseActivity() {
     }
 
     private fun handleBodyPartSelected(regionId: String, regionName: String) {
-        selectedBodyRegionId = regionId
-        selectedBodyRegionName = when (regionId.lowercase()) {
-            "arms" -> "Arm"
-            "head" -> "Head"
-            "neck" -> "Neck"
-            "shoulders" -> "Shoulder"
-            "chest" -> "Chest"
-            "abdomen" -> "Abdomen"
-            "legs" -> "Leg"
-            else -> if (regionName.isNotBlank()) regionName else "Arm"
+        if (selectedBodyRegionId != regionId) {
+            selectedBodyRegionId = regionId
+            selectedBodyRegionName = when (regionId.lowercase()) {
+                "arms" -> "Arm"
+                "head" -> "Head"
+                "neck" -> "Neck"
+                "shoulders" -> "Shoulder"
+                "chest" -> "Chest"
+                "abdomen" -> "Abdomen"
+                "legs" -> "Leg"
+                else -> if (regionName.isNotBlank()) regionName else ""
+            }
+            selectedSymptomIds.clear()
+            selectedQ5SymptomIds.clear()
+            lastLoadedQ5Category = ""
         }
+        updateContinueButtonState()
         binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
     }
 
@@ -381,6 +415,7 @@ class SymptomAssessmentActivity : BaseActivity() {
             selectedSymptomIds.add(item.id)
         }
         updateSelectedChips()
+        updateContinueButtonState()
         binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
 
         val pos = symptomsAdapter.currentList.indexOfFirst { it.id == item.id }
@@ -442,6 +477,7 @@ class SymptomAssessmentActivity : BaseActivity() {
             chipBinding.ivChipRemove.setOnClickListener {
                 selectedSymptomIds.remove(symptom.id)
                 updateSelectedChips()
+                updateContinueButtonState()
                 val pos = symptomsAdapter.currentList.indexOfFirst { it.id == symptom.id }
                 if (pos >= 0) {
                     symptomsAdapter.notifyItemChanged(pos, SymptomsAdapter.PAYLOAD_SELECTION_CHANGED)
@@ -467,6 +503,11 @@ class SymptomAssessmentActivity : BaseActivity() {
             "Arm weakness",
             "Shoulder pain & stiffness",
             "Frozen shoulder",
+            "Rotator cuff pain",
+            "Shoulder blade pain",
+            "Inability to lift arm above head",
+            "Clicking or popping in shoulder",
+            "Shoulder muscle spasms",
             "Elbow joint pain",
             "Wrist pain & soreness",
             "Numbness in fingers",
@@ -651,10 +692,15 @@ class SymptomAssessmentActivity : BaseActivity() {
             "shoulders" -> listOf(
                 "Shoulder pain & stiffness",
                 "Frozen shoulder",
+                "Rotator cuff pain",
+                "Shoulder blade pain",
+                "Inability to lift arm above head",
+                "Clicking or popping in shoulder",
+                "Shoulder muscle spasms",
                 "Upper back pain",
-                "Arm ache",
-                "Neck stiffness & pain",
-                "Arm weakness"
+                "Arm numbness or tingling",
+                "Arm weakness",
+                "Neck stiffness & pain"
             )
             else -> listOf(
                 "Arm ache",
@@ -666,8 +712,6 @@ class SymptomAssessmentActivity : BaseActivity() {
                 "Arm numbness or tingling",
                 "Arm muscle twitching",
                 "Arm weakness",
-                "Shoulder pain & stiffness",
-                "Frozen shoulder",
                 "Elbow joint pain",
                 "Wrist pain & soreness",
                 "Numbness in fingers",
@@ -678,9 +722,12 @@ class SymptomAssessmentActivity : BaseActivity() {
             )
         }
 
+        val regionSymptomSet = prioritySymptoms.map { it.lowercase() }.toSet()
         val priorityMap = prioritySymptoms.withIndex().associate { it.value.lowercase() to it.index }
-        return allSymptoms.sortedBy { item ->
-            priorityMap[item.originalName.lowercase()] ?: (1000 + item.originalName.hashCode())
+        return allSymptoms.filter { item ->
+            regionSymptomSet.contains(item.originalName.lowercase())
+        }.sortedBy { item ->
+            priorityMap[item.originalName.lowercase()] ?: 0
         }
     }
 
@@ -728,6 +775,7 @@ class SymptomAssessmentActivity : BaseActivity() {
                 } else {
                     selectedQ5SymptomIds.add(item.id)
                 }
+                updateContinueButtonState()
                 binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
             }
         )
@@ -739,33 +787,95 @@ class SymptomAssessmentActivity : BaseActivity() {
         }
     }
 
+    private fun getRegionCategory(): String? {
+        return when (selectedBodyRegionId.lowercase()) {
+            "head", "neck" -> "HEAD"
+            "chest" -> "CHEST"
+            "abdomen" -> "ABDOMEN"
+            "legs" -> "LEGS"
+            "shoulders" -> "SHOULDERS"
+            "arms" -> "ARM_SKIN"
+            else -> when (selectedBodyRegionName.lowercase()) {
+                "head", "neck" -> "HEAD"
+                "chest" -> "CHEST"
+                "abdomen" -> "ABDOMEN"
+                "leg", "legs" -> "LEGS"
+                "shoulder", "shoulders" -> "SHOULDERS"
+                "arm", "arms" -> "ARM_SKIN"
+                else -> null
+            }
+        }
+    }
+
+    private fun classifySymptomCategory(originalName: String): String? {
+        val text = originalName.lowercase()
+        return when {
+            text.contains("leg") || text.contains("knee") || text.contains("ankle") ||
+            text.contains("foot") || text.contains("feet") || text.contains("calf") ||
+            text.contains("toe") || text.contains("sciatica") || text.contains("shin") ||
+            text.contains("hip") || text.contains("lumbago") || text.contains("lower back") -> "LEGS"
+
+            text.contains("stomach") || text.contains("abdom") || text.contains("acid") ||
+            text.contains("reflux") || text.contains("heartburn") || text.contains("nausea") ||
+            text.contains("vomit") || text.contains("bloat") || text.contains("diarrhea") ||
+            text.contains("constipation") || text.contains("digest") || text.contains("dyspepsia") ||
+            text.contains("appetite") -> "ABDOMEN"
+
+            text.contains("shoulder") || text.contains("rotator") ||
+            text.contains("above head") || text.contains("upper back") -> "SHOULDERS"
+
+            text.contains("chest") || text.contains("breath") || text.contains("dyspnea") ||
+            text.contains("cough") || text.contains("heartbeat") || text.contains("wheez") ||
+            text.contains("lung") || text.contains("palpitation") -> "CHEST"
+
+            text.contains("head") || text.contains("migraine") || text.contains("dizz") ||
+            text.contains("vertigo") || text.contains("brain") || text.contains("light") ||
+            text.contains("photophobia") || text.contains("eye") || text.contains("vision") ||
+            text.contains("ear") || text.contains("tinnitus") || text.contains("throat") ||
+            text.contains("swallow") || text.contains("voice") || text.contains("neck") ||
+            text.contains("nose") || text.contains("sinus") || text.contains("sneez") ||
+            text.contains("smell") || text.contains("taste") -> "HEAD"
+
+            text.contains("arm") || text.contains("elbow") || text.contains("wrist") ||
+            text.contains("finger") || text.contains("hand") || text.contains("skin") ||
+            text.contains("rash") || text.contains("eczem") -> "ARM_SKIN"
+
+            else -> null
+        }
+    }
+
     private fun loadRelatedSymptomsForQuestion5() {
         val selectedItems = selectedSymptomIds.mapNotNull { id ->
             allSymptoms.firstOrNull { it.id == id }
         }
-        val selectedNames = selectedItems.flatMap { listOf(it.originalName, it.name) }
-        val combinedText = (selectedNames.joinToString(" ") + " " + selectedBodyRegionName).lowercase()
+        val regionCategory = getRegionCategory()
+        val regionSymptomOriginals = if (selectedBodyRegionId.isNotBlank()) {
+            getSymptomsForRegion(selectedBodyRegionId).map { it.originalName.lowercase() }.toSet()
+        } else {
+            emptySet()
+        }
+        val categoryCounts = mutableMapOf<String, Int>()
+        for (item in selectedItems) {
+            val itemCat = if (regionCategory != null && regionSymptomOriginals.contains(item.originalName.lowercase())) {
+                regionCategory
+            } else {
+                classifySymptomCategory(item.originalName) ?: regionCategory
+            }
+            if (itemCat != null) {
+                categoryCounts[itemCat] = (categoryCounts[itemCat] ?: 0) + 1
+            }
+        }
 
-        val category = when {
-            combinedText.contains("head") || combinedText.contains("migraine") || combinedText.contains("dizzy") ||
-            combinedText.contains("vertigo") || combinedText.contains("brain") || combinedText.contains("light") ||
-            combinedText.contains("ear") || combinedText.contains("throat") || combinedText.contains("swallow") ||
-            selectedBodyRegionName.equals("Head", ignoreCase = true) || selectedBodyRegionName.equals("Neck", ignoreCase = true) -> "HEAD"
-
-            combinedText.contains("chest") || combinedText.contains("breath") || combinedText.contains("cough") ||
-            combinedText.contains("heart") || combinedText.contains("wheez") || combinedText.contains("lung") ||
-            combinedText.contains("palpitation") || selectedBodyRegionName.equals("Chest", ignoreCase = true) -> "CHEST"
-
-            combinedText.contains("stomach") || combinedText.contains("abdomen") || combinedText.contains("acid") ||
-            combinedText.contains("reflux") || combinedText.contains("nausea") || combinedText.contains("vomit") ||
-            combinedText.contains("cramp") || combinedText.contains("bloat") || combinedText.contains("diarrhea") ||
-            combinedText.contains("digest") || selectedBodyRegionName.equals("Abdomen", ignoreCase = true) -> "ABDOMEN"
-
-            combinedText.contains("leg") || combinedText.contains("knee") || combinedText.contains("ankle") ||
-            combinedText.contains("foot") || combinedText.contains("calf") || combinedText.contains("toe") ||
-            combinedText.contains("sciatica") || selectedBodyRegionName.equals("Legs", ignoreCase = true) -> "LEGS"
-
-            else -> "ARM_SKIN" // Default matches Arm / Skin / Allergy (Screenshot 3)
+        val category = if (categoryCounts.isNotEmpty()) {
+            val maxCount = categoryCounts.values.maxOrNull() ?: 0
+            val topCategories = categoryCounts.filterValues { it == maxCount }.keys
+            if (regionCategory != null && topCategories.contains(regionCategory)) {
+                regionCategory
+            } else {
+                topCategories.first()
+            }
+        } else {
+            regionCategory ?: "ARM_SKIN"
         }
 
         if (category == lastLoadedQ5Category && q5Symptoms.isNotEmpty()) {
@@ -778,6 +888,14 @@ class SymptomAssessmentActivity : BaseActivity() {
         q5Symptoms.clear()
 
         val rawList = when (category) {
+            "SHOULDERS" -> listOf(
+                "Stiffness or limited range of motion",
+                "Sharp pain when lifting arm overhead",
+                "Dull ache radiating down upper arm",
+                "Clicking or popping sensation in shoulder",
+                "Muscle tightness in upper back and neck",
+                "Weakness when carrying objects"
+            )
             "HEAD" -> listOf(
                 "Sensitivity to light (Photophobia)",
                 "Nausea or vomiting",
@@ -938,17 +1056,31 @@ class SymptomAssessmentActivity : BaseActivity() {
         binding.tvAgePlus2.setOnClickListener { setAge(currentAge + 2) }
 
         binding.btnContinue.setOnClickListener {
+            if (!binding.btnContinue.isEnabled) return@setOnClickListener
             when (currentQuestionIndex) {
                 1 -> goToQuestion(2, animate = true)
                 2 -> goToQuestion(3, animate = true)
                 3 -> {
-                    if (selectedBodyRegionName.isEmpty()) {
-                        selectedBodyRegionName = "Arm"
+                    if (selectedBodyRegionName.isBlank()) {
+                        Toast.makeText(this, "Please select a body region", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
                     }
                     goToQuestion(4, animate = true)
                 }
-                4 -> goToQuestion(5, animate = true)
-                5 -> goToQuestion(6, animate = true)
+                4 -> {
+                    if (selectedSymptomIds.isEmpty()) {
+                        Toast.makeText(this, "Please select at least one symptom", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    goToQuestion(5, animate = true)
+                }
+                5 -> {
+                    if (selectedQ5SymptomIds.isEmpty()) {
+                        Toast.makeText(this, "Please select at least one related symptom", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    goToQuestion(6, animate = true)
+                }
                 6 -> {
                     performSymptomAssessment()
                 }
@@ -1004,8 +1136,12 @@ class SymptomAssessmentActivity : BaseActivity() {
                             insectBiteStr
                         )
                     }
-                    startActivity(intent)
-                    finish()
+                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        pendingResultIntent = intent
+                    }
                 } else {
                     Toast.makeText(
                         this@SymptomAssessmentActivity,
@@ -1118,6 +1254,21 @@ class SymptomAssessmentActivity : BaseActivity() {
                 binding.layoutInsectBiteQuestion.visibility = View.VISIBLE
             }
         }
+        updateContinueButtonState()
+    }
+
+    private fun updateContinueButtonState() {
+        val isEnabled = when (currentQuestionIndex) {
+            1 -> true
+            2 -> true
+            3 -> selectedBodyRegionId.isNotBlank() && selectedBodyRegionName.isNotBlank()
+            4 -> selectedSymptomIds.isNotEmpty()
+            5 -> selectedQ5SymptomIds.isNotEmpty()
+            6 -> true
+            else -> true
+        }
+        binding.btnContinue.isEnabled = isEnabled
+        binding.btnContinue.alpha = if (isEnabled) 1.0f else 0.5f
     }
 
     private fun showExitConfirmationDialog() {

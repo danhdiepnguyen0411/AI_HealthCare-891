@@ -14,11 +14,12 @@
     <!-- Title -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="22dp"
         android:fontFamily="@font/urbanist_bold"
+        android:gravity="center"
+        android:textAlignment="center"
         android:includeFontPadding="false"
         android:text="@string/dialog_title_add_time"
         android:textColor="@color/color_text"
@@ -136,9 +137,11 @@
         <!-- AM / PM Toggle -->
         <LinearLayout
             android:id="@+id/layoutAmPm"
-            android:layout_width="74dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="14dp"
+            android:minWidth="74dp"
+            android:paddingHorizontal="4dp"
             android:background="@drawable/bg_ampm_toggle_container"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/boxMinute"
@@ -162,9 +165,10 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/urbanist_bold"
                     android:includeFontPadding="false"
+                    android:maxLines="1"
                     android:text="@string/time_am"
                     android:textColor="@color/color_text"
-                    android:textSize="15.5sp" />
+                    android:textSize="14sp" />
             </FrameLayout>
 
             <!-- PM Option -->
@@ -184,9 +188,10 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/urbanist_bold"
                     android:includeFontPadding="false"
+                    android:maxLines="1"
                     android:text="@string/time_pm"
                     android:textColor="@color/white"
-                    android:textSize="15.5sp" />
+                    android:textSize="14sp" />
             </FrameLayout>
         </LinearLayout>
 

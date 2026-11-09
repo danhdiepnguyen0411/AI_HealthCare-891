@@ -12,6 +12,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.example.healthcareai.R
 import com.example.healthcareai.databinding.FragmentScanBinding
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 
 class ScanFragment : Fragment() {
 
@@ -58,18 +59,7 @@ class ScanFragment : Fragment() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootScanLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            val density = resources.displayMetrics.density
-            val targetTopMargin = if (statusBarTop > 0) {
-                statusBarTop + (8 * density).toInt()
-            } else {
-                (24 * density).toInt()
-            }
-            binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if (topMargin != targetTopMargin) {
-                    topMargin = targetTopMargin
-                }
-            }
+            binding.topBar.applyHeaderTopMargin(insets)
             insets
         }
     }

@@ -35,25 +35,24 @@
                 android:src="@drawable/arrow_back" />
         </FrameLayout>
 
-        <TextView
+        <com.example.healthcareai.ui.widget.MarqueeTextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:ellipsize="end"
+            android:layout_marginHorizontal="52dp"
             android:fontFamily="@font/urbanist"
             android:gravity="center"
             android:includeFontPadding="false"
             android:letterSpacing="0"
             android:lineHeight="27sp"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="@string/title_detail_profile"
             android:textColor="@color/color_text"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
@@ -104,10 +103,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="1dp"
-                app:cardMaxElevation="2dp">
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,18 +152,47 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvProfileName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:fontFamily="@font/urbanist"
-                                android:includeFontPadding="false"
-                                android:maxLines="1"
-                                android:textColor="@color/color_text"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                tools:text="Harry" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tvProfileName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/urbanist"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:textColor="@color/color_text"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:layout_constrainedWidth="true"
+                                    app:layout_constraintHorizontal_bias="0"
+                                    app:layout_constraintHorizontal_chainStyle="packed"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/tvProfileRelationship"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    tools:text="Harry" />
+
+                                <com.example.healthcareai.ui.widget.MarqueeTextView
+                                    android:id="@+id/tvProfileRelationship"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:fontFamily="@font/urbanist_medium"
+                                    android:includeFontPadding="false"
+                                    android:singleLine="true"
+                                    android:textColor="@color/color_subtext"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toEndOf="@+id/tvProfileName"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    tools:text="(Husband)" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <TextView
                                 android:id="@+id/tvProfileGender"
@@ -170,8 +203,19 @@
                                 android:includeFontPadding="false"
                                 android:textColor="@color/color_subtext"
                                 android:textSize="14sp"
-                                tools:text="Male (Husband)" />
+                                tools:text="Male" />
                         </LinearLayout>
+
+                        <!-- Edit Profile Pen Icon -->
+                        <ImageView
+                            android:id="@+id/ivEditProfile"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/btn_edit"
+                            android:src="@drawable/ic_pen"
+                            app:tint="@color/color_subtext" />
                     </LinearLayout>
 
                     <!-- 3-Column Stats Row: Age, Height, Weight -->
@@ -189,28 +233,31 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingEnd="4dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="14sp"
+                                android:singleLine="true"
                                 android:text="@string/label_age"
                                 android:textColor="@color/color_subtext"
                                 android:textSize="12sp" />
 
-                            <TextView
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
                                 android:id="@+id/tvAge"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="24sp"
+                                android:singleLine="true"
                                 android:text="--"
                                 android:textColor="@color/color_text"
                                 android:textSize="20sp"
@@ -223,28 +270,31 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingEnd="4dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="14sp"
+                                android:singleLine="true"
                                 android:text="@string/label_height"
                                 android:textColor="@color/color_subtext"
                                 android:textSize="12sp" />
 
-                            <TextView
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
                                 android:id="@+id/tvHeight"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="24sp"
+                                android:singleLine="true"
                                 android:text="-- cm"
                                 android:textColor="@color/color_text"
                                 android:textSize="20sp"
@@ -259,26 +309,28 @@
                             android:gravity="start"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="14sp"
+                                android:singleLine="true"
                                 android:text="@string/label_weight"
                                 android:textColor="@color/color_subtext"
                                 android:textSize="12sp" />
 
-                            <TextView
+                            <com.example.healthcareai.ui.widget.MarqueeTextView
                                 android:id="@+id/tvWeight"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/urbanist"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="0"
                                 android:lineHeight="24sp"
+                                android:singleLine="true"
                                 android:text="-- kg"
                                 android:textColor="@color/color_text"
                                 android:textSize="20sp"
@@ -328,8 +380,10 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:cardMaxElevation="2dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -350,7 +404,7 @@
                                 android:src="@drawable/ic_medications" />
                         </FrameLayout>
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -358,11 +412,12 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="19sp"
+                            android:singleLine="true"
                             android:text="@string/record_medications"
                             android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:id="@+id/tvMedicationsCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -371,6 +426,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="14sp"
+                            android:singleLine="true"
                             android:text="0 active"
                             android:textColor="@color/color_subtext"
                             android:textSize="12sp" />
@@ -389,8 +445,10 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:cardMaxElevation="2dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -411,7 +469,7 @@
                                 android:src="@drawable/ic_allergies" />
                         </FrameLayout>
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -419,11 +477,12 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="19sp"
+                            android:singleLine="true"
                             android:text="@string/record_allergies"
                             android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:id="@+id/tvAllergiesCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -432,6 +491,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="14sp"
+                            android:singleLine="true"
                             android:text="0 reported"
                             android:textColor="@color/color_subtext"
                             android:textSize="12sp" />
@@ -462,8 +522,10 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:cardMaxElevation="2dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -484,7 +546,7 @@
                                 android:src="@drawable/ic_conditions" />
                         </FrameLayout>
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -492,11 +554,12 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="19sp"
+                            android:singleLine="true"
                             android:text="@string/record_conditions"
                             android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:id="@+id/tvConditionsCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -505,6 +568,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="14sp"
+                            android:singleLine="true"
                             android:text="0 diagnosed"
                             android:textColor="@color/color_subtext"
                             android:textSize="12sp" />
@@ -523,8 +587,10 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:cardMaxElevation="2dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -545,7 +611,7 @@
                                 android:src="@drawable/ic_vaccinations" />
                         </FrameLayout>
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -553,11 +619,12 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="19sp"
+                            android:singleLine="true"
                             android:text="@string/record_vaccinations"
                             android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
-                        <TextView
+                        <com.example.healthcareai.ui.widget.MarqueeTextView
                             android:id="@+id/tvVaccinationsCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -566,6 +633,7 @@
                             android:includeFontPadding="false"
                             android:letterSpacing="0"
                             android:lineHeight="14sp"
+                            android:singleLine="true"
                             android:text="0 recorded"
                             android:textColor="@color/color_subtext"
                             android:textSize="12sp" />
@@ -581,19 +649,22 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="16dp">
 
-                <TextView
+                <com.example.healthcareai.ui.widget.MarqueeTextView
                     android:id="@+id/tvReminderTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/urbanist"
                     android:includeFontPadding="false"
                     android:letterSpacing="0"
                     android:lineHeight="26sp"
+                    android:singleLine="true"
                     android:text="@string/home_section_today_reminder"
                     android:textColor="@color/color_text"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvViewAllReminders"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -633,8 +704,10 @@
                     android:layout_marginTop="10dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:cardMaxElevation="2dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -711,19 +784,49 @@
                 android:visibility="gone" />
 
             <!-- 4. Section: AI scan history -->
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/urbanist"
-                android:includeFontPadding="false"
-                android:letterSpacing="0"
-                android:lineHeight="26sp"
-                android:text="@string/home_section_ai_scan_history"
-                android:textColor="@color/color_text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tvAiScanHistoryHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="26sp"
+                    android:singleLine="true"
+                    android:text="@string/home_section_ai_scan_history"
+                    android:textColor="@color/color_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvViewAllScans"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvViewAllScans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/urbanist_semibold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="16sp"
+                    android:text="@string/home_view_all"
+                    android:textColor="@color/primary_color"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- AI scan history: Empty State Card (Matches Screenshot) -->
             <androidx.cardview.widget.CardView
@@ -734,8 +837,10 @@
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="1dp"
-                app:cardMaxElevation="2dp">
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -7,13 +7,16 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.updateLayoutParams
 import com.example.healthcareai.data.local.PreferenceHelper
 import com.example.healthcareai.util.LocaleHelper
 
@@ -21,6 +24,23 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: android.content.res.Configuration?) {
+        if (overrideConfiguration != null) {
+            val langCode = PreferenceHelper.getInstance(this).selectedLanguageCode
+            val locale = LocaleHelper.getLocale(langCode)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                overrideConfiguration.setLocale(locale)
+                overrideConfiguration.setLayoutDirection(locale)
+            } else {
+                @Suppress("DEPRECATION")
+                overrideConfiguration.locale = locale
+                @Suppress("DEPRECATION")
+                overrideConfiguration.setLayoutDirection(locale)
+            }
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val langCode = PreferenceHelper.getInstance(this).selectedLanguageCode
+        LocaleHelper.updateResources(this, langCode)
         LocaleHelper.applyLayoutDirection(this, langCode)
         hideNavigationBar()
     }
@@ -40,6 +61,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val langCode = PreferenceHelper.getInstance(this).selectedLanguageCode
+        LocaleHelper.updateResources(this, langCode)
         LocaleHelper.applyLayoutDirection(this, langCode)
         hideNavigationBar()
     }
@@ -92,4 +114,51 @@ abstract class BaseActivity : AppCompatActivity() {
             )
         }
     }
+
+    /**
+     * Standardized top inset configuration for topBar / header across all activities.
+     * Ensures consistent comfortable spacing (16dp by default) below the system status bar.
+     */
+    fun setupHeaderTopMargin(
+        headerView: View,
+        rootView: View = headerView.rootView,
+        additionalTopDp: Int = 16
+    ) {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { _, insets ->
+            headerView.applyHeaderTopMargin(insets, additionalTopDp)
+            insets
+        }
+
+        ViewCompat.getRootWindowInsets(rootView)?.let { currentInsets ->
+            headerView.applyHeaderTopMargin(currentInsets, additionalTopDp)
+        }
+    }
+
+    companion object {
+        fun applyHeaderTopMargin(
+            headerView: View,
+            insets: WindowInsetsCompat,
+            additionalTopDp: Int = 16
+        ) {
+            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            val density = headerView.resources.displayMetrics.density
+            val extraPx = (additionalTopDp * density).toInt()
+            val fallbackPx = ((additionalTopDp + 8) * density).toInt()
+            val targetMarginTop = if (statusBarTop > 0) statusBarTop + extraPx else fallbackPx
+
+            headerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                if (topMargin != targetMarginTop) {
+                    topMargin = targetMarginTop
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Extension function allowing any View (topBar / header) to apply standardized top margin
+ * from WindowInsetsCompat. Can be called inside custom setOnApplyWindowInsetsListener.
+ */
+fun View.applyHeaderTopMargin(insets: WindowInsetsCompat, additionalTopDp: Int = 16) {
+    BaseActivity.applyHeaderTopMargin(this, insets, additionalTopDp)
 }

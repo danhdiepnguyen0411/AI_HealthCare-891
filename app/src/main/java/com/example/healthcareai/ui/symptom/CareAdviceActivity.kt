@@ -16,6 +16,7 @@ import com.example.healthcareai.databinding.ActivityCareAdviceBinding
 import com.example.healthcareai.databinding.ItemCareBulletBinding
 import com.example.healthcareai.databinding.ItemWhenToSeekCareBinding
 import com.example.healthcareai.ui.base.BaseActivity
+import com.example.healthcareai.ui.base.applyHeaderTopMargin
 import com.example.healthcareai.ui.camera.ChooseRemindersBottomSheetDialog
 import com.example.healthcareai.ui.main.MainActivity
 
@@ -40,15 +41,11 @@ class CareAdviceActivity : BaseActivity() {
 
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootCareAdviceLayout) { _, insets ->
-            val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.topBar.applyHeaderTopMargin(insets)
+
             val navBarBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             val density = resources.displayMetrics.density
 
-            if (statusBarTop > 0) {
-                binding.topBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin = statusBarTop + 8
-                }
-            }
             if (navBarBottom > 0) {
                 binding.bottomSection.setPadding(
                     (16 * density).toInt(),
