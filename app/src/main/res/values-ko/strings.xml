@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">홈</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">그래도 삭제하기</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">HealthCare AI 앱을 삭제하시는 이유가 무엇인가요?</string>
+    <string name="uninstall_reason_title">AI Health: Personal Care 앱을 삭제하시는 이유가 무엇인가요?</string>
     <string name="uninstall_reason_subtitle">불편을 드려 죄송합니다. 개선을 위해 의견을 들려주세요.</string>
     <string name="uninstall_reason_1">사용하기 어려움</string>
     <string name="uninstall_reason_2">광고가 너무 많음</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">알림 수정</string>
     <string name="reminder_action_edit">수정</string>
     <string name="reminder_action_delete">삭제</string>
-    <string name="reminder_status_taken">복용 완료</string>
+    <string name="reminder_status_taken">완료됨</string>
     <string name="reminder_action_undo">실행 취소</string>
     <string name="msg_reminder_deleted">알림이 삭제되었습니다</string>
     <string name="msg_reminder_updated">알림이 수정되었습니다</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">이 알림을 삭제하시겠습니까?</string>
     <string name="delete_confirm_title">이 기록을 삭제하시겠습니까?</string>
     <string name="delete_confirm_message">이 기록을 삭제하시겠습니까?\n삭제 후 복구할 수 없습니다.</string>
+    <string name="delete_scan_confirm_title">이 스캔 기록을 삭제하시겠습니까?</string>
+    <string name="delete_scan_confirm_message">이 스캔 기록을 삭제하시겠습니까?
+이 작업은 취소할 수 없습니다.</string>
+    <string name="msg_scan_deleted">스캔 기록이 삭제되었습니다</string>
+    <string name="delete_reminder_confirm_title">이 알림을 삭제하시겠습니까?</string>
+    <string name="delete_reminder_confirm_message">이 알림을 삭제하시겠습니까?
+이 작업은 취소할 수 없습니다.</string>
+    <string name="delete_member_confirm_title">이 멤버를 삭제하시겠습니까?</string>
+    <string name="delete_member_confirm_message">이 멤버를 삭제하시겠습니까?
+이 작업은 취소할 수 없습니다.</string>
+
     <string name="btn_delete">삭제</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">저장하지 않고 나가기</string>
     <string name="btn_save_appointment">예약 저장</string>
     <string name="btn_stay_on_page">이 페이지에 머무르기</string>
-    <string name="dialog_leave_without_saving_message">분석 결과가 저장되지 않았습니다. 지금 나가시면\n이 결과를 다시 볼 수 없습니다.</string>
+    <string name="dialog_leave_without_saving_message">분석 결과가 저장되지 않았습니다. 지금 나가시면 이 결과를 다시 볼 수 없습니다.</string>
     <string name="dialog_leave_without_saving_title">저장하지 않고 나가시겠습니까?</string>
     <string name="dialog_mic_permission_desc">음성 채팅 및 음성 분석 기능을 사용하려면 마이크 접근 권한을 허용해 주세요.</string>
     <string name="dialog_mic_permission_title">마이크 접근 권한</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">기록이 삭제되었습니다</string>
     <string name="msg_vaccination_saved">예방접종이 저장되었습니다</string>
     <string name="no_reminders_yet">아직 알림이 없습니다</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">방금 전</string>
     <string name="results_for">분석 대상:</string>
     <string name="scan_history_empty_desc">완료된 AI 건강 스캔 내역이 여기에 표시됩니다.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">상세 결과</string>
     <string name="title_edit_appointment">예약 편집</string>
     <string name="title_edit_profile">프로필 편집</string>
+    <string name="repeat_custom">사용자 지정</string>
+    <string name="day_monday">월요일</string>
+    <string name="day_tuesday">화요일</string>
+    <string name="day_wednesday">수요일</string>
+    <string name="day_thursday">목요일</string>
+    <string name="day_friday">금요일</string>
+    <string name="day_saturday">토요일</string>
+    <string name="day_sunday">일요일</string>
+    <string name="error_select_at_least_one_day">하루 이상 선택해 주세요</string>
+    <string name="hint_appointment_title">심장내과 진료</string>
+    <string name="hint_appointment_clinician">사라 젠킨스 의사</string>
+    <string name="hint_appointment_clinic">종합병원</string>
+    <string name="hint_appointment_date_time">날짜 및 시간 선택</string>
+    <string name="hint_appointment_notes">이전 진료 기록 및 검사 결과 지참.</string>
+    <string name="hint_vaccine_clinic">예방접종 센터</string>
+    <string name="hint_vaccine_reaction_notes">이전 접종 시 이상반응 보고됨.</string>
+    <string name="hint_condition_name">알레르기 비염</string>
+    <string name="hint_condition_diagnosis_date">2026. 10. 08.</string>
+    <string name="hint_condition_notes">알레르기 진료 후 기록.</string>
+    <string name="hint_allergen_name">페니실린</string>
+    <string name="hint_allergy_reaction">두드러기</string>
+    <string name="hint_allergy_notes">이전 투약 시 이상반응 보고됨.</string>
+    <string name="hint_medication_name">세티리진</string>
+    <string name="hint_medication_reason">알레르기 증상</string>
+    <string name="hint_medication_instructions">식전 복용</string>
 </resources>

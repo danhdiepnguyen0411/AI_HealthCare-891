@@ -47,6 +47,9 @@ class ReminderRepository private constructor(context: Context) {
                 if (item.timeList.isNotEmpty()) {
                     item.timeList = com.example.healthcareai.util.ReminderScheduler.sortTimeList(item.timeList)
                 }
+                if (item.isEnabled == null) {
+                    item.isEnabled = true
+                }
             }
             list
         } catch (_: Exception) {
@@ -86,7 +89,11 @@ class ReminderRepository private constructor(context: Context) {
             currentList.add(0, reminder)
         }
         saveList(currentList)
-        com.example.healthcareai.util.ReminderScheduler.scheduleReminder(appContext, reminder)
+        if (reminder.isReminderEnabled()) {
+            com.example.healthcareai.util.ReminderScheduler.scheduleReminder(appContext, reminder)
+        } else {
+            com.example.healthcareai.util.ReminderScheduler.cancelReminder(appContext, reminder.id)
+        }
     }
 
     @Synchronized

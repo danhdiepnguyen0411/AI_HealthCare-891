@@ -21,6 +21,7 @@ class HorizontalCalendarAdapter(
 
     private val days = mutableListOf<Calendar>()
     private var selectedCalendar: Calendar = Calendar.getInstance()
+    private val todayCalendar: Calendar = Calendar.getInstance()
     private var remindersList: List<ReminderItem> = emptyList()
 
     fun setDays(newDays: List<Calendar>, selected: Calendar) {
@@ -79,37 +80,69 @@ class HorizontalCalendarAdapter(
             binding.tvDayName.text = getDayOfWeekAbbreviation(dayCal, currentLocale)
 
             val isSelected = isSameDay(dayCal, selectedCalendar)
+            val isToday = isSameDay(dayCal, todayCalendar)
             val hasReminders = remindersList.any { it.isScheduledForDay(dayCal, context) }
 
             val textColorNormal = ContextCompat.getColor(context, R.color.color_text)
             val subtextColorNormal = ContextCompat.getColor(context, R.color.color_subtext)
+            val primaryColor = ContextCompat.getColor(context, R.color.brand_primary)
             val textSelected = ContextCompat.getColor(context, R.color.white)
             val subtextSelected = Color.parseColor("#DCE6FF")
 
-            if (isSelected) {
-                binding.root.setBackgroundResource(R.drawable.bg_calendar_day_selected)
-                binding.tvDayNumber.setTextColor(textSelected)
-                binding.tvDayName.setTextColor(subtextSelected)
-                binding.viewDayDot.visibility = View.VISIBLE
-                binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot)
-            } else {
-                binding.root.background = null
-                binding.tvDayNumber.setTextColor(textColorNormal)
-                binding.tvDayName.setTextColor(subtextColorNormal)
-                if (hasReminders) {
-                    binding.viewDayDot.visibility = View.VISIBLE
-                    binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot_blue)
-                } else {
-                    binding.viewDayDot.visibility = View.GONE
+            when {
+                isSelected && isToday -> {
+                    binding.root.setBackgroundResource(R.drawable.bg_calendar_day_today_selected)
+                    binding.tvDayNumber.setTextColor(textSelected)
+                    binding.tvDayName.setTextColor(subtextSelected)
+                    if (hasReminders) {
+                        binding.viewDayDot.visibility = View.VISIBLE
+                        binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot)
+                    } else {
+                        binding.viewDayDot.visibility = View.GONE
+                    }
+                }
+                isSelected -> {
+                    binding.root.setBackgroundResource(R.drawable.bg_calendar_day_selected)
+                    binding.tvDayNumber.setTextColor(textSelected)
+                    binding.tvDayName.setTextColor(subtextSelected)
+                    if (hasReminders) {
+                        binding.viewDayDot.visibility = View.VISIBLE
+                        binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot)
+                    } else {
+                        binding.viewDayDot.visibility = View.GONE
+                    }
+                }
+                isToday -> {
+                    binding.root.setBackgroundResource(R.drawable.bg_calendar_day_today)
+                    binding.tvDayNumber.setTextColor(primaryColor)
+                    binding.tvDayName.setTextColor(primaryColor)
+                    if (hasReminders) {
+                        binding.viewDayDot.visibility = View.VISIBLE
+                        binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot_blue)
+                    } else {
+                        binding.viewDayDot.visibility = View.GONE
+                    }
+                }
+                else -> {
+                    binding.root.background = null
+                    binding.tvDayNumber.setTextColor(textColorNormal)
+                    binding.tvDayName.setTextColor(subtextColorNormal)
+                    if (hasReminders) {
+                        binding.viewDayDot.visibility = View.VISIBLE
+                        binding.viewDayDot.setBackgroundResource(R.drawable.bg_circle_calendar_dot_blue)
+                    } else {
+                        binding.viewDayDot.visibility = View.GONE
+                    }
                 }
             }
 
             binding.root.setOnClickListener {
-                if (!isSelected) {
+                val wasSelected = isSelected
+                if (!wasSelected) {
                     selectedCalendar = dayCal.clone() as Calendar
                     notifyDataSetChanged()
-                    onDaySelected(dayCal)
                 }
+                onDaySelected(dayCal)
             }
         }
     }

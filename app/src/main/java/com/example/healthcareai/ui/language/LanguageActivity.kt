@@ -35,6 +35,7 @@ class LanguageActivity : BaseActivity() {
     private var initialSavedLangCode = "en"
     private var selectedLanguage: LanguageModel? = null
     private var hasSelectedLanguage = false
+    private var hasHandMovedToHeader = false
     private var isConfirmed = false
     private var isHandGifLoaded = false
 
@@ -69,6 +70,7 @@ class LanguageActivity : BaseActivity() {
         if (!isFromSettings) {
             // Guarantee fresh onboarding state on every first-language entry
             hasSelectedLanguage = false
+            hasHandMovedToHeader = false
             selectedLanguage = null
             preferenceHelper.isFirstLanguageSet = false
             preferenceHelper.clearLanguageIfIntroNotCompleted(this)
@@ -304,29 +306,50 @@ class LanguageActivity : BaseActivity() {
     }
 
     private fun handleLanguageSelected(selected: LanguageModel) {
+        val isFirstSelection = !hasHandMovedToHeader
         hasSelectedLanguage = true
         selectedLanguage = selected
         applyPreviewLanguage(selected.code)
 
         if (!isFromSettings) {
-            binding.viewCountdown.cancelCountdown()
-            binding.btnDone.visibility = View.GONE
-            binding.btnDone.alpha = 0f
-            binding.btnDone.isEnabled = false
-            binding.btnDone.isClickable = false
-            binding.viewCountdown.visibility = View.VISIBLE
-            binding.viewCountdown.alpha = 1.0f
+            if (isFirstSelection) {
+                hasHandMovedToHeader = true
+                binding.viewCountdown.cancelCountdown()
+                binding.btnDone.visibility = View.GONE
+                binding.btnDone.alpha = 0f
+                binding.btnDone.isEnabled = false
+                binding.btnDone.isClickable = false
+                binding.viewCountdown.visibility = View.VISIBLE
+                binding.viewCountdown.alpha = 1.0f
 
-            binding.viewCountdown.startCountdown(
-                totalDurationMs = 3000L,
-                onFinished = {
-                    if (!isFinishing && !isDestroyed) {
-                        showDoneButtonAfterCountdown()
+                binding.viewCountdown.startCountdown(
+                    totalDurationMs = 3000L,
+                    onFinished = {
+                        if (!isFinishing && !isDestroyed) {
+                            showDoneButtonAfterCountdown()
+                        }
                     }
-                }
-            )
+                )
 
-            animateHandToDone()
+                animateHandToDone()
+            } else {
+                // If Done button is not yet visible (countdown still running), restart countdown
+                if (binding.btnDone.visibility != View.VISIBLE) {
+                    binding.viewCountdown.cancelCountdown()
+                    binding.viewCountdown.visibility = View.VISIBLE
+                    binding.viewCountdown.alpha = 1.0f
+                    binding.viewCountdown.startCountdown(
+                        totalDurationMs = 3000L,
+                        onFinished = {
+                            if (!isFinishing && !isDestroyed) {
+                                showDoneButtonAfterCountdown()
+                            }
+                        }
+                    )
+                }
+                // Do not move hand up from list again; keep it in the header
+                updateHandHeaderPosition()
+            }
         } else {
             updateDoneButtonState(hasSelection = true, animate = true)
         }
@@ -498,7 +521,7 @@ class LanguageActivity : BaseActivity() {
         floatingHand.isClickable = true
         floatingHand.isFocusable = true
 
-        if (floatingHand.visibility != View.VISIBLE || floatingHand.x <= 0f || floatingHand.y < binding.topBar.bottom) {
+        if (floatingHand.visibility != View.VISIBLE || floatingHand.x <= 0f) {
             val selectedPos = adapter.getSelectedPosition().takeIf { it >= 0 } ?: 3
             val selectedRadio = findRadioViewForPosition(selectedPos)
             if (selectedRadio != null && selectedRadio.isAttachedToWindow && selectedRadio.width > 0) {
@@ -534,6 +557,23 @@ class LanguageActivity : BaseActivity() {
                     }
                 }
                 .start()
+        }
+    }
+
+    private fun updateHandHeaderPosition() {
+        if (isFinishing || isDestroyed) return
+        loadHandGif()
+        binding.ivFloatingHand.visibility = View.VISIBLE
+        binding.rootLayout.post {
+            if (!isFinishing && !isDestroyed && hasSelectedLanguage) {
+                val (endX, endY) = getTargetDoneEndCoordinates()
+                binding.ivFloatingHand.animate().cancel()
+                binding.ivFloatingHand.animate()
+                    .x(endX)
+                    .y(endY)
+                    .setDuration(150L)
+                    .start()
+            }
         }
     }
 

@@ -99,6 +99,8 @@ class ReminderDetailBottomSheetDialog : BottomSheetDialogFragment() {
         binding.layoutDeleteReminder.setOnClickListener {
             DeleteConfirmationDialog.show(
                 context = requireContext(),
+                title = getString(R.string.delete_reminder_confirm_title),
+                message = getString(R.string.delete_reminder_confirm_message),
                 onDeleteConfirmed = {
                     ReminderRepository.getInstance(requireContext()).deleteReminder(id)
                     Toast.makeText(requireContext(), R.string.msg_reminder_deleted, Toast.LENGTH_SHORT).show()

@@ -317,7 +317,9 @@ object ReminderScheduler {
         val list = repo.getAllReminders()
         Log.d(TAG, "Rescheduling ${list.size} reminders on system broadcast/app launch")
         for (item in list) {
-            scheduleReminder(context, item)
+            if (item.isReminderEnabled()) {
+                scheduleReminder(context, item)
+            }
         }
     }
 }

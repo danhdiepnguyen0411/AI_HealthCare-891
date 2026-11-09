@@ -48,6 +48,19 @@ class SelectCustomDaysBottomSheetDialog : BottomSheetDialogFragment() {
 
         setupDaysSelection()
 
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val navInsets = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.navigationBars())
+            val density = resources.displayMetrics.density
+            val baseBottomPadding = (24 * density).toInt()
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                baseBottomPadding + navInsets.bottom
+            )
+            insets
+        }
+
         binding.btnSaveCustomDays.setOnClickListener {
             if (selectedDays.isEmpty()) {
                 Toast.makeText(requireContext(), R.string.error_select_at_least_one_day, Toast.LENGTH_SHORT).show()
@@ -148,6 +161,15 @@ class SelectCustomDaysBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        dialog?.let {
+            if (it is BottomSheetDialog) {
+                DialogImmersiveHelper.setupBottomSheetImmersive(it)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         dialog?.let {
             if (it is BottomSheetDialog) {
                 DialogImmersiveHelper.setupBottomSheetImmersive(it)

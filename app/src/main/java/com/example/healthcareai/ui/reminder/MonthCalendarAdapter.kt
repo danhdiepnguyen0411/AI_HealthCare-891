@@ -114,6 +114,16 @@ class MonthCalendarAdapter(
             val textWhite = ContextCompat.getColor(context, R.color.white)
 
             when {
+                isSelected && isToday -> {
+                    binding.layoutDayContainer.setBackgroundResource(R.drawable.bg_circle_calendar_today_selected)
+                    binding.tvDayNumber.setTextColor(textWhite)
+                    if (hasReminders) {
+                        binding.viewDotIndicator.visibility = View.VISIBLE
+                        binding.viewDotIndicator.setBackgroundResource(R.drawable.bg_circle_calendar_dot)
+                    } else {
+                        binding.viewDotIndicator.visibility = View.GONE
+                    }
+                }
                 isSelected -> {
                     binding.layoutDayContainer.setBackgroundResource(R.drawable.bg_circle_calendar_selected)
                     binding.tvDayNumber.setTextColor(textWhite)

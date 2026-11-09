@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Início</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">Desinstalar mesmo assim</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">Por que desinstalar o HealthCare AI?</string>
+    <string name="uninstall_reason_title">Por que desinstalar o AI Health: Personal Care?</string>
     <string name="uninstall_reason_subtitle">Sentimos muito por sua partida. Conte-nos como podemos melhorar.</string>
     <string name="uninstall_reason_1">Difícil de usar</string>
     <string name="uninstall_reason_2">Muitos anúncios</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">Editar lembrete</string>
     <string name="reminder_action_edit">Editar</string>
     <string name="reminder_action_delete">Excluir</string>
-    <string name="reminder_status_taken">Tomado</string>
+    <string name="reminder_status_taken">Concluído</string>
     <string name="reminder_action_undo">Desfazer</string>
     <string name="msg_reminder_deleted">Lembrete excluído</string>
     <string name="msg_reminder_updated">Lembrete atualizado</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">Tem certeza de que deseja excluir este lembrete?</string>
     <string name="delete_confirm_title">Excluir este registro?</string>
     <string name="delete_confirm_message">Tem certeza de que deseja excluir este registro?\nEsta ação não poderá ser desfeita.</string>
+    <string name="delete_scan_confirm_title">Excluir esta verificação?</string>
+    <string name="delete_scan_confirm_message">Tem certeza de que deseja excluir este registro de verificação?
+Esta ação não pode ser desfeita.</string>
+    <string name="msg_scan_deleted">Registro de verificação excluído</string>
+    <string name="delete_reminder_confirm_title">Excluir este lembrete?</string>
+    <string name="delete_reminder_confirm_message">Tem certeza de que deseja excluir este lembrete?
+Esta ação não pode ser desfeita.</string>
+    <string name="delete_member_confirm_title">Excluir este membro?</string>
+    <string name="delete_member_confirm_message">Tem certeza de que deseja excluir este membro?
+Esta ação não pode ser desfeita.</string>
+
     <string name="btn_delete">Excluir</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">Sair sem salvar</string>
     <string name="btn_save_appointment">Salvar consulta</string>
     <string name="btn_stay_on_page">Permanecer nesta página</string>
-    <string name="dialog_leave_without_saving_message">Sua análise não foi salva. Se você sair agora,\nnão poderá ver esses resultados novamente.</string>
+    <string name="dialog_leave_without_saving_message">Sua análise não foi salva. Se você sair agora, não poderá ver esses resultados novamente.</string>
     <string name="dialog_leave_without_saving_title">Sair sem salvar?</string>
     <string name="dialog_mic_permission_desc">Permita o acesso ao microfone para usar os recursos de chat por voz e análise de voz.</string>
     <string name="dialog_mic_permission_title">Acesso ao microfone</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">Registro excluído</string>
     <string name="msg_vaccination_saved">Vacinação salva</string>
     <string name="no_reminders_yet">Nenhum lembrete ainda</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">agora mesmo</string>
     <string name="results_for">Resultados para</string>
     <string name="scan_history_empty_desc">Seus exames de saúde com IA concluídos aparecerão aqui.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">Resultados detalhados</string>
     <string name="title_edit_appointment">Editar consulta</string>
     <string name="title_edit_profile">Editar perfil</string>
+    <string name="repeat_custom">Personalizado</string>
+    <string name="day_monday">Segunda-feira</string>
+    <string name="day_tuesday">Terça-feira</string>
+    <string name="day_wednesday">Quarta-feira</string>
+    <string name="day_thursday">Quinta-feira</string>
+    <string name="day_friday">Sexta-feira</string>
+    <string name="day_saturday">Sábado</string>
+    <string name="day_sunday">Domingo</string>
+    <string name="error_select_at_least_one_day">Selecione pelo menos um dia</string>
+    <string name="hint_appointment_title">Consulta de cardiologia</string>
+    <string name="hint_appointment_clinician">Dra. Sarah Jenkins</string>
+    <string name="hint_appointment_clinic">Hospital Geral</string>
+    <string name="hint_appointment_date_time">Selecionar data e hora</string>
+    <string name="hint_appointment_notes">Trazer registros médicos anteriores e resultados de exames.</string>
+    <string name="hint_vaccine_clinic">Centro de vacinação</string>
+    <string name="hint_vaccine_reaction_notes">Reação relatada durante tratamento anterior.</string>
+    <string name="hint_condition_name">Rinite alérgica</string>
+    <string name="hint_condition_diagnosis_date">08/10/2026</string>
+    <string name="hint_condition_notes">Registrado após consulta de alergia.</string>
+    <string name="hint_allergen_name">Penicilina</string>
+    <string name="hint_allergy_reaction">Urticária</string>
+    <string name="hint_allergy_notes">Reação relatada durante tratamento anterior.</string>
+    <string name="hint_medication_name">Cetirizina</string>
+    <string name="hint_medication_reason">Sintomas de alergia</string>
+    <string name="hint_medication_instructions">Tomar antes da refeição</string>
 </resources>

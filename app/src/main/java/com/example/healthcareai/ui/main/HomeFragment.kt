@@ -387,6 +387,8 @@ class HomeFragment : Fragment() {
                 val cardBinding = ItemReminderCardBinding.inflate(layoutInflater, binding.layoutReminderList, false)
                 cardBinding.ivReminderIcon.setImageResource(item.getIconResId())
                 cardBinding.tvReminderTitle.text = item.getLocalizedName(ctx)
+                val langCode = com.example.healthcareai.util.LocaleHelper.getSavedLanguageCode(ctx)
+                cardBinding.tvTakenStatus.text = com.example.healthcareai.util.LocaleHelper.getLocalizedString(ctx, langCode, R.string.reminder_status_taken)
                 val desc = item.getLocalizedDescription(ctx)
                 if (desc.isNotBlank()) {
                     cardBinding.tvReminderDesc.visibility = View.VISIBLE
@@ -498,6 +500,8 @@ class HomeFragment : Fragment() {
                     itemBinding.swipeRevealLayout.close(false)
                     com.example.healthcareai.ui.dialog.DeleteConfirmationDialog.show(
                         context = requireContext(),
+                        title = getString(R.string.delete_scan_confirm_title),
+                        message = getString(R.string.delete_scan_confirm_message),
                         onDeleteConfirmed = {
                             ScanHistoryRepository.getInstance(requireContext()).deleteScan(scan.id)
                             try {
@@ -506,7 +510,7 @@ class HomeFragment : Fragment() {
                                     if (file.exists()) file.delete()
                                 }
                             } catch (_: Exception) {}
-                            android.widget.Toast.makeText(requireContext(), R.string.msg_record_deleted, android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(requireContext(), R.string.msg_scan_deleted, android.widget.Toast.LENGTH_SHORT).show()
                             syncScanHistory()
                         }
                     )

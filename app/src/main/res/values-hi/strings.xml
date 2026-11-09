@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">होम</string>
@@ -363,7 +363,7 @@
     <string name="option_dont_know">पता नहीं</string>
     <!-- Exit Confirmation Dialog -->
     <string name="dialog_exit_app_title">ऐप से बाहर निकलें?</string>
-    <string name="dialog_exit_app_desc">क्या आप वाकई HealthCare AI से बाहर निकलना चाहते हैं?</string>
+    <string name="dialog_exit_app_desc">क्या आप वाकई AI Health: Personal Care से बाहर निकलना चाहते हैं?</string>
     <string name="dialog_exit_app_btn_stay">रहें</string>
     <string name="dialog_exit_app_btn_exit">बाहर निकलें</string>
     <string name="dialog_exit_assessment_title">मूल्यांकन छोड़ें?</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">अनुस्मारक संपादित करें</string>
     <string name="reminder_action_edit">संपादित करें</string>
     <string name="reminder_action_delete">हटाएं</string>
-    <string name="reminder_status_taken">लिया गया</string>
+    <string name="reminder_status_taken">पूर्ण हुआ</string>
     <string name="reminder_action_undo">पूर्ववत करें</string>
     <string name="msg_reminder_deleted">अनुस्मारक हटा दिया गया</string>
     <string name="msg_reminder_updated">अनुस्मारक अपडेट किया गया</string>
@@ -478,10 +478,21 @@
     <string name="delete_reminder_confirm">क्या आप वाकई इस अनुस्मारक को हटाना चाहते हैं?</string>
     <string name="delete_confirm_title">हटाने की पुष्टि करें</string>
     <string name="delete_confirm_message">क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+    <string name="delete_scan_confirm_title">यह स्कैन हटाएं?</string>
+    <string name="delete_scan_confirm_message">क्या आप वाकई इस स्कैन रिकॉर्ड को हटाना चाहते हैं?
+यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+    <string name="msg_scan_deleted">स्कैन रिकॉर्ड हटा दिया गया</string>
+    <string name="delete_reminder_confirm_title">यह अनुस्मारक हटाएं?</string>
+    <string name="delete_reminder_confirm_message">क्या आप वाकई इस अनुस्मारक को हटाना चाहते हैं?
+यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+    <string name="delete_member_confirm_title">यह सदस्य हटाएं?</string>
+    <string name="delete_member_confirm_message">क्या आप वाकई इस सदस्य को हटाना चाहते हैं?
+यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+
     <string name="btn_delete">हटाएं</string>
     
     <!-- Rate App Dialog -->
-    <string name="rate_dialog_title">HealthCare AI आपको कैसा लगा?</string>
+    <string name="rate_dialog_title">AI Health: Personal Care आपको कैसा लगा?</string>
     <string name="rate_dialog_message">आपकी प्रतिक्रिया हमें निरंतर सुधार करने और बेहतर स्वास्थ्य सहायता प्रदान करने में मदद करती है।</string>
     <string name="rate_dialog_submit">रेट करें</string>
     <string name="rate_dialog_maybe_later">बाद में</string>
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">बिना सेव किए बाहर निकलें</string>
     <string name="btn_save_appointment">अपॉइंटमेंट सेव करें</string>
     <string name="btn_stay_on_page">इसी पेज पर रहें</string>
-    <string name="dialog_leave_without_saving_message">आपका विश्लेषण सेव नहीं किया गया है। यदि आप अभी बाहर निकलते हैं,\nतो आप इन परिणामों को दोबारा नहीं देख पाएंगे।</string>
+    <string name="dialog_leave_without_saving_message">आपका विश्लेषण सेव नहीं किया गया है। यदि आप अभी बाहर निकलते हैं, तो आप इन परिणामों को दोबारा नहीं देख पाएंगे।</string>
     <string name="dialog_leave_without_saving_title">बिना सेव किए बाहर निकलें?</string>
     <string name="dialog_mic_permission_desc">वॉइस चैट और वॉइस विश्लेषण सुविधाओं का उपयोग करने के लिए माइक्रोफ़ोन एक्सेस की अनुमति दें।</string>
     <string name="dialog_mic_permission_title">माइक्रोफ़ोन एक्सेस</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">रिकॉर्ड हटाया गया</string>
     <string name="msg_vaccination_saved">टीकाकरण सेव किया गया</string>
     <string name="no_reminders_yet">अभी तक कोई रिमाइंडर नहीं</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">अभी-अभी</string>
     <string name="results_for">के लिए परिणाम</string>
     <string name="scan_history_empty_desc">आपके पूरे किए गए एआई स्वास्थ्य स्कैन यहाँ दिखाई देंगे।</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">विस्तृत परिणाम</string>
     <string name="title_edit_appointment">अपॉइंटमेंट संपादित करें</string>
     <string name="title_edit_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="repeat_custom">कस्टम</string>
+    <string name="day_monday">सोमवार</string>
+    <string name="day_tuesday">मंगलवार</string>
+    <string name="day_wednesday">बुधवार</string>
+    <string name="day_thursday">गुरुवार</string>
+    <string name="day_friday">शुक्रवार</string>
+    <string name="day_saturday">शनिवार</string>
+    <string name="day_sunday">रविवार</string>
+    <string name="error_select_at_least_one_day">कृपया कम से कम एक दिन चुनें</string>
+    <string name="hint_appointment_title">हृदय रोग परामर्श</string>
+    <string name="hint_appointment_clinician">डॉ. सारा जेनकिंस</string>
+    <string name="hint_appointment_clinic">सिटी जनरल अस्पताल</string>
+    <string name="hint_appointment_date_time">तारीख और समय चुनें</string>
+    <string name="hint_appointment_notes">पिछले मेडिकल रिकॉर्ड और टेस्ट रिपोर्ट साथ लाएं।</string>
+    <string name="hint_vaccine_clinic">टीकाकरण केंद्र</string>
+    <string name="hint_vaccine_reaction_notes">पिछली खुराक के दौरान प्रतिक्रिया दर्ज की गई।</string>
+    <string name="hint_condition_name">एलर्जिक राइनाइटिस</string>
+    <string name="hint_condition_diagnosis_date">08/10/2026</string>
+    <string name="hint_condition_notes">एलर्जी परामर्श के बाद दर्ज किया गया।</string>
+    <string name="hint_allergen_name">पेनिसिलिन</string>
+    <string name="hint_allergy_reaction">पित्ती</string>
+    <string name="hint_allergy_notes">पिछली खुराक के दौरान प्रतिक्रिया दर्ज की गई।</string>
+    <string name="hint_medication_name">सिटिरिज़िन</string>
+    <string name="hint_medication_reason">एलर्जी के लक्षण</string>
+    <string name="hint_medication_instructions">भोजन से पहले लें</string>
 </resources>

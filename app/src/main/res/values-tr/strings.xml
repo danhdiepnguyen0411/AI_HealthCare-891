@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Ana Sayfa</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">Yine de kaldır</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">HealthCare AI uygulamasını neden siliyorsunuz?</string>
+    <string name="uninstall_reason_title">AI Health: Personal Care uygulamasını neden siliyorsunuz?</string>
     <string name="uninstall_reason_subtitle">Ayrıldığınız için üzgünüz. Nasıl daha iyi olabileceğimizi lütfen belirtin.</string>
     <string name="uninstall_reason_1">Kullanımı zor</string>
     <string name="uninstall_reason_2">Çok fazla reklam var</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">Hatırlatıcıyı düzenle</string>
     <string name="reminder_action_edit">Düzenle</string>
     <string name="reminder_action_delete">Sil</string>
-    <string name="reminder_status_taken">Alındı</string>
+    <string name="reminder_status_taken">Tamamlandı</string>
     <string name="reminder_action_undo">Geri al</string>
     <string name="msg_reminder_deleted">Hatırlatıcı silindi</string>
     <string name="msg_reminder_updated">Hatırlatıcı güncellendi</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">Bu hatırlatıcıyı silmek istediğinize emin misiniz?</string>
     <string name="delete_confirm_title">Bu kayıt silinsin mi?</string>
     <string name="delete_confirm_message">Bu kaydı silmek istediğinize emin misiniz?\nBu işlem geri alınamaz.</string>
+    <string name="delete_scan_confirm_title">Bu taramayı sil?</string>
+    <string name="delete_scan_confirm_message">Bu tarama kaydını silmek istediğinize emin misiniz?
+Bu işlem geri alınamaz.</string>
+    <string name="msg_scan_deleted">Tarama kaydı silindi</string>
+    <string name="delete_reminder_confirm_title">Bu hatırlatıcıyı sil?</string>
+    <string name="delete_reminder_confirm_message">Bu hatırlatıcıyı silmek istediğinize emin misiniz?
+Bu işlem geri alınamaz.</string>
+    <string name="delete_member_confirm_title">Bu üyeyi sil?</string>
+    <string name="delete_member_confirm_message">Bu üyeyi silmek istediğinize emin misiniz?
+Bu işlem geri alınamaz.</string>
+
     <string name="btn_delete">Sil</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">Kaydetmeden çık</string>
     <string name="btn_save_appointment">Randevuyu kaydet</string>
     <string name="btn_stay_on_page">Bu sayfada kal</string>
-    <string name="dialog_leave_without_saving_message">Analiziniz kaydedilmedi. Şimdi çıkarsanız,\nbu sonuçları tekrar görüntüleyemezsiniz.</string>
+    <string name="dialog_leave_without_saving_message">Analiziniz kaydedilmedi. Şimdi çıkarsanız, bu sonuçları tekrar görüntüleyemezsiniz.</string>
     <string name="dialog_leave_without_saving_title">Kaydetmeden Çıkılsın mı?</string>
     <string name="dialog_mic_permission_desc">Sesli sohbet ve ses analizi özelliklerini kullanmak için mikrofon erişimine izin verin.</string>
     <string name="dialog_mic_permission_title">Mikrofon Erişimi</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">Kayıt silindi</string>
     <string name="msg_vaccination_saved">Aşı kaydedildi</string>
     <string name="no_reminders_yet">Henüz hatırlatıcı yok</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">az önce</string>
     <string name="results_for">Sonuç sahibi:</string>
     <string name="scan_history_empty_desc">Tamamlanan yapay zeka sağlık taramalarınız burada görünecektir.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">Detaylı sonuçlar</string>
     <string name="title_edit_appointment">Randevuyu düzenle</string>
     <string name="title_edit_profile">Profili düzenle</string>
+    <string name="repeat_custom">Özel</string>
+    <string name="day_monday">Pazartesi</string>
+    <string name="day_tuesday">Salı</string>
+    <string name="day_wednesday">Çarşamba</string>
+    <string name="day_thursday">Perşembe</string>
+    <string name="day_friday">Cuma</string>
+    <string name="day_saturday">Cumartesi</string>
+    <string name="day_sunday">Pazar</string>
+    <string name="error_select_at_least_one_day">Lütfen en az bir gün seçin</string>
+    <string name="hint_appointment_title">Kardiyoloji muayenesi</string>
+    <string name="hint_appointment_clinician">Dr. Sarah Jenkins</string>
+    <string name="hint_appointment_clinic">Şehir Genel Hastanesi</string>
+    <string name="hint_appointment_date_time">Tarih ve saat seçin</string>
+    <string name="hint_appointment_notes">Önceki tıbbi kayıtları ve test sonuçlarını getirin.</string>
+    <string name="hint_vaccine_clinic">Aşı Merkezi</string>
+    <string name="hint_vaccine_reaction_notes">Önceki doz sırasında reaksiyon bildirildi.</string>
+    <string name="hint_condition_name">Alerjik rinit</string>
+    <string name="hint_condition_diagnosis_date">08.10.2026</string>
+    <string name="hint_condition_notes">Alerji muayenesi sonrası kaydedildi.</string>
+    <string name="hint_allergen_name">Penisilin</string>
+    <string name="hint_allergy_reaction">Kurdeşen</string>
+    <string name="hint_allergy_notes">Önceki doz sırasında reaksiyon bildirildi.</string>
+    <string name="hint_medication_name">Setirizin</string>
+    <string name="hint_medication_reason">Alerji belirtileri</string>
+    <string name="hint_medication_instructions">Yemekten önce alın</string>
 </resources>

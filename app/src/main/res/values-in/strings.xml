@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Beranda</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">Tetap hapus aplikasi</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">Mengapa Anda mencopot HealthCare AI?</string>
+    <string name="uninstall_reason_title">Mengapa Anda mencopot AI Health: Personal Care?</string>
     <string name="uninstall_reason_subtitle">Kami sedih melihat Anda pergi. Beri tahu kami apa yang bisa kami tingkatkan.</string>
     <string name="uninstall_reason_1">Sulit digunakan</string>
     <string name="uninstall_reason_2">Terlalu banyak iklan</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">Edit pengingat</string>
     <string name="reminder_action_edit">Edit</string>
     <string name="reminder_action_delete">Hapus</string>
-    <string name="reminder_status_taken">Sudah diminum</string>
+    <string name="reminder_status_taken">Selesai</string>
     <string name="reminder_action_undo">Urungkan</string>
     <string name="msg_reminder_deleted">Pengingat berhasil dihapus</string>
     <string name="msg_reminder_updated">Pengingat berhasil diperbarui</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">Apakah Anda yakin ingin menghapus pengingat ini?</string>
     <string name="delete_confirm_title">Hapus catatan ini?</string>
     <string name="delete_confirm_message">Apakah Anda yakin ingin menghapus catatan ini?\nTindakan ini tidak dapat dibatalkan.</string>
+    <string name="delete_scan_confirm_title">Hapus pemindaian ini?</string>
+    <string name="delete_scan_confirm_message">Apakah Anda yakin ingin menghapus catatan pemindaian ini?
+Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="msg_scan_deleted">Catatan pemindaian berhasil dihapus</string>
+    <string name="delete_reminder_confirm_title">Hapus pengingat ini?</string>
+    <string name="delete_reminder_confirm_message">Apakah Anda yakin ingin menghapus pengingat ini?
+Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="delete_member_confirm_title">Hapus anggota ini?</string>
+    <string name="delete_member_confirm_message">Apakah Anda yakin ingin menghapus anggota ini?
+Tindakan ini tidak dapat dibatalkan.</string>
+
     <string name="btn_delete">Hapus</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">Keluar tanpa menyimpan</string>
     <string name="btn_save_appointment">Simpan janji temu</string>
     <string name="btn_stay_on_page">Tetap di halaman ini</string>
-    <string name="dialog_leave_without_saving_message">Analisis Anda belum disimpan. Jika Anda keluar sekarang,\nAnda tidak akan dapat melihat hasil ini lagi.</string>
+    <string name="dialog_leave_without_saving_message">Analisis Anda belum disimpan. Jika Anda keluar sekarang, Anda tidak akan dapat melihat hasil ini lagi.</string>
     <string name="dialog_leave_without_saving_title">Keluar Tanpa Menyimpan?</string>
     <string name="dialog_mic_permission_desc">Izinkan akses mikrofon untuk menggunakan fitur obrolan suara dan analisis suara.</string>
     <string name="dialog_mic_permission_title">Akses Mikrofon</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">Catatan dihapus</string>
     <string name="msg_vaccination_saved">Vaksinasi disimpan</string>
     <string name="no_reminders_yet">Belum ada pengingat</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">baru saja</string>
     <string name="results_for">Hasil untuk</string>
     <string name="scan_history_empty_desc">Pemindaian kesehatan AI Anda yang telah selesai akan muncul di sini.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">Hasil detail</string>
     <string name="title_edit_appointment">Edit janji temu</string>
     <string name="title_edit_profile">Edit profil</string>
+    <string name="repeat_custom">Kustom</string>
+    <string name="day_monday">Senin</string>
+    <string name="day_tuesday">Selasa</string>
+    <string name="day_wednesday">Rabu</string>
+    <string name="day_thursday">Kamis</string>
+    <string name="day_friday">Jumat</string>
+    <string name="day_saturday">Sabtu</string>
+    <string name="day_sunday">Minggu</string>
+    <string name="error_select_at_least_one_day">Pilih minimal satu hari</string>
+    <string name="hint_appointment_title">Konsultasi kardiologi</string>
+    <string name="hint_appointment_clinician">dr. Sarah Jenkins</string>
+    <string name="hint_appointment_clinic">Rumah Sakit Umum</string>
+    <string name="hint_appointment_date_time">Pilih tanggal &amp; waktu</string>
+    <string name="hint_appointment_notes">Bawa rekam medis dan hasil tes sebelumnya.</string>
+    <string name="hint_vaccine_clinic">Pusat Vaksinasi</string>
+    <string name="hint_vaccine_reaction_notes">Reaksi dilaporkan pada pemberian sebelumnya.</string>
+    <string name="hint_condition_name">Rinitis alergi</string>
+    <string name="hint_condition_diagnosis_date">08/10/2026</string>
+    <string name="hint_condition_notes">Dicatat setelah konsultasi alergi.</string>
+    <string name="hint_allergen_name">Penisilin</string>
+    <string name="hint_allergy_reaction">Biduran</string>
+    <string name="hint_allergy_notes">Reaksi dilaporkan pada pemberian sebelumnya.</string>
+    <string name="hint_medication_name">Cetirizine</string>
+    <string name="hint_medication_reason">Gejala alergi</string>
+    <string name="hint_medication_instructions">Diminum sebelum makan</string>
 </resources>

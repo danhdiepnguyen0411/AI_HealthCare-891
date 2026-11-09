@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Главная</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">Всё равно удалить</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">Почему вы удаляете HealthCare AI?</string>
+    <string name="uninstall_reason_title">Почему вы удаляете AI Health: Personal Care?</string>
     <string name="uninstall_reason_subtitle">Нам жаль, что вы уходите. Напишите, как мы можем стать лучше.</string>
     <string name="uninstall_reason_1">Трудно разобраться</string>
     <string name="uninstall_reason_2">Слишком много рекламы</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">Редактировать напоминание</string>
     <string name="reminder_action_edit">Редактировать</string>
     <string name="reminder_action_delete">Удалить</string>
-    <string name="reminder_status_taken">Принято</string>
+    <string name="reminder_status_taken">Выполнено</string>
     <string name="reminder_action_undo">Отменить</string>
     <string name="msg_reminder_deleted">Напоминание удалено</string>
     <string name="msg_reminder_updated">Напоминание обновлено</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">Вы уверены, что хотите удалить это напоминание?</string>
     <string name="delete_confirm_title">Удалить эту запись?</string>
     <string name="delete_confirm_message">Вы уверены, что хотите удалить запись?\nДействие необратимо.</string>
+    <string name="delete_scan_confirm_title">Удалить это сканирование?</string>
+    <string name="delete_scan_confirm_message">Вы уверены, что хотите удалить эту запись сканирования?
+Это действие нельзя отменить.</string>
+    <string name="msg_scan_deleted">Запись сканирования удалена</string>
+    <string name="delete_reminder_confirm_title">Удалить это напоминание?</string>
+    <string name="delete_reminder_confirm_message">Вы уверены, что хотите удалить это напоминание?
+Это действие нельзя отменить.</string>
+    <string name="delete_member_confirm_title">Удалить этого участника?</string>
+    <string name="delete_member_confirm_message">Вы уверены, что хотите удалить этого участника?
+Это действие нельзя отменить.</string>
+
     <string name="btn_delete">Удалить</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">Выйти без сохранения</string>
     <string name="btn_save_appointment">Сохранить приём</string>
     <string name="btn_stay_on_page">Остаться на странице</string>
-    <string name="dialog_leave_without_saving_message">Ваш анализ не сохранён. Если вы выйдете сейчас,\nвы не сможете просмотреть эти результаты снова.</string>
+    <string name="dialog_leave_without_saving_message">Ваш анализ не сохранён. Если вы выйдете сейчас, вы не сможете просмотреть эти результаты снова.</string>
     <string name="dialog_leave_without_saving_title">Выйти без сохранения?</string>
     <string name="dialog_mic_permission_desc">Разрешите доступ к микрофону для использования голосового чата и анализа голоса.</string>
     <string name="dialog_mic_permission_title">Доступ к микрофону</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">Запись удалена</string>
     <string name="msg_vaccination_saved">Вакцинация сохранена</string>
     <string name="no_reminders_yet">Пока нет напоминаний</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">только что</string>
     <string name="results_for">Результаты для</string>
     <string name="scan_history_empty_desc">Здесь будут отображаться ваши завершённые ИИ-сканирования здоровья.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">Подробные результаты</string>
     <string name="title_edit_appointment">Редактировать приём</string>
     <string name="title_edit_profile">Редактировать профиль</string>
+    <string name="repeat_custom">По выбору</string>
+    <string name="day_monday">Понедельник</string>
+    <string name="day_tuesday">Вторник</string>
+    <string name="day_wednesday">Среда</string>
+    <string name="day_thursday">Четверг</string>
+    <string name="day_friday">Пятница</string>
+    <string name="day_saturday">Суббота</string>
+    <string name="day_sunday">Воскресенье</string>
+    <string name="error_select_at_least_one_day">Пожалуйста, выберите хотя бы один день</string>
+    <string name="hint_appointment_title">Консультация кардиолога</string>
+    <string name="hint_appointment_clinician">Д-р Сара Дженкинс</string>
+    <string name="hint_appointment_clinic">Городская больница</string>
+    <string name="hint_appointment_date_time">Выберите дату и время</string>
+    <string name="hint_appointment_notes">Возьмите медицинскую карту и результаты анализов.</string>
+    <string name="hint_vaccine_clinic">Центр вакцинации</string>
+    <string name="hint_vaccine_reaction_notes">Реакция отмечалась во время предыдущего курса.</string>
+    <string name="hint_condition_name">Аллергический ринит</string>
+    <string name="hint_condition_diagnosis_date">08.10.2026</string>
+    <string name="hint_condition_notes">Записано после консультации аллерголога.</string>
+    <string name="hint_allergen_name">Пенициллин</string>
+    <string name="hint_allergy_reaction">Крапивница</string>
+    <string name="hint_allergy_notes">Реакция отмечалась во время предыдущего курса.</string>
+    <string name="hint_medication_name">Цетиризин</string>
+    <string name="hint_medication_reason">Симптомы аллергии</string>
+    <string name="hint_medication_instructions">Принимать до еды</string>
 </resources>

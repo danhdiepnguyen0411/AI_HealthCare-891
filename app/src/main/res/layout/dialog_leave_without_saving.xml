@@ -44,10 +44,12 @@
         android:fontFamily="@font/urbanist"
         android:gravity="center"
         android:lineSpacingExtra="3dp"
+        android:breakStrategy="balanced"
+        android:hyphenationFrequency="none"
         android:text="@string/dialog_leave_without_saving_message"
         android:textColor="@color/text_secondary"
         android:textSize="14sp"
-        tools:text="Your analysis is not saved. If you leave now,\nyou won't be able to view these results again." />
+        tools:text="Your analysis is not saved. If you leave now, you won't be able to view these results again." />
 
     <!-- Primary Button: Stay on this page -->
     <androidx.appcompat.widget.AppCompatButton

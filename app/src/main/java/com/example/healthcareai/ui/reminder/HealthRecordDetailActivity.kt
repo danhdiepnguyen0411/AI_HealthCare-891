@@ -72,6 +72,8 @@ open class HealthRecordDetailActivity : BaseActivity() {
         binding.btnDelete.setOnClickListener {
             DeleteConfirmationDialog.show(
                 context = this,
+                title = getString(R.string.delete_confirm_title),
+                message = getString(R.string.delete_confirm_message),
                 onDeleteConfirmed = {
                     currentRecord?.let { record ->
                         HealthRecordRepository.getInstance(this).deleteRecord(record.id)

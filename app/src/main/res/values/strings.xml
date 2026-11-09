@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Home</string>
@@ -143,7 +143,7 @@
     <string name="uninstall_btn_still_uninstall">Still want to uninstall</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">Why uninstall HealthCare AI ?</string>
+    <string name="uninstall_reason_title">Why uninstall AI Health: Personal Care ?</string>
     <string name="uninstall_reason_subtitle">We\'re sorry to see you go. Please let us know how we can improve the app for everyone.</string>
     <string name="uninstall_reason_1">Difficult to use</string>
     <string name="uninstall_reason_2">Too many ads</string>
@@ -188,7 +188,7 @@
 
     <!-- Microphone Permission Custom Dialog -->
     <string name="dialog_mic_permission_title">Enable Microphone Access</string>
-    <string name="dialog_mic_permission_desc">Allow Healthcare AI to access your microphone so you can ask health questions using voice input.</string>
+    <string name="dialog_mic_permission_desc">Allow AI Health: Personal Care to access your microphone so you can ask health questions using voice input.</string>
 
     <!-- Camera Screen &amp; Guide -->
     <string name="camera_guide_title">Photo Guide</string>
@@ -495,6 +495,17 @@
     <string name="delete_reminder_confirm">Are you sure you want to delete this reminder?</string>
     <string name="delete_confirm_title">Delete this record?</string>
     <string name="delete_confirm_message">Are you sure you want to delete this record?\nThis action cannot be undone.</string>
+    <string name="delete_scan_confirm_title">Delete this scan?</string>
+    <string name="delete_scan_confirm_message">Are you sure you want to delete this scan record?
+This action cannot be undone.</string>
+    <string name="msg_scan_deleted">Scan record deleted</string>
+    <string name="delete_reminder_confirm_title">Delete this reminder?</string>
+    <string name="delete_reminder_confirm_message">Are you sure you want to delete this reminder?
+This action cannot be undone.</string>
+    <string name="delete_member_confirm_title">Delete this member?</string>
+    <string name="delete_member_confirm_message">Are you sure you want to remove this member?
+This action cannot be undone.</string>
+
     <string name="btn_delete">Delete</string>
     
     <!-- Rate App Dialog -->
@@ -702,7 +713,7 @@
 
     <!-- Leave Without Saving Dialog -->
     <string name="dialog_leave_without_saving_title">Leave Without Saving?</string>
-    <string name="dialog_leave_without_saving_message">Your analysis is not saved. If you leave now,\nyou won\'t be able to view these results again.</string>
+    <string name="dialog_leave_without_saving_message">Your analysis is not saved. If you leave now, you won\'t be able to view these results again.</string>
     <string name="btn_stay_on_page">Stay on this page</string>
     <string name="btn_exit_without_saving">Exit without saving</string>
 
@@ -713,6 +724,22 @@
     <string name="scan_history_empty_title">No scan history yet</string>
     <string name="scan_history_empty_desc">Your completed AI health scans will appear here.</string>
     <!-- Custom System Notification (Figma 1:4045) -->
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">just now</string>
+    <string name="hint_appointment_title">Cardiology consultation</string>
+    <string name="hint_appointment_clinician">Dr. Sarah Jenkins</string>
+    <string name="hint_appointment_clinic">City General Hospital</string>
+    <string name="hint_appointment_date_time">Select date &amp; time</string>
+    <string name="hint_appointment_notes">Bring previous medical records and test results.</string>
+    <string name="hint_vaccine_clinic">Vaccination Center</string>
+    <string name="hint_vaccine_reaction_notes">Reaction reported during a previous course.</string>
+    <string name="hint_condition_name">Allergic rhinitis</string>
+    <string name="hint_condition_diagnosis_date">Oct 8, 2026</string>
+    <string name="hint_condition_notes">Recorded after my allergy consultation.</string>
+    <string name="hint_allergen_name">Penicillin</string>
+    <string name="hint_allergy_reaction">Hives</string>
+    <string name="hint_allergy_notes">Reaction reported during a previous course.</string>
+    <string name="hint_medication_name">Cetirizine</string>
+    <string name="hint_medication_reason">Allergy symptoms</string>
+    <string name="hint_medication_instructions">Take before a meal</string>
 </resources>

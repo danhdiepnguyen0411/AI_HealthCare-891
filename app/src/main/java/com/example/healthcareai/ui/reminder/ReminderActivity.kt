@@ -253,7 +253,7 @@ class ReminderActivity : BaseActivity() {
         monthCalendarAdapter.setSelectedDay(selectedCalendarDay)
 
         updateMonthYearHeader(selectedCalendarDay)
-        loadReminders()
+        loadReminders(scrollToTop = true)
 
         if (fromMonthView) {
             // Also update displayed month if needed
@@ -297,7 +297,7 @@ class ReminderActivity : BaseActivity() {
         binding.rvReminders.adapter = reminderAdapter
     }
 
-    private fun loadReminders() {
+    private fun loadReminders(scrollToTop: Boolean = false) {
         val effectiveProfileId = profileId ?: ProfileRepository.getInstance(this).getPrimaryProfile().id
         val reminderRepo = ReminderRepository.getInstance(this)
         val allReminders = reminderRepo.getRemindersForProfile(effectiveProfileId)
@@ -320,7 +320,14 @@ class ReminderActivity : BaseActivity() {
                 compareBy<ReminderItem> { it.isDone }
                     .thenBy { com.example.healthcareai.util.ReminderScheduler.parseTimeToMinutes(it.timeList.firstOrNull().orEmpty()) }
             )
-            reminderAdapter.submitList(sorted)
+            if (scrollToTop) {
+                binding.rvReminders.scrollToPosition(0)
+            }
+            reminderAdapter.submitList(sorted) {
+                if (scrollToTop && !isFinishing && !isDestroyed) {
+                    binding.rvReminders.scrollToPosition(0)
+                }
+            }
         }
 
         horizontalCalendarAdapter.setAllReminders(allReminders)

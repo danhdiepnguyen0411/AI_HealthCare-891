@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">ホーム</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">アンインストールを続ける</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">HealthCare AI をアンインストールする理由</string>
+    <string name="uninstall_reason_title">AI Health: Personal Care をアンインストールする理由</string>
     <string name="uninstall_reason_subtitle">ご利用ありがとうございました。今後の改善のためご意見をお聞かせください。</string>
     <string name="uninstall_reason_1">操作が難しい</string>
     <string name="uninstall_reason_2">広告が多すぎる</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">リマインダー編集</string>
     <string name="reminder_action_edit">編集</string>
     <string name="reminder_action_delete">削除</string>
-    <string name="reminder_status_taken">服用済み</string>
+    <string name="reminder_status_taken">完了</string>
     <string name="reminder_action_undo">元に戻す</string>
     <string name="msg_reminder_deleted">リマインダーを削除しました</string>
     <string name="msg_reminder_updated">リマインダーを更新しました</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">このリマインダーを削除してもよろしいですか？</string>
     <string name="delete_confirm_title">この記録を削除しますか？</string>
     <string name="delete_confirm_message">この記録を削除してもよろしいですか？\nこの操作は元に戻せません。</string>
+    <string name="delete_scan_confirm_title">このスキャンを削除しますか？</string>
+    <string name="delete_scan_confirm_message">このスキャン記録を削除してもよろしいですか？
+この操作は元に戻せません。</string>
+    <string name="msg_scan_deleted">スキャン記録を削除しました</string>
+    <string name="delete_reminder_confirm_title">このリマインダーを削除しますか？</string>
+    <string name="delete_reminder_confirm_message">このリマインダーを削除してもよろしいですか？
+この操作は元に戻せません。</string>
+    <string name="delete_member_confirm_title">このメンバーを削除しますか？</string>
+    <string name="delete_member_confirm_message">このメンバーを削除してもよろしいですか？
+この操作は元に戻せません。</string>
+
     <string name="btn_delete">削除</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">保存せずに終了</string>
     <string name="btn_save_appointment">予約を保存</string>
     <string name="btn_stay_on_page">このページに留まる</string>
-    <string name="dialog_leave_without_saving_message">分析結果が保存されていません。今終了すると、\nこの結果を再度確認することはできません。</string>
+    <string name="dialog_leave_without_saving_message">分析結果が保存されていません。今終了すると、 この結果を再度確認することはできません。</string>
     <string name="dialog_leave_without_saving_title">保存せずに終了しますか？</string>
     <string name="dialog_mic_permission_desc">音声チャットや音声分析機能を使用するには、マイクへのアクセスを許可してください。</string>
     <string name="dialog_mic_permission_title">マイクへのアクセス</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">記録を削除しました</string>
     <string name="msg_vaccination_saved">予防接種を保存しました</string>
     <string name="no_reminders_yet">リマインダーはまだありません</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">たった今</string>
     <string name="results_for">対象プロファイル:</string>
     <string name="scan_history_empty_desc">完了したAIヘルススキャンの履歴がここに表示されます。</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">詳細な結果</string>
     <string name="title_edit_appointment">予約を編集</string>
     <string name="title_edit_profile">プロフィールを編集</string>
+    <string name="repeat_custom">カスタム</string>
+    <string name="day_monday">月曜日</string>
+    <string name="day_tuesday">火曜日</string>
+    <string name="day_wednesday">水曜日</string>
+    <string name="day_thursday">木曜日</string>
+    <string name="day_friday">金曜日</string>
+    <string name="day_saturday">土曜日</string>
+    <string name="day_sunday">日曜日</string>
+    <string name="error_select_at_least_one_day">1日以上選択してください</string>
+    <string name="hint_appointment_title">循環器内科の診察</string>
+    <string name="hint_appointment_clinician">サラ・ジェンキンス医師</string>
+    <string name="hint_appointment_clinic">総合病院</string>
+    <string name="hint_appointment_date_time">日時を選択</string>
+    <string name="hint_appointment_notes">過去の診療記録と検査結果を持参。</string>
+    <string name="hint_vaccine_clinic">ワクチン接種センター</string>
+    <string name="hint_vaccine_reaction_notes">以前の接種で副反応の報告あり。</string>
+    <string name="hint_condition_name">アレルギー性鼻炎</string>
+    <string name="hint_condition_diagnosis_date">2026/10/08</string>
+    <string name="hint_condition_notes">アレルギー診察後に記録。</string>
+    <string name="hint_allergen_name">ペニシリン</string>
+    <string name="hint_allergy_reaction">じんましん</string>
+    <string name="hint_allergy_notes">過去の投与でアレルギー反応あり。</string>
+    <string name="hint_medication_name">セチリジン</string>
+    <string name="hint_medication_reason">アレルギー症状</string>
+    <string name="hint_medication_instructions">食前に服用</string>
 </resources>

@@ -68,6 +68,8 @@ class FamilyFragment : Fragment() {
     private fun showDeleteMemberDialog(member: UserProfile) {
         DeleteConfirmationDialog.show(
             context = requireContext(),
+            title = getString(R.string.delete_member_confirm_title),
+            message = getString(R.string.delete_member_confirm_message),
             onDeleteConfirmed = {
                 profileRepository.deleteProfile(member.id)
                 Toast.makeText(requireContext(), R.string.msg_member_removed, Toast.LENGTH_SHORT).show()

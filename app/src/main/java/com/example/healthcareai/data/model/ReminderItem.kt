@@ -16,8 +16,11 @@ data class ReminderItem(
     var endDate: String = "",
     var notes: String = "",
     var isDone: Boolean = false,
+    var isEnabled: Boolean? = true,
     val createdAt: Long = System.currentTimeMillis()
 ) : Serializable {
+
+    fun isReminderEnabled(): Boolean = isEnabled ?: true
 
     fun getDisplayDescription(): String {
         return when {
@@ -30,7 +33,7 @@ data class ReminderItem(
     }
 
     fun getLocalizedName(context: android.content.Context): String {
-        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, name)
+        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, name, category)
     }
 
     fun getLocalizedDescription(context: android.content.Context): String {
@@ -50,18 +53,19 @@ data class ReminderItem(
         val lowerCat = category.lowercase()
         val lowerName = name.lowercase()
         return when {
-            lowerCat.contains("water") || lowerName.contains("water") -> com.example.healthcareai.R.drawable.ic_drink_water
-            lowerCat.contains("exercise") || lowerName.contains("exercise") -> com.example.healthcareai.R.drawable.ic_do_exercise
-            lowerCat.contains("sleep") || lowerName.contains("sleep") -> com.example.healthcareai.R.drawable.ic_sleep
-            lowerCat.contains("temperature") || lowerName.contains("temp") -> com.example.healthcareai.R.drawable.ic_temperature
-            lowerCat.contains("heart") -> com.example.healthcareai.R.drawable.ic_heart_rate
-            lowerCat.contains("appointment") -> com.example.healthcareai.R.drawable.ic_appointments
-            lowerCat.contains("vaccin") -> com.example.healthcareai.R.drawable.ic_vaccination
+            lowerCat.contains("water") || lowerName.contains("water") || lowerCat.contains("nước") || lowerName.contains("nước") -> com.example.healthcareai.R.drawable.ic_drink_water
+            lowerCat.contains("exercise") || lowerName.contains("exercise") || lowerCat.contains("thể dục") || lowerName.contains("thể dục") -> com.example.healthcareai.R.drawable.ic_do_exercise
+            lowerCat.contains("sleep") || lowerName.contains("sleep") || lowerCat.contains("ngủ") || lowerName.contains("ngủ") -> com.example.healthcareai.R.drawable.ic_sleep
+            lowerCat.contains("temperature") || lowerName.contains("temp") || lowerCat.contains("nhiệt độ") || lowerName.contains("nhiệt độ") -> com.example.healthcareai.R.drawable.ic_temperature
+            lowerCat.contains("heart") || lowerName.contains("heart") || lowerCat.contains("nhịp tim") || lowerName.contains("nhịp tim") -> com.example.healthcareai.R.drawable.ic_heart_rate
+            lowerCat.contains("appointment") || lowerName.contains("appointment") || lowerCat.contains("lịch hẹn") || lowerName.contains("lịch hẹn") -> com.example.healthcareai.R.drawable.ic_appointments
+            lowerCat.contains("vaccin") || lowerName.contains("vaccin") || lowerCat.contains("tiêm") || lowerName.contains("tiêm") -> com.example.healthcareai.R.drawable.ic_vaccination
             else -> com.example.healthcareai.R.drawable.ic_medications
         }
     }
 
     fun isScheduledForDay(targetCal: java.util.Calendar, context: android.content.Context? = null): Boolean {
+        if (!isReminderEnabled()) return false
         val target = java.util.Calendar.getInstance().apply {
             set(targetCal.get(java.util.Calendar.YEAR), targetCal.get(java.util.Calendar.MONTH), targetCal.get(java.util.Calendar.DAY_OF_MONTH), 0, 0, 0)
             set(java.util.Calendar.MILLISECOND, 0)

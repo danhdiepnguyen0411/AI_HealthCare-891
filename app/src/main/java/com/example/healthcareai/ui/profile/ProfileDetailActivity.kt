@@ -252,6 +252,8 @@ class ProfileDetailActivity : BaseActivity() {
                     itemBinding.swipeRevealLayout.close(false)
                     DeleteConfirmationDialog.show(
                         context = this,
+                        title = getString(R.string.delete_scan_confirm_title),
+                        message = getString(R.string.delete_scan_confirm_message),
                         onDeleteConfirmed = {
                             scanRepo.deleteScan(scan.id)
                             try {
@@ -260,7 +262,7 @@ class ProfileDetailActivity : BaseActivity() {
                                     if (file.exists()) file.delete()
                                 }
                             } catch (_: Exception) {}
-                            Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.msg_scan_deleted, Toast.LENGTH_SHORT).show()
                             syncScanHistory()
                         }
                     )
@@ -274,6 +276,8 @@ class ProfileDetailActivity : BaseActivity() {
     private fun showDeleteConfirmationDialog(profile: UserProfile) {
         DeleteConfirmationDialog.show(
             context = this,
+            title = getString(R.string.delete_member_confirm_title),
+            message = getString(R.string.delete_member_confirm_message),
             onDeleteConfirmed = {
                 profileRepository.deleteProfile(profile.id)
                 Toast.makeText(this, R.string.msg_member_removed, Toast.LENGTH_SHORT).show()
@@ -327,6 +331,8 @@ class ProfileDetailActivity : BaseActivity() {
 
                 cardBinding.ivReminderIcon.setImageResource(reminder.getIconResId())
                 cardBinding.tvReminderTitle.text = reminder.getLocalizedName(this)
+                val langCode = com.example.healthcareai.util.LocaleHelper.getSavedLanguageCode(this)
+                cardBinding.tvTakenStatus.text = com.example.healthcareai.util.LocaleHelper.getLocalizedString(this, langCode, R.string.reminder_status_taken)
 
                 val desc = reminder.getLocalizedDescription(this)
                 if (desc.isNotBlank()) {

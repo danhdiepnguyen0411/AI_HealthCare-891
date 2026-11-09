@@ -26,8 +26,8 @@ class LeaveWithoutSavingDialog(
 
         window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val width = (context.resources.displayMetrics.widthPixels * 0.85f).toInt().coerceAtMost(
-                (340 * context.resources.displayMetrics.density).toInt()
+            val width = (context.resources.displayMetrics.widthPixels * 0.88f).toInt().coerceAtMost(
+                (360 * context.resources.displayMetrics.density).toInt()
             )
             setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
             setDimAmount(0.55f)

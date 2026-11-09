@@ -128,6 +128,8 @@ class HealthRecordListActivity : BaseActivity() {
     private fun showDeleteConfirmationDialog(record: HealthRecordItem) {
         DeleteConfirmationDialog.show(
             context = this,
+            title = getString(R.string.delete_confirm_title),
+            message = getString(R.string.delete_confirm_message),
             onDeleteConfirmed = {
                 HealthRecordRepository.getInstance(this).deleteRecord(record.id)
                 Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()

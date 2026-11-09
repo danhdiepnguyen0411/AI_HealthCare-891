@@ -21,7 +21,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.healthcareai"
+        applicationId = "com.ai.health.log.personal.asisstant.care"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

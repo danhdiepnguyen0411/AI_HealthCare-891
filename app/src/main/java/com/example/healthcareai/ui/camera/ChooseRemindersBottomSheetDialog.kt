@@ -79,6 +79,11 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val maxRvHeight = (resources.displayMetrics.heightPixels * 0.50f).toInt()
+        (binding.rvReminders.layoutParams as? androidx.constraintlayout.widget.ConstraintLayout.LayoutParams)?.let { lp ->
+            lp.matchConstraintMaxHeight = maxRvHeight
+            binding.rvReminders.layoutParams = lp
+        }
         setupRecyclerView()
         refreshRemindersList()
         setupActions()
@@ -109,8 +114,8 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             }
             val existingItem = existingMap[item.id]
             // Newly added reminders default to checked = true.
-            // Existing reminders preserve their user-selected check status.
-            val isChecked = existingItem?.isChecked ?: true
+            // Existing reminders preserve their user-selected check status or enabled status.
+            val isChecked = existingItem?.isChecked ?: item.isReminderEnabled()
 
             newList.add(
                 RecommendedReminder(
@@ -184,16 +189,9 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         binding.btnSaveReminders.setOnClickListener {
             val repo = ReminderRepository.getInstance(requireContext())
             val selectedItems = remindersList.filter { it.isChecked }
-            val unselectedItems = remindersList.filter { !it.isChecked }
 
-            // Delete unselected items if they were previously saved in repository
-            for (unselected in unselectedItems) {
-                if (repo.getReminder(unselected.id) != null) {
-                    repo.deleteReminder(unselected.id)
-                }
-            }
-
-            for (item in selectedItems) {
+            // Save all reminders with updated isEnabled status. DO NOT delete unselected reminders!
+            for (item in remindersList) {
                 val existing = repo.getReminder(item.id)
                 val reminder = ReminderItem(
                     id = item.id,
@@ -204,13 +202,16 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
                     timeList = item.timeList,
                     notes = item.notes,
                     isDone = existing?.isDone ?: false,
+                    isEnabled = item.isChecked,
                     createdAt = existing?.createdAt ?: System.currentTimeMillis()
                 )
                 repo.saveReminder(reminder)
             }
 
             val count = selectedItems.size
-            val msg = if (count == 1) {
+            val msg = if (count == 0) {
+                getString(R.string.msg_reminder_saved)
+            } else if (count == 1) {
                 getString(R.string.msg_reminder_saved)
             } else {
                 getString(R.string.btn_save_reminders_count, count)
@@ -230,8 +231,8 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
         val checkedCount = remindersList.count { it.isChecked }
         if (checkedCount == 0) {
             binding.btnSaveReminders.text = getString(R.string.btn_save)
-            binding.btnSaveReminders.isEnabled = false
-            binding.btnSaveReminders.alpha = 0.5f
+            binding.btnSaveReminders.isEnabled = true
+            binding.btnSaveReminders.alpha = 1.0f
         } else if (checkedCount == 1) {
             binding.btnSaveReminders.text = getString(R.string.btn_save_reminder_single)
             binding.btnSaveReminders.isEnabled = true
@@ -251,7 +252,8 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             category = item.category,
             repeat = item.repeat,
             timeList = item.timeList,
-            notes = item.notes
+            notes = item.notes,
+            isEnabled = item.isChecked
         ) ?: ReminderItem(
             id = item.id,
             profileId = profileId,
@@ -261,6 +263,7 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
             timeList = item.timeList,
             notes = item.notes,
             isDone = false,
+            isEnabled = item.isChecked,
             createdAt = System.currentTimeMillis()
         )
         repo.saveReminder(reminder)
@@ -279,7 +282,11 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
                 DialogImmersiveHelper.setupBottomSheetImmersive(it)
                 val bottomSheet = it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
                 bottomSheet?.let { sheet ->
-                    BottomSheetBehavior.from(sheet).state = BottomSheetBehavior.STATE_EXPANDED
+                    val behavior = BottomSheetBehavior.from(sheet)
+                    val maxH = (resources.displayMetrics.heightPixels * 0.90f).toInt()
+                    behavior.maxHeight = maxH
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior.skipCollapsed = true
                 }
             }
         }
@@ -303,6 +310,8 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
                 sheet.background = null
                 sheet.setBackgroundColor(Color.TRANSPARENT)
                 val behavior = BottomSheetBehavior.from(sheet)
+                val maxH = (resources.displayMetrics.heightPixels * 0.90f).toInt()
+                behavior.maxHeight = maxH
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.skipCollapsed = true
             }
@@ -342,7 +351,7 @@ class ChooseRemindersBottomSheetDialog : BottomSheetDialogFragment() {
 
             // Content
             val context = holder.itemView.context
-            holder.itemBinding.tvReminderName.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, item.name)
+            holder.itemBinding.tvReminderName.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedName(context, item.name, item.category)
             holder.itemBinding.tvReminderSchedule.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedSchedule(context, item.scheduleDisplay)
             holder.itemBinding.ivReminderIcon.setImageResource(item.iconResId)
 

@@ -119,6 +119,8 @@ class AiScanHistoryActivity : BaseActivity() {
     private fun showDeleteConfirmationDialog(item: ScanHistoryItem) {
         DeleteConfirmationDialog.show(
             context = this,
+            title = getString(R.string.delete_scan_confirm_title),
+            message = getString(R.string.delete_scan_confirm_message),
             onDeleteConfirmed = {
                 scanRepo.deleteScan(item.id)
                 adapter.removeItem(item)
@@ -128,7 +130,7 @@ class AiScanHistoryActivity : BaseActivity() {
                         if (file.exists()) file.delete()
                     }
                 } catch (_: Exception) {}
-                Toast.makeText(this, R.string.msg_record_deleted, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.msg_scan_deleted, Toast.LENGTH_SHORT).show()
                 if (adapter.itemCount == 0) {
                     binding.rvScans.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE

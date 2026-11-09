@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">首页</string>
@@ -139,7 +139,7 @@
     <string name="uninstall_btn_still_uninstall">仍要卸载</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">为什么要卸载 HealthCare AI？</string>
+    <string name="uninstall_reason_title">为什么要卸载 AI Health: Personal Care？</string>
     <string name="uninstall_reason_subtitle">非常遗憾看到您离开。请告诉我们如何改进。</string>
     <string name="uninstall_reason_1">操作太复杂</string>
     <string name="uninstall_reason_2">广告过多</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">编辑提醒</string>
     <string name="reminder_action_edit">编辑</string>
     <string name="reminder_action_delete">删除</string>
-    <string name="reminder_status_taken">已服/已做</string>
+    <string name="reminder_status_taken">已完成</string>
     <string name="reminder_action_undo">撤销</string>
     <string name="msg_reminder_deleted">提醒已删除</string>
     <string name="msg_reminder_updated">提醒已更新</string>
@@ -478,6 +478,17 @@
     <string name="delete_reminder_confirm">确定要删除这条提醒吗？</string>
     <string name="delete_confirm_title">删除此记录？</string>
     <string name="delete_confirm_message">确定要删除此条记录吗？\n此操作无法撤销。</string>
+    <string name="delete_scan_confirm_title">删除此扫描记录？</string>
+    <string name="delete_scan_confirm_message">确定要删除这条扫描记录吗？
+此操作无法撤销。</string>
+    <string name="msg_scan_deleted">扫描记录已删除</string>
+    <string name="delete_reminder_confirm_title">删除此提醒？</string>
+    <string name="delete_reminder_confirm_message">确定要删除这条提醒吗？
+此操作无法撤销。</string>
+    <string name="delete_member_confirm_title">删除此成员？</string>
+    <string name="delete_member_confirm_message">确定要删除此成员吗？
+此操作无法撤销。</string>
+
     <string name="btn_delete">删除</string>
     
     <!-- Rate App Dialog -->
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">不儲存並離開</string>
     <string name="btn_save_appointment">儲存預約</string>
     <string name="btn_stay_on_page">留在此頁</string>
-    <string name="dialog_leave_without_saving_message">您的分析尚未儲存。如果現在離開，\n您將無法再次查看這些結果。</string>
+    <string name="dialog_leave_without_saving_message">您的分析尚未儲存。如果現在離開， 您將無法再次查看這些結果。</string>
     <string name="dialog_leave_without_saving_title">不儲存就離開嗎？</string>
     <string name="dialog_mic_permission_desc">允許存取麥克風以使用語音聊天和語音分析功能。</string>
     <string name="dialog_mic_permission_title">麥克風權限</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">紀錄已刪除</string>
     <string name="msg_vaccination_saved">疫苗接種已儲存</string>
     <string name="no_reminders_yet">尚無提醒</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">剛剛</string>
     <string name="results_for">結果所屬：</string>
     <string name="scan_history_empty_desc">您已完成的 AI 健康掃描將顯示在這裡。</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">詳細結果</string>
     <string name="title_edit_appointment">編輯預約</string>
     <string name="title_edit_profile">編輯個人資料</string>
+    <string name="repeat_custom">自訂</string>
+    <string name="day_monday">週一</string>
+    <string name="day_tuesday">週二</string>
+    <string name="day_wednesday">週三</string>
+    <string name="day_thursday">週四</string>
+    <string name="day_friday">週五</string>
+    <string name="day_saturday">週六</string>
+    <string name="day_sunday">週日</string>
+    <string name="error_select_at_least_one_day">請至少選擇一天</string>
+    <string name="hint_appointment_title">心臟科諮詢</string>
+    <string name="hint_appointment_clinician">莎拉·詹金斯醫生</string>
+    <string name="hint_appointment_clinic">市立綜合醫院</string>
+    <string name="hint_appointment_date_time">選擇日期與時間</string>
+    <string name="hint_appointment_notes">攜帶過往病歷與檢查報告。</string>
+    <string name="hint_vaccine_clinic">疫苗接種中心</string>
+    <string name="hint_vaccine_reaction_notes">過往接種曾有不良反應記錄。</string>
+    <string name="hint_condition_name">過敏性鼻炎</string>
+    <string name="hint_condition_diagnosis_date">2026-10-08</string>
+    <string name="hint_condition_notes">過敏門診諮詢後記錄。</string>
+    <string name="hint_allergen_name">盤尼西林</string>
+    <string name="hint_allergy_reaction">蕁麻疹</string>
+    <string name="hint_allergy_notes">過往用藥曾有不良反應記錄。</string>
+    <string name="hint_medication_name">西替利嗪</string>
+    <string name="hint_medication_reason">過敏症狀</string>
+    <string name="hint_medication_instructions">飯前服用</string>
 </resources>

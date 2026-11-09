@@ -46,6 +46,19 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
 
         setupRepeatSelection()
 
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val navInsets = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.navigationBars())
+            val density = resources.displayMetrics.density
+            val baseBottomPadding = (24 * density).toInt()
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                baseBottomPadding + navInsets.bottom
+            )
+            insets
+        }
+
         binding.btnContinue.setOnClickListener {
             onRepeatSelectedListener?.invoke(currentSelectedRepeat)
             dismiss()
@@ -147,6 +160,15 @@ class SelectRepeatBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        dialog?.let {
+            if (it is BottomSheetDialog) {
+                DialogImmersiveHelper.setupBottomSheetImmersive(it)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         dialog?.let {
             if (it is BottomSheetDialog) {
                 DialogImmersiveHelper.setupBottomSheetImmersive(it)

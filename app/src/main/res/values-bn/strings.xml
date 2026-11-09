@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">হোম</string>
@@ -363,7 +363,7 @@
     <string name="option_dont_know">জানি না</string>
     <!-- Exit Confirmation Dialog -->
     <string name="dialog_exit_app_title">অ্যাপ থেকে বের হবেন?</string>
-    <string name="dialog_exit_app_desc">আপনি কি নিশ্চিতভাবে HealthCare AI থেকে বের হতে চান?</string>
+    <string name="dialog_exit_app_desc">আপনি কি নিশ্চিতভাবে AI Health: Personal Care থেকে বের হতে চান?</string>
     <string name="dialog_exit_app_btn_stay">থাকুন</string>
     <string name="dialog_exit_app_btn_exit">বের হন</string>
     <string name="dialog_exit_assessment_title">মূল্যায়ন ছেড়ে যাবেন?</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">রিমাইন্ডার সম্পাদনা করুন</string>
     <string name="reminder_action_edit">সম্পাদনা করুন</string>
     <string name="reminder_action_delete">মুছুন</string>
-    <string name="reminder_status_taken">গ্রহণ করা হয়েছে</string>
+    <string name="reminder_status_taken">সম্পন্ন হয়েছে</string>
     <string name="reminder_action_undo">পূর্বাবস্থায় ফেরান</string>
     <string name="msg_reminder_deleted">রিমাইন্ডার মুছে ফেলা হয়েছে</string>
     <string name="msg_reminder_updated">রিমাইন্ডার আপডেট করা হয়েছে</string>
@@ -478,10 +478,21 @@
     <string name="delete_reminder_confirm">আপনি কি নিশ্চিতভাবে এই রিমাইন্ডারটি মুছে ফেলতে চান?</string>
     <string name="delete_confirm_title">মুছে ফেলার নিশ্চিতকরণ</string>
     <string name="delete_confirm_message">আপনি কি নিশ্চিতভাবে এই রেকর্ডটি মুছে ফেলতে চান? এটি আর ফিরিয়ে আনা যাবে না।</string>
+    <string name="delete_scan_confirm_title">এই স্ক্যানটি মুছবেন?</string>
+    <string name="delete_scan_confirm_message">আপনি কি নিশ্চিতভাবে এই স্ক্যান রেকর্ডটি মুছে ফেলতে চান?
+এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+    <string name="msg_scan_deleted">স্ক্যান রেকর্ড মুছে ফেলা হয়েছে</string>
+    <string name="delete_reminder_confirm_title">এই রিমাইন্ডারটি মুছবেন?</string>
+    <string name="delete_reminder_confirm_message">আপনি কি নিশ্চিতভাবে এই রিমাইন্ডারটি মুছে ফেলতে চান?
+এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+    <string name="delete_member_confirm_title">এই সদস্যকে মুছবেন?</string>
+    <string name="delete_member_confirm_message">আপনি কি নিশ্চিতভাবে এই সদস্যকে মুছে ফেলতে চান?
+এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+
     <string name="btn_delete">মুছুন</string>
     
     <!-- Rate App Dialog -->
-    <string name="rate_dialog_title">HealthCare AI আপনার কেমন লাগছে?</string>
+    <string name="rate_dialog_title">AI Health: Personal Care আপনার কেমন লাগছে?</string>
     <string name="rate_dialog_message">আপনার মতামত আমাদের সেবার মান উন্নত করতে এবং আরও ভালো স্বাস্থ্যসেবা দিতে সাহায্য করে।</string>
     <string name="rate_dialog_submit">রেটিং দিন</string>
     <string name="rate_dialog_maybe_later">পরে</string>
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">সেভ না করেই বের হন</string>
     <string name="btn_save_appointment">অ্যাপয়েন্টমেন্ট সেভ করুন</string>
     <string name="btn_stay_on_page">এই পেজেই থাকুন</string>
-    <string name="dialog_leave_without_saving_message">আপনার বিশ্লেষণ সেভ করা হয়নি। আপনি এখন বেরিয়ে গেলে,\nএই ফলাফলগুলি আর দেখতে পাবেন না।</string>
+    <string name="dialog_leave_without_saving_message">আপনার বিশ্লেষণ সেভ করা হয়নি। আপনি এখন বেরিয়ে গেলে, এই ফলাফলগুলি আর দেখতে পাবেন না।</string>
     <string name="dialog_leave_without_saving_title">সেভ না করেই বের হবেন?</string>
     <string name="dialog_mic_permission_desc">ভয়েস চ্যাট এবং ভয়েস বিশ্লেষণ বৈশিষ্ট্যগুলি ব্যবহার করতে মাইক্রোফোন অ্যাক্সেসের অনুমতি দিন।</string>
     <string name="dialog_mic_permission_title">মাইক্রোফোন অ্যাক্সেস</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">রেকর্ড মুছে ফেলা হয়েছে</string>
     <string name="msg_vaccination_saved">টিকাদান সেভ করা হয়েছে</string>
     <string name="no_reminders_yet">এখনও কোনো রিমাইন্ডার নেই</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">এইমাত্র</string>
     <string name="results_for">যার জন্য ফলাফল</string>
     <string name="scan_history_empty_desc">আপনার সম্পন্ন করা এআই স্বাস্থ্য স্ক্যানগুলি এখানে দেখা যাবে।</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">বিস্তারিত ফলাফল</string>
     <string name="title_edit_appointment">অ্যাপয়েন্টমেন্ট সম্পাদনা করুন</string>
     <string name="title_edit_profile">প্রোফাইল সম্পাদনা করুন</string>
+    <string name="repeat_custom">কাস্টম</string>
+    <string name="day_monday">সোমবার</string>
+    <string name="day_tuesday">মঙ্গলবার</string>
+    <string name="day_wednesday">বুধবার</string>
+    <string name="day_thursday">বৃহস্পতিবার</string>
+    <string name="day_friday">শুক্রবার</string>
+    <string name="day_saturday">শনিবার</string>
+    <string name="day_sunday">রবিবার</string>
+    <string name="error_select_at_least_one_day">অনুগ্রহ করে অন্তত একটি দিন নির্বাচন করুন</string>
+    <string name="hint_appointment_title">হৃদরোগ পরামর্শ</string>
+    <string name="hint_appointment_clinician">ডাঃ সারা জেনকিন্স</string>
+    <string name="hint_appointment_clinic">সিটি জেনারেল হাসপাতাল</string>
+    <string name="hint_appointment_date_time">তারিখ ও সময় নির্বাচন করুন</string>
+    <string name="hint_appointment_notes">পূর্ববর্তী চিকিৎসার নথি ও পরীক্ষার রিপোর্ট সাথে আনুন।</string>
+    <string name="hint_vaccine_clinic">টিকাদান কেন্দ্র</string>
+    <string name="hint_vaccine_reaction_notes">পূর্বের ডোজের সময় পার্শ্বপ্রতিক্রিয়া দেখা গিয়েছিল।</string>
+    <string name="hint_condition_name">অ্যালার্জিক রাইনাইটিস</string>
+    <string name="hint_condition_diagnosis_date">০৮/১০/২০২৬</string>
+    <string name="hint_condition_notes">অ্যালার্জি পরামর্শের পর রেকর্ড করা হয়েছে।</string>
+    <string name="hint_allergen_name">পেনিসিলিন</string>
+    <string name="hint_allergy_reaction">আমবাত</string>
+    <string name="hint_allergy_notes">পূর্বের চিকিৎসার সময় প্রতিক্রিয়া দেখা গিয়েছিল।</string>
+    <string name="hint_medication_name">সেটিরিজিন</string>
+    <string name="hint_medication_reason">অ্যালার্জির লক্ষণ</string>
+    <string name="hint_medication_instructions">খাবারের আগে সেব্য</string>
 </resources>

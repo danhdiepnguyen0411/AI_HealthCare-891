@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">Trang chủ</string>
@@ -142,7 +142,7 @@
     <string name="uninstall_btn_still_uninstall">Vẫn muốn gỡ cài đặt</string>
 
     <!-- Uninstall Reason Screen 2 -->
-    <string name="uninstall_reason_title">Vì sao bạn gỡ cài đặt HealthCare AI?</string>
+    <string name="uninstall_reason_title">Vì sao bạn gỡ cài đặt AI Health: Personal Care?</string>
     <string name="uninstall_reason_subtitle">Rất tiếc khi bạn rời đi. Vui lòng cho chúng tôi biết cách cải thiện ứng dụng tốt hơn nhé.</string>
     <string name="uninstall_reason_1">Khó sử dụng</string>
     <string name="uninstall_reason_2">Quá nhiều quảng cáo</string>
@@ -169,7 +169,7 @@
     <!-- Medication &amp; Health Reminders Channel -->
     <string name="noti_reminders_channel_name">Nhắc nhở uống thuốc &amp; Sức khỏe</string>
     <string name="noti_reminders_channel_desc">Báo thức và thông báo đúng giờ cho lịch uống thuốc, uống nước và chăm sóc sức khỏe.</string>
-    <string name="noti_reminder_action_done">Đã uống / xong</string>
+    <string name="noti_reminder_action_done">Hoàn thành</string>
     <string name="noti_reminder_default_desc">Đã đến giờ cho nhắc nhở %s của bạn.</string>
     
     <!-- Permission Dialog -->
@@ -485,6 +485,17 @@
     <string name="delete_reminder_confirm">Bạn có chắc chắn muốn xóa nhắc nhở này không?</string>
     <string name="delete_confirm_title">Xóa hồ sơ này?</string>
     <string name="delete_confirm_message">Bạn có chắc chắn muốn xóa hồ sơ này không?\nHành động này không thể hoàn tác.</string>
+    <string name="delete_scan_confirm_title">Xóa lịch sử quét này?</string>
+    <string name="delete_scan_confirm_message">Bạn có chắc chắn muốn xóa lịch sử quét này không?
+Hành động này không thể hoàn tác.</string>
+    <string name="msg_scan_deleted">Đã xóa lịch sử quét</string>
+    <string name="delete_reminder_confirm_title">Xóa nhắc nhở này?</string>
+    <string name="delete_reminder_confirm_message">Bạn có chắc chắn muốn xóa nhắc nhở này không?
+Hành động này không thể hoàn tác.</string>
+    <string name="delete_member_confirm_title">Xóa thành viên này?</string>
+    <string name="delete_member_confirm_message">Bạn có chắc chắn muốn xóa thành viên này khỏi Gia đình không?
+Hành động này không thể hoàn tác.</string>
+
     <string name="btn_delete">Xóa</string>
     
     <!-- Rate App Dialog -->
@@ -703,7 +714,32 @@
     <string name="scan_history_empty_title">Chưa có lịch sử quét</string>
     <string name="scan_history_empty_desc">Các kết quả quét sức khỏe bằng AI của bạn sẽ xuất hiện tại đây.</string>
     <!-- Custom System Notification (Figma 1:4045) -->
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">vừa xong</string>
     <string name="splash_loading_progress">%1$s (%2$d%%)</string>
+    <string name="repeat_custom">Tùy chỉnh</string>
+    <string name="day_monday">Thứ 2</string>
+    <string name="day_tuesday">Thứ 3</string>
+    <string name="day_wednesday">Thứ 4</string>
+    <string name="day_thursday">Thứ 5</string>
+    <string name="day_friday">Thứ 6</string>
+    <string name="day_saturday">Thứ 7</string>
+    <string name="day_sunday">Chủ nhật</string>
+    <string name="error_select_at_least_one_day">Vui lòng chọn ít nhất một ngày</string>
+    <string name="hint_appointment_title">Tư vấn tim mạch</string>
+    <string name="hint_appointment_clinician">BS. Nguyễn Văn A</string>
+    <string name="hint_appointment_clinic">Bệnh viện Đa khoa</string>
+    <string name="hint_appointment_date_time">Chọn ngày &amp; giờ</string>
+    <string name="hint_appointment_notes">Mang theo hồ sơ bệnh án và kết quả xét nghiệm trước đó.</string>
+    <string name="hint_vaccine_clinic">Trung tâm tiêm chủng</string>
+    <string name="hint_vaccine_reaction_notes">Đã ghi nhận phản ứng trong đợt tiêm trước.</string>
+    <string name="hint_condition_name">Viêm mũi dị ứng</string>
+    <string name="hint_condition_diagnosis_date">08/10/2026</string>
+    <string name="hint_condition_notes">Ghi nhận sau buổi khám dị ứng.</string>
+    <string name="hint_allergen_name">Penicillin</string>
+    <string name="hint_allergy_reaction">Nổi mề đay</string>
+    <string name="hint_allergy_notes">Đã ghi nhận phản ứng trong đợt điều trị trước.</string>
+    <string name="hint_medication_name">Cetirizine</string>
+    <string name="hint_medication_reason">Triệu chứng dị ứng</string>
+    <string name="hint_medication_instructions">Uống trước bữa ăn</string>
 </resources>

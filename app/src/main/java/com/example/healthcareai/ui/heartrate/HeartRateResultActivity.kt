@@ -153,6 +153,8 @@ class HeartRateResultActivity : BaseActivity() {
     private fun showDeleteConfirmation() {
         DeleteConfirmationDialog.show(
             context = this,
+            title = getString(R.string.heart_rate_delete_confirm_title),
+            message = getString(R.string.heart_rate_delete_confirm_msg),
             onDeleteConfirmed = {
                 recordId?.let { id ->
                     HeartRateRepository.getInstance(this).deleteRecord(id)

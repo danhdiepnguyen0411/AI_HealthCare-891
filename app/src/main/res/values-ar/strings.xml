@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthCare AI</string>
+    <string name="app_name">AI Health: Personal Care</string>
     
     <!-- Bottom Nav Tabs -->
     <string name="tab_home">الرئيسية</string>
@@ -363,7 +363,7 @@
     <string name="option_dont_know">لا أعلم</string>
     <!-- Exit Confirmation Dialog -->
     <string name="dialog_exit_app_title">الخروج من التطبيق؟</string>
-    <string name="dialog_exit_app_desc">هل أنت متأكد من رغبتك في الخروج من HealthCare AI؟</string>
+    <string name="dialog_exit_app_desc">هل أنت متأكد من رغبتك في الخروج من AI Health: Personal Care؟</string>
     <string name="dialog_exit_app_btn_stay">البقاء</string>
     <string name="dialog_exit_app_btn_exit">خروج</string>
     <string name="dialog_exit_assessment_title">مغادرة التقييم؟</string>
@@ -470,7 +470,7 @@
     <string name="title_edit_reminder">تعديل التذكير</string>
     <string name="reminder_action_edit">تعديل</string>
     <string name="reminder_action_delete">حذف</string>
-    <string name="reminder_status_taken">تم تناوله</string>
+    <string name="reminder_status_taken">مكتمل</string>
     <string name="reminder_action_undo">تراجع</string>
     <string name="msg_reminder_deleted">تم حذف التذكير</string>
     <string name="msg_reminder_updated">تم تحديث التذكير</string>
@@ -478,10 +478,21 @@
     <string name="delete_reminder_confirm">هل أنت متأكد من رغبتك في حذف هذا التذكير؟</string>
     <string name="delete_confirm_title">تأكيد الحذف</string>
     <string name="delete_confirm_message">هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="delete_scan_confirm_title">حذف هذا الفحص؟</string>
+    <string name="delete_scan_confirm_message">هل أنت متأكد من رغبتك في حذف سجل الفحص هذا؟
+لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="msg_scan_deleted">تم حذف سجل الفحص</string>
+    <string name="delete_reminder_confirm_title">حذف هذا التذكير؟</string>
+    <string name="delete_reminder_confirm_message">هل أنت متأكد من رغبتك في حذف هذا التذكير؟
+لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="delete_member_confirm_title">حذف هذا العضو؟</string>
+    <string name="delete_member_confirm_message">هل أنت متأكد من رغبتك في حذف هذا العضو؟
+لا يمكن التراجع عن هذا الإجراء.</string>
+
     <string name="btn_delete">حذف</string>
     
     <!-- Rate App Dialog -->
-    <string name="rate_dialog_title">ما رأيك في HealthCare AI؟</string>
+    <string name="rate_dialog_title">ما رأيك في AI Health: Personal Care؟</string>
     <string name="rate_dialog_message">تقييمك يساعدنا على تحسين التطبيق وتقديم أفضل رعاية صحية لك.</string>
     <string name="rate_dialog_submit">تقييم</string>
     <string name="rate_dialog_maybe_later">لاحقاً</string>
@@ -666,7 +677,7 @@
     <string name="btn_exit_without_saving">الخروج دون حفظ</string>
     <string name="btn_save_appointment">حفظ الموعد</string>
     <string name="btn_stay_on_page">البقاء في هذه الصفحة</string>
-    <string name="dialog_leave_without_saving_message">لم يتم حفظ تحليلك. إذا غادرت الآن،\nفلن تتمكن من عرض هذه النتائج مرة أخرى.</string>
+    <string name="dialog_leave_without_saving_message">لم يتم حفظ تحليلك. إذا غادرت الآن، فلن تتمكن من عرض هذه النتائج مرة أخرى.</string>
     <string name="dialog_leave_without_saving_title">المغادرة دون حفظ؟</string>
     <string name="dialog_mic_permission_desc">اسمح بالوصول إلى الميكروفون لاستخدام ميزات الدردشة الصوتية وتحليل الصوت.</string>
     <string name="dialog_mic_permission_title">الوصول إلى الميكروفون</string>
@@ -684,7 +695,7 @@
     <string name="msg_record_deleted">تم حذف السجل</string>
     <string name="msg_vaccination_saved">تم حفظ التطعيم</string>
     <string name="no_reminders_yet">لا توجد تذكيرات بعد</string>
-    <string name="noti_app_name_display">Health Link</string>
+    <string name="noti_app_name_display">AI Health: Personal Care</string>
     <string name="noti_time_now">الآن</string>
     <string name="results_for">نتائج لـ</string>
     <string name="scan_history_empty_desc">ستظهر فحوصاتك الصحية المكتملة بالذكاء الاصطناعي هنا.</string>
@@ -699,4 +710,29 @@
     <string name="title_detailed_results">النتائج التفصيلية</string>
     <string name="title_edit_appointment">تعديل الموعد</string>
     <string name="title_edit_profile">تعديل الملف الشخصي</string>
+    <string name="repeat_custom">مخصص</string>
+    <string name="day_monday">الاثنين</string>
+    <string name="day_tuesday">الثلاثاء</string>
+    <string name="day_wednesday">الأربعاء</string>
+    <string name="day_thursday">الخميس</string>
+    <string name="day_friday">الجمعة</string>
+    <string name="day_saturday">السبت</string>
+    <string name="day_sunday">الأحد</string>
+    <string name="error_select_at_least_one_day">يرجى تحديد يوم واحد على الأقل</string>
+    <string name="hint_appointment_title">استشارة أمراض القلب</string>
+    <string name="hint_appointment_clinician">د. سارة جنكينز</string>
+    <string name="hint_appointment_clinic">مستشفى المدينة العام</string>
+    <string name="hint_appointment_date_time">اختر التاريخ والوقت</string>
+    <string name="hint_appointment_notes">أحضر السجلات الطبية ونتائج الفحوصات السابقة.</string>
+    <string name="hint_vaccine_clinic">مركز التطعيم</string>
+    <string name="hint_vaccine_reaction_notes">تم الإبلاغ عن رد فعل خلال الجرعة السابقة.</string>
+    <string name="hint_condition_name">التهاب الأنف التحسسي</string>
+    <string name="hint_condition_diagnosis_date">2026/10/08</string>
+    <string name="hint_condition_notes">سُجلت بعد استشارة الحساسية.</string>
+    <string name="hint_allergen_name">بنسلين</string>
+    <string name="hint_allergy_reaction">شرى (طفح جلدي)</string>
+    <string name="hint_allergy_notes">تم الإبلاغ عن رد فعل خلال الجرعة السابقة.</string>
+    <string name="hint_medication_name">سيتريزين</string>
+    <string name="hint_medication_reason">أعراض الحساسية</string>
+    <string name="hint_medication_instructions">يؤخذ قبل الوجبة</string>
 </resources>

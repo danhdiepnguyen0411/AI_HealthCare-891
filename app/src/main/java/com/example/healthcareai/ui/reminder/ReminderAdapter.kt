@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.healthcareai.R
 import com.example.healthcareai.data.model.ReminderItem
 import com.example.healthcareai.databinding.ItemReminderCardBinding
 
@@ -16,7 +17,7 @@ class ReminderAdapter(
 
     private val items = mutableListOf<ReminderItem>()
 
-    fun submitList(newList: List<ReminderItem>) {
+    fun submitList(newList: List<ReminderItem>, commitCallback: (() -> Unit)? = null) {
         val diffCallback = object : DiffUtil.Callback() {
             override fun getOldListSize(): Int = items.size
             override fun getNewListSize(): Int = newList.size
@@ -35,6 +36,7 @@ class ReminderAdapter(
         items.clear()
         items.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
+        commitCallback?.invoke()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
@@ -59,6 +61,8 @@ class ReminderAdapter(
             val context = binding.root.context
             binding.ivReminderIcon.setImageResource(item.getIconResId())
             binding.tvReminderTitle.text = item.getLocalizedName(context)
+            val langCode = com.example.healthcareai.util.LocaleHelper.getSavedLanguageCode(context)
+            binding.tvTakenStatus.text = com.example.healthcareai.util.LocaleHelper.getLocalizedString(context, langCode, R.string.reminder_status_taken)
             val desc = item.getLocalizedDescription(context)
             if (desc.isNotBlank()) {
                 binding.tvReminderDesc.visibility = View.VISIBLE

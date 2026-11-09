@@ -89,7 +89,7 @@ class SettingsFragment : Fragment() {
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
                 putExtra(
                     Intent.EXTRA_TEXT,
-                    "Check out HealthLink AI - Your Personal Health Assistant: https://play.google.com/store/apps/details?id=$appPackageName"
+                    "Check out ${getString(R.string.app_name)}: https://play.google.com/store/apps/details?id=$appPackageName"
                 )
             }
             startActivity(

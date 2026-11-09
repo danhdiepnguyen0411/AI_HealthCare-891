@@ -354,6 +354,7 @@ class NewReminderActivity : BaseActivity() {
                 endDate = existing?.endDate.orEmpty(),
                 notes = binding.etReminderNotes.text?.toString()?.trim().orEmpty(),
                 isDone = existing?.isDone ?: false,
+                isEnabled = existing?.isReminderEnabled() ?: true,
                 createdAt = createdTime
             )
 
