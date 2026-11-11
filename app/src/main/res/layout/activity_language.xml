@@ -79,27 +79,52 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Subtitle: Please select language to continue (visible on first launch, Centered horizontally) -->
-        <TextView
-            android:id="@+id/tvSubtitle"
+        <!-- Subtitle Container: Please select language to continue + Applying language settings... (visible on first launch, Centered horizontally) -->
+        <LinearLayout
+            android:id="@+id/layoutSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:fontFamily="@font/urbanist_medium"
-            app:fontFamily="@font/urbanist_medium"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:includeFontPadding="false"
-            android:letterSpacing="0"
-            android:text="@string/subtitle_select_language"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:text="@string/subtitle_select_language"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvApplyingSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_medium"
+                app:fontFamily="@font/urbanist_medium"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:text="@string/applying_language_settings"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
 
         <!-- Done Confirmation Button: Primary Button (Fixed 60dp x 36dp, Radius 112px, Color #0F67FE) -->
         <FrameLayout

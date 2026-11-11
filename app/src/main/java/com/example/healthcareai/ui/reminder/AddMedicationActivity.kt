@@ -19,6 +19,7 @@ class AddMedicationActivity : BaseActivity() {
     private var editingRecordId: String? = null
     private var existingRecord: HealthRecordItem? = null
     private var profileId: String? = null
+    private var currentFormKey: String = SelectFormBottomSheetDialog.FORM_TABLET
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +45,13 @@ class AddMedicationActivity : BaseActivity() {
                 binding.etReason.setText(record.reason)
                 binding.etStrength.setText(record.strength)
                 if (record.form.isNotBlank()) {
-                    binding.tvForm.text = record.form
+                    currentFormKey = record.form
+                    binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, record.form)
                 }
                 binding.etNotes.setText(record.notes)
             }
+        } else {
+            binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, currentFormKey)
         }
 
         setupListeners()
@@ -60,12 +64,12 @@ class AddMedicationActivity : BaseActivity() {
 
         binding.cardForm.setOnClickListener {
             hideKeyboard()
-            val currentForm = binding.tvForm.text.toString().trim()
             SelectFormBottomSheetDialog.show(
                 supportFragmentManager,
-                if (currentForm.isNotEmpty()) currentForm else SelectFormBottomSheetDialog.FORM_TABLET
+                currentFormKey.ifBlank { SelectFormBottomSheetDialog.FORM_TABLET }
             ) { selectedForm ->
-                binding.tvForm.text = selectedForm
+                currentFormKey = selectedForm
+                binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, selectedForm)
             }
         }
 
@@ -81,7 +85,7 @@ class AddMedicationActivity : BaseActivity() {
 
             val reason = binding.etReason.text?.toString()?.trim().orEmpty()
             val strength = binding.etStrength.text?.toString()?.trim().orEmpty()
-            val form = binding.tvForm.text?.toString()?.trim().orEmpty()
+            val form = currentFormKey.ifBlank { binding.tvForm.text?.toString()?.trim().orEmpty() }
             val notes = binding.etNotes.text?.toString()?.trim().orEmpty()
 
             val details = when {

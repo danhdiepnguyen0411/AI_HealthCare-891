@@ -33,13 +33,17 @@
     <string name="btn_start_scan">スキャン開始</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">読み込み中...</string>
     <string name="splash_ads_notice">この操作には広告が含まれる場合があります</string>
     
     <!-- Language -->
     <string name="title_language">言語</string>
     <string name="subtitle_select_language">続行するには言語を選択してください</string>
+    <string name="applying_language_settings">言語設定を適用しています...</string>
     <string name="btn_done">完了</string>
     <string name="hint_tap_device_language">タップして言語を選択</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">継続中</string>
     <string name="status_updated_format">状態を「%1$s」に更新しました</string>
     <string name="toast_photo_load_failed">選択された写真を読み込めませんでした</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: スキャン無制限＆24時間サポート！</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: スキャン無制限＆24時間サポート！</string>
     <string name="toast_opening_privacy_policy">プライバシーポリシーを開いています…</string>
     <string name="medical_disclaimer_dialog_title">免責事項</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Careは一般的な健康情報の提供のみを目的としており、専門的な医療アドバイス、診断、治療に代わるものではありません。常に医療従事者にご相談ください。</string>
+    <string name="dialog_medical_disclaimer_btn">了解しました</string>
     <string name="ai_health_disclaimer_title">AIヘルス免責事項</string>
     <string name="ai_health_disclaimer_desc">本画像分析はAIによる情報提供を目的としており、臨床評価や皮膚科の診断に代わるものではありません。\n\n出血、急激な変化、持続する痛みがある場合は、直ちに医師にご相談ください。</string>
     <string name="medical_disclaimer_full_text">この症状チェックは教育および情報提供のみを目的としています。医師による診察、臨床診断、処方等の代わりとなるものではありません。\n\n健康上の懸念や疑問については、必ず医師や資格を持つ医療従事者にご相談ください。</string>

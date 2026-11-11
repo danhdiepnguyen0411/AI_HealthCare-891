@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Iniciar escaneo</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Cargando...</string>
     <string name="splash_ads_notice">Esta acción puede contener anuncios</string>
     
     <!-- Language -->
     <string name="title_language">Idioma</string>
     <string name="subtitle_select_language">Selecciona un idioma para continuar</string>
+    <string name="applying_language_settings">Aplicando configuración de idioma...</string>
     <string name="btn_done">Listo</string>
     <string name="hint_tap_device_language">Toca para seleccionar tu idioma</string>
     
@@ -645,9 +649,11 @@ Esta acción no se puede deshacer.</string>
     <string name="status_ongoing">En curso</string>
     <string name="status_updated_format">Estado actualizado a %1$s</string>
     <string name="toast_photo_load_failed">Error al cargar la foto seleccionada</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: ¡Escaneos ilimitados y soporte 24/7!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: ¡Escaneos ilimitados y soporte 24/7!</string>
     <string name="toast_opening_privacy_policy">Abriendo Política de Privacidad…</string>
     <string name="medical_disclaimer_dialog_title">Descargo de responsabilidad médica</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care solo proporciona información de salud general y no sustituye el asesoramiento, diagnóstico ni tratamiento médico profesional. Consulte siempre a un profesional de la salud.</string>
+    <string name="dialog_medical_disclaimer_btn">Entendido</string>
     <string name="ai_health_disclaimer_title">Descargo de responsabilidad de IA</string>
     <string name="ai_health_disclaimer_desc">Este análisis visual funciona con IA con fines informativos y de seguimiento general. No reemplaza la consulta clínica ni el diagnóstico dermatológico profesional.\n\nSi experimentas sangrado, cambios rápidos o dolor persistente, consulta a un médico de inmediato.</string>
     <string name="medical_disclaimer_full_text">Esta evaluación de síntomas proporciona únicamente información educativa y de referencia. No pretende sustituir el consejo, diagnóstico o tratamiento médico profesional.\n\nConsulta siempre a un médico ante cualquier duda sobre tu salud.</string>

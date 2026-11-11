@@ -119,7 +119,9 @@ class LanguageActivity : BaseActivity() {
     private fun setupToolbar() {
         if (isFromSettings) {
             binding.btnBack.visibility = View.VISIBLE
+            binding.layoutSubtitle.visibility = View.GONE
             binding.tvSubtitle.visibility = View.GONE
+            binding.tvApplyingSettings.visibility = View.GONE
             binding.viewCountdown.visibility = View.GONE
             binding.btnDone.visibility = View.VISIBLE
             binding.ivFloatingHand.visibility = View.GONE
@@ -130,7 +132,9 @@ class LanguageActivity : BaseActivity() {
         } else {
             // First launch: hide back button, show subtitle, countdown & done initially hidden until language selection
             binding.btnBack.visibility = View.GONE
+            binding.layoutSubtitle.visibility = View.VISIBLE
             binding.tvSubtitle.visibility = View.VISIBLE
+            binding.tvApplyingSettings.visibility = View.GONE
             binding.btnDone.visibility = View.GONE
             binding.btnDone.alpha = 0f
             binding.btnDone.isEnabled = false
@@ -322,6 +326,11 @@ class LanguageActivity : BaseActivity() {
                 binding.viewCountdown.visibility = View.VISIBLE
                 binding.viewCountdown.alpha = 1.0f
 
+                binding.tvApplyingSettings.alpha = 0f
+                binding.tvApplyingSettings.visibility = View.VISIBLE
+                binding.tvApplyingSettings.text = LocaleHelper.getLocalizedString(this, selected.code, R.string.applying_language_settings)
+                binding.tvApplyingSettings.animate().alpha(1.0f).setDuration(200L).start()
+
                 binding.viewCountdown.startCountdown(
                     totalDurationMs = 3000L,
                     onFinished = {
@@ -333,21 +342,7 @@ class LanguageActivity : BaseActivity() {
 
                 animateHandToDone()
             } else {
-                // If Done button is not yet visible (countdown still running), restart countdown
-                if (binding.btnDone.visibility != View.VISIBLE) {
-                    binding.viewCountdown.cancelCountdown()
-                    binding.viewCountdown.visibility = View.VISIBLE
-                    binding.viewCountdown.alpha = 1.0f
-                    binding.viewCountdown.startCountdown(
-                        totalDurationMs = 3000L,
-                        onFinished = {
-                            if (!isFinishing && !isDestroyed) {
-                                showDoneButtonAfterCountdown()
-                            }
-                        }
-                    )
-                }
-                // Do not move hand up from list again; keep it in the header
+                // Not first selection: do not start or restart countdown
                 updateHandHeaderPosition()
             }
         } else {
@@ -365,6 +360,16 @@ class LanguageActivity : BaseActivity() {
             .withEndAction {
                 if (isFinishing || isDestroyed) return@withEndAction
                 binding.viewCountdown.visibility = View.GONE
+            }
+            .start()
+
+        binding.tvApplyingSettings.animate()
+            .alpha(0f)
+            .setDuration(150L)
+            .withEndAction {
+                if (isFinishing || isDestroyed) return@withEndAction
+                binding.tvApplyingSettings.visibility = View.GONE
+                binding.tvApplyingSettings.alpha = 1.0f
             }
             .start()
 
@@ -579,7 +584,7 @@ class LanguageActivity : BaseActivity() {
 
     private fun applyPreviewLanguage(languageCode: String) {
         val locale = LocaleHelper.getLocale(languageCode)
-        val isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(locale) == ViewCompat.LAYOUT_DIRECTION_RTL
+        val isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_RTL
         val dir = if (isRtl) View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
 
         // Temporarily update resources for localized string lookups
@@ -614,6 +619,9 @@ class LanguageActivity : BaseActivity() {
         binding.tvTitle.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.title_language)
         if (binding.tvSubtitle.visibility == View.VISIBLE) {
             binding.tvSubtitle.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.subtitle_select_language)
+        }
+        if (binding.tvApplyingSettings.visibility == View.VISIBLE) {
+            binding.tvApplyingSettings.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.applying_language_settings)
         }
         binding.tvBtnDone.text = LocaleHelper.getLocalizedString(this, languageCode, R.string.btn_done)
     }
@@ -659,6 +667,8 @@ class LanguageActivity : BaseActivity() {
 
     private fun handleBackPressed() {
         binding.viewCountdown.cancelCountdown()
+        binding.tvApplyingSettings.animate().cancel()
+        binding.tvApplyingSettings.visibility = View.GONE
         if (isFromSettings) {
             // Restore previous language and finish
             LocaleHelper.setLocale(this, initialSavedLangCode)
@@ -687,6 +697,7 @@ class LanguageActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding.viewCountdown.cancelCountdown()
+        binding.tvApplyingSettings.animate().cancel()
         binding.ivFloatingHand.animate().cancel()
         (binding.ivFloatingHand.drawable as? android.graphics.drawable.Animatable)?.stop()
         if (!isConfirmed && isFromSettings) {

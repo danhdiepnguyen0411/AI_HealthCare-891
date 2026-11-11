@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Taramayı Başlat</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Yükleniyor...</string>
     <string name="splash_ads_notice">Bu işlem reklam içerebilir</string>
     
     <!-- Language -->
     <string name="title_language">Dil</string>
     <string name="subtitle_select_language">Devam etmek için bir dil seçin</string>
+    <string name="applying_language_settings">Dil ayarları uygulanıyor...</string>
     <string name="btn_done">Tamam</string>
     <string name="hint_tap_device_language">Dilinizi seçmek için dokunun</string>
     
@@ -645,9 +649,11 @@ Bu işlem geri alınamaz.</string>
     <string name="status_ongoing">Devam ediyor</string>
     <string name="status_updated_format">Durum %1$s olarak güncellendi</string>
     <string name="toast_photo_load_failed">Seçilen fotoğraf yüklenemedi</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: Sınırsız tarama &amp; 7/24 destek!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: Sınırsız tarama &amp; 7/24 destek!</string>
     <string name="toast_opening_privacy_policy">Gizlilik Politikası açılıyor…</string>
     <string name="medical_disclaimer_dialog_title">Tıbbi Sorumluluk Reddi</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care yalnızca genel sağlık bilgileri sağlar ve profesyonel tıbbi tavsiye, teşhis veya tedavinin yerini almaz. Her zaman bir sağlık uzmanına danışın.</string>
+    <string name="dialog_medical_disclaimer_btn">Anladım</string>
     <string name="ai_health_disclaimer_title">Yapay Zeka Sağlık Uyarısı</string>
     <string name="ai_health_disclaimer_desc">Bu görsel analiz yapay zeka destekli olup genel takip amaçlıdır. Profesyonel klinik ya da dermatolojik teşhisin yerini tutmaz.\n\nKanamalı, hızlı büyüyen veya geçmeyen ağrılarda vakit kaybetmeden doktora danışın.</string>
     <string name="medical_disclaimer_full_text">Bu semptom değerlendirmesi sadece bilgilendirme amaçlıdır. Profesyonel tıbbi tavsiye, klinik teşhis ya da tedavi yerine geçmez.\n\nSağlığınızla ilgili her türlü endişenizde mutlaka bir hekime danışın.</string>

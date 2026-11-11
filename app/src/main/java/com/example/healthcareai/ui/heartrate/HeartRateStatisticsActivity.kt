@@ -62,6 +62,11 @@ class HeartRateStatisticsActivity : BaseActivity() {
         refreshData()
     }
 
+    override fun onPause() {
+        super.onPause()
+        historyAdapter.closeAll(binding.rvHistory)
+    }
+
     private fun setupWindowInsets() {
         setupHeaderTopMargin(binding.topBar, binding.rootView)
     }
@@ -95,6 +100,7 @@ class HeartRateStatisticsActivity : BaseActivity() {
 
         binding.btnTabOverview.setOnClickListener {
             if (currentTab != StatsTab.OVERVIEW) {
+                historyAdapter.closeAll(binding.rvHistory)
                 currentTab = StatsTab.OVERVIEW
                 updateTabsUI()
                 refreshData()
@@ -103,6 +109,7 @@ class HeartRateStatisticsActivity : BaseActivity() {
 
         binding.btnTabHistory.setOnClickListener {
             if (currentTab != StatsTab.HISTORY) {
+                historyAdapter.closeAll(binding.rvHistory)
                 currentTab = StatsTab.HISTORY
                 updateTabsUI()
                 refreshData()
@@ -192,14 +199,20 @@ class HeartRateStatisticsActivity : BaseActivity() {
 
             when (currentTab) {
                 StatsTab.OVERVIEW -> {
+                    historyAdapter.closeAll(binding.rvHistory)
                     binding.layoutOverviewData.visibility = View.VISIBLE
                     binding.rvHistory.visibility = View.GONE
                     loadOverviewChartData(records, animate = false)
                 }
                 StatsTab.HISTORY -> {
+                    historyAdapter.closeAll(binding.rvHistory)
                     binding.layoutOverviewData.visibility = View.GONE
                     binding.rvHistory.visibility = View.VISIBLE
                     historyAdapter.submitList(records)
+                    historyAdapter.notifyDataSetChanged()
+                    binding.rvHistory.post {
+                        historyAdapter.closeAll(binding.rvHistory)
+                    }
                 }
             }
         }

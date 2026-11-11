@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Bắt đầu quét</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Đang tải...</string>
     <string name="splash_ads_notice">Hành động này có thể chứa quảng cáo</string>
     
     <!-- Language -->
     <string name="title_language">Ngôn ngữ</string>
     <string name="subtitle_select_language">Vui lòng chọn ngôn ngữ để tiếp tục</string>
+    <string name="applying_language_settings">Đang áp dụng cài đặt ngôn ngữ...</string>
     <string name="btn_done">Xong</string>
     <string name="hint_tap_device_language">Nhấn để chọn ngôn ngữ của bạn</string>
     
@@ -672,9 +676,11 @@ Hành động này không thể hoàn tác.</string>
     <string name="status_ongoing">Đang diễn ra</string>
     <string name="status_updated_format">Đã cập nhật trạng thái thành %1$s</string>
     <string name="toast_photo_load_failed">Không thể tải ảnh đã chọn</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: Quét AI không giới hạn &amp; hỗ trợ 24/7!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: Quét AI không giới hạn &amp; hỗ trợ 24/7!</string>
     <string name="toast_opening_privacy_policy">Đang mở Chính sách bảo mật…</string>
     <string name="medical_disclaimer_dialog_title">Tuyên bố miễn trừ trách nhiệm y tế</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care chỉ cung cấp thông tin sức khỏe tổng quát và không thay thế cho lời khuyên, chẩn đoán hoặc điều trị y tế chuyên nghiệp. Luôn tham khảo ý kiến của chuyên gia y tế.</string>
+    <string name="dialog_medical_disclaimer_btn">Tôi đã hiểu</string>
     <string name="ai_health_disclaimer_title">Tuyên bố miễn trừ sức khỏe AI</string>
     <string name="ai_health_disclaimer_desc">Phân tích thị giác này được hỗ trợ bởi AI và thiết kế cho mục đích tham khảo thông tin và theo dõi sức khỏe ban đầu. Tính năng không thay thế cho đánh giá lâm sàng hoặc chẩn đoán da liễu chuyên nghiệp.\n\nNếu bạn gặp triệu chứng chảy máu, nốt biến đổi nhanh hoặc đau nhức dai dẳng, hãy tham khảo ý kiến bác sĩ ngay lập tức.</string>
     <string name="medical_disclaimer_full_text">Đánh giá triệu chứng này chỉ cung cấp hiểu biết mang tính giáo dục và thông tin tham khảo. Đánh giá này không nhằm thay thế cho lời khuyên, chẩn đoán lâm sàng hoặc điều trị y tế chuyên nghiệp.\n\nLuôn tìm kiếm lời khuyên từ bác sĩ hoặc chuyên gia y tế có chuyên môn đối với bất kỳ câu hỏi nào bạn có về tình trạng bệnh lý.</string>

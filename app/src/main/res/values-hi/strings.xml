@@ -33,13 +33,17 @@
     <string name="btn_start_scan">स्कैन शुरू करें</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">लोड हो रहा है...</string>
     <string name="splash_ads_notice">इस क्रिया में विज्ञापन शामिल हो सकते हैं</string>
     
     <!-- Language -->
     <string name="title_language">भाषा</string>
     <string name="subtitle_select_language">जारी रखने के लिए भाषा चुनें</string>
+    <string name="applying_language_settings">भाषा सेटिंग लागू हो रही है...</string>
     <string name="btn_done">पूर्ण</string>
     <string name="hint_tap_device_language">भाषा चुनने के लिए टैप करें</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">जारी है</string>
     <string name="status_updated_format">स्थिति %1$s में अपडेट की गई</string>
     <string name="toast_photo_load_failed">चयनित फ़ोटो लोड करने में विफल</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: असीमित स्कैन और 24/7 सहायता!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: असीमित स्कैन और 24/7 सहायता!</string>
     <string name="toast_opening_privacy_policy">गोपनीयता नीति खोली जा रही है…</string>
     <string name="medical_disclaimer_dialog_title">चिकित्सा अस्वीकरण</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care केवल सामान्य स्वास्थ्य जानकारी प्रदान करता है और पेशेवर चिकित्सा सलाह, निदान या उपचार का विकल्प नहीं है। हमेशा एक स्वास्थ्य पेशेवर से परामर्श लें।</string>
+    <string name="dialog_medical_disclaimer_btn">मैं समझता/ती हूँ</string>
     <string name="ai_health_disclaimer_title">एआई स्वास्थ्य अस्वीकरण</string>
     <string name="ai_health_disclaimer_desc">यह दृश्य विश्लेषण एआई द्वारा संचालित है और केवल सामान्य स्वास्थ्य ट्रैकिंग और शैक्षिक उद्देश्यों के लिए है। यह पेशेवर नैदानिक मूल्यांकन या त्वचा विशेषज्ञ के निदान का विकल्प नहीं है।\n\nयदि आपको रक्तस्राव, तेजी से परिवर्तन या गंभीर दर्द का अनुभव हो, तो तुरंत डॉक्टर से संपर्क करें।</string>
     <string name="medical_disclaimer_full_text">यह लक्षण मूल्यांकन केवल शैक्षिक और सूचनात्मक जानकारी प्रदान करता है। यह पेशेवर चिकित्सा सलाह, नैदानिक निदान या उपचार का विकल्प नहीं है।\n\nअपनी स्वास्थ्य स्थिति के बारे में किसी भी प्रश्न के लिए हमेशा अपने चिकित्सक से परामर्श लें।</string>

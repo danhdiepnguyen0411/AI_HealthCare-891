@@ -203,10 +203,11 @@ class HealthRecordListActivity : BaseActivity() {
             // 3. Subtitle / Details
             val subtitleText = when (currentCategory.trim().lowercase()) {
                 CATEGORY_MEDICATION.lowercase(), "medications" -> {
+                    val localizedForm = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(ctx, item.form)
                     when {
-                        item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · 1 ${item.form}"
+                        item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · 1 $localizedForm"
                         item.strength.isNotBlank() -> item.strength
-                        item.form.isNotBlank() -> item.form
+                        item.form.isNotBlank() -> localizedForm
                         item.details.isNotBlank() -> item.details.replace(" · Once daily", "").replace("Once daily", "").trim()
                         item.reason.isNotBlank() -> item.reason
                         else -> item.notes

@@ -45,6 +45,19 @@ class SelectFormBottomSheetDialog : BottomSheetDialogFragment() {
 
         setupFormSelection()
 
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val navInsets = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.navigationBars())
+            val density = resources.displayMetrics.density
+            val baseBottomPadding = (24 * density).toInt()
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                baseBottomPadding + navInsets.bottom
+            )
+            insets
+        }
+
         binding.btnContinue.setOnClickListener {
             onFormSelectedListener?.invoke(currentSelectedForm)
             dismiss()
@@ -70,12 +83,17 @@ class SelectFormBottomSheetDialog : BottomSheetDialogFragment() {
         )
 
         fun updateUI(selectedKey: String) {
-            currentSelectedForm = selectedKey
             val context = context ?: return
+            val matchedKey = formOptions.firstOrNull { bundle ->
+                bundle.key.equals(selectedKey, ignoreCase = true) ||
+                        bundle.tvTitle.text.toString().equals(selectedKey, ignoreCase = true) ||
+                        com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(context, bundle.key).equals(selectedKey, ignoreCase = true)
+            }?.key ?: selectedKey
+
+            currentSelectedForm = matchedKey
 
             for (bundle in formOptions) {
-                val isSelected = bundle.key.equals(selectedKey, ignoreCase = true) ||
-                        bundle.tvTitle.text.toString().equals(selectedKey, ignoreCase = true)
+                val isSelected = bundle.key.equals(matchedKey, ignoreCase = true)
                 if (isSelected) {
                     bundle.card.setBackgroundResource(R.drawable.bg_category_card_selected)
                     bundle.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -93,6 +111,15 @@ class SelectFormBottomSheetDialog : BottomSheetDialogFragment() {
         for (bundle in formOptions) {
             bundle.card.setOnClickListener {
                 updateUI(bundle.key)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.let {
+            if (it is BottomSheetDialog) {
+                DialogImmersiveHelper.setupBottomSheetImmersive(it)
             }
         }
     }

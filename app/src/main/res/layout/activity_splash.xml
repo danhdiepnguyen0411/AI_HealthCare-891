@@ -7,36 +7,60 @@
     android:layout_height="match_parent"
     android:background="@color/splash_bg">
 
-    <!-- Center Brand: Logo + HealthLink -->
+    <!-- Center Brand: Logo + AI HEALTH / Personal Care -->
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="144dp"
         android:layout_height="124dp"
-        android:contentDescription="@string/splash_app_title"
+        android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
         android:src="@drawable/logo_rm_cropped"
-        app:layout_constraintBottom_toTopOf="@+id/tvAppName"
+        app:layout_constraintBottom_toTopOf="@+id/brandTextContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52"
+        app:layout_constraintVertical_bias="0.48"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <TextView
-        android:id="@+id/tvAppName"
+    <LinearLayout
+        android:id="@+id/brandTextContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/urbanist"
-        android:includeFontPadding="false"
-        android:text="@string/splash_app_title"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottomContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo">
+
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.01"
+            android:text="@string/splash_app_title_line1"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAppSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/urbanist"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.02"
+            android:text="@string/splash_app_title_line2"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Bottom Section: Loading (60%), ProgressBar, Ads Notice -->
     <LinearLayout

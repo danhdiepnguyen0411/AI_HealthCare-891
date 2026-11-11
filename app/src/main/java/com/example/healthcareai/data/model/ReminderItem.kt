@@ -22,11 +22,14 @@ data class ReminderItem(
 
     fun isReminderEnabled(): Boolean = isEnabled ?: true
 
-    fun getDisplayDescription(): String {
+    fun getDisplayDescription(context: android.content.Context? = null): String {
+        val formDisplay = if (context != null && form.isNotBlank()) {
+            com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(context, form)
+        } else form
         return when {
-            strength.isNotBlank() && form.isNotBlank() -> "$strength · 1 $form"
+            strength.isNotBlank() && formDisplay.isNotBlank() -> "$strength · 1 $formDisplay"
             strength.isNotBlank() -> strength
-            form.isNotBlank() -> form
+            formDisplay.isNotBlank() -> formDisplay
             notes.isNotBlank() -> notes
             else -> ""
         }
@@ -37,7 +40,7 @@ data class ReminderItem(
     }
 
     fun getLocalizedDescription(context: android.content.Context): String {
-        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedDescription(context, getDisplayDescription())
+        return com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedDescription(context, getDisplayDescription(context))
     }
 
     fun getDisplayTime(context: android.content.Context? = null): String {

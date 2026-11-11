@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Начать сканирование</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Загрузка...</string>
     <string name="splash_ads_notice">Это действие может содержать рекламу</string>
     
     <!-- Language -->
     <string name="title_language">Язык</string>
     <string name="subtitle_select_language">Выберите язык для продолжения</string>
+    <string name="applying_language_settings">Применение настроек языка...</string>
     <string name="btn_done">Готово</string>
     <string name="hint_tap_device_language">Нажмите, чтобы выбрать язык</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">Текущий</string>
     <string name="status_updated_format">Статус обновлен на: %1$s</string>
     <string name="toast_photo_load_failed">Не удалось загрузить выбранное фото</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: Безлимитные сканы и поддержка 24/7!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: Безлимитные сканы и поддержка 24/7!</string>
     <string name="toast_opening_privacy_policy">Открываем Политику конфиденциальности…</string>
     <string name="medical_disclaimer_dialog_title">Медицинский отказ от ответственности</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care предоставляет только общую справочную информацию и не заменяет профессиональную медицинскую консультацию, диагностику или лечение. Всегда консультируйтесь с медицинским специалистом.</string>
+    <string name="dialog_medical_disclaimer_btn">Понятно</string>
     <string name="ai_health_disclaimer_title">Предупреждение ИИ-анализа</string>
     <string name="ai_health_disclaimer_desc">Данный визуальный анализ создан на базе ИИ для ознакомительных целей. Он не заменяет врачебного или дерматологического диагноза.\n\nПри кровотечении, быстром разрастании или острой боли немедленно обратитесь в больницу.</string>
     <string name="medical_disclaimer_full_text">Этот опрос симптомов служит исключительно для образовательных и справочных целей. Он не является клиническим диагнозом или врачебным назначением.\n\nВсегда консультируйтесь с квалифицированным врачом по любым вопросам здоровья.</string>

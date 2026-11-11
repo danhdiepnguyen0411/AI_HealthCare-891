@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Mulai Pindai</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Memuat...</string>
     <string name="splash_ads_notice">Tindakan ini mungkin mengandung iklan</string>
     
     <!-- Language -->
     <string name="title_language">Bahasa</string>
     <string name="subtitle_select_language">Pilih bahasa untuk melanjutkan</string>
+    <string name="applying_language_settings">Menerapkan pengaturan bahasa...</string>
     <string name="btn_done">Selesai</string>
     <string name="hint_tap_device_language">Ketuk untuk memilih bahasa Anda</string>
     
@@ -645,9 +649,11 @@ Tindakan ini tidak dapat dibatalkan.</string>
     <string name="status_ongoing">Berlangsung</string>
     <string name="status_updated_format">Status diperbarui menjadi %1$s</string>
     <string name="toast_photo_load_failed">Gagal memuat foto yang dipilih</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: Pindai tanpa batas &amp; dukungan 24/7!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: Pindai tanpa batas &amp; dukungan 24/7!</string>
     <string name="toast_opening_privacy_policy">Membuka Kebijakan Privasi…</string>
     <string name="medical_disclaimer_dialog_title">Disclaimer Medis</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care hanya menyediakan informasi kesehatan umum dan tidak menggantikan saran, diagnosis, atau perawatan medis profesional. Selalu konsultasikan dengan tenaga medis profesional.</string>
+    <string name="dialog_medical_disclaimer_btn">Saya Mengerti</string>
     <string name="ai_health_disclaimer_title">Peringatan Medis AI</string>
     <string name="ai_health_disclaimer_desc">Analisis visual ini didukung AI dan dirancang untuk tujuan edukasi serta pemantauan umum. Ini bukan pengganti diagnosis klinis dokter atau dokter kulit.\n\nJika Anda mengalami pendarahan, perubahan bentuk yang cepat, atau nyeri hebat, segera periksakan ke dokter.</string>
     <string name="medical_disclaimer_full_text">Pemeriksaan gejala ini hanya memberikan informasi edukatif dan referensi awal. Ini tidak ditujukan sebagai pengganti nasihat medis, diagnosis klinis, atau resep pengobatan.\n\nSelalu konsultasikan dengan dokter atau tenaga medis berwenang mengenai kondisi kesehatan Anda.</string>

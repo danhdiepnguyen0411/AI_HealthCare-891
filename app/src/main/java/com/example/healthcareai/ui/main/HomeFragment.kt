@@ -36,6 +36,7 @@ import com.example.healthcareai.ui.profile.ProfileDetailActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
+import com.example.healthcareai.data.local.PreferenceHelper
 import java.io.File
 import java.util.Calendar
 
@@ -62,6 +63,19 @@ class HomeFragment : Fragment() {
         syncFamilyProfiles()
         syncReminders()
         syncScanHistory()
+        checkAndShowMedicalDisclaimer()
+    }
+
+    private fun checkAndShowMedicalDisclaimer() {
+        val ctx = context ?: return
+        val pref = PreferenceHelper.getInstance(ctx)
+        if (!pref.hasSeenMedicalDisclaimer && pref.isProfileCreated) {
+            binding.root.post {
+                if (isAdded && !isDetached && activity != null && !requireActivity().isFinishing && !requireActivity().isDestroyed) {
+                    com.example.healthcareai.ui.dialog.MedicalDisclaimerDialog.show(requireActivity())
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -222,9 +236,8 @@ class HomeFragment : Fragment() {
             selectedFamilyMemberIndex = -1
             val emptyAddLp = (addBtn.layoutParams as? LinearLayout.LayoutParams)
                 ?: LinearLayout.LayoutParams((64 * density).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
-            emptyAddLp.leftMargin = 0
-            emptyAddLp.rightMargin = 0
             emptyAddLp.marginStart = 0
+            emptyAddLp.marginEnd = 0
             addBtn.layoutParams = emptyAddLp
             binding.cardFamilyHub.selectMember(-1, animate = false, force = true)
             updateFamilyStats(null)
@@ -238,9 +251,8 @@ class HomeFragment : Fragment() {
         val itemSpacing = (24 * density).toInt()
         val activeAddLp = (addBtn.layoutParams as? LinearLayout.LayoutParams)
             ?: LinearLayout.LayoutParams((64 * density).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
-        activeAddLp.leftMargin = itemSpacing
-        activeAddLp.rightMargin = 0
         activeAddLp.marginStart = itemSpacing
+        activeAddLp.marginEnd = 0
         addBtn.layoutParams = activeAddLp
 
         for ((index, profile) in familyMembers.withIndex()) {
@@ -250,9 +262,8 @@ class HomeFragment : Fragment() {
                 (64 * density).toInt(),
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                leftMargin = m
-                rightMargin = 0
                 marginStart = m
+                marginEnd = 0
             }
             itemBinding.root.layoutParams = lp
 
@@ -332,17 +343,9 @@ class HomeFragment : Fragment() {
         // Smooth scroll to make selected member visible if near/beyond edge
         val selectedChild = row.getChildAt(index)
         if (selectedChild != null) {
-            val scrollX = binding.scrollFamilyAvatars.scrollX
-            val scrollWidth = binding.scrollFamilyAvatars.width
-            val childLeft = selectedChild.left
-            val childRight = selectedChild.right
             val margin = (20 * density).toInt()
-
-            if (childLeft - margin < scrollX) {
-                binding.scrollFamilyAvatars.smoothScrollTo((childLeft - margin).coerceAtLeast(0), 0)
-            } else if (childRight + margin > scrollX + scrollWidth && scrollWidth > 0) {
-                binding.scrollFamilyAvatars.smoothScrollTo(childRight + margin - scrollWidth, 0)
-            }
+            val rect = android.graphics.Rect(-margin, 0, selectedChild.width + margin, selectedChild.height)
+            selectedChild.requestRectangleOnScreen(rect, true)
         }
     }
 

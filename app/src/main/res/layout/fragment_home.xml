@@ -55,12 +55,12 @@
                         android:id="@+id/ivLogoApp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="@string/splash_app_title"
+                        android:contentDescription="@string/home_app_title"
                         android:scaleType="fitCenter"
                         android:src="@drawable/logo_app" />
                 </androidx.cardview.widget.CardView>
 
-                <!-- HealthLink App Title (26px, Bold, #0556E5) -->
+                <!-- AIHealth App Title (26px, Bold, #0556E5) -->
                 <TextView
                     android:id="@+id/tvAppName"
                     android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                     android:fontFamily="@font/urbanist_bold"
                     android:includeFontPadding="false"
                     android:letterSpacing="-0.01"
-                    android:text="@string/splash_app_title"
+                    android:text="@string/home_app_title"
                     android:textColor="@color/home_app_title"
                     android:textSize="26sp" />
             </LinearLayout>

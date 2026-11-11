@@ -33,13 +33,17 @@
     <string name="btn_start_scan">스캔 시작</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">로딩 중...</string>
     <string name="splash_ads_notice">이 작업에는 광고가 포함될 수 있습니다</string>
     
     <!-- Language -->
     <string name="title_language">언어</string>
     <string name="subtitle_select_language">계속하려면 언어를 선택하세요</string>
+    <string name="applying_language_settings">언어 설정을 적용하는 중...</string>
     <string name="btn_done">완료</string>
     <string name="hint_tap_device_language">언어를 선택하려면 탭하세요</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">진행 중</string>
     <string name="status_updated_format">상태가 %1$s(으)로 업데이트되었습니다</string>
     <string name="toast_photo_load_failed">선택한 사진을 불러오지 못했습니다</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: 무제한 AI 스캔 &amp; 24시간 케어 지원!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: 무제한 AI 스캔 &amp; 24시간 케어 지원!</string>
     <string name="toast_opening_privacy_policy">개인정보 처리방침을 여는 중…</string>
     <string name="medical_disclaimer_dialog_title">의학적 면책 조항</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care는 일반적인 건강 정보만을 제공하며 전문적인 의학적 조언, 진단 또는 치료를 대신할 수 없습니다. 항상 의료 전문가와 상담하십시오.</string>
+    <string name="dialog_medical_disclaimer_btn">확인했습니다</string>
     <string name="ai_health_disclaimer_title">AI 헬스 면책 조항</string>
     <string name="ai_health_disclaimer_desc">본 시각적 분석은 AI 기반으로 참고용 및 일반 건강 추적을 위해 제공됩니다. 전문 의료진의 진단이나 피부과 진료를 대신할 수 없습니다.\n\n출혈, 급격한 변화, 지속적인 통증이 있는 경우 즉시 병원을 방문하세요.</string>
     <string name="medical_disclaimer_full_text">본 증상 평가는 교육 및 참고 목적의 정보만을 제공합니다. 전문적인 의학적 조언, 임상 진단 또는 치료 처방을 대신하지 않습니다.\n\n건강 이상이나 의문 사항이 있을 경우 반드시 의사 등 의료 전문가와 상담하세요.</string>

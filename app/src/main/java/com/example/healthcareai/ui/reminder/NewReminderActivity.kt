@@ -44,6 +44,7 @@ class NewReminderActivity : BaseActivity() {
     private var selectedHealthRecordItem: HealthRecordItem? = null
     private var currentCategoryKey: String = SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION
     private var currentRepeatKey: String = SelectRepeatBottomSheetDialog.REPEAT_EVERY_DAY
+    private var currentFormKey: String = ""
 
     private var lastImeInsetsBottom = 0
     private var lastGlobalImeBottom = 0
@@ -105,6 +106,7 @@ class NewReminderActivity : BaseActivity() {
                     selectedHealthRecordItem = null
                     binding.tvChooseItem.text = ""
                     binding.etStrength.setText("")
+                    currentFormKey = ""
                     binding.tvForm.text = ""
                 }
                 updateCategoryState(selected)
@@ -165,7 +167,8 @@ class NewReminderActivity : BaseActivity() {
                         binding.etStrength.setText(item.strength)
                     }
                     if (item.form.isNotBlank()) {
-                        binding.tvForm.text = item.form
+                        currentFormKey = item.form
+                        binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, item.form)
                     }
                 }
             }
@@ -202,12 +205,13 @@ class NewReminderActivity : BaseActivity() {
         // Form selector (Bottom Sheet Dialog with standard app styling)
         binding.cardForm.setOnClickListener {
             hideKeyboard()
-            val currentForm = binding.tvForm.text.toString().trim()
+            val currentForm = currentFormKey.ifBlank { binding.tvForm.text.toString().trim() }
             SelectFormBottomSheetDialog.show(
                 supportFragmentManager,
                 if (currentForm.isNotEmpty()) currentForm else SelectFormBottomSheetDialog.FORM_TABLET
-            ) { selectedForm ->
-                binding.tvForm.text = selectedForm
+            ) { selectedFormKey ->
+                currentFormKey = selectedFormKey
+                binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, selectedFormKey)
             }
         }
     }
@@ -255,7 +259,8 @@ class NewReminderActivity : BaseActivity() {
         binding.tvChooseItem.text = existing.name.ifBlank { existing.getLocalizedName(this) }
         binding.etStrength.setText(existing.strength)
         if (existing.form.isNotBlank()) {
-            binding.tvForm.text = existing.form
+            currentFormKey = existing.form
+            binding.tvForm.text = com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, existing.form)
         }
         if (existing.repeat.isNotBlank()) {
             currentRepeatKey = existing.repeat
@@ -326,7 +331,7 @@ class NewReminderActivity : BaseActivity() {
             } else ""
 
             val form = if (chosenCategory.equals(SelectCategoryBottomSheetDialog.CATEGORY_MEDICATION, ignoreCase = true)) {
-                binding.tvForm.text?.toString()?.trim().orEmpty()
+                currentFormKey.ifBlank { binding.tvForm.text?.toString()?.trim().orEmpty() }
             } else ""
 
             val effectiveProfileId = existing?.profileId

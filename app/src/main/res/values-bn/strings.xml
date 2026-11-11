@@ -33,13 +33,17 @@
     <string name="btn_start_scan">স্ক্যান শুরু করুন</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">লোড হচ্ছে...</string>
     <string name="splash_ads_notice">এই কার্যক্রমে বিজ্ঞাপন থাকতে পারে</string>
     
     <!-- Language -->
     <string name="title_language">ভাষা</string>
     <string name="subtitle_select_language">চালিয়ে যেতে একটি ভাষা নির্বাচন করুন</string>
+    <string name="applying_language_settings">ভাষা সেটিংস প্রয়োগ করা হচ্ছে...</string>
     <string name="btn_done">সম্পন্ন</string>
     <string name="hint_tap_device_language">ভাষা নির্বাচন করতে ট্যাপ করুন</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">চলমান</string>
     <string name="status_updated_format">স্ট্যাটাস %1$s হিসেবে আপডেট করা হয়েছে</string>
     <string name="toast_photo_load_failed">নির্বাচিত ছবি লোড করা যায়নি</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: আনলিমিটেড স্ক্যান ও ২৪/৭ সেবা!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: আনলিমিটেড স্ক্যান ও ২৪/৭ সেবা!</string>
     <string name="toast_opening_privacy_policy">গোপনীয়তা নীতি খোলা হচ্ছে…</string>
     <string name="medical_disclaimer_dialog_title">চিকিৎসা সংক্রান্ত দাবিত্যাগ</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care কেবল সাধারণ স্বাস্থ্য সংক্রান্ত তথ্য প্রদান করে এবং এটি পেশাদার চিকিৎসা পরামর্শ, রোগ নির্ণয় বা চিকিৎসার বিকল্প নয়। সর্বদা একজন স্বাস্থ্যসেবা পেশাদারের পরামর্শ নিন।</string>
+    <string name="dialog_medical_disclaimer_btn">আমি বুঝেছি</string>
     <string name="ai_health_disclaimer_title">এআই স্বাস্থ্য দাবিত্যাগ</string>
     <string name="ai_health_disclaimer_desc">এই ভিজ্যুয়াল বিশ্লেষণটি এআই-চালিত এবং সাধারণ সুস্থতা পর্যবেক্ষণ ও শিক্ষামূলক উদ্দেশ্যে প্রস্তুত। এটি কোনো পেশাদার চিকিৎসক বা চর্মরোগ বিশেষজ্ঞের রোগ নির্ণয়ের বিকল্প নয়।\n\nযদি আপনার রক্তপাত, দ্রুত পরিবর্তন বা তীব্র ব্যথা হয়, তবে অবিলম্বে একজন ডাক্তারের কাছে যান।</string>
     <string name="medical_disclaimer_full_text">এই লক্ষণ মূল্যায়ন কেবল শিক্ষামূলক ও তথ্যগত পরামর্শ প্রদান করে। এটি পেশাদার চিকিৎসা পরামর্শ, ক্লিনিকাল ডায়াগনোসিস বা চিকিৎসার বিকল্প নয়।\n\nযেকোনো শারীরিক সমস্যা সম্পর্কে সর্বদা আপনার চিকিৎসক বা যোগ্যতাসম্পন্ন স্বাস্থ্যসেবা প্রদানকারীর পরামর্শ নিন।</string>

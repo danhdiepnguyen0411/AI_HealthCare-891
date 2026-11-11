@@ -183,6 +183,58 @@ object ReminderLocalizationHelper {
         }.joinToString(", ")
     }
 
+    fun getLocalizedForm(context: Context, rawForm: String): String {
+        if (rawForm.isBlank()) return rawForm
+        val lower = rawForm.trim().lowercase()
+        return when {
+            lower == "tablet" || lower == "viên nén" || lower == "tablette" || lower == "comprimé" ||
+            lower == "tableta" || lower == "comprimido" || lower == "таблетка" || lower == "片剂" ||
+            lower == "錠剤" || lower.contains("tablet") || lower.contains("viên nén") ||
+            lower.contains("정제") || lower.contains("أقراص") || lower.contains("ট্যাবলেট") ||
+            lower.contains("गोली") -> {
+                getStringSafe(context, R.string.form_tablet)
+            }
+            lower == "capsule" || lower == "viên nang" || lower == "kapsel" || lower == "cápsula" ||
+            lower == "капсула" || lower == "胶囊" || lower == "カプセル" || lower == "캡슐" ||
+            lower.contains("capsule") || lower.contains("viên nang") || lower.contains("كبسول") ||
+            lower.contains("ক্যাপসুল") || lower.contains("कैप्सूल") -> {
+                getStringSafe(context, R.string.form_capsule)
+            }
+            lower == "liquid" || lower == "dung dịch" || lower == "dạng lỏng" || lower == "flüssigkeit" ||
+            lower == "liquide" || lower == "líquido" || lower == "жидкость" || lower == "口服液" ||
+            lower == "液体" || lower == "액상" || lower == "سائل" || lower.contains("liquid") ||
+            lower.contains("dung dịch") || lower.contains("तरल") || lower.contains("তরল") -> {
+                getStringSafe(context, R.string.form_liquid)
+            }
+            lower == "drops" || lower == "thuốc nhỏ" || lower == "tropfen" || lower == "gouttes" ||
+            lower == "gotas" || lower == "капли" || lower == "滴剂" || lower.contains("drop") ||
+            lower.contains("nhỏ") || lower.contains("قطرات") || lower.contains("ড্রপ") ||
+            lower.contains("बूंद") || lower.contains("点眼") || lower.contains("점적") -> {
+                getStringSafe(context, R.string.form_drops)
+            }
+            lower == "injection" || lower == "thuốc tiêm" || lower == "tiêm" || lower == "injektion" ||
+            lower == "inyección" || lower == "injeção" || lower == "инъекция" || lower == "注射剂" ||
+            lower == "注射" || lower == "주사" || lower.contains("inject") || lower.contains("tiêm") ||
+            lower.contains("حقن") || lower.contains("ইনজেকশন") || lower.contains("इंजेक्शन") -> {
+                getStringSafe(context, R.string.form_injection)
+            }
+            lower == "inhaler" || lower == "ống hít" || lower == "hít" || lower == "inhalator" ||
+            lower == "inhalateur" || lower == "inhalador" || lower == "ингалятор" || lower == "吸入剂" ||
+            lower == "吸入器" || lower == "흡입기" || lower.contains("inhal") || lower.contains("hít") ||
+            lower.contains("بخاخ") || lower.contains("ইনহেলার") || lower.contains("इन्हेलर") -> {
+                getStringSafe(context, R.string.form_inhaler)
+            }
+            lower == "other" || lower == "khác" || lower == "sonstiges" || lower == "autre" ||
+            lower == "otro" || lower == "outro" || lower == "другое" || lower == "其它" ||
+            lower == "其他" || lower == "その他" || lower == "기타" || lower.contains("other") ||
+            lower.contains("khác") || lower.contains("أخرى") || lower.contains("অন্যান্য") ||
+            lower.contains("अन्य") -> {
+                getStringSafe(context, R.string.form_other)
+            }
+            else -> rawForm
+        }
+    }
+
     fun getLocalizedSchedule(context: Context, scheduleDisplay: String): String {
         if (scheduleDisplay.isBlank()) return scheduleDisplay
         val lower = scheduleDisplay.trim().lowercase()

@@ -128,7 +128,11 @@ open class HealthRecordDetailActivity : BaseActivity() {
 
         // Row 2: Form | (hidden)
         binding.tvLabelRow2Left.text = getString(R.string.label_form)
-        binding.tvValueRow2Left.text = record.form.ifBlank { getString(R.string.not_provided) }
+        binding.tvValueRow2Left.text = if (record.form.isNotBlank()) {
+            com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(this, record.form)
+        } else {
+            getString(R.string.not_provided)
+        }
 
         binding.layoutRow2Right.visibility = View.INVISIBLE
 

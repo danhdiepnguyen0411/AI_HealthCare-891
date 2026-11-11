@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Scan starten</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Wird geladen...</string>
     <string name="splash_ads_notice">Diese Aktion kann Werbung enthalten</string>
     
     <!-- Language -->
     <string name="title_language">Sprache</string>
     <string name="subtitle_select_language">Bitte wählen Sie eine Sprache zum Fortfahren</string>
+    <string name="applying_language_settings">Spracheinstellungen werden angewendet...</string>
     <string name="btn_done">Fertig</string>
     <string name="hint_tap_device_language">Tippen Sie, um Ihre Sprache auszuwählen</string>
     
@@ -645,9 +649,11 @@ Diese Aktion kann nicht rückgängig gemacht werden.</string>
     <string name="status_ongoing">Aktiv</string>
     <string name="status_updated_format">Status aktualisiert auf %1$s</string>
     <string name="toast_photo_load_failed">Ausgewähltes Foto konnte nicht geladen werden</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: Unbegrenzte Scans &amp; 24/7-Support!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: Unbegrenzte Scans &amp; 24/7-Support!</string>
     <string name="toast_opening_privacy_policy">Datenschutzerklärung wird geöffnet…</string>
     <string name="medical_disclaimer_dialog_title">Medizinischer Haftungsausschluss</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care bietet lediglich allgemeine Gesundheitsinformationen und ersetzt keine professionelle medizinische Beratung, Diagnose oder Behandlung. Wenden Sie sich stets an medizinisches Fachpersonal.</string>
+    <string name="dialog_medical_disclaimer_btn">Ich habe verstanden</string>
     <string name="ai_health_disclaimer_title">KI-Gesundheitshinweis</string>
     <string name="ai_health_disclaimer_desc">Diese Bildanalyse dient nur zu Informationszwecken und ersetzt keine ärztliche oder dermatologische Diagnose.\n\nBei Blutungen, raschen Veränderungen oder anhaltenden Schmerzen umgehend einen Arzt aufsuchen.</string>
     <string name="medical_disclaimer_full_text">Diese Symptomprüfung bietet rein informative Einblicke und ist kein Ersatz für professionellen medizinischen Rat, Diagnostik oder Therapie.\n\nWenden Sie sich bei gesundheitlichen Fragen stets an medizinisches Fachpersonal.</string>

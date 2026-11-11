@@ -246,6 +246,7 @@ class SwipeRevealLayout @JvmOverloads constructor(
                 }
             }
         } else {
+            dragHelper.abort()
             mainView?.offsetLeftAndRight(-secW - (mainView?.left ?: 0))
             requestLayout()
         }
@@ -260,6 +261,7 @@ class SwipeRevealLayout @JvmOverloads constructor(
                 }
             }
         } else {
+            dragHelper.abort()
             mainView?.let {
                 val currentLeft = it.left
                 if (currentLeft != 0) {

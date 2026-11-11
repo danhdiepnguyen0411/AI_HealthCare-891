@@ -35,9 +35,23 @@ class HeartRateHistoryAdapter(
         holder.bind(getItem(position))
     }
 
-    fun closeOpenItem() {
-        currentlyOpenLayout?.close(true)
+    fun closeOpenItem(animate: Boolean = true) {
+        currentlyOpenLayout?.close(animate)
         currentlyOpenLayout = null
+    }
+
+    fun closeAll(recyclerView: RecyclerView? = null) {
+        closeOpenItem(false)
+        recyclerView?.let { rv ->
+            for (i in 0 until rv.childCount) {
+                val child = rv.getChildAt(i)
+                if (child is SwipeRevealLayout) {
+                    child.close(false)
+                } else {
+                    child.findViewById<SwipeRevealLayout>(R.id.swipeRevealLayout)?.close(false)
+                }
+            }
+        }
     }
 
     inner class HistoryViewHolder(

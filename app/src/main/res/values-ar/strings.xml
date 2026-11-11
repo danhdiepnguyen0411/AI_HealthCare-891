@@ -33,13 +33,17 @@
     <string name="btn_start_scan">بدء المسح</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">جاري التحميل...</string>
     <string name="splash_ads_notice">قد يحتوي هذا الإجراء على إعلانات</string>
     
     <!-- Language -->
     <string name="title_language">اللغة</string>
     <string name="subtitle_select_language">اختر لغة للمتابعة</string>
+    <string name="applying_language_settings">جارٍ تطبيق إعدادات اللغة...</string>
     <string name="btn_done">تم</string>
     <string name="hint_tap_device_language">اضغط لاختيار لغة جهازك</string>
     
@@ -645,9 +649,11 @@
     <string name="status_ongoing">مستمرة</string>
     <string name="status_updated_format">تم تحديث الحالة إلى %1$s</string>
     <string name="toast_photo_load_failed">فشل تحميل الصورة المحددة</string>
-    <string name="toast_healthlink_pro">HealthLink Pro: مسح غير محدود ودعم على مدار الساعة!</string>
+    <string name="toast_healthlink_pro">AIHealth Pro: مسح غير محدود ودعم على مدار الساعة!</string>
     <string name="toast_opening_privacy_policy">جاري فتح سياسة الخصوصية…</string>
     <string name="medical_disclaimer_dialog_title">إخلاء مسؤولية طبي</string>
+    <string name="dialog_medical_disclaimer_desc">يوفر AI Health Care معلومات صحية عامة فقط ولا يعد بديلاً عن المشورة الطبية المتخصصة أو التشخيص أو العلاج. استشر دائماً مقدم الرعاية الصحية المؤهل.</string>
+    <string name="dialog_medical_disclaimer_btn">أنا أفهم ذلك</string>
     <string name="ai_health_disclaimer_title">تنبيه صحي بالذكاء الاصطناعي</string>
     <string name="ai_health_disclaimer_desc">هذا التحليل البصري مدعوم بالذكاء الاصطناعي ومصمم لأغراض المتابعة العامة والتثقيف. لا يغني عن التقييم الطبي المتخصص أو تشخيص طبيب الجلدية.\n\nإذا كنت تعاني من نزيف أو تغيرات سريعة أو ألم حاد، يرجى مراجعة الطبيب على الفور.</string>
     <string name="medical_disclaimer_full_text">يقدم تقييم الأعراض هذا رؤى تثقيفية وإرشادية فقط. وهو ليس بديلاً عن المشورة الطبية المتخصصة أو التشخيص السريري أو العلاج الطبي.\n\nاستشر دائماً طبيبك أو مقدم الرعاية الصحية المؤهل بشأن أي أسئلة تخص حالتك الصحية.</string>

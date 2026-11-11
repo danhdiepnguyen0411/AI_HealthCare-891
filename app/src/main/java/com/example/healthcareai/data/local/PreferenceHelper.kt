@@ -24,6 +24,7 @@ class PreferenceHelper private constructor(context: Context) {
         private const val KEY_NOTI_DENIAL_COUNT = "key_noti_denial_count"
         private const val KEY_CAMERA_DENIAL_COUNT = "key_camera_denial_count"
         private const val KEY_APP_RATED = "key_app_rated"
+        private const val KEY_HAS_SEEN_MEDICAL_DISCLAIMER = "key_has_seen_medical_disclaimer"
 
         @Volatile
         private var instance: PreferenceHelper? = null
@@ -99,6 +100,10 @@ class PreferenceHelper private constructor(context: Context) {
         get() = prefs.getBoolean(KEY_APP_RATED, false)
         set(value) = prefs.edit().putBoolean(KEY_APP_RATED, value).apply()
 
+    var hasSeenMedicalDisclaimer: Boolean
+        get() = prefs.getBoolean(KEY_HAS_SEEN_MEDICAL_DISCLAIMER, false)
+        set(value) = prefs.edit().putBoolean(KEY_HAS_SEEN_MEDICAL_DISCLAIMER, value).apply()
+
     /**
      * Resets language selection back to system default if onboarding was not fully completed.
      */
@@ -110,6 +115,7 @@ class PreferenceHelper private constructor(context: Context) {
                 .remove(KEY_SELECTED_LANGUAGE)
                 .remove(KEY_INTRO_COMPLETED)
                 .remove(KEY_PROFILE_CREATED)
+                .remove(KEY_HAS_SEEN_MEDICAL_DISCLAIMER)
                 .commit()
             context?.let { ctx ->
                 LocaleHelper.setLocale(ctx, devLang)

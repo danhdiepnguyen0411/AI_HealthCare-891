@@ -33,13 +33,17 @@
     <string name="btn_start_scan">Démarrer le scan</string>
     
     <!-- Splash &amp; Loading -->
-    <string name="splash_app_title">HealthLink</string>
+    <string name="splash_app_title">AI HEALTH\nPersonal Care</string>
+    <string name="splash_app_title_line1">AI HEALTH</string>
+    <string name="splash_app_title_line2">Personal Care</string>
+    <string name="home_app_title">AIHealth</string>
     <string name="splash_loading">Chargement...</string>
     <string name="splash_ads_notice">Cette action peut contenir des publicités</string>
     
     <!-- Language -->
     <string name="title_language">Langue</string>
     <string name="subtitle_select_language">Veuillez choisir une langue pour continuer</string>
+    <string name="applying_language_settings">Application des paramètres de langue...</string>
     <string name="btn_done">Terminé</string>
     <string name="hint_tap_device_language">Touchez pour sélectionner votre langue</string>
     
@@ -645,9 +649,11 @@ Cette action est irréversible.</string>
     <string name="status_ongoing">En cours</string>
     <string name="status_updated_format">Statut mis à jour : %1$s</string>
     <string name="toast_photo_load_failed">Échec du chargement de la photo choisie</string>
-    <string name="toast_healthlink_pro">HealthLink Pro : Scans illimités &amp; assistance 24/7 !</string>
+    <string name="toast_healthlink_pro">AIHealth Pro : Scans illimités &amp; assistance 24/7 !</string>
     <string name="toast_opening_privacy_policy">Ouverture de la Politique de Confidentialité…</string>
     <string name="medical_disclaimer_dialog_title">Avertissement médical</string>
+    <string name="dialog_medical_disclaimer_desc">AI Health Care fournit uniquement des informations de santé générales et ne remplace pas un avis, un diagnostic ou un traitement médical professionnel. Consultez toujours un professionnel de santé.</string>
+    <string name="dialog_medical_disclaimer_btn">J\'ai compris</string>
     <string name="ai_health_disclaimer_title">Avertissement IA de santé</string>
     <string name="ai_health_disclaimer_desc">Cette analyse visuelle est propulsée par l\'IA à visée informative et de suivi général. Elle ne remplace en aucun cas un diagnostic médical ou dermatologique.\n\nEn cas de saignement, d\'évolution rapide ou de douleur persistante, consultez immédiatement un médecin.</string>
     <string name="medical_disclaimer_full_text">Cette évaluation des symptômes fournit des éclairages purement informatifs et pédagogiques. Elle ne constitue en aucun cas un avis médical, un diagnostic clinique ou une prescription thérapeutique.\n\nConsultez toujours un professionnel de santé qualifié pour toute question médicale.</string>

@@ -77,15 +77,36 @@ class FamilyHubCardView @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        if (!hasCalculatedInitialBounds || changed) {
-            calculateTabBounds(selectedIndex, false)
+        calculateTabBounds(selectedIndex, false)
+    }
+
+    private fun getChildCenterInCard(child: android.view.View, index: Int): Float {
+        val density = resources.displayMetrics.density
+        if (child.width > 0) {
+            val rect = android.graphics.Rect()
+            child.getDrawingRect(rect)
+            try {
+                offsetDescendantRectToMyCoords(child, rect)
+                return rect.exactCenterX()
+            } catch (_: Exception) {
+                // In case child is not a descendant yet
+            }
+        }
+
+        // Fallback before initial child layout measurement
+        val isRtl = layoutDirection == android.view.View.LAYOUT_DIRECTION_RTL
+        val w = width.toFloat()
+        val step = 88f * density // 64dp avatar + 24dp margin
+        return if (isRtl && w > 0) {
+            w - (12f * density + index * step + 32f * density)
+        } else {
+            12f * density + index * step + 32f * density
         }
     }
 
     private fun calculateTabBounds(index: Int, animate: Boolean) {
         val density = resources.displayMetrics.density
         val avatarsRow = getAvatarsRow()
-        val scrollContainer = getScrollContainer()
 
         if (index < 0) {
             targetTabLeft = 0f
@@ -98,24 +119,22 @@ class FamilyHubCardView @JvmOverloads constructor(
         }
 
         val child = avatarsRow?.getChildAt(index)
-        val scrollX = scrollContainer?.scrollX ?: 0
-
-        val targetLeft: Float
-        val targetRight: Float
-        val halfWidth = 44f * density
-
-        if (child != null && child.width > 0) {
-            val childCenter = (child.left + child.right) / 2f - scrollX
-            targetLeft = childCenter - halfWidth
-            targetRight = childCenter + halfWidth
+        val childCenter = if (child != null) {
+            getChildCenterInCard(child, index)
         } else {
-            // Fallback before initial child layout measurement
-            val step = 88f * density // 64dp avatar + 24dp margin
-            val start = 12f * density + index * step
-            val childCenter = start + 32f * density
-            targetLeft = childCenter - halfWidth
-            targetRight = childCenter + halfWidth
+            val isRtl = layoutDirection == android.view.View.LAYOUT_DIRECTION_RTL
+            val w = width.toFloat()
+            val step = 88f * density
+            if (isRtl && w > 0) {
+                w - (12f * density + index * step + 32f * density)
+            } else {
+                12f * density + index * step + 32f * density
+            }
         }
+
+        val halfWidth = 44f * density
+        val targetLeft = childCenter - halfWidth
+        val targetRight = childCenter + halfWidth
 
         targetTabLeft = targetLeft
         targetTabRight = targetRight
@@ -155,13 +174,11 @@ class FamilyHubCardView @JvmOverloads constructor(
     fun updateTabBoundsForScroll() {
         val density = resources.displayMetrics.density
         val avatarsRow = getAvatarsRow() ?: return
-        val scrollContainer = getScrollContainer() ?: return
         if (selectedIndex < 0) return
         val child = avatarsRow.getChildAt(selectedIndex) ?: return
         if (child.width <= 0) return
 
-        val scrollX = scrollContainer.scrollX
-        val childCenter = (child.left + child.right) / 2f - scrollX
+        val childCenter = getChildCenterInCard(child, selectedIndex)
         val halfWidth = 44f * density
         val newTargetLeft = childCenter - halfWidth
         val newTargetRight = childCenter + halfWidth
@@ -236,14 +253,15 @@ class FamilyHubCardView @JvmOverloads constructor(
         val tabLeft = currentTabLeft
         val tabRight = currentTabRight
         val effectiveTabLeft = if (tabLeft in -2f * density..2f * density) 0f else tabLeft
-        val tabWidth = (tabRight - effectiveTabLeft).coerceAtLeast(40f * density)
+        val effectiveTabRight = if (tabRight in (w - 2f * density)..(w + 2f * density)) w else tabRight
+        val tabWidth = (effectiveTabRight - effectiveTabLeft).coerceAtLeast(40f * density)
         val domeRadius = tabWidth / 2f
 
         // 1. Bottom-left corner: (bottomRadius, h) -> (0, h - bottomRadius)
         rectF.set(0f, h - 2 * bottomRadius, 2 * bottomRadius, h)
         path.arcTo(rectF, 90f, 90f, false)
 
-        if (tabRight <= 0f || effectiveTabLeft >= w) {
+        if (effectiveTabRight <= 0f || effectiveTabLeft >= w) {
             // Selected tab completely scrolled off-screen: clean horizontal shelf across card
             path.lineTo(0f, shelfY + shelfTopRadius)
             rectF.set(0f, shelfY, 2 * shelfTopRadius, shelfY + 2 * shelfTopRadius)
@@ -282,25 +300,25 @@ class FamilyHubCardView @JvmOverloads constructor(
                 path.lineTo(effectiveTabLeft, domeRadius)
             }
 
-            // 3. Top dome over active member: (effectiveTabLeft, domeRadius) -> (tabRight, domeRadius)
-            rectF.set(effectiveTabLeft, 0f, tabRight, 2 * domeRadius)
+            // 3. Top dome over active member: (effectiveTabLeft, domeRadius) -> (effectiveTabRight, domeRadius)
+            rectF.set(effectiveTabLeft, 0f, effectiveTabRight, 2 * domeRadius)
             path.arcTo(rectF, 180f, 180f, false)
 
-            // 4. Right side down from tabRight to shelf & right edge
-            if (tabRight >= w) {
+            // 4. Right side down from effectiveTabRight to shelf & right edge
+            if (effectiveTabRight >= w) {
                 path.lineTo(w, domeRadius)
                 path.lineTo(w, h - bottomRadius)
             } else {
-                val availRight = w - tabRight
+                val availRight = w - effectiveTabRight
                 val cornerR = shelfTopRadius.coerceAtMost(availRight / 2f).coerceAtLeast(0f)
                 val concaveR = concaveRadius.coerceAtMost(availRight - cornerR).coerceAtLeast(0f)
 
-                path.lineTo(tabRight, shelfY - concaveR)
+                path.lineTo(effectiveTabRight, shelfY - concaveR)
                 if (concaveR > 0f) {
-                    rectF.set(tabRight, shelfY - 2 * concaveR, tabRight + 2 * concaveR, shelfY)
+                    rectF.set(effectiveTabRight, shelfY - 2 * concaveR, effectiveTabRight + 2 * concaveR, shelfY)
                     path.arcTo(rectF, 180f, -90f, false)
                 } else {
-                    path.lineTo(tabRight, shelfY)
+                    path.lineTo(effectiveTabRight, shelfY)
                 }
 
                 path.lineTo(w - cornerR, shelfY)

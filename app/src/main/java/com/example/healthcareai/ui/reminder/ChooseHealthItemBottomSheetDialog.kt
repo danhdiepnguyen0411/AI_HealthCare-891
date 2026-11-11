@@ -154,6 +154,15 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        dialog?.let {
+            if (it is BottomSheetDialog) {
+                DialogImmersiveHelper.setupBottomSheetImmersive(it)
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         dialog?.let {
@@ -213,10 +222,13 @@ class ChooseHealthItemBottomSheetDialog : BottomSheetDialogFragment() {
             holder.binding.tvItemName.text = item.name
 
             // Details string
+            val localizedForm = if (item.form.isNotBlank()) {
+                com.example.healthcareai.util.ReminderLocalizationHelper.getLocalizedForm(holder.itemView.context, item.form)
+            } else ""
             val details = when {
-                item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · ${item.form}"
+                item.strength.isNotBlank() && item.form.isNotBlank() -> "${item.strength} · $localizedForm"
                 item.strength.isNotBlank() -> item.strength
-                item.form.isNotBlank() -> item.form
+                item.form.isNotBlank() -> localizedForm
                 item.details.isNotBlank() -> item.details
                 else -> ""
             }
