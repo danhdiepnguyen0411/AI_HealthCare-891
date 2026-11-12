@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">言語設定</string>
     <string name="settings_notifications">デイリーリマインダー</string>
-    <string name="settings_version">バージョン 1.0</string>
+    <string name="settings_version">バージョン 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">どのような問題が発生しましたか？</string>

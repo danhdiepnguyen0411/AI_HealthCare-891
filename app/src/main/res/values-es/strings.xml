@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">Configuración de idioma</string>
     <string name="settings_notifications">Recordatorios diarios</string>
-    <string name="settings_version">Versión 1.0</string>
+    <string name="settings_version">Versión 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">¿Qué problemas encontraste durante el uso?</string>

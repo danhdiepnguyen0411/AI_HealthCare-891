@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">语言设置</string>
     <string name="settings_notifications">每日提醒</string>
-    <string name="settings_version">版本 1.0</string>
+    <string name="settings_version">版本 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">您在体验中遇到了什么问题？</string>

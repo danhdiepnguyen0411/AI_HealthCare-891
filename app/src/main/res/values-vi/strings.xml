@@ -132,7 +132,7 @@
     <!-- Settings -->
     <string name="settings_language">Cài đặt ngôn ngữ</string>
     <string name="settings_notifications">Nhắc nhở hàng ngày</string>
-    <string name="settings_version">Phiên bản 1.0</string>
+    <string name="settings_version">Phiên bản 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">Bạn đã gặp khó khăn gì trong quá trình sử dụng?</string>

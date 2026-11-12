@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">언어 설정</string>
     <string name="settings_notifications">매일 알림</string>
-    <string name="settings_version">버전 1.0</string>
+    <string name="settings_version">버전 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">사용 중 어떤 문제가 발생했나요?</string>

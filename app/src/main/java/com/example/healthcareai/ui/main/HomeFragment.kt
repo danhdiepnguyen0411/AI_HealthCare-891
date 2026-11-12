@@ -36,7 +36,6 @@ import com.example.healthcareai.ui.profile.ProfileDetailActivity
 import com.example.healthcareai.ui.reminder.NewReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderActivity
 import com.example.healthcareai.ui.reminder.ReminderDetailBottomSheetDialog
-import com.example.healthcareai.data.local.PreferenceHelper
 import java.io.File
 import java.util.Calendar
 
@@ -63,19 +62,6 @@ class HomeFragment : Fragment() {
         syncFamilyProfiles()
         syncReminders()
         syncScanHistory()
-        checkAndShowMedicalDisclaimer()
-    }
-
-    private fun checkAndShowMedicalDisclaimer() {
-        val ctx = context ?: return
-        val pref = PreferenceHelper.getInstance(ctx)
-        if (!pref.hasSeenMedicalDisclaimer && pref.isProfileCreated) {
-            binding.root.post {
-                if (isAdded && !isDetached && activity != null && !requireActivity().isFinishing && !requireActivity().isDestroyed) {
-                    com.example.healthcareai.ui.dialog.MedicalDisclaimerDialog.show(requireActivity())
-                }
-            }
-        }
     }
 
     override fun onResume() {

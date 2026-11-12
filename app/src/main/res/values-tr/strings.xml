@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">Dil Ayarı</string>
     <string name="settings_notifications">Günlük Hatırlatıcılar</string>
-    <string name="settings_version">Sürüm 1.0</string>
+    <string name="settings_version">Sürüm 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">Kullanırken hangi sorunlarla karşılaştınız?</string>

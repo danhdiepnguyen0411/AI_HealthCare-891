@@ -129,7 +129,7 @@
     <!-- Settings -->
     <string name="settings_language">Pengaturan Bahasa</string>
     <string name="settings_notifications">Pengingat Harian</string>
-    <string name="settings_version">Versi 1.0</string>
+    <string name="settings_version">Versi 1.0.0</string>
     
     <!-- Uninstall Retention Screen 1 -->
     <string name="uninstall_title">Kendala apa yang Anda alami saat menggunakan aplikasi?</string>
